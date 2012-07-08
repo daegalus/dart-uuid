@@ -1,0 +1,103 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>DualPivotQuicksort Class / dart:coreimpl Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:coreimpl" data-type="DualPivotQuicksort">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_coreimpl.html">dart:coreimpl</a> &rsaquo; <a href="../dart_coreimpl/DualPivotQuicksort.html">DualPivotQuicksort</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>DualPivotQuicksort</strong>
+          Class
+        </h2>
+        
+<div class="doc">
+<p>Dual-Pivot Quicksort algorithm.</p>
+<p>This class implements the dual-pivot quicksort algorithm as presented in
+Vladimir Yaroslavskiy's paper.</p>
+<p>Some improvements have been copied from Android's implementation.</p>
+</div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="insertionSort_">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>insertionSort_</strong>(<a href="../dart_core/List.html">List</a> a, <a href="../dart_core/int.html">int</a> left, <a href="../dart_core/int.html">int</a> right, <a href="../dart_core/int.html">int</a> compare(a, b)) <a class="anchor-link" href="#insertionSort_"
+              title="Permalink to DualPivotQuicksort.insertionSort_">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static void insertionSort_(List a, int left, int right, int compare(a, b)) {
+  for (int i = left + 1; i &lt;= right; i++) {
+    var el = a[i];
+    int j = i;
+    while ((j &gt; left) &amp;&amp; (compare(a[j - 1], el) &gt; 0)) {
+      a[j] = a[j - 1];
+      j--;
+    }
+    a[j] = el;
+  }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="sort">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>sort</strong>(<a href="../dart_core/List.html">List</a> a, <a href="../dart_core/int.html">int</a> compare(a, b)) <a class="anchor-link" href="#sort"
+              title="Permalink to DualPivotQuicksort.sort">#</a></h4>
+<div class="doc">
+<p>Sorts all elements of the given list <code>a</code> according to the given
+<code>compare</code> function.</p>
+<p>The <code>compare</code> function takes two arguments <code>x</code> and <code>y</code> and returns
+ -1 if <code>x &lt; y</code>,
+  0 if <code>x == y</code>, and
+  1 if <code>x &gt; y</code>.</p>
+<p>The function's behavior must be consistent. It must not return different
+results for the same values.</p>
+<pre class="source">
+static void sort(List a, int compare(a, b)) {
+  _doSort(a, 0, a.length - 1, compare);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="sortRange">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>sortRange</strong>(<a href="../dart_core/List.html">List</a> a, <a href="../dart_core/int.html">int</a> from, <a href="../dart_core/int.html">int</a> to, <a href="../dart_core/int.html">int</a> compare(a, b)) <a class="anchor-link" href="#sortRange"
+              title="Permalink to DualPivotQuicksort.sortRange">#</a></h4>
+<div class="doc">
+<p>Sorts all elements in the range <code>from</code> (inclusive) to <code>to</code> (exclusive)
+of the given list <code>a</code>.</p>
+<p>If the given range is invalid an "OutOfRange" error is raised.
+TODO(floitsch): do we want an error?</p>
+<p>See <code>sort</code> for requirements of the <code>compare</code> function.</p>
+<pre class="source">
+static void sortRange(List a, int from, int to, int compare(a, b)) {
+  if ((from &lt; 0) || (to &gt; a.length) || (to &lt; from)) {
+    throw "OutOfRange";
+  }
+  _doSort(a, from, to - 1, compare);
+}
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:45.659</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

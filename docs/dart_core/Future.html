@@ -1,0 +1,230 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Future&lt;T&gt; Interface / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="Future&amp;lt;T&amp;gt;">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/Future.html">Future&lt;T&gt;</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Future&lt;T&gt;</strong>
+          Interface
+        </h2>
+        
+<div class="doc">
+<p>A <a class="crossref" href="../dart_core/Future.html">Future</a> is used to obtain a value sometime in the future.  Receivers of a
+<a class="crossref" href="../dart_core/Future.html">Future</a> can obtain the value by passing a callback to <a class="crossref" href="../dart_core/Future.html#then">then</a>. For example:</p>
+<pre><code>Future&lt;int&gt; future = getFutureFromSomewhere();
+future.then((value) {
+  print("I received the number $value");
+});
+</code></pre>
+<p>A future may complete by <em>succeeding</em> (producing a value) or <em>failing</em>
+(producing an exception, which may be handled with <a class="crossref" href="../dart_core/Future.html#handleException">handleException</a>).
+Callbacks passed to <a class="crossref" href="../dart_core/Future.html#onComplete">onComplete</a> will be invoked in either case.</p>
+<p>When a future completes, the following actions happen in order:</p><ol><li>if the future suceeded, handlers registered with <a class="crossref" href="../dart_core/Future.html#then">then</a> are called.</li><li>
+<p>if the future failed, handlers registered with <a class="crossref" href="../dart_core/Future.html#handleException">handleException</a> are
+ called in sequence, until one returns true.</p></li><li>handlers registered with <a class="crossref" href="../dart_core/Future.html#onComplete">onComplete</a> are called</li><li>
+<p>if the future failed, and at least one handler was registered with
+ <a class="crossref" href="../dart_core/Future.html#then">then</a>, and no handler registered with <a class="crossref" href="../dart_core/Future.html#handleException">handleException</a> returned
+ <code>true</code>, then the exception is thrown.</p></li></ol>
+<p>Use a <a class="crossref" href="../dart_core/Completer.html">Completer</a> to create and change the state of a <a class="crossref" href="../dart_core/Future.html">Future</a>.</p>
+</div>
+<h3>Default class</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/FutureImpl.html">FutureImpl&lt;T&gt;</a></span></p>
+<h3>Implemented by</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/FutureImpl.html">FutureImpl&lt;T&gt;</a></span></p>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Future">
+<span class="show-code">Code</span>
+new <strong>Future</strong>.immediate(value) <a class="anchor-link" href="#Future"
+              title="Permalink to Future&lt;T&gt;.Future">#</a></h4>
+<div class="doc">
+<p>A future whose value is immediately available.</p>
+<pre class="source">
+Future.immediate(T value);
+</pre>
+</div>
+</div>
+<h3>Methods</h3>
+<div class="method"><h4 id="chain">
+<span class="show-code">Code</span>
+<a href="../dart_core/Future.html">Future</a> <strong>chain</strong>(<a href="../dart_core/Future.html">Future</a> transformation(value)) <a class="anchor-link" href="#chain"
+              title="Permalink to Future&lt;T&gt;.chain">#</a></h4>
+<div class="doc">
+<p>A future representing an asynchronous transformation applied to this
+future's value. 
+<span class="param">transformation</span> must return a Future.</p>
+<p>When this future gets a value, 
+<span class="param">transformation</span> will be called on the
+value. When the resulting future gets a value, the returned future
+will receive it.</p>
+<p>If an exception occurs (received by this future, thrown by
+
+<span class="param">transformation</span>, or received by the future returned by 
+<span class="param">transformation</span>)
+then the returned future will receive the exception.</p>
+<p>You must not add exception handlers to <code>this</code> future prior to calling
+chain, and any you add afterwards will not be invoked.</p>
+<pre class="source">
+Future chain(Future transformation(T value));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:exception">
+<span class="show-code">Code</span>
+<a href="../dart_core/Object.html">Object</a> <strong>get exception</strong>() <a class="anchor-link" href="#get:exception"
+              title="Permalink to Future&lt;T&gt;.get exception">#</a></h4>
+<div class="doc">
+<p>Exception that occurred (<code>null</code> if no exception occured). This property
+throws a <a class="crossref" href="../dart_core/FutureNotCompleteException.html">FutureNotCompleteException</a> if it is used before this future is
+completes.</p>
+<pre class="source">
+Object get exception();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="handleException">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>handleException</strong>(<a href="../dart_core/bool.html">bool</a> onException(<a href="../dart_core/Object.html">Object</a> exception)) <a class="anchor-link" href="#handleException"
+              title="Permalink to Future&lt;T&gt;.handleException">#</a></h4>
+<div class="doc">
+<p>If this future is complete and has an exception, then call 
+<span class="param">onException</span>.</p>
+<p>If 
+<span class="param">onException</span> returns true, then the exception is considered handled.</p>
+<p>If 
+<span class="param">onException</span> does not return true (or <a class="crossref" href="../dart_core/Future.html#handleException">handleException</a> was never
+called), then the exception is not considered handled. In that case, if
+there were any calls to <a class="crossref" href="../dart_core/Future.html#then">then</a>, then the exception will be thrown when the
+value is set.</p>
+<p>In most cases it should not be necessary to call <a class="crossref" href="../dart_core/Future.html#handleException">handleException</a>,
+because the exception associated with this <a class="crossref" href="../dart_core/Future.html">Future</a> will propagate
+naturally if the future's value is being consumed. Only call
+<a class="crossref" href="../dart_core/Future.html#handleException">handleException</a> if you need to do some special local exception handling
+related to this particular Future's value.</p>
+<pre class="source">
+void handleException(bool onException(Object exception));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:hasValue">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>get hasValue</strong>() <a class="anchor-link" href="#get:hasValue"
+              title="Permalink to Future&lt;T&gt;.get hasValue">#</a></h4>
+<div class="doc">
+<p>Whether the value is available (meaning <a class="crossref" href="../dart_core/Future.html#get:isComplete">isComplete</a> is true, and there was
+no exception).</p>
+<pre class="source">
+bool get hasValue();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:isComplete">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>get isComplete</strong>() <a class="anchor-link" href="#get:isComplete"
+              title="Permalink to Future&lt;T&gt;.get isComplete">#</a></h4>
+<div class="doc">
+<p>Whether the future is complete (either the value is available or there was
+an exception).</p>
+<pre class="source">
+bool get isComplete();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="onComplete">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>onComplete</strong>(<a href="../dart_core/void.html">void</a> complete(<a href="../dart_core/Future.html">Future</a> future)) <a class="anchor-link" href="#onComplete"
+              title="Permalink to Future&lt;T&gt;.onComplete">#</a></h4>
+<div class="doc">
+<p>When this future is complete (either with a value or with an exception),
+then 
+<span class="param">complete</span> is called with the future.
+If 
+<span class="param">complete</span> throws an exception, it is ignored.</p>
+<pre class="source">
+void onComplete(void complete(Future&lt;T&gt; future));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:stackTrace">
+<span class="show-code">Code</span>
+<a href="../dart_core/Object.html">Object</a> <strong>get stackTrace</strong>() <a class="anchor-link" href="#get:stackTrace"
+              title="Permalink to Future&lt;T&gt;.get stackTrace">#</a></h4>
+<div class="doc">
+<p>The stack trace object associated with the exception that occurred. This
+throws a <a class="crossref" href="../dart_core/FutureNotCompleteException.html">FutureNotCompleteException</a> if it is used before the future
+completes. Returns <code>null</code> if the future completed successfully or a
+stack trace wasn't provided with the exception when it occurred.</p>
+<pre class="source">
+Object get stackTrace();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="then">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>then</strong>(<a href="../dart_core/void.html">void</a> onSuccess(value)) <a class="anchor-link" href="#then"
+              title="Permalink to Future&lt;T&gt;.then">#</a></h4>
+<div class="doc">
+<p>If this future is complete and has a value, then <code>onValue</code> is called
+with the value.</p>
+<pre class="source">
+void then(void onSuccess(T value));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="transform">
+<span class="show-code">Code</span>
+<a href="../dart_core/Future.html">Future</a> <strong>transform</strong>(transformation(value)) <a class="anchor-link" href="#transform"
+              title="Permalink to Future&lt;T&gt;.transform">#</a></h4>
+<div class="doc">
+<p>A future representing 
+<span class="param">transformation</span> applied to this future's value.</p>
+<p>When this future gets a value, 
+<span class="param">transformation</span> will be called on the
+value, and the returned future will receive the result.</p>
+<p>If an exception occurs (received by this future, or thrown by
+
+<span class="param">transformation</span>) then the returned future will receive the exception.</p>
+<p>You must not add exception handlers to <code>this</code> future prior to calling
+transform, and any you add afterwards will not be invoked.</p>
+<pre class="source">
+Future transform(transformation(T value));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:value">
+<span class="show-code">Code</span>
+<strong>get value</strong>() <a class="anchor-link" href="#get:value"
+              title="Permalink to Future&lt;T&gt;.get value">#</a></h4>
+<div class="doc">
+<p>The value provided. Throws an exception if <a class="crossref" href="../dart_core/Future.html#get:hasValue">hasValue</a> is false.</p>
+<pre class="source">
+T get value();
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:45.067</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

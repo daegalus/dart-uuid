@@ -1,0 +1,101 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Options Interface / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="Options">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/Options.html">Options</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Options</strong>
+          Interface
+        </h2>
+        
+<div class="doc">
+<p>The Options object allows accessing the arguments which have been passed to
+the current isolate.</p>
+</div>
+<h3>Default class</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/RuntimeOptions.html">RuntimeOptions</a></span></p>
+<h3>Implemented by</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/RuntimeOptions.html">RuntimeOptions</a></span></p>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Options">
+<span class="show-code">Code</span>
+new <strong>Options</strong>() <a class="anchor-link" href="#Options"
+              title="Permalink to Options.Options">#</a></h4>
+<div class="doc">
+<p>A newly constructed Options object contains the arguments exactly as they
+have been passed to the isolate.</p>
+<pre class="source">
+Options();
+</pre>
+</div>
+</div>
+<h3>Methods</h3>
+<div class="method"><h4 id="get:arguments">
+<span class="show-code">Code</span>
+<a href="../dart_core/List.html">List</a> <strong>get arguments</strong>() <a class="anchor-link" href="#get:arguments"
+              title="Permalink to Options.get arguments">#</a></h4>
+<div class="doc">
+<p>Returns a list of arguments that have been passed to this isolate. Any
+modifications to the list will be contained to the options object owning
+this list.</p>
+<p>If the execution environment does not support <a class="crossref" href="../dart_core/Options.html#get:arguments">arguments</a> an empty list
+is returned.</p>
+<pre class="source">
+List&lt;String&gt; get arguments();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:executable">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>get executable</strong>() <a class="anchor-link" href="#get:executable"
+              title="Permalink to Options.get executable">#</a></h4>
+<div class="doc">
+<p>Returns the path of the executable used to run the script in this
+isolate.</p>
+<p>If the execution environment does not support <a class="crossref" href="../dart_core/Options.html#get:executable">executable</a> an empty
+string is returned.</p>
+<pre class="source">
+String get executable();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:script">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>get script</strong>() <a class="anchor-link" href="#get:script"
+              title="Permalink to Options.get script">#</a></h4>
+<div class="doc">
+<p>Returns the path of the script being run in this isolate.</p>
+<p>If the executable environment does not support <a class="crossref" href="../dart_core/Options.html#get:script">script</a> an empty
+string is returned.</p>
+<pre class="source">
+String get script();
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:45.297</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,137 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Collection&lt;E&gt; Interface / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="Collection&amp;lt;E&amp;gt;">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/Collection.html">Collection&lt;E&gt;</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Collection&lt;E&gt;</strong>
+          Interface
+        </h2>
+        
+<div class="doc">
+<p>The <a class="crossref" href="../dart_core/Collection.html">Collection</a> interface is the public interface of all
+collections.</p>
+</div>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-interface"></span><a href="../dart_core/Iterable.html">Iterable&lt;E&gt;</a></span></p>
+<h3>Subinterfaces</h3>
+<p>
+<span class="type-box"><span class="icon-interface"></span><a href="../dart_core/List.html">List&lt;E&gt;</a></span>, <span class="type-box"><span class="icon-interface"></span><a href="../dart_core/Queue.html">Queue&lt;E&gt;</a></span>, <span class="type-box"><span class="icon-interface"></span><a href="../dart_core/Set.html">Set&lt;E&gt;</a></span></p>
+<h3>Methods</h3>
+<div class="method"><h4 id="every">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>every</strong>(<a href="../dart_core/bool.html">bool</a> f(element)) <a class="anchor-link" href="#every"
+              title="Permalink to Collection&lt;E&gt;.every">#</a></h4>
+<div class="doc">
+<p>Returns true if every elements of this collection satisify the
+predicate 
+<span class="param">f</span>. Returns false otherwise.</p>
+<pre class="source">
+bool every(bool f(E element));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="filter">
+<span class="show-code">Code</span>
+<a href="../dart_core/Collection.html">Collection</a> <strong>filter</strong>(<a href="../dart_core/bool.html">bool</a> f(element)) <a class="anchor-link" href="#filter"
+              title="Permalink to Collection&lt;E&gt;.filter">#</a></h4>
+<div class="doc">
+<p>Returns a new collection with the elements of this collection
+that satisfy the predicate 
+<span class="param">f</span>.</p>
+<p>An element satisfies the predicate 
+<span class="param">f</span> if <code>f(element)</code>
+returns true.</p>
+<pre class="source">
+Collection&lt;E&gt; filter(bool f(E element));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="forEach">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>forEach</strong>(<a href="../dart_core/void.html">void</a> f(element)) <a class="anchor-link" href="#forEach"
+              title="Permalink to Collection&lt;E&gt;.forEach">#</a></h4>
+<div class="doc">
+<p>Applies the function 
+<span class="param">f</span> to each element of this collection.</p>
+<pre class="source">
+void forEach(void f(E element));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="isEmpty">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>isEmpty</strong>() <a class="anchor-link" href="#isEmpty"
+              title="Permalink to Collection&lt;E&gt;.isEmpty">#</a></h4>
+<div class="doc">
+<p>Returns true if there is no element in this collection.</p>
+<pre class="source">
+bool isEmpty();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:length">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get length</strong>() <a class="anchor-link" href="#get:length"
+              title="Permalink to Collection&lt;E&gt;.get length">#</a></h4>
+<div class="doc">
+<p>Returns the number of elements in this collection.</p>
+<pre class="source">
+int get length();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="map">
+<span class="show-code">Code</span>
+<a href="../dart_core/Collection.html">Collection</a> <strong>map</strong>(f(element)) <a class="anchor-link" href="#map"
+              title="Permalink to Collection&lt;E&gt;.map">#</a></h4>
+<div class="doc">
+<p>Returns a new collection with the elements <code> f(e) </code>
+for each element <code>e</code> of this collection.</p>
+<p>Note on typing: the return type of f() could be an arbitrary
+type and consequently the returned collection's
+typeis Collection.</p>
+<pre class="source">
+Collection map(f(E element));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="some">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>some</strong>(<a href="../dart_core/bool.html">bool</a> f(element)) <a class="anchor-link" href="#some"
+              title="Permalink to Collection&lt;E&gt;.some">#</a></h4>
+<div class="doc">
+<p>Returns true if one element of this collection satisfies the
+predicate 
+<span class="param">f</span>. Returns false otherwise.</p>
+<pre class="source">
+bool some(bool f(E element));
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:44.401</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,662 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Date Interface / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="Date">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/Date.html">Date</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Date</strong>
+          Interface
+        </h2>
+        
+<div class="doc">
+<p>Date is the public interface to a point in time.</p>
+<p>It can represent time values that are at a distance of at most
+8,640,000,000,000,000ms (100,000,000 days) from epoch (1970-01-01 UTC). In
+other words: <code>millisecondsSinceEpoch.abs() &lt;= 8640000000000000</code>.</p>
+<p>Also see <a class="crossref" href="../dart_core/Stopwatch.html">Stopwatch</a> for means to measure time-spans.</p>
+</div>
+<h3>Default class</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/DateImplementation.html">DateImplementation</a></span></p>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-interface"></span><a href="../dart_core/Comparable.html">Comparable</a></span>, <span class="type-box"><span class="icon-interface"></span><a href="../dart_core/Hashable.html">Hashable</a></span></p>
+<h3>Implemented by</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/DateImplementation.html">DateImplementation</a></span></p>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Date">
+<span class="show-code">Code</span>
+new <strong>Date</strong>(<a href="../dart_core/int.html">int</a> year, [<a href="../dart_core/int.html">int</a> month, <a href="../dart_core/int.html">int</a> day, <a href="../dart_core/int.html">int</a> hour, <a href="../dart_core/int.html">int</a> minute, <a href="../dart_core/int.html">int</a> second, <a href="../dart_core/int.html">int</a> millisecond, <a href="../dart_core/bool.html">bool</a> isUtc]) <a class="anchor-link" href="#Date"
+              title="Permalink to Date.Date">#</a></h4>
+<div class="doc">
+<p>Constructs a <a class="crossref" href="../dart_core/Date.html">Date</a> instance based on the individual parts. The date is
+in the local time zone if 
+<span class="param">isUtc</span> is false.</p>
+<p>
+<span class="param">month</span> and 
+<span class="param">day</span> are one-based. For example
+<a class="crossref" href="../dart_coreimpl/DateImplementation.html#">:new Date(1038, 1, 10)</a> represents the 10th of January 1938.</p>
+<pre class="source">
+Date(int year,
+     [int month,
+      int day,
+      int hour,
+      int minute,
+      int second,
+      int millisecond,
+      bool isUtc]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="Date">
+<span class="show-code">Code</span>
+new <strong>Date</strong>.fromMillisecondsSinceEpoch(<a href="../dart_core/int.html">int</a> millisecondsSinceEpoch, [<a href="../dart_core/bool.html">bool</a> isUtc]) <a class="anchor-link" href="#Date"
+              title="Permalink to Date.Date">#</a></h4>
+<div class="doc">
+<p>Constructs a new <a class="crossref" href="../dart_core/Date.html">Date</a> instance with the given 
+<span class="param">millisecondsSinceEpoch</span>.
+If 
+<span class="param">isUtc</span> is false then the date is in the local time zone.</p>
+<p>The constructed <a class="crossref" href="../dart_core/Date.html">Date</a> represents
+1970-01-01T00:00:00Z + 
+<span class="param">millisecondsSinceEpoch</span>ms in the given
+time zone (local or UTC).</p>
+<pre class="source">
+Date.fromMillisecondsSinceEpoch(int millisecondsSinceEpoch, [bool isUtc]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="Date">
+<span class="show-code">Code</span>
+new <strong>Date</strong>.fromString(<a href="../dart_core/String.html">String</a> formattedString) <a class="anchor-link" href="#Date"
+              title="Permalink to Date.Date">#</a></h4>
+<div class="doc">
+<p>Constructs a new <a class="crossref" href="../dart_core/Date.html">Date</a> instance based on 
+<span class="param">formattedString</span>.</p>
+<pre class="source">
+Date.fromString(String formattedString);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="Date">
+<span class="show-code">Code</span>
+new <strong>Date</strong>.now() <a class="anchor-link" href="#Date"
+              title="Permalink to Date.Date">#</a></h4>
+<div class="doc">
+<p>Constructs a new <a class="crossref" href="../dart_core/Date.html">Date</a> instance with current date time value in the
+local time zone.</p>
+<pre class="source">
+Date.now();
+</pre>
+</div>
+</div>
+<h3>Static Fields</h3>
+<div class="field"><h4 id="APR">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>APR</strong> <a class="anchor-link"
+            href="#APR"
+            title="Permalink to Date.APR">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int APR = 4;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="AUG">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>AUG</strong> <a class="anchor-link"
+            href="#AUG"
+            title="Permalink to Date.AUG">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int AUG = 8;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="DAYS_IN_WEEK">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>DAYS_IN_WEEK</strong> <a class="anchor-link"
+            href="#DAYS_IN_WEEK"
+            title="Permalink to Date.DAYS_IN_WEEK">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int DAYS_IN_WEEK = 7;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="DEC">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>DEC</strong> <a class="anchor-link"
+            href="#DEC"
+            title="Permalink to Date.DEC">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int DEC = 12;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="FEB">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>FEB</strong> <a class="anchor-link"
+            href="#FEB"
+            title="Permalink to Date.FEB">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int FEB = 2;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="FRI">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>FRI</strong> <a class="anchor-link"
+            href="#FRI"
+            title="Permalink to Date.FRI">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int FRI = 5;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="JAN">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>JAN</strong> <a class="anchor-link"
+            href="#JAN"
+            title="Permalink to Date.JAN">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int JAN = 1;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="JUL">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>JUL</strong> <a class="anchor-link"
+            href="#JUL"
+            title="Permalink to Date.JUL">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int JUL = 7;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="JUN">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>JUN</strong> <a class="anchor-link"
+            href="#JUN"
+            title="Permalink to Date.JUN">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int JUN = 6;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="MAR">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>MAR</strong> <a class="anchor-link"
+            href="#MAR"
+            title="Permalink to Date.MAR">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int MAR = 3;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="MAY">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>MAY</strong> <a class="anchor-link"
+            href="#MAY"
+            title="Permalink to Date.MAY">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int MAY = 5;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="MON">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>MON</strong> <a class="anchor-link"
+            href="#MON"
+            title="Permalink to Date.MON">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int MON = 1;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="NOV">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>NOV</strong> <a class="anchor-link"
+            href="#NOV"
+            title="Permalink to Date.NOV">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int NOV = 11;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="OCT">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>OCT</strong> <a class="anchor-link"
+            href="#OCT"
+            title="Permalink to Date.OCT">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int OCT = 10;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="SAT">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>SAT</strong> <a class="anchor-link"
+            href="#SAT"
+            title="Permalink to Date.SAT">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int SAT = 6;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="SEP">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>SEP</strong> <a class="anchor-link"
+            href="#SEP"
+            title="Permalink to Date.SEP">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int SEP = 9;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="SUN">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>SUN</strong> <a class="anchor-link"
+            href="#SUN"
+            title="Permalink to Date.SUN">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int SUN = 7;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="THU">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>THU</strong> <a class="anchor-link"
+            href="#THU"
+            title="Permalink to Date.THU">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int THU = 4;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="TUE">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>TUE</strong> <a class="anchor-link"
+            href="#TUE"
+            title="Permalink to Date.TUE">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int TUE = 2;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="WED">
+<span class="show-code">Code</span>
+final <a href="../dart_core/int.html">int</a>         <strong>WED</strong> <a class="anchor-link"
+            href="#WED"
+            title="Permalink to Date.WED">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final int WED = 3;
+</pre>
+</div>
+</div>
+<h3>Methods</h3>
+<div class="method"><h4 id=":eq">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>operator ==</strong>(<a href="../dart_core/Date.html">Date</a> other) <a class="anchor-link" href="#:eq"
+              title="Permalink to Date.operator ==">#</a></h4>
+<div class="doc">
+<p>Returns true if <code>this</code> occurs at the same time as 
+<span class="param">other</span>. The
+comparison is independent of whether the time is utc or in the local
+time zone.</p>
+<pre class="source">
+bool operator ==(Date other);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id=":gt">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>operator ></strong>(<a href="../dart_core/Date.html">Date</a> other) <a class="anchor-link" href="#:gt"
+              title="Permalink to Date.operator >">#</a></h4>
+<div class="doc">
+<p>Returns true if <code>this</code> occurs after 
+<span class="param">other</span>. The comparison is independent
+of whether the time is utc or in the local time zone.</p>
+<pre class="source">
+bool operator &gt;(Date other);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id=":gte">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>operator >=</strong>(<a href="../dart_core/Date.html">Date</a> other) <a class="anchor-link" href="#:gte"
+              title="Permalink to Date.operator >=">#</a></h4>
+<div class="doc">
+<p>Returns true if <code>this</code> occurs at the same time or after 
+<span class="param">other</span>. The
+comparison is independent of whether the time is utc or in the local
+time zone.</p>
+<pre class="source">
+bool operator &gt;=(Date other);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id=":lt">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>operator <</strong>(<a href="../dart_core/Date.html">Date</a> other) <a class="anchor-link" href="#:lt"
+              title="Permalink to Date.operator <">#</a></h4>
+<div class="doc">
+<p>Returns true if <code>this</code> occurs before 
+<span class="param">other</span>. The comparison is independent
+of whether the time is utc or in the local time zone.</p>
+<pre class="source">
+bool operator &lt;(Date other);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id=":lte">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>operator <=</strong>(<a href="../dart_core/Date.html">Date</a> other) <a class="anchor-link" href="#:lte"
+              title="Permalink to Date.operator <=">#</a></h4>
+<div class="doc">
+<p>Returns true if <code>this</code> occurs at the same time or before 
+<span class="param">other</span>. The
+comparison is independent of whether the time is utc or in the local
+time zone.</p>
+<pre class="source">
+bool operator &lt;=(Date other);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="add">
+<span class="show-code">Code</span>
+<a href="../dart_core/Date.html">Date</a> <strong>add</strong>(<a href="../dart_core/Duration.html">Duration</a> duration) <a class="anchor-link" href="#add"
+              title="Permalink to Date.add">#</a></h4>
+<div class="doc">
+<p>Returns a new <a class="crossref" href="../dart_core/Date.html">Date</a> with the 
+<span class="param">duration</span> added to this instance.</p>
+<pre class="source">
+Date add(Duration duration);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:day">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get day</strong>() <a class="anchor-link" href="#get:day"
+              title="Permalink to Date.get day">#</a></h4>
+<div class="doc">
+<p>Returns the day into the month <code>1..31</code>.</p>
+<pre class="source">
+int get day();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="difference">
+<span class="show-code">Code</span>
+<a href="../dart_core/Duration.html">Duration</a> <strong>difference</strong>(<a href="../dart_core/Date.html">Date</a> other) <a class="anchor-link" href="#difference"
+              title="Permalink to Date.difference">#</a></h4>
+<div class="doc">
+<p>Returns a <a class="crossref" href="../dart_core/Duration.html">Duration</a> with the difference of <code>this</code> and 
+<span class="param">other</span>.</p>
+<pre class="source">
+Duration difference(Date other);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:hour">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get hour</strong>() <a class="anchor-link" href="#get:hour"
+              title="Permalink to Date.get hour">#</a></h4>
+<div class="doc">
+<p>Returns the hour into the day <code>0..23</code>.</p>
+<pre class="source">
+int get hour();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:isUtc">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>get isUtc</strong>() <a class="anchor-link" href="#get:isUtc"
+              title="Permalink to Date.get isUtc">#</a></h4>
+<div class="doc">
+<p>True if this <a class="crossref" href="../dart_core/Date.html">Date</a> is set to UTC time.</p>
+<pre class="source">
+bool get isUtc();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:millisecond">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get millisecond</strong>() <a class="anchor-link" href="#get:millisecond"
+              title="Permalink to Date.get millisecond">#</a></h4>
+<div class="doc">
+<p>Returns the millisecond into the second <code>0...999</code>.</p>
+<pre class="source">
+int get millisecond();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:millisecondsSinceEpoch">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get millisecondsSinceEpoch</strong>() <a class="anchor-link" href="#get:millisecondsSinceEpoch"
+              title="Permalink to Date.get millisecondsSinceEpoch">#</a></h4>
+<div class="doc">
+<p>The milliseconds since 1970-01-01T00:00:00Z (UTC). This value is
+independent of the time zone.</p>
+<p>See <a class="crossref" href="../dart_core/Stopwatch.html">Stopwatch</a> for means to measure time-spans.</p>
+<pre class="source">
+int get millisecondsSinceEpoch();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:minute">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get minute</strong>() <a class="anchor-link" href="#get:minute"
+              title="Permalink to Date.get minute">#</a></h4>
+<div class="doc">
+<p>Returns the minute into the hour <code>0...59</code>.</p>
+<pre class="source">
+int get minute();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:month">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get month</strong>() <a class="anchor-link" href="#get:month"
+              title="Permalink to Date.get month">#</a></h4>
+<div class="doc">
+<p>Returns the month into the year <code>1..12</code>.</p>
+<pre class="source">
+int get month();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:second">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get second</strong>() <a class="anchor-link" href="#get:second"
+              title="Permalink to Date.get second">#</a></h4>
+<div class="doc">
+<p>Returns the second into the minute <code>0...59</code>.</p>
+<pre class="source">
+int get second();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="subtract">
+<span class="show-code">Code</span>
+<a href="../dart_core/Date.html">Date</a> <strong>subtract</strong>(<a href="../dart_core/Duration.html">Duration</a> duration) <a class="anchor-link" href="#subtract"
+              title="Permalink to Date.subtract">#</a></h4>
+<div class="doc">
+<p>Returns a new <a class="crossref" href="../dart_core/Date.html">Date</a> with the 
+<span class="param">duration</span> subtracted from this instance.</p>
+<pre class="source">
+Date subtract(Duration duration);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:timeZoneName">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>get timeZoneName</strong>() <a class="anchor-link" href="#get:timeZoneName"
+              title="Permalink to Date.get timeZoneName">#</a></h4>
+<div class="doc">
+<p>Returns the abbreviated time-zone name.</p>
+<p>Examples: <code>"CET"</code> or <code>"CEST"</code>.</p>
+<pre class="source">
+String get timeZoneName();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:timeZoneOffset">
+<span class="show-code">Code</span>
+<a href="../dart_core/Duration.html">Duration</a> <strong>get timeZoneOffset</strong>() <a class="anchor-link" href="#get:timeZoneOffset"
+              title="Permalink to Date.get timeZoneOffset">#</a></h4>
+<div class="doc">
+<p>The time-zone offset is the difference between local time and UTC. That is,
+the offset is positive for time zones west of UTC.</p>
+<p>Note, that JavaScript, Python and C return the difference between UTC and
+local time. Java, C# and Ruby return the difference between local time and
+UTC.</p>
+<pre class="source">
+Duration get timeZoneOffset();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toLocal">
+<span class="show-code">Code</span>
+<a href="../dart_core/Date.html">Date</a> <strong>toLocal</strong>() <a class="anchor-link" href="#toLocal"
+              title="Permalink to Date.toLocal">#</a></h4>
+<div class="doc">
+<p>Returns <code>this</code> in the local time zone. Returns itself if it is already in
+the local time zone. Otherwise, this method is equivalent to
+<code>new Date.fromMillisecondsSinceEpoch(millisecondsSinceEpoch, false)</code>.</p>
+<pre class="source">
+Date toLocal();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toString">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to Date.toString">#</a></h4>
+<div class="doc">
+<p>Returns a human readable string for this instance.
+The returned string is constructed for the time zone of this instance.</p>
+<pre class="source">
+String toString();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toUtc">
+<span class="show-code">Code</span>
+<a href="../dart_core/Date.html">Date</a> <strong>toUtc</strong>() <a class="anchor-link" href="#toUtc"
+              title="Permalink to Date.toUtc">#</a></h4>
+<div class="doc">
+<p>Returns <code>this</code> in UTC. Returns itself if it is already in UTC. Otherwise,
+this method is equivalent to
+<code>new Date.fromMillisecondsSinceEpoch(millisecondsSinceEpoch, true)</code>.</p>
+<pre class="source">
+Date toUtc();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:weekday">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get weekday</strong>() <a class="anchor-link" href="#get:weekday"
+              title="Permalink to Date.get weekday">#</a></h4>
+<div class="doc">
+<p>Returns the week day <code>MON..SUN</code>. In accordance with ISO 8601
+a week starts with Monday which has the value 1.</p>
+<pre class="source">
+int get weekday();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:year">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get year</strong>() <a class="anchor-link" href="#get:year"
+              title="Permalink to Date.get year">#</a></h4>
+<div class="doc">
+<p>Returns the year.</p>
+<pre class="source">
+int get year();
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:44.587</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

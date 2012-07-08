@@ -1,0 +1,166 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>RegExp Interface / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="RegExp">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/RegExp.html">RegExp</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>RegExp</strong>
+          Interface
+        </h2>
+        
+<div class="doc">
+<p><a class="crossref" href="../dart_core/RegExp.html">RegExp</a> represents regular expressions.</p>
+<p><a class="crossref" href="../dart_core/RegExp.html#firstMatch">firstMatch</a> is the main implementation method that applies a regular
+expression to a string and returns the first <a class="crossref" href="../dart_core/Match.html">Match</a>. All
+other methods in <a class="crossref" href="../dart_core/RegExp.html">RegExp</a> can build on it.</p>
+<p>Use <a class="crossref" href="../dart_core/RegExp.html#allMatches">allMatches</a> to look for all matches of a regular expression in
+a string.</p>
+<p>The following example finds all matches of a regular expression in
+a string.</p>
+<p><code>
+   RegExp exp = const RegExp(@"(\w+)");
+   String str = "Parse my string";
+   Iterable&lt;Match&gt; matches = exp.allMatches(str);
+</code></p>
+</div>
+<h3>Default class</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/JSSyntaxRegExp.html">JSSyntaxRegExp</a></span></p>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-interface"></span><a href="../dart_core/Pattern.html">Pattern</a></span></p>
+<h3>Implemented by</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/JSSyntaxRegExp.html">JSSyntaxRegExp</a></span></p>
+<h3>Constructors</h3>
+<div class="method"><h4 id="RegExp">
+<span class="show-code">Code</span>
+const <strong>RegExp</strong>(<a href="../dart_core/String.html">String</a> pattern, [<a href="../dart_core/bool.html">bool</a> multiLine, <a href="../dart_core/bool.html">bool</a> ignoreCase]) <a class="anchor-link" href="#RegExp"
+              title="Permalink to RegExp.RegExp">#</a></h4>
+<div class="doc">
+<p>Constructs a regular expression. The default implementation of a
+<a class="crossref" href="../dart_core/RegExp.html">RegExp</a> sets 
+<span class="param">multiLine</span> and 
+<span class="param">ignoreCase</span> to false.</p>
+<pre class="source">
+const RegExp(String pattern, [bool multiLine, bool ignoreCase]);
+</pre>
+</div>
+</div>
+<h3>Methods</h3>
+<div class="method"><h4 id="allMatches">
+<span class="show-code">Code</span>
+<a href="../dart_core/Iterable.html">Iterable</a> <strong>allMatches</strong>(<a href="../dart_core/String.html">String</a> str) <a class="anchor-link" href="#allMatches"
+              title="Permalink to RegExp.allMatches">#</a></h4>
+<div class="doc">
+<p>Returns an iterable on the  matches of the regular
+expression in 
+<span class="param">str</span>.</p>
+<pre class="source">
+Iterable&lt;Match&gt; allMatches(String str);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="firstMatch">
+<span class="show-code">Code</span>
+<a href="../dart_core/Match.html">Match</a> <strong>firstMatch</strong>(<a href="../dart_core/String.html">String</a> str) <a class="anchor-link" href="#firstMatch"
+              title="Permalink to RegExp.firstMatch">#</a></h4>
+<div class="doc">
+<p>Searches for the first match of the regular expression
+in the string 
+<span class="param">str</span>. Returns <code>null</code> if there is no match.</p>
+<pre class="source">
+Match firstMatch(String str);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="hasMatch">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>hasMatch</strong>(<a href="../dart_core/String.html">String</a> str) <a class="anchor-link" href="#hasMatch"
+              title="Permalink to RegExp.hasMatch">#</a></h4>
+<div class="doc">
+<p>Returns whether the regular expression has a match in the string 
+<span class="param">str</span>.</p>
+<pre class="source">
+bool hasMatch(String str);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="stringMatch">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>stringMatch</strong>(<a href="../dart_core/String.html">String</a> str) <a class="anchor-link" href="#stringMatch"
+              title="Permalink to RegExp.stringMatch">#</a></h4>
+<div class="doc">
+<p>Searches for the first match of the regular expression
+in the string 
+<span class="param">str</span> and returns the matched string.</p>
+<pre class="source">
+String stringMatch(String str);
+</pre>
+</div>
+</div>
+<h3>Fields</h3>
+<div class="field"><h4 id="ignoreCase">
+<span class="show-code">Code</span>
+final <a href="../dart_core/bool.html">bool</a>         <strong>ignoreCase</strong> <a class="anchor-link"
+            href="#ignoreCase"
+            title="Permalink to RegExp.ignoreCase">#</a>
+        </h4>
+        <div class="doc">
+<p>Whether this regular expression is case insensitive.</p>
+<pre class="source">
+final bool ignoreCase;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="multiLine">
+<span class="show-code">Code</span>
+final <a href="../dart_core/bool.html">bool</a>         <strong>multiLine</strong> <a class="anchor-link"
+            href="#multiLine"
+            title="Permalink to RegExp.multiLine">#</a>
+        </h4>
+        <div class="doc">
+<p>Whether this regular expression matches multiple lines.</p>
+<pre class="source">
+final bool multiLine;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="pattern">
+<span class="show-code">Code</span>
+final <a href="../dart_core/String.html">String</a>         <strong>pattern</strong> <a class="anchor-link"
+            href="#pattern"
+            title="Permalink to RegExp.pattern">#</a>
+        </h4>
+        <div class="doc">
+<p>The pattern of this regular expression.</p>
+<pre class="source">
+final String pattern;
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:45.430</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

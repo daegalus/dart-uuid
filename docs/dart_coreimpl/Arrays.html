@@ -1,0 +1,128 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Arrays Class / dart:coreimpl Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:coreimpl" data-type="Arrays">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_coreimpl.html">dart:coreimpl</a> &rsaquo; <a href="../dart_coreimpl/Arrays.html">Arrays</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Arrays</strong>
+          Class
+        </h2>
+        
+<div class="doc">
+
+</div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="copy">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>copy</strong>(<a href="../dart_core/List.html">List</a> src, <a href="../dart_core/int.html">int</a> srcStart, <a href="../dart_core/List.html">List</a> dst, <a href="../dart_core/int.html">int</a> dstStart, <a href="../dart_core/int.html">int</a> count) <a class="anchor-link" href="#copy"
+              title="Permalink to Arrays.copy">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static void copy(List&lt;Object&gt; src, int srcStart,
+                 List&lt;Object&gt; dst, int dstStart, int count) {
+  if (srcStart === null) srcStart = 0;
+  if (dstStart === null) dstStart = 0;
+
+  if (srcStart &lt; dstStart) {
+    for (int i = srcStart + count - 1, j = dstStart + count - 1;
+         i &gt;= srcStart; i--, j--) {
+      dst[j] = src[i];
+    }
+  } else {
+    for (int i = srcStart, j = dstStart; i &lt; srcStart + count; i++, j++) {
+      dst[j] = src[i];
+    }
+  }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="indexOf">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>indexOf</strong>(<a href="../dart_core/List.html">List</a> a, <a href="../dart_core/Object.html">Object</a> element, <a href="../dart_core/int.html">int</a> startIndex, <a href="../dart_core/int.html">int</a> endIndex) <a class="anchor-link" href="#indexOf"
+              title="Permalink to Arrays.indexOf">#</a></h4>
+<div class="doc">
+<p>Returns the index in the array 
+<span class="param">a</span> of the given 
+<span class="param">element</span>, starting
+the search at index 
+<span class="param">startIndex</span> to <a href="exclusive">endIndex</a>.
+Returns -1 if 
+<span class="param">element</span> is not found.</p>
+<pre class="source">
+static int indexOf(List a,
+                   Object element,
+                   int startIndex,
+                   int endIndex) {
+  if (startIndex &gt;= a.length) {
+    return -1;
+  }
+  if (startIndex &lt; 0) {
+    startIndex = 0;
+  }
+  for (int i = startIndex; i &lt; endIndex; i++) {
+    if (a[i] == element) {
+      return i;
+    }
+  }
+  return -1;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="lastIndexOf">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>lastIndexOf</strong>(<a href="../dart_core/List.html">List</a> a, <a href="../dart_core/Object.html">Object</a> element, <a href="../dart_core/int.html">int</a> startIndex) <a class="anchor-link" href="#lastIndexOf"
+              title="Permalink to Arrays.lastIndexOf">#</a></h4>
+<div class="doc">
+<p>Returns the last index in the array 
+<span class="param">a</span> of the given 
+<span class="param">element</span>, starting
+the search at index 
+<span class="param">startIndex</span> to 0.
+Returns -1 if 
+<span class="param">element</span> is not found.</p>
+<pre class="source">
+static int lastIndexOf(List a, Object element, int startIndex) {
+  if (startIndex &lt; 0) {
+    return -1;
+  }
+  if (startIndex &gt;= a.length) {
+    startIndex = a.length - 1;
+  }
+  for (int i = startIndex; i &gt;= 0; i--) {
+    if (a[i] == element) {
+      return i;
+    }
+  }
+  return -1;
+}
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:46.088</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

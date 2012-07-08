@@ -1,0 +1,411 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Expect Class / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="Expect">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/Expect.html">Expect</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Expect</strong>
+          Class
+        </h2>
+        
+<div class="doc">
+<p>Expect is used for tests that do not want to make use of the
+Dart unit test library - for example, the core language tests.
+Third parties are discouraged from using this, and should use
+the expect() function in the unit test library instead for
+test assertions.</p>
+</div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="approxEquals">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>approxEquals</strong>(<a href="../dart_core/num.html">num</a> expected, <a href="../dart_core/num.html">num</a> actual, [<a href="../dart_core/num.html">num</a> tolerance = null, <a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#approxEquals"
+              title="Permalink to Expect.approxEquals">#</a></h4>
+<div class="doc">
+<p>Failure if the difference between expected and actual is greater than the
+given tolerance. If no tolerance is given, tolerance is assumed to be the
+value 4 significant digits smaller than the value given for expected.</p>
+<pre class="source">
+static void approxEquals(num expected,
+                         num actual,
+                         [num tolerance = null,
+                          String reason = null]) {
+  if (tolerance === null) {
+    tolerance = (expected / Math.pow(10.0, 4.0)).abs();
+  }
+  // Note: use !( &lt;= ) rather than &gt; so we fail on NaNs
+  if ((expected - actual).abs() &lt;= tolerance) return;
+
+  String msg = _getMessage(reason);
+  _fail('Expect.approxEquals(expected:&lt;$expected&gt;, actual:&lt;$actual&gt;, '
+        'tolerance:&lt;$tolerance&gt;$msg) fails');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="equals">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>equals</strong>(expected, actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#equals"
+              title="Permalink to Expect.equals">#</a></h4>
+<div class="doc">
+<p>Checks whether the expected and actual values are equal (using <code>==</code>).</p>
+<pre class="source">
+static void equals(var expected, var actual, [String reason = null]) {
+  if (expected == actual) return;
+  String msg = _getMessage(reason);
+  _fail("Expect.equals(expected: &lt;$expected&gt;, actual: &lt;$actual&gt;$msg) fails.");
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="fail">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>fail</strong>(<a href="../dart_core/String.html">String</a> msg) <a class="anchor-link" href="#fail"
+              title="Permalink to Expect.fail">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static void fail(String msg) {
+  _fail("Expect.fail('$msg')");
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="identical">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>identical</strong>(expected, actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#identical"
+              title="Permalink to Expect.identical">#</a></h4>
+<div class="doc">
+<p>Checks whether the expected and actual values are identical
+(using <code>===</code>).</p>
+<pre class="source">
+static void identical(var expected, var actual, [String reason = null]) {
+  if (expected === actual) return;
+  String msg = _getMessage(reason);
+  _fail("Expect.identical(expected: &lt;$expected&gt;, actual: &lt;$actual&gt;$msg) "
+        "fails.");
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="isFalse">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>isFalse</strong>(actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#isFalse"
+              title="Permalink to Expect.isFalse">#</a></h4>
+<div class="doc">
+<p>Checks whether the actual value is a bool and its value is false.</p>
+<pre class="source">
+static void isFalse(var actual, [String reason = null]) {
+  if (actual === false) return;
+  String msg = _getMessage(reason);
+  _fail("Expect.isFalse($actual$msg) fails.");
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="isNotNull">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>isNotNull</strong>(actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#isNotNull"
+              title="Permalink to Expect.isNotNull">#</a></h4>
+<div class="doc">
+<p>Checks whether 
+<span class="param">actual</span> is not null.</p>
+<pre class="source">
+static void isNotNull(actual, [String reason = null]) {
+  if (null !== actual) return;
+  String msg = _getMessage(reason);
+  _fail("Expect.isNotNull(actual: &lt;$actual&gt;$msg) fails.");
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="isNull">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>isNull</strong>(actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#isNull"
+              title="Permalink to Expect.isNull">#</a></h4>
+<div class="doc">
+<p>Checks whether 
+<span class="param">actual</span> is null.</p>
+<pre class="source">
+static void isNull(actual, [String reason = null]) {
+  if (null === actual) return;
+  String msg = _getMessage(reason);
+  _fail("Expect.isNull(actual: &lt;$actual&gt;$msg) fails.");
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="isTrue">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>isTrue</strong>(actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#isTrue"
+              title="Permalink to Expect.isTrue">#</a></h4>
+<div class="doc">
+<p>Checks whether the actual value is a bool and its value is true.</p>
+<pre class="source">
+static void isTrue(var actual, [String reason = null]) {
+  if (actual === true) return;
+  String msg = _getMessage(reason);
+  _fail("Expect.isTrue($actual$msg) fails.");
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="listEquals">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>listEquals</strong>(<a href="../dart_core/List.html">List</a> expected, <a href="../dart_core/List.html">List</a> actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#listEquals"
+              title="Permalink to Expect.listEquals">#</a></h4>
+<div class="doc">
+<p>Checks that all elements in 
+<span class="param">expected</span> and 
+<span class="param">actual</span> are equal <code>==</code>.
+This is different than the typical check for identity equality <code>===</code>
+used by the standard list implementation.  It should also produce nicer
+error messages than just calling <code>Expect.equals(expected, actual)</code>.</p>
+<pre class="source">
+static void listEquals(List expected, List actual, [String reason = null]) {
+  String msg = _getMessage(reason);
+  int n = Math.min(expected.length, actual.length);
+  for (int i = 0; i &lt; n; i++) {
+    if (expected[i] != actual[i]) {
+      _fail('Expect.listEquals(at index $i, '
+            'expected: &lt;${expected[i]}&gt;, actual: &lt;${actual[i]}&gt;$msg) fails');
+    }
+  }
+  // We check on length at the end in order to provide better error
+  // messages when an unexpected item is inserted in a list.
+  if (expected.length != actual.length) {
+    _fail('Expect.listEquals(list length, '
+      'expected: &lt;${expected.length}&gt;, actual: &lt;${actual.length}&gt;$msg) '
+      'fails');
+  }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="mapEquals">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>mapEquals</strong>(<a href="../dart_core/Map.html">Map</a> expected, <a href="../dart_core/Map.html">Map</a> actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#mapEquals"
+              title="Permalink to Expect.mapEquals">#</a></h4>
+<div class="doc">
+<p>Checks that all 
+<span class="param">expected</span> and 
+<span class="param">actual</span> have the same set of keys (using
+the semantics of <a class="crossref" href="../dart_core/Map.html#containsKey">Map.containsKey</a> to determine what "same" means. For
+each key, checks that the values in both maps are equal using <code>==</code>.</p>
+<pre class="source">
+static void mapEquals(Map expected, Map actual, [String reason = null]) {
+  String msg = _getMessage(reason);
+
+  // Make sure all of the values are present in both and match.
+  for (final key in expected.getKeys()) {
+    if (!actual.containsKey(key)) {
+      _fail('Expect.mapEquals(missing expected key: &lt;$key&gt;$msg) fails');
+    }
+
+    Expect.equals(expected[key], actual[key]);
+  }
+
+  // Make sure the actual map doesn't have any extra keys.
+  for (final key in actual.getKeys()) {
+    if (!expected.containsKey(key)) {
+      _fail('Expect.mapEquals(unexpected key: &lt;$key&gt;$msg) fails');
+    }
+  }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="notEquals">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>notEquals</strong>(unexpected, actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#notEquals"
+              title="Permalink to Expect.notEquals">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static void notEquals(unexpected, actual, [String reason = null]) {
+  if (unexpected != actual) return;
+  String msg = _getMessage(reason);
+  _fail("Expect.notEquals(unexpected: &lt;$unexpected&gt;, actual:&lt;$actual&gt;$msg) "
+        "fails.");
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="setEquals">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>setEquals</strong>(<a href="../dart_core/Iterable.html">Iterable</a> expected, <a href="../dart_core/Iterable.html">Iterable</a> actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#setEquals"
+              title="Permalink to Expect.setEquals">#</a></h4>
+<div class="doc">
+<p>Checks that every element of 
+<span class="param">expected</span> is also in 
+<span class="param">actual</span>, and that
+every element of 
+<span class="param">actual</span> is also in 
+<span class="param">expected</span>.</p>
+<pre class="source">
+static void setEquals(Iterable expected,
+                      Iterable actual,
+                      [String reason = null]) {
+  final missingSet = new Set.from(expected);
+  missingSet.removeAll(actual);
+  final extraSet = new Set.from(actual);
+  extraSet.removeAll(expected);
+
+  if (extraSet.isEmpty() &amp;&amp; missingSet.isEmpty()) return;
+  String msg = _getMessage(reason);
+
+  StringBuffer sb = new StringBuffer("Expect.setEquals($msg) fails");
+  // Report any missing items.
+  if (!missingSet.isEmpty()) {
+    sb.add('\nExpected collection does not contain: ');
+  }
+
+  for (final val in missingSet) {
+    sb.add('$val ');
+  }
+
+  // Report any extra items.
+  if (!extraSet.isEmpty()) {
+    sb.add('\nExpected collection should not contain: ');
+  }
+
+  for (final val in extraSet) {
+    sb.add('$val ');
+  }
+  _fail(sb.toString());
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="stringEquals">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>stringEquals</strong>(<a href="../dart_core/String.html">String</a> expected, <a href="../dart_core/String.html">String</a> actual, [<a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#stringEquals"
+              title="Permalink to Expect.stringEquals">#</a></h4>
+<div class="doc">
+<p>Specialized equality test for strings. When the strings don't match,
+this method shows where the mismatch starts and ends.</p>
+<pre class="source">
+static void stringEquals(String expected,
+                         String actual,
+                         [String reason = null]) {
+  String msg = _getMessage(reason);
+  String defaultMessage =
+      'Expect.stringEquals(expected: &lt;$expected&gt;", &lt;$actual&gt;$msg) fails';
+
+  if (expected == actual) return;
+  if ((expected === null) || (actual === null)) {
+    _fail('$defaultMessage');
+  }
+  // scan from the left until we find a mismatch
+  int left = 0;
+  int eLen = expected.length;
+  int aLen = actual.length;
+  while (true) {
+    if (left == eLen) {
+      assert (left &lt; aLen);
+      String snippet = actual.substring(left, aLen);
+      _fail('$defaultMessage\nDiff:\n...[  ]\n...[ $snippet ]');
+      return;
+    }
+    if (left == aLen) {
+      assert (left &lt; eLen);
+      String snippet = expected.substring(left, eLen);
+      _fail('$defaultMessage\nDiff:\n...[  ]\n...[ $snippet ]');
+      return;
+    }
+    if (expected[left] != actual[left]) {
+      break;
+    }
+    left++;
+  }
+
+  // scan from the right until we find a mismatch
+  int right = 0;
+  while (true) {
+    if (right == eLen) {
+      assert (right &lt; aLen);
+      String snippet = actual.substring(0, aLen - right);
+      _fail('$defaultMessage\nDiff:\n[  ]...\n[ $snippet ]...');
+      return;
+    }
+    if (right == aLen) {
+      assert (right &lt; eLen);
+      String snippet = expected.substring(0, eLen - right);
+      _fail('$defaultMessage\nDiff:\n[  ]...\n[ $snippet ]...');
+      return;
+    }
+    // stop scanning if we've reached the end of the left-to-right match
+    if (eLen - right &lt;= left || aLen - right &lt;= left) {
+      break;
+    }
+    if (expected[eLen - right - 1] != actual[aLen - right - 1]) {
+      break;
+    }
+    right++;
+  }
+  String eSnippet = expected.substring(left, eLen - right);
+  String aSnippet = actual.substring(left, aLen - right);
+  String diff = '\nDiff:\n...[ $eSnippet ]...\n...[ $aSnippet ]...';
+  _fail('$defaultMessage$diff');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="throws">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>throws</strong>(<a href="../dart_core/void.html">void</a> f(), [<a href="../dart_core/bool.html">bool</a> check(exception) = null, <a href="../dart_core/String.html">String</a> reason = null]) <a class="anchor-link" href="#throws"
+              title="Permalink to Expect.throws">#</a></h4>
+<div class="doc">
+<p>Calls the function 
+<span class="param">f</span> and verifies that it throws an exception.
+The optional 
+<span class="param">check</span> function can provide additional validation
+that the correct exception is being thrown.  For example, to check
+the type of the exception you could write this:</p>
+<p>[:
+  Expect.throws(myThrowingFunction,</p>
+<pre><code>            (e) { return e is MyException})
+</code></pre>
+<p>:]</p>
+<pre class="source">
+static void throws(void f(),
+                   [_CheckExceptionFn check = null,
+                    String reason = null]) {
+  try {
+    f();
+  } catch (var e) {
+    if (check !== null) {
+      Expect.isTrue(check(e));
+    }
+    return;
+  }
+  String msg = _getMessage(reason);
+  _fail('Expect.throws($msg) fails');
+}
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:44.834</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,319 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Uuid Class / Uuid Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="Uuid" data-type="Uuid">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../Uuid.html">Uuid</a> &rsaquo; <a href="../Uuid/Uuid.html">Uuid</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Uuid</strong>
+          Class
+        </h2>
+        
+<div class="doc">
+<p> uuid for Dart</p>
+<p> Copyright (c) 2012 Yulian Kuncheff</p>
+<p> Released under MIT License.</p>
+<p> Based on node-uuid by Robert Kieffer.</p>
+</div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Uuid">
+<span class="show-code">Code</span>
+new <strong>Uuid</strong>() <a class="anchor-link" href="#Uuid"
+              title="Permalink to Uuid.Uuid">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+Uuid() {
+  _rndBytes = new List(16);
+  _byteToHex = new List(256);
+  _hexToByte = new Map();
+
+  // Easy number &lt;-&gt; hex conversion
+  for(var i = 0; i &lt; 256; i++) {
+    var hex = new List&lt;int&gt;();
+    hex.add(i);
+    _byteToHex[i] = CryptoUtils.bytesToHex(hex);
+    _hexToByte[_byteToHex[i]] = i;
+  }
+
+  // Sets initial seedBytes, node, and clock seq based on MathRNG.
+  _seedBytes = mathRNG();
+
+  // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
+  _nodeId = [_seedBytes[0] | 0x01,
+             _seedBytes[1], _seedBytes[2], _seedBytes[3],
+             _seedBytes[4], _seedBytes[5]];
+
+  // Per 4.2.2, randomize (14 bit) clockseq
+  _clockSeq = (_seedBytes[6] &lt;&lt; 8 | _seedBytes[7]) &amp; 0x3ffff;
+}
+</pre>
+</div>
+</div>
+<h3>Static Fields</h3>
+<div class="field"><h4 id="TAU">
+<span class="show-code">Code</span>
+final         <strong>TAU</strong> <a class="anchor-link"
+            href="#TAU"
+            title="Permalink to Uuid.TAU">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+static final TAU = 2*Math.PI;
+</pre>
+</div>
+</div>
+<h3>Methods</h3>
+<div class="method"><h4 id="mathRNG">
+<span class="show-code">Code</span>
+<a href="../dart_core/List.html">List</a> <strong>mathRNG</strong>() <a class="anchor-link" href="#mathRNG"
+              title="Permalink to Uuid.mathRNG">#</a></h4>
+<div class="doc">
+<p>Math.Random()-based RNG. All platforms, fast, not cryptographically strong.</p>
+<pre class="source">
+List mathRNG() {
+  var rand, b = _rndBytes;
+
+  for(var i = 0; i &lt; 16; i++) {
+    if ((i &amp; 0x03) == 0) {
+      rand = (Math.random() * 0x100000000).floor().toInt();
+    }
+    b[i] = rand &gt;&gt; ((i &amp; 0x03) &lt;&lt; 3) &amp; 0xff;
+  }
+
+  return b;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="parse">
+<span class="show-code">Code</span>
+<a href="../dart_core/List.html">List</a> <strong>parse</strong>(<a href="../dart_core/String.html">String</a> uuid, [<a href="../dart_core/List.html">List</a> buffer, <a href="../dart_core/int.html">int</a> offset = 0]) <a class="anchor-link" href="#parse"
+              title="Permalink to Uuid.parse">#</a></h4>
+<div class="doc">
+<p>Parses the provided 
+<span class="param">uuid</span> into a list of byte values.
+Can optionally be provided a 
+<span class="param">buffer</span> to write into and
+ a positional 
+<span class="param">offset</span> for where to start inputting into the buffer.</p>
+<pre class="source">
+List parse(String uuid, [List buffer, int offset=0]) {
+  var i = offset, ii = 0;
+
+  // Create a 16 item buffer if one hasn't been provided.
+  buffer = (buffer != null) ? buffer : new List(16);
+
+  // Convert to lowercase and split into 2 character string list.
+  // It would be better to use String.split() but the RegEx of
+  // '[0-9a-z]{2}' did not split it at all, so I split it manually.
+  uuid = uuid.toLowerCase().replaceAll('-','');
+  var charSplit = uuid.splitChars();
+  var c2Split = new List();
+  for(var j = 0; j &lt; charSplit.length; j+=2) {
+    c2Split.add('${charSplit[j]}${charSplit[j+1]}');
+  }
+
+  // Got through the hex list and turn it into a byte buffer.
+  for(var oct in c2Split) {
+    if (ii &lt; 16) {
+      buffer[i + ii++] = _hexToByte[oct];
+    }
+  };
+
+  // Zero out any left over bytes if the string was too short.
+  while (ii &lt; 16) {
+    buffer[i + ii++] = 0;
+  }
+
+  return buffer;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="unparse">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>unparse</strong>(<a href="../dart_core/List.html">List</a> buffer, [<a href="../dart_core/int.html">int</a> offset = 0]) <a class="anchor-link" href="#unparse"
+              title="Permalink to Uuid.unparse">#</a></h4>
+<div class="doc">
+<p>Unparses a 
+<span class="param">buffer</span> of bytes and outputs a proper UUID string.
+An optional 
+<span class="param">offset</span> is allowed if you want to start at a different point
+ in the buffer.</p>
+<pre class="source">
+String unparse(List buffer, [int offset=0]) {
+  var i = offset;
+  return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
+         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
+         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
+         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}';
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="v1">
+<span class="show-code">Code</span>
+<strong>v1</strong>([<a href="../dart_core/Map.html">Map</a> options = null, <a href="../dart_core/List.html">List</a> buffer, <a href="../dart_core/int.html">int</a> offset = 0]) <a class="anchor-link" href="#v1"
+              title="Permalink to Uuid.v1">#</a></h4>
+<div class="doc">
+<p>v1() Generates a time-based version 1 UUID</p>
+<p>By default it will generate a string based off current time, and will
+return a string.</p>
+<p>If an optional 
+<span class="param">buffer</span> list is provided, it will put the byte data into
+that buffer and return a buffer.</p>
+<p>Optionally an 
+<span class="param">offset</span> can be provided with a start position in the buffer.</p>
+<p>The first argument is an options map that takes various configuration
+options detailed in the readme.</p>
+<p>http://tools.ietf.org/html/rfc4122.html#section-4.2.2</p>
+<pre class="source">
+v1([Map options = null, List buffer, int offset=0]) {
+  var i = offset;
+  var buf = (buffer != null) ? buffer : new List(16);
+  options = (options != null) ? options : new Map();
+
+  var clockSeq = (options['clockSeq'] != null) ? options['clockSeq'] : _clockSeq;
+
+  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
+  // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
+  // milliseconds) and 'nsecs' (100-nanoseconds offset from msecs) since unix
+  // epoch, 1970-01-01 00:00.
+  var mSecs = (options['mSecs'] != null) ? options['mSecs'] : (new Date.now()).millisecondsSinceEpoch;
+
+  // Per 4.2.1.2, use count of uuid's generated during the current clock
+  // cycle to simulate higher resolution clock
+  var nSecs = (options['nSecs'] != null) ? options['nSecs'] : _lastNSecs + 1;
+
+  // Time since last uuid creation (in msecs)
+  var dt = (mSecs - _lastMSecs) + (nSecs - _lastNSecs)/10000;
+
+  // Per 4.2.1.2, Bump clockseq on clock regression
+  if (dt &lt; 0 &amp;&amp; options['clockSeq'] == null) {
+    clockSeq = clockSeq + 1 &amp; 0x3fff;
+  }
+
+  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
+  // time interval
+  if ((dt &lt; 0 || mSecs &gt; _lastMSecs) &amp;&amp; options['nSecs'] == null) {
+    nSecs = 0;
+  }
+
+  // Per 4.2.1.2 Throw error if too many uuids are requested
+  if (nSecs &gt;= 10000) {
+    throw new Exception('uuid.v1(): Can\'t create more than 10M uuids/sec');
+  }
+
+  _lastMSecs = mSecs;
+  _lastNSecs = nSecs;
+  _clockSeq = clockSeq;
+
+  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
+  mSecs += 12219292800000;
+
+  // time Low
+  var tl = ((mSecs &amp; 0xfffffff) * 10000 + nSecs) % 0x100000000;
+  buf[i++] = tl &gt;&gt; 24 &amp; 0xff;
+  buf[i++] = tl &gt;&gt; 16 &amp; 0xff;
+  buf[i++] = tl &gt;&gt; 8 &amp; 0xff;
+  buf[i++] = tl &amp; 0xff;
+
+  // time mid
+  var tmh = (mSecs / 0x100000000 * 10000).toInt() &amp; 0xfffffff;
+  buf[i++] = tmh &gt;&gt; 8 &amp; 0xff;
+  buf[i++] = tmh &amp; 0xff;
+
+  // time high and version
+  buf[i++] = tmh &gt;&gt; 24 &amp; 0xf | 0x10; // include version
+  buf[i++] = tmh &gt;&gt; 16 &amp; 0xff;
+
+  // clockSeq high and reserved (Per 4.2.2 - include variant)
+  buf[i++] = clockSeq &gt;&gt; 8 | 0x80;
+
+  // clockSeq low
+  buf[i++] = clockSeq &amp; 0xff;
+
+  // node
+  var node = (options['node'] != null) ? options['node'] : _nodeId;
+  for (var n = 0; n &lt; 6; n++) {
+    buf[i + n] = node[n];
+  }
+
+  return (buffer != null) ? buffer : unparse(buf);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="v4">
+<span class="show-code">Code</span>
+<strong>v4</strong>([<a href="../dart_core/Map.html">Map</a> options = null, <a href="../dart_core/List.html">List</a> buffer, <a href="../dart_core/int.html">int</a> offset = 0]) <a class="anchor-link" href="#v4"
+              title="Permalink to Uuid.v4">#</a></h4>
+<div class="doc">
+<p>v4() Generates a time-based version 4 UUID</p>
+<p>By default it will generate a string based Math.random(), and will return
+a string.</p>
+<p>If an optional 
+<span class="param">buffer</span> list is provided, it will put the byte data into
+that buffer and return a buffer.</p>
+<p>Optionally an 
+<span class="param">offset</span> can be provided with a start position in the buffer.</p>
+<p>The first argument is an options map that takes various configuration
+options detailed in the readme.</p>
+<p>http://tools.ietf.org/html/rfc4122.html#section-4.4</p>
+<pre class="source">
+v4([Map options = null, List buffer, int offset=0]) {
+  var i = offset;
+  options = (options != null) ? options : new Map();
+
+  // Use the built-in RNG or a custom provided RNG
+  var rng = (options['rng'] != null) ? options['rng'] : mathRNG();
+
+  // Use provided values over RNG
+  var rnds = (options['random'] != null) ? options['random'] : rng;
+
+  // per 4.4, set bits for version and clockSeq high and reserved
+  rnds[6] = (rnds[6] &amp; 0x0f) | 0x40;
+  rnds[8] = (rnds[6] &amp; 0x3f) | 0x80;
+
+  // Copy the bytes to the buffer if one is provided.
+  if (buffer != null) {
+    for (var j = 0; j &lt; 16; j++) {
+      buffer[i+j] = rnds[j];
+    }
+  }
+
+  return (buffer != null) ? buffer : unparse(rnds);
+}
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:46.178</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

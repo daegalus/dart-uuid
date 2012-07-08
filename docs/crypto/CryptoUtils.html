@@ -1,0 +1,69 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>CryptoUtils Class / crypto Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="crypto" data-type="CryptoUtils">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../crypto.html">crypto</a> &rsaquo; <a href="../crypto/CryptoUtils.html">CryptoUtils</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>CryptoUtils</strong>
+          Class
+        </h2>
+        
+<div class="doc">
+<p>Utility methods for working with message digests.</p>
+</div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="bytesToBase64">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>bytesToBase64</strong>(<a href="../dart_core/List.html">List</a> bytes, [<a href="../dart_core/int.html">int</a> lineLength]) <a class="anchor-link" href="#bytesToBase64"
+              title="Permalink to CryptoUtils.bytesToBase64">#</a></h4>
+<div class="doc">
+<p>Converts a list of bytes (for example a message digest) into a
+base64 encoded string optionally broken up in to lines of
+
+<span class="param">lineLength</span> chars separated by '\r\n'.</p>
+<pre class="source">
+static String bytesToBase64(List&lt;int&gt; bytes, [int lineLength]) {
+  return _CryptoUtils.bytesToBase64(bytes, lineLength);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="bytesToHex">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>bytesToHex</strong>(<a href="../dart_core/List.html">List</a> bytes) <a class="anchor-link" href="#bytesToHex"
+              title="Permalink to CryptoUtils.bytesToHex">#</a></h4>
+<div class="doc">
+<p>Convert a list of bytes (for example a message digest) into a hex
+string.</p>
+<pre class="source">
+static String bytesToHex(List&lt;int&gt; bytes) {
+  return _CryptoUtils.bytesToHex(bytes);
+}
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:43.765</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

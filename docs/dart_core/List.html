@@ -1,0 +1,347 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>List&lt;E&gt; Interface / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="List&amp;lt;E&amp;gt;">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/List.html">List&lt;E&gt;</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>List&lt;E&gt;</strong>
+          Interface
+        </h2>
+        
+<div class="doc">
+<p>A <a class="crossref" href="../dart_core/List.html">List</a> is an indexable collection with a length. It can be of
+fixed size or extendable.</p>
+</div>
+<h3>Default class</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/ListFactory.html">ListFactory&lt;E&gt;</a></span></p>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-interface"></span><a href="../dart_core/Collection.html">Collection&lt;E&gt;</a></span></p>
+<h3>Implemented by</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/ListFactory.html">ListFactory&lt;E&gt;</a></span></p>
+<h3>Constructors</h3>
+<div class="method"><h4 id="List">
+<span class="show-code">Code</span>
+new <strong>List</strong>([<a href="../dart_core/int.html">int</a> length]) <a class="anchor-link" href="#List"
+              title="Permalink to List&lt;E&gt;.List">#</a></h4>
+<div class="doc">
+<p>Creates a list of the given 
+<span class="param">length</span>.</p>
+<pre class="source">
+List([int length]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="List">
+<span class="show-code">Code</span>
+new <strong>List</strong>.from(<a href="../dart_core/Iterable.html">Iterable</a> other) <a class="anchor-link" href="#List"
+              title="Permalink to List&lt;E&gt;.List">#</a></h4>
+<div class="doc">
+<p>Creates a list with the elements of 
+<span class="param">other</span>. The order in
+the list will be the order provided by the iterator of 
+<span class="param">other</span>.</p>
+<pre class="source">
+List.from(Iterable&lt;E&gt; other);
+</pre>
+</div>
+</div>
+<h3>Methods</h3>
+<div class="method"><h4 id=":index">
+<span class="show-code">Code</span>
+<strong>operator []</strong>(<a href="../dart_core/int.html">int</a> index) <a class="anchor-link" href="#:index"
+              title="Permalink to List&lt;E&gt;.operator []">#</a></h4>
+<div class="doc">
+<p>Returns the element at the given 
+<span class="param">index</span> in the list or throws
+an <a class="crossref" href="../dart_core/IndexOutOfRangeException.html">IndexOutOfRangeException</a> if 
+<span class="param">index</span> is out of bounds.</p>
+<pre class="source">
+E operator [](int index);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id=":setindex">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>operator []=</strong>(<a href="../dart_core/int.html">int</a> index, value) <a class="anchor-link" href="#:setindex"
+              title="Permalink to List&lt;E&gt;.operator []=">#</a></h4>
+<div class="doc">
+<p>Sets the entry at the given 
+<span class="param">index</span> in the list to 
+<span class="param">value</span>.
+Throws an <a class="crossref" href="../dart_core/IndexOutOfRangeException.html">IndexOutOfRangeException</a> if 
+<span class="param">index</span> is out of bounds.</p>
+<pre class="source">
+void operator []=(int index, E value);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="add">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>add</strong>(value) <a class="anchor-link" href="#add"
+              title="Permalink to List&lt;E&gt;.add">#</a></h4>
+<div class="doc">
+<p>Adds 
+<span class="param">value</span> at the end of the list, extending the length by
+one. Throws an <a class="crossref" href="../dart_core/UnsupportedOperationException.html">UnsupportedOperationException</a> if the list is not
+extendable.</p>
+<pre class="source">
+void add(E value);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addAll">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>addAll</strong>(<a href="../dart_core/Collection.html">Collection</a> collection) <a class="anchor-link" href="#addAll"
+              title="Permalink to List&lt;E&gt;.addAll">#</a></h4>
+<div class="doc">
+<p>Appends all elements of the 
+<span class="param">collection</span> to the end of the list.
+Extends the length of the list by the length of 
+<span class="param">collection</span>.
+Throws an <a class="crossref" href="../dart_core/UnsupportedOperationException.html">UnsupportedOperationException</a> if the list is not
+extendable.</p>
+<pre class="source">
+void addAll(Collection&lt;E&gt; collection);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addLast">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>addLast</strong>(value) <a class="anchor-link" href="#addLast"
+              title="Permalink to List&lt;E&gt;.addLast">#</a></h4>
+<div class="doc">
+<p>Adds 
+<span class="param">value</span> at the end of the list, extending the length by
+one. Throws an <a class="crossref" href="../dart_core/UnsupportedOperationException.html">UnsupportedOperationException</a> if the list is not
+extendable.</p>
+<pre class="source">
+void addLast(E value);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="clear">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>clear</strong>() <a class="anchor-link" href="#clear"
+              title="Permalink to List&lt;E&gt;.clear">#</a></h4>
+<div class="doc">
+<p>Removes all elements in the list. The length of the list
+becomes zero. Throws an <a class="crossref" href="../dart_core/UnsupportedOperationException.html">UnsupportedOperationException</a> if
+the list is not extendable.</p>
+<pre class="source">
+void clear();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getRange">
+<span class="show-code">Code</span>
+<a href="../dart_core/List.html">List</a> <strong>getRange</strong>(<a href="../dart_core/int.html">int</a> start, <a href="../dart_core/int.html">int</a> length) <a class="anchor-link" href="#getRange"
+              title="Permalink to List&lt;E&gt;.getRange">#</a></h4>
+<div class="doc">
+<p>Returns a new list containing 
+<span class="param">length</span> elements from the list,
+starting at  
+<span class="param">start</span>.
+Returns an empty list if 
+<span class="param">length</span> is 0.
+Throws an <a class="crossref" href="../dart_core/IllegalArgumentException.html">IllegalArgumentException</a> if 
+<span class="param">length</span> is negative.
+Throws an <a class="crossref" href="../dart_core/IndexOutOfRangeException.html">IndexOutOfRangeException</a> if 
+<span class="param">start</span> or
+<code>start + length - 1</code> are out of range.</p>
+<pre class="source">
+List&lt;E&gt; getRange(int start, int length);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="indexOf">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>indexOf</strong>(element, [<a href="../dart_core/int.html">int</a> start]) <a class="anchor-link" href="#indexOf"
+              title="Permalink to List&lt;E&gt;.indexOf">#</a></h4>
+<div class="doc">
+<p>Returns the first index of 
+<span class="param">element</span> in the list. Searches the
+list from index 
+<span class="param">start</span> to the length of the list. Returns
+-1 if 
+<span class="param">element</span> is not found.</p>
+<pre class="source">
+int indexOf(E element, [int start]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="insertRange">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>insertRange</strong>(<a href="../dart_core/int.html">int</a> start, <a href="../dart_core/int.html">int</a> length, [initialValue]) <a class="anchor-link" href="#insertRange"
+              title="Permalink to List&lt;E&gt;.insertRange">#</a></h4>
+<div class="doc">
+<p>Inserts a new range into the list, starting from 
+<span class="param">start</span> to
+<code>start + length - 1</code>. The entries are filled with 
+<span class="param">initialValue</span>.
+Throws an <a class="crossref" href="../dart_core/UnsupportedOperationException.html">UnsupportedOperationException</a> if the list is
+not extendable.
+If 
+<span class="param">length</span> is 0, this method does not do anything.
+If 
+<span class="param">start</span> is the length of the list, this method inserts the
+range at the end of the list.
+Throws an <a class="crossref" href="../dart_core/IllegalArgumentException.html">IllegalArgumentException</a> if 
+<span class="param">length</span> is negative.
+Throws an <a class="crossref" href="../dart_core/IndexOutOfRangeException.html">IndexOutOfRangeException</a> if 
+<span class="param">start</span> is negative or if
+
+<span class="param">start</span> is greater than the length of the list.</p>
+<pre class="source">
+void insertRange(int start, int length, [E initialValue]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="last">
+<span class="show-code">Code</span>
+<strong>last</strong>() <a class="anchor-link" href="#last"
+              title="Permalink to List&lt;E&gt;.last">#</a></h4>
+<div class="doc">
+<p>Returns the last element of the list, or throws an out of bounds
+exception if the list is empty.</p>
+<pre class="source">
+E last();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="lastIndexOf">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>lastIndexOf</strong>(element, [<a href="../dart_core/int.html">int</a> start]) <a class="anchor-link" href="#lastIndexOf"
+              title="Permalink to List&lt;E&gt;.lastIndexOf">#</a></h4>
+<div class="doc">
+<p>Returns the last index of 
+<span class="param">element</span> in the list. Searches the
+list from index <a href="inclusive">start</a> to 0. Returns -1 if
+
+<span class="param">element</span> is not found.</p>
+<pre class="source">
+int lastIndexOf(E element, [int start]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="set:length">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>set length</strong>(<a href="../dart_core/int.html">int</a> newLength) <a class="anchor-link" href="#set:length"
+              title="Permalink to List&lt;E&gt;.set length">#</a></h4>
+<div class="doc">
+<p>Changes the length of the list. If 
+<span class="param">newLength</span> is greater than
+the current <a class="crossref" href="../dart_core/List.html#set:length">length</a>, entries are initialized to <code>null</code>. Throws
+an <a class="crossref" href="../dart_core/UnsupportedOperationException.html">UnsupportedOperationException</a> if the list is not extendable.</p>
+<pre class="source">
+void set length(int newLength);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="removeLast">
+<span class="show-code">Code</span>
+<strong>removeLast</strong>() <a class="anchor-link" href="#removeLast"
+              title="Permalink to List&lt;E&gt;.removeLast">#</a></h4>
+<div class="doc">
+<p>Pops and returns the last element of the list.
+Throws a <a class="crossref" href="../dart_core/UnsupportedOperationException.html">UnsupportedOperationException</a> if the length of the
+list cannot be changed.</p>
+<pre class="source">
+E removeLast();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="removeRange">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>removeRange</strong>(<a href="../dart_core/int.html">int</a> start, <a href="../dart_core/int.html">int</a> length) <a class="anchor-link" href="#removeRange"
+              title="Permalink to List&lt;E&gt;.removeRange">#</a></h4>
+<div class="doc">
+<p>Removes 
+<span class="param">length</span> elements from the list, beginning at 
+<span class="param">start</span>.
+Throws an <a class="crossref" href="../dart_core/UnsupportedOperationException.html">UnsupportedOperationException</a> if the list is
+not extendable.
+If 
+<span class="param">length</span> is 0, this method does not do anything.
+Throws an <a class="crossref" href="../dart_core/IllegalArgumentException.html">IllegalArgumentException</a> if 
+<span class="param">length</span> is negative.
+Throws an <a class="crossref" href="../dart_core/IndexOutOfRangeException.html">IndexOutOfRangeException</a> if 
+<span class="param">start</span> or
+<code>:start + length: - 1</code> are out of range.</p>
+<pre class="source">
+void removeRange(int start, int length);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="setRange">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>setRange</strong>(<a href="../dart_core/int.html">int</a> start, <a href="../dart_core/int.html">int</a> length, <a href="../dart_core/List.html">List</a> from, [<a href="../dart_core/int.html">int</a> startFrom]) <a class="anchor-link" href="#setRange"
+              title="Permalink to List&lt;E&gt;.setRange">#</a></h4>
+<div class="doc">
+<p>Copies 
+<span class="param">length</span> elements of 
+<span class="param">from</span>, starting
+at 
+<span class="param">startFrom</span>, into the list, starting at 
+<span class="param">start</span>.
+If 
+<span class="param">length</span> is 0, this method does not do anything.
+Throws an <a class="crossref" href="../dart_core/IllegalArgumentException.html">IllegalArgumentException</a> if 
+<span class="param">length</span> is negative.
+Throws an <a class="crossref" href="../dart_core/IndexOutOfRangeException.html">IndexOutOfRangeException</a> if 
+<span class="param">start</span> or
+<code>start + length - 1</code> are out of range for <code>this</code>, or if
+
+<span class="param">startFrom</span> or <code>startFrom + length - 1</code> are out of range for 
+<span class="param">from</span>.</p>
+<pre class="source">
+void setRange(int start, int length, List&lt;E&gt; from, [int startFrom]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="sort">
+<span class="show-code">Code</span>
+<a href="../dart_core/void.html">void</a> <strong>sort</strong>(<a href="../dart_core/int.html">int</a> compare(a, b)) <a class="anchor-link" href="#sort"
+              title="Permalink to List&lt;E&gt;.sort">#</a></h4>
+<div class="doc">
+<p>Sorts the list according to the order specified by the comparator.
+The order specified by the comparator must be reflexive,
+anti-symmetric, and transitive.</p>
+<p>The comparator function 
+<span class="param">compare</span> must take two arguments <code>a</code> and <code>b</code>
+and return</p>
+<p>  an integer strictly less than 0 if a &lt; b,
+  0 if a = b, and
+  an integer strictly greater than 0 if a > b.</p>
+<pre class="source">
+void sort(int compare(E a, E b));
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:44.268</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

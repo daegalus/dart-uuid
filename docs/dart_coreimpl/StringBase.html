@@ -1,0 +1,88 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>StringBase Class / dart:coreimpl Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:coreimpl" data-type="StringBase">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_coreimpl.html">dart:coreimpl</a> &rsaquo; <a href="../dart_coreimpl/StringBase.html">StringBase</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>StringBase</strong>
+          Class
+        </h2>
+        
+<div class="doc">
+
+</div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="concatAll">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>concatAll</strong>(<a href="../dart_core/List.html">List</a> strings) <a class="anchor-link" href="#concatAll"
+              title="Permalink to StringBase.concatAll">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static String concatAll(List&lt;String&gt; strings) =&gt; join(strings, "");
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="createFromCharCodes">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>createFromCharCodes</strong>(<a href="../dart_core/List.html">List</a> charCodes) <a class="anchor-link" href="#createFromCharCodes"
+              title="Permalink to StringBase.createFromCharCodes">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static String createFromCharCodes(List&lt;int&gt; charCodes) native @'''
+if (Object.getPrototypeOf(charCodes) !== Array.prototype) {
+charCodes = new ListFactory.ListFactory$from$factory(charCodes);
+}
+return String.fromCharCode.apply(null, charCodes);
+''' {
+ // we may need to iterate over charCodes
+  var i = charCodes.iterator();  i.next(); i.hasNext();
+  new ListFactory.from(charCodes); // ensure List.from is generated
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="join">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>join</strong>(<a href="../dart_core/List.html">List</a> strings, <a href="../dart_core/String.html">String</a> separator) <a class="anchor-link" href="#join"
+              title="Permalink to StringBase.join">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static String join(List&lt;String&gt; strings, String separator) {
+  if (strings.length == 0) return '';
+  String s = strings[0];
+  for (int i = 1; i &lt; strings.length; i++) {
+    s = s + separator + strings[i];
+  }
+  return s;
+}
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:46.064</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,161 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Match Interface / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="Match">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/Match.html">Match</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Match</strong>
+          Interface
+        </h2>
+        
+<div class="doc">
+<p><a class="crossref" href="../dart_core/Match.html">Match</a> contains methods to manipulate a regular expression match.</p>
+<p>Iterables of <a class="crossref" href="../dart_core/Match.html">Match</a> objects are returned from <a class="crossref" href="../dart_core/RegExp.html">RegExp</a> matching methods.</p>
+<p>The following example finds all matches of a <a class="crossref" href="../dart_core/RegExp.html">RegExp</a> in a <a class="crossref" href="../dart_core/String.html">String</a>
+and iterates through the returned iterable of <a class="crossref" href="../dart_core/Match.html">Match</a> objects.</p>
+<p>[:
+   RegExp exp = const RegExp(@"(\w+)");
+   String str = "Parse my string";
+   Iterable&lt;Match> matches = exp.allMatches(str);
+   for (Match m in matches) {</p>
+<pre><code> String match = m.group(0);
+ print(match);
+</code></pre>
+<p>   };
+:]</p>
+<p>The output of the example is:</p>
+<p><code>
+   Parse
+   my
+   string
+</code></p>
+</div>
+<h3>Implemented by</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/MatchImplementation.html">MatchImplementation</a></span></p>
+<h3>Methods</h3>
+<div class="method"><h4 id=":index">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>operator []</strong>(<a href="../dart_core/int.html">int</a> group) <a class="anchor-link" href="#:index"
+              title="Permalink to Match.operator []">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+String operator [](int group);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="end">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>end</strong>() <a class="anchor-link" href="#end"
+              title="Permalink to Match.end">#</a></h4>
+<div class="doc">
+<p>Returns the index in the string after the last character of the
+match.</p>
+<pre class="source">
+int end();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="group">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>group</strong>(<a href="../dart_core/int.html">int</a> group) <a class="anchor-link" href="#group"
+              title="Permalink to Match.group">#</a></h4>
+<div class="doc">
+<p>Returns the string matched by the given 
+<span class="param">group</span>. If 
+<span class="param">group</span> is 0,
+returns the match of the regular expression.</p>
+<pre class="source">
+String group(int group);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="groupCount">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>groupCount</strong>() <a class="anchor-link" href="#groupCount"
+              title="Permalink to Match.groupCount">#</a></h4>
+<div class="doc">
+<p>Returns the number of groups in the regular expression.</p>
+<pre class="source">
+int groupCount();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="groups">
+<span class="show-code">Code</span>
+<a href="../dart_core/List.html">List</a> <strong>groups</strong>(<a href="../dart_core/List.html">List</a> groups) <a class="anchor-link" href="#groups"
+              title="Permalink to Match.groups">#</a></h4>
+<div class="doc">
+<p>Returns the strings matched by 
+<span class="param">groups</span>. The order in the
+returned string follows the order in 
+<span class="param">groups</span>.</p>
+<pre class="source">
+List&lt;String&gt; groups(List&lt;int&gt; groups);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="start">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>start</strong>() <a class="anchor-link" href="#start"
+              title="Permalink to Match.start">#</a></h4>
+<div class="doc">
+<p>Returns the index in the string where the match starts.</p>
+<pre class="source">
+int start();
+</pre>
+</div>
+</div>
+<h3>Fields</h3>
+<div class="field"><h4 id="pattern">
+<span class="show-code">Code</span>
+final <a href="../dart_core/Pattern.html">Pattern</a>         <strong>pattern</strong> <a class="anchor-link"
+            href="#pattern"
+            title="Permalink to Match.pattern">#</a>
+        </h4>
+        <div class="doc">
+<p>The pattern to search for in <a class="crossref" href="../dart_core/Match.html#str">str</a>.</p>
+<pre class="source">
+final Pattern pattern;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="str">
+<span class="show-code">Code</span>
+final <a href="../dart_core/String.html">String</a>         <strong>str</strong> <a class="anchor-link"
+            href="#str"
+            title="Permalink to Match.str">#</a>
+        </h4>
+        <div class="doc">
+<p>The string on which this matcher was computed.</p>
+<pre class="source">
+final String str;
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:45.382</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,96 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>NoSuchMethodException Class / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="NoSuchMethodException">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/NoSuchMethodException.html">NoSuchMethodException</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>NoSuchMethodException</strong>
+          Class
+        </h2>
+        
+<div class="doc">
+<p>Exception thrown because of non-existing receiver's method.</p>
+</div>
+<h3>Implements</h3>
+<p>
+<span class="type-box"><span class="icon-exception"></span><a href="../dart_core/Exception.html">Exception</a></span></p>
+<h3>Constructors</h3>
+<div class="method"><h4 id="NoSuchMethodException">
+<span class="show-code">Code</span>
+const <strong>NoSuchMethodException</strong>(<a href="../dart_core/Object.html">Object</a> _receiver, <a href="../dart_core/String.html">String</a> _functionName, <a href="../dart_core/List.html">List</a> _arguments, [<a href="../dart_core/List.html">List</a> existingArgumentNames = null]) <a class="anchor-link" href="#NoSuchMethodException"
+              title="Permalink to NoSuchMethodException.NoSuchMethodException">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+const NoSuchMethodException(Object this._receiver,
+                            String this._functionName,
+                            List this._arguments,
+                            [List existingArgumentNames = null])
+    : this._existingArgumentNames = existingArgumentNames;
+</pre>
+</div>
+</div>
+<h3>Methods</h3>
+<div class="method"><h4 id="toString">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to NoSuchMethodException.toString">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+String toString() {
+  StringBuffer sb = new StringBuffer();
+  for (int i = 0; i &lt; _arguments.length; i++) {
+    if (i &gt; 0) {
+      sb.add(", ");
+    }
+    sb.add(_arguments[i]);
+  }
+  if (_existingArgumentNames === null) {
+    return "NoSuchMethodException : method not found: '$_functionName'\n"
+        "Receiver: $_receiver\n"
+        "Arguments: [$sb]";
+  } else {
+    String actualParameters = sb.toString();
+    sb = new StringBuffer();
+    for (int i = 0; i &lt; _existingArgumentNames.length; i++) {
+      if (i &gt; 0) {
+        sb.add(", ");
+      }
+      sb.add(_existingArgumentNames[i]);
+    }
+    String formalParameters = sb.toString();
+    return "NoSuchMethodException: incorrect number of arguments passed to "
+        "method named '$_functionName'\nReceiver: $_receiver\n"
+        "Tried calling: $_functionName($actualParameters)\n"
+        "Found: $_functionName($formalParameters)";
+  }
+}
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:44.647</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,83 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Futures Class / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="Futures">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/Futures.html">Futures</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Futures</strong>
+          Class
+        </h2>
+        
+<div class="doc">
+<p><a class="crossref" href="../dart_core/Futures.html">Futures</a> holds additional utility functions that operate on <a class="crossref" href="../dart_core/Future.html">Future</a>s (for
+example, waiting for a collection of Futures to complete).</p>
+</div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="wait">
+<span class="show-code">Code</span>
+<a href="../dart_core/Future.html">Future</a> <strong>wait</strong>(<a href="../dart_core/List.html">List</a> futures) <a class="anchor-link" href="#wait"
+              title="Permalink to Futures.wait">#</a></h4>
+<div class="doc">
+<p>Returns a future which will complete once all the futures in a list are
+complete. If any of the futures in the list completes with an exception,
+the resulting future also completes with an exception. (The value of the
+returned future will be a list of all the values that were produced.)</p>
+<pre class="source">
+static Future&lt;List&gt; wait(List&lt;Future&gt; futures) {
+  if (futures.isEmpty()) {
+    return new Future&lt;List&gt;.immediate(const []);
+  }
+
+  Completer completer = new Completer&lt;List&gt;();
+  Future&lt;List&gt; result = completer.future;
+  int remaining = futures.length;
+  List values = new List(futures.length);
+
+  // As each future completes, put its value into the corresponding
+  // position in the list of values.
+  for (int i = 0; i &lt; futures.length; i++) {
+    // TODO(mattsh) - remove this after bug
+    // http://code.google.com/p/dart/issues/detail?id=333 is fixed.
+    int pos = i;
+    Future future = futures[pos];
+    future.then((Object value) {
+      values[pos] = value;
+      if (--remaining == 0 &amp;&amp; !result.isComplete) {
+        completer.complete(values);
+      }
+    });
+    future.handleException((exception) {
+      if (!result.isComplete) completer.completeException(exception);
+      return true;
+    });
+  }
+  return result;
+}
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:45.159</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,188 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Maps Class / dart:coreimpl Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:coreimpl" data-type="Maps">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_coreimpl.html">dart:coreimpl</a> &rsaquo; <a href="../dart_coreimpl/Maps.html">Maps</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Maps</strong>
+          Class
+        </h2>
+        
+<div class="doc">
+
+</div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="clear">
+<span class="show-code">Code</span>
+<strong>clear</strong>(<a href="../dart_core/Map.html">Map</a> map) <a class="anchor-link" href="#clear"
+              title="Permalink to Maps.clear">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static clear(Map map) {
+  for (final k in map.getKeys()) {
+    map.remove(k);
+  }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="containsKey">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>containsKey</strong>(<a href="../dart_core/Map.html">Map</a> map, key) <a class="anchor-link" href="#containsKey"
+              title="Permalink to Maps.containsKey">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static bool containsKey(Map map, key) {
+  for (final k in map.getKeys()) {
+    if (key == k) {
+      return true;
+    }
+  }
+  return false;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="containsValue">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>containsValue</strong>(<a href="../dart_core/Map.html">Map</a> map, value) <a class="anchor-link" href="#containsValue"
+              title="Permalink to Maps.containsValue">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static bool containsValue(Map map, value) {
+  for (final v in map.getValues()) {
+    if (value == v) {
+      return true;
+    }
+  }
+  return false;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="forEach">
+<span class="show-code">Code</span>
+<strong>forEach</strong>(<a href="../dart_core/Map.html">Map</a> map, <a href="../dart_core/void.html">void</a> f(key, value)) <a class="anchor-link" href="#forEach"
+              title="Permalink to Maps.forEach">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static forEach(Map map, void f(key, value)) {
+  for (final k in map.getKeys()) {
+    f(k, map[k]);
+  }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getValues">
+<span class="show-code">Code</span>
+<a href="../dart_core/Collection.html">Collection</a> <strong>getValues</strong>(<a href="../dart_core/Map.html">Map</a> map) <a class="anchor-link" href="#getValues"
+              title="Permalink to Maps.getValues">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static Collection getValues(Map map) {
+  final result = [];
+  for (final k in map.getKeys()) {
+    result.add(map[k]);
+  }
+  return result;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="isEmpty">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>isEmpty</strong>(<a href="../dart_core/Map.html">Map</a> map) <a class="anchor-link" href="#isEmpty"
+              title="Permalink to Maps.isEmpty">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static bool isEmpty(Map map) =&gt; length(map) == 0;
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="length">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>length</strong>(<a href="../dart_core/Map.html">Map</a> map) <a class="anchor-link" href="#length"
+              title="Permalink to Maps.length">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static int length(Map map) =&gt; map.getKeys().length;
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="mapToString">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>mapToString</strong>(<a href="../dart_core/Map.html">Map</a> m) <a class="anchor-link" href="#mapToString"
+              title="Permalink to Maps.mapToString">#</a></h4>
+<div class="doc">
+<p>Returns a string representing the specified map. The returned string
+looks like this: <code>'{key0: value0, key1: value1, ... keyN: valueN}'</code>.
+The value returned by its <code>toString</code> method is used to represent each
+key or value.</p>
+<p>If the map collection contains a reference to itself, either
+directly as a key or value, or indirectly through other collections
+or maps, the contained reference is rendered as <code>'{...}'</code>. This
+prevents the infinite regress that would otherwise occur. So, for example,
+calling this method on a map whose sole entry maps the string key 'me'
+to a reference to the map would return <code>'{me: {...}}'</code>.</p>
+<p>A typical implementation of a map's <code>toString</code> method will
+simply return the results of this method applied to the collection.</p>
+<pre class="source">
+static String mapToString(Map m) {
+  var result = new StringBuffer();
+  _emitMap(m, result, new List());
+  return result.toString();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="putIfAbsent">
+<span class="show-code">Code</span>
+<strong>putIfAbsent</strong>(<a href="../dart_core/Map.html">Map</a> map, key, ifAbsent()) <a class="anchor-link" href="#putIfAbsent"
+              title="Permalink to Maps.putIfAbsent">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+static putIfAbsent(Map map, key, ifAbsent()) {
+  if (map.containsKey(key)) {
+    return map[key];
+  }
+  final v = ifAbsent();
+  map[key] = v;
+  return v;
+}
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:45.923</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

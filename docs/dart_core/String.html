@@ -1,0 +1,315 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>String Interface / dart:core Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="dart:core" data-type="String">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../dart_core.html">dart:core</a> &rsaquo; <a href="../dart_core/String.html">String</a></div>
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>String</strong>
+          Interface
+        </h2>
+        
+<div class="doc">
+<p>The String class represents character strings. Strings are
+immutable. A string is represented by a list of 32-bit Unicode
+scalar character codes accessible through the <a class="crossref" href="../dart_core/String.html#charCodeAt">charCodeAt</a> or the
+<a class="crossref" href="../dart_core/String.html#charCodes">charCodes</a> method.</p>
+</div>
+<h3>Default class</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_core/Strings.html">Strings</a></span></p>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-interface"></span><a href="../dart_core/Comparable.html">Comparable</a></span>, <span class="type-box"><span class="icon-interface"></span><a href="../dart_core/Hashable.html">Hashable</a></span>, <span class="type-box"><span class="icon-interface"></span><a href="../dart_core/Pattern.html">Pattern</a></span></p>
+<h3>Implemented by</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_coreimpl/StringImplementation.html">StringImplementation</a></span></p>
+<h3>Constructors</h3>
+<div class="method"><h4 id="String">
+<span class="show-code">Code</span>
+new <strong>String</strong>.fromCharCodes(<a href="../dart_core/List.html">List</a> charCodes) <a class="anchor-link" href="#String"
+              title="Permalink to String.String">#</a></h4>
+<div class="doc">
+<p>Allocates a new String for the specified 
+<span class="param">charCodes</span>.</p>
+<pre class="source">
+String.fromCharCodes(List&lt;int&gt; charCodes);
+</pre>
+</div>
+</div>
+<h3>Methods</h3>
+<div class="method"><h4 id=":eq">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>operator ==</strong>(<a href="../dart_core/String.html">String</a> other) <a class="anchor-link" href="#:eq"
+              title="Permalink to String.operator ==">#</a></h4>
+<div class="doc">
+<p>Returns whether the two strings are equal. This method compares
+each individual scalar character codes of the strings.</p>
+<pre class="source">
+bool operator ==(String other);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id=":index">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>operator []</strong>(<a href="../dart_core/int.html">int</a> index) <a class="anchor-link" href="#:index"
+              title="Permalink to String.operator []">#</a></h4>
+<div class="doc">
+<p>Gets the character (as <a class="crossref" href="../dart_core/String.html">String</a>) at the given 
+<span class="param">index</span>.</p>
+<pre class="source">
+String operator [](int index);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="charCodeAt">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>charCodeAt</strong>(<a href="../dart_core/int.html">int</a> index) <a class="anchor-link" href="#charCodeAt"
+              title="Permalink to String.charCodeAt">#</a></h4>
+<div class="doc">
+<p>Gets the scalar character code at the given 
+<span class="param">index</span>.</p>
+<pre class="source">
+int charCodeAt(int index);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="charCodes">
+<span class="show-code">Code</span>
+<a href="../dart_core/List.html">List</a> <strong>charCodes</strong>() <a class="anchor-link" href="#charCodes"
+              title="Permalink to String.charCodes">#</a></h4>
+<div class="doc">
+<p>Returns a list of the scalar character codes of this string.</p>
+<pre class="source">
+List&lt;int&gt; charCodes();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="concat">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>concat</strong>(<a href="../dart_core/String.html">String</a> other) <a class="anchor-link" href="#concat"
+              title="Permalink to String.concat">#</a></h4>
+<div class="doc">
+<p>Creates a new string by concatenating this string with 
+<span class="param">other</span>.</p>
+<pre class="source">
+String concat(String other);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="contains">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>contains</strong>(<a href="../dart_core/Pattern.html">Pattern</a> other, [<a href="../dart_core/int.html">int</a> startIndex]) <a class="anchor-link" href="#contains"
+              title="Permalink to String.contains">#</a></h4>
+<div class="doc">
+<p>Returns whether this string contains 
+<span class="param">other</span> starting
+at <a href="inclusive">startIndex</a>.</p>
+<pre class="source">
+bool contains(Pattern other, [int startIndex]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="endsWith">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>endsWith</strong>(<a href="../dart_core/String.html">String</a> other) <a class="anchor-link" href="#endsWith"
+              title="Permalink to String.endsWith">#</a></h4>
+<div class="doc">
+<p>Returns whether this string ends with 
+<span class="param">other</span>.</p>
+<pre class="source">
+bool endsWith(String other);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="indexOf">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>indexOf</strong>(<a href="../dart_core/String.html">String</a> other, [<a href="../dart_core/int.html">int</a> start]) <a class="anchor-link" href="#indexOf"
+              title="Permalink to String.indexOf">#</a></h4>
+<div class="doc">
+<p>Returns the first location of 
+<span class="param">other</span> in this string starting at
+<a href="inclusive">start</a>.
+Returns -1 if 
+<span class="param">other</span> could not be found.</p>
+<pre class="source">
+int indexOf(String other, [int start]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="isEmpty">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>isEmpty</strong>() <a class="anchor-link" href="#isEmpty"
+              title="Permalink to String.isEmpty">#</a></h4>
+<div class="doc">
+<p>Returns whether this string is empty.</p>
+<pre class="source">
+bool isEmpty();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="lastIndexOf">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>lastIndexOf</strong>(<a href="../dart_core/String.html">String</a> other, [<a href="../dart_core/int.html">int</a> start]) <a class="anchor-link" href="#lastIndexOf"
+              title="Permalink to String.lastIndexOf">#</a></h4>
+<div class="doc">
+<p>Returns the last location of 
+<span class="param">other</span> in this string, searching
+backward starting at <a href="inclusive">start</a>.
+Returns -1 if 
+<span class="param">other</span> could not be found.</p>
+<pre class="source">
+int lastIndexOf(String other, [int start]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="get:length">
+<span class="show-code">Code</span>
+<a href="../dart_core/int.html">int</a> <strong>get length</strong>() <a class="anchor-link" href="#get:length"
+              title="Permalink to String.get length">#</a></h4>
+<div class="doc">
+<p>The length of the string.</p>
+<pre class="source">
+int get length();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="replaceAll">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>replaceAll</strong>(<a href="../dart_core/Pattern.html">Pattern</a> from, <a href="../dart_core/String.html">String</a> to) <a class="anchor-link" href="#replaceAll"
+              title="Permalink to String.replaceAll">#</a></h4>
+<div class="doc">
+<p>Returns a new string where all occurences of 
+<span class="param">from</span> in this string
+are replaced with 
+<span class="param">to</span>.</p>
+<pre class="source">
+String replaceAll(Pattern from, String to);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="replaceFirst">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>replaceFirst</strong>(<a href="../dart_core/Pattern.html">Pattern</a> from, <a href="../dart_core/String.html">String</a> to) <a class="anchor-link" href="#replaceFirst"
+              title="Permalink to String.replaceFirst">#</a></h4>
+<div class="doc">
+<p>Returns a new string where the first occurence of 
+<span class="param">from</span> in this string
+is replaced with 
+<span class="param">to</span>.</p>
+<pre class="source">
+String replaceFirst(Pattern from, String to);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="split">
+<span class="show-code">Code</span>
+<a href="../dart_core/List.html">List</a> <strong>split</strong>(<a href="../dart_core/Pattern.html">Pattern</a> pattern) <a class="anchor-link" href="#split"
+              title="Permalink to String.split">#</a></h4>
+<div class="doc">
+<p>Splits the string around matches of 
+<span class="param">pattern</span>. Returns
+a list of substrings.</p>
+<pre class="source">
+List&lt;String&gt; split(Pattern pattern);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="splitChars">
+<span class="show-code">Code</span>
+<a href="../dart_core/List.html">List</a> <strong>splitChars</strong>() <a class="anchor-link" href="#splitChars"
+              title="Permalink to String.splitChars">#</a></h4>
+<div class="doc">
+<p>Returns a list of the characters of this string.</p>
+<pre class="source">
+List&lt;String&gt; splitChars();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="startsWith">
+<span class="show-code">Code</span>
+<a href="../dart_core/bool.html">bool</a> <strong>startsWith</strong>(<a href="../dart_core/String.html">String</a> other) <a class="anchor-link" href="#startsWith"
+              title="Permalink to String.startsWith">#</a></h4>
+<div class="doc">
+<p>Returns whether this string starts with 
+<span class="param">other</span>.</p>
+<pre class="source">
+bool startsWith(String other);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="substring">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>substring</strong>(<a href="../dart_core/int.html">int</a> startIndex, [<a href="../dart_core/int.html">int</a> endIndex]) <a class="anchor-link" href="#substring"
+              title="Permalink to String.substring">#</a></h4>
+<div class="doc">
+<p>Returns a substring of this string in the given range.
+
+<span class="param">startIndex</span> is inclusive and 
+<span class="param">endIndex</span> is exclusive.</p>
+<pre class="source">
+String substring(int startIndex, [int endIndex]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toLowerCase">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>toLowerCase</strong>() <a class="anchor-link" href="#toLowerCase"
+              title="Permalink to String.toLowerCase">#</a></h4>
+<div class="doc">
+<p>If this string is not already all lower case, returns a new string
+where all characters  are made lower case. Returns <code>this</code> otherwise.</p>
+<pre class="source">
+String toLowerCase();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toUpperCase">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>toUpperCase</strong>() <a class="anchor-link" href="#toUpperCase"
+              title="Permalink to String.toUpperCase">#</a></h4>
+<div class="doc">
+<p>If this string is not already all uper case, returns a new string
+where all characters are made upper case. Returns <code>this</code> otherwise.</p>
+<pre class="source">
+String toUpperCase();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="trim">
+<span class="show-code">Code</span>
+<a href="../dart_core/String.html">String</a> <strong>trim</strong>() <a class="anchor-link" href="#trim"
+              title="Permalink to String.trim">#</a></h4>
+<div class="doc">
+<p>Returns a new string where leading and trailing whitespaces of
+this string have been removed, or returns this string if it does
+not have leading and trailing whitespaces.</p>
+<pre class="source">
+String trim();
+</pre>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          <div>This page generated at 2012-07-08 16:36:43.947</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        
