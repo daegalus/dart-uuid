@@ -12,7 +12,7 @@ Features:
 * __(Currently NOT implemented)__ Cryptographically strong random # generation on supporting platforms
 * [Annotated source code](http://daegalus.github.com/dart-uuid/Uuid/Uuid.html)
 
-Note: Reason Crypto strong random # isn't implemented is because I don't believe Dart has implemented anything thats Crypto strong, at least nothing exposed in public apis. Then the Whatwg browser one I haven't included.
+Note: Reason Crypto strong random # isn't implemented is because I don't believe Dart has implemented anything thats Crypto strong, at least nothing exposed in public apis. And the Whatwg browser one I haven't included.
 
 ## Getting Started
 (This will be updated once I explore the new Pub Package manager, and fix this doc up for it)
@@ -39,9 +39,9 @@ uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
 
 Generate and return a RFC4122 v1 (timestamp-based) UUID.
 
-* `options` - (Object) Optional uuid state to apply. Properties may include:
+* `options` - (Map) Optional uuid state to apply. Properties may include:
 
-  * `node` - (List) Node id as Array of 6 bytes (per 4.1.6). Default: Randomnly generated ID.  See note 1.
+  * `node` - (List) Node id as List of 6 bytes (per 4.1.6). Default: Randomnly generated ID.
   * `clockseq` - (Number between 0 - 0x3fff) RFC clock sequence.  Default: An internally maintained clockseq is used.
   * `msecs` - (Number) Time in milliseconds since unix Epoch.  Default: The current time is used.
   * `nsecs` - (Number between 0-9999) additional time, in 100-nanosecond units. Ignored if `msecs` is unspecified. Default: internal uuid counter is used, as per 4.2.1.2.
@@ -81,12 +81,12 @@ uuid.unparse(buffer, 16) // -> '73bd0581-c95b-11e1-9234-6d0009003480'
 
 Generate and return a RFC4122 v4 UUID.
 
-* `options` - (Object) Optional uuid state to apply. Properties may include:
+* `options` - (Map) Optional uuid state to apply. Properties may include:
 
-  * `random` - (Number[16]) Array of 16 numbers (0-255) to use in place of randomly generated values
-  * `rng` - (Function) Random # generator to use.  Set to one of the built-in generators - `uuid.mathRNG` (all platforms), `uuid.nodeRNG` (node.js only), `uuid.whatwgRNG` (WebKit only) - or a custom function that returns an array[16] of byte values.
+  * `random` - (Number[16]) List of 16 numbers (0-255) to use in place of randomly generated values
+  * `rng` - (Function) Random # generator to use. A Custom function that returns an list[16] of byte values.
 
-* `buffer` - (Array | Buffer) Array or buffer where UUID bytes are to be written.
+* `buffer` - (List) Array or buffer where UUID bytes are to be written.
 * `offset` - (Number) Starting index in `buffer` at which to begin writing.
 
 Returns `buffer`, if specified, otherwise the string form of the UUID
