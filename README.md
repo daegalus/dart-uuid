@@ -15,7 +15,7 @@ Features:
 Note: Reason Crypto strong random # isn't implemented is because I don't believe Dart has implemented anything thats Crypto strong, at least nothing exposed in public apis. And the Whatwg browser one I haven't included.
 
 ## Getting Started
-(This will be updated once I explore the new Pub Package manager, and fix this doc up for it)
+(This might change as Pub gets better)
 
 ```dart
 #import('https://raw.github.com/Daegalus/dart-uuid/master/Uuid.dart'); //pulls it directly from git
@@ -144,7 +144,10 @@ Not ready for this yet. My code is probably inefficient and messy in many areas.
 
 ## Release notes
 
-v0.01
+v0.0.2
+- Initial tests
+- Fixed some parser bugs.
+
+v0.0.1
 - Initial Release
 - No tests
-- Possible Bug: Due to the need of using >> inplace of many >>> operators, I don't think v1() outputs UUIDs that match the original node-uuid doc example (gives a different UUID)

@@ -69,22 +69,16 @@ class Uuid {
     // Create a 16 item buffer if one hasn't been provided.
     buffer = (buffer != null) ? buffer : new List(16);
 
-    // Convert to lowercase and split into 2 character string list.
-    // It would be better to use String.split() but the RegEx of
-    // '[0-9a-z]{2}' did not split it at all, so I split it manually.
-    uuid = uuid.toLowerCase().replaceAll('-','');
-    var charSplit = uuid.splitChars();
-    var c2Split = new List();
-    for(var j = 0; j < charSplit.length; j+=2) {
-      c2Split.add('${charSplit[j]}${charSplit[j+1]}');
-    }
-
-    // Got through the hex list and turn it into a byte buffer.
-    for(var oct in c2Split) {
-      if (ii < 16) {
-        buffer[i + ii++] = _hexToByte[oct];
+    // Convert to lowercase and replace all hex with bytes then
+    // string.replaceAll() does a lot of work that I don't need, and a manual
+    // regex gives me more control.
+    RegExp regex = const RegExp('[0-9a-f]{2}');
+    for(Match match in regex.allMatches(uuid.toLowerCase())) {
+      if(ii < 16) {
+        var hex = uuid.toLowerCase().substring(match.start(),match.end());
+        buffer[i + ii++] = _hexToByte[hex];
       }
-    };
+    }
 
     // Zero out any left over bytes if the string was too short.
     while (ii < 16) {
@@ -240,6 +234,4 @@ class Uuid {
 
     return (buffer != null) ? buffer : unparse(rnds);
   }
-
-
 }
