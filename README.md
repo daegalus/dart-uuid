@@ -18,7 +18,9 @@ Note: Reason Crypto strong random # isn't implemented is because I don't believe
 (This will be updated once I explore the new Pub Package manager, and fix this doc up for it)
 
 ```dart
-#import('Uuid.dart')
+#import('https://raw.github.com/Daegalus/dart-uuid/master/Uuid.dart'); //pulls it directly from git
+// OR
+#import('package:dart-uuid/Uuid.dart'); //Uses the local one in ./packages/dart-uuid/Uuid.dart
 
 var uuid = new Uuid();
 ```
