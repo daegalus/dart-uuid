@@ -1,0 +1,7 @@
+#http://www.dartlang.org/docs/pub-package-manager/
+name: dart_uuid_tests
+description: some tests
+version: 0.0.1
+dependencies:
+  unittest:
+    sdk: unittest
