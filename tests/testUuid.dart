@@ -1,5 +1,6 @@
-#import('/Users/yulian/Downloads/dart/dart-sdk/lib/unittest/unittest.dart');
-#import('../Uuid.dart');
+#import("package:unittest/unittest.dart");
+#import('../Uuid.dart'); 
+#import('dart:math', prefix:"Math");
 
 main() {
   var uuid = new Uuid();
@@ -14,7 +15,7 @@ main() {
       var thrown = false;
       try {
         uuid.v1({'mSecs': TIME, 'nSecs': 10000});
-      } catch (Exception e) {
+      } catch (e) {
         thrown = true;
       }
       expect(thrown, equals(true));

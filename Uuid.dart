@@ -1,5 +1,6 @@
 #library('Uuid');
 #import('dart:crypto');
+#import('dart:math', prefix:"Math"); 
 
 /**
  *  uuid for Dart
@@ -50,7 +51,9 @@ class Uuid {
 
     for(var i = 0; i < 16; i++) {
       if ((i & 0x03) == 0) {
-        rand = (Math.random() * 0x100000000).floor().toInt();
+        Date date = new Date.now();
+        var _rand = new Math.Random(date.millisecondsSinceEpoch);
+        rand = (_rand.nextDouble() * 0x100000000).floor().toInt();
       }
       b[i] = rand >> ((i & 0x03) << 3) & 0xff;
     }
