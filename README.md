@@ -7,12 +7,12 @@ Primarily becaue it works, well written, and so on.
 
 Features:
 
-* Generate RFC4122 version 1 or version 4 UUIDs
+* Generate RFC4122 version 1, version 4, or version 5 UUIDs
 * Runs in dartvm and hopefully browsers too.
 * __(Currently NOT implemented)__ Cryptographically strong random # generation on supporting platforms
 * [Annotated source code](http://daegalus.github.com/dart-uuid/Uuid/Uuid.html)
 
-Note: Reason Crypto strong random # isn't implemented is because I don't believe Dart has implemented anything thats Crypto strong, at least nothing exposed in public apis. And the Whatwg browser one I haven't included.
+Note: Reason Crypto strong random # isn't implemented is because, at the moment, Dart hasn't implemented anything thats Crypto strong, at least nothing exposed in public apis. And the Whatwg browser one I haven't included.
 
 ## Getting Started
 (This might change as Pub gets better)
@@ -33,6 +33,9 @@ uuid.v1(); // -> '6c84fb90-12c4-11e1-840d-7b25c5ee775a'
 
 // Generate a v4 (random) id
 uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
+
+// Generate a v5 (namespace-name-sha1-based) id
+uuid.v5(uuid.NAMESPACE_URL, 'www.google.com'); // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
 ```
 
 ## API
@@ -113,6 +116,34 @@ uuid.v4(null, buffer, 0);
 uuid.v4(null, buffer, 16);
 ```
 
+### uuid.v5(String namespace, String name, [Map options = null, List buffer, int offset=0])
+
+Generate and return a RFC4122 v5 UUID.
+
+* `options` - (Map) Optional uuid state to apply. Properties may include:
+
+  * `randomNamespace` - (Boolean) Default True. Returns if you want a v4 generated namespace (true) or NAMESPACE_NIL (false)
+
+* `buffer` - (List) Array or buffer where UUID bytes are to be written.
+* `offset` - (Number) Starting index in `buffer` at which to begin writing.
+
+Returns `buffer`, if specified, otherwise the string form of the UUID
+
+Example: Generate string UUID with fully-specified options
+
+```dart
+uuid.v5(uuid.NAMESPACE_URL, 'www.google.com');
+// -> "c74a196f-f19d-5ea9-bffd-a2742432fc9c"
+```
+
+Example: Generate two IDs in a single buffer
+
+```dart
+var buffer = new List(32);
+uuid.v5(uuid.NAMESPACE_URL, 'www.google.com', buffer, 0);
+uuid.v5(uuid.NAMESPACE_URL, 'www.google.com', buffer, 16);
+```
+
 ### uuid.parse(String uuid, [List buffer, int offset=0])
 ### uuid.unparse(List buffer, [int offset=0])
 
@@ -132,17 +163,25 @@ var string = uuid.unparse(bytes); // -> '797ff043-11eb-11e1-80d6-510998755d10'
 
 In dartvm
 
-N/A atm, still working on these. I consider this an untested library because I don't have any tests for it yet.
+```
+dart tests\testUuid.dart
+```
 
 In Browser
 
-N/A for same reasons.
+N/A as I have not used or tested this in the browser.
 
 ### Benchmarking
 
 Not ready for this yet. My code is probably inefficient and messy in many areas. Though
 
 ## Release notes
+
+v0.0.3
+- Added UUIDv5
+- Fixed UUIDv4 bugs
+- Added more unit tests
+- Found bug in dart's Math.Random(), reported, waiting for fix to fix my code.
 
 v0.0.2
 - Initial tests
