@@ -58,10 +58,10 @@ class Uuid {
    */
   List mathRNG() {
     var rand, b = _rndBytes;
-
+    
+    var _rand = new Math.Random();
     for(var i = 0; i < 16; i++) {
       if ((i & 0x03) == 0) {
-        var _rand = new Math.Random();
         rand = (_rand.nextDouble() * 0x100000000).floor().toInt();
       }
       b[i] = rand >> ((i & 0x03) << 3) & 0xff;

@@ -9,9 +9,9 @@ main() {
   List mathRNGCustom() {
     var rand, b = new List(16);
 
+    var _rand = new Math.Random(1);
     for(var i = 0; i < 16; i++) {
       if ((i & 0x03) == 0) {
-        var _rand = new Math.Random(1);
         rand = (_rand.nextDouble() * 0x100000000).floor().toInt();
       }
       b[i] = rand >> ((i & 0x03) << 3) & 0xff;
@@ -78,7 +78,7 @@ main() {
       var u0 = uuid.v4({
         'rng': mathRNGCustom()
       });
-      var u1 = "0fc6a4b0-0fc6-44b0-8fc6-a4b00fc6a4b0";
+      var u1 = "0fc6a4b0-914e-439b-83cc-d57c8a731749";
       expect(u0, equals(u1));
     });
     
