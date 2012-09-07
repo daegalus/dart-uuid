@@ -15,16 +15,15 @@ Features:
 Note: Reason Crypto strong random # isn't implemented is because, at the moment, Dart hasn't implemented anything thats Crypto strong, at least nothing exposed in public apis. And the Whatwg browser one I haven't included.
 
 ## Getting Started
-1) Install and configure pub (http://www.dartlang.org/docs/pub-package-manager/#installing-and-configuring-pub)
+1. Install and configure pub (http://www.dartlang.org/docs/pub-package-manager/#installing-and-configuring-pub)
 ### Notes about windows (currently)
 * Use cmd for pub
 * After a pub install delete the self-referencing link inside the packages folder (Issue 4877)
 * When actually running an application add an extra character to the beginning of your Package-root directory (Issue 4534)
-
-2) Open a command line and cd to the tests folder inside the dart-uuid repo
-3) pub install
-4) Open the folder dart-uuid in the dart editor
-5) Run tests/testUuid.dart
+1. Open a command line and cd to the tests folder inside the dart-uuid repo
+1. pub install
+1. Open the folder dart-uuid in the dart editor
+1. Run tests/testUuid.dart
 
 ```dart
 #import('https://raw.github.com/Daegalus/dart-uuid/master/Uuid.dart'); //pulls it directly from git
