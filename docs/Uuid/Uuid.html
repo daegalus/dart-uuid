@@ -14,7 +14,14 @@
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
           <a href="../index.html">Dart Documentation</a>
-         &rsaquo; <a href="../Uuid.html">Uuid</a> &rsaquo; <a href="../Uuid/Uuid.html">Uuid</a></div>
+         &rsaquo; <a href="../Uuid.html">Uuid</a> &rsaquo; <a href="../Uuid/Uuid.html">Uuid</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
         <div class="nav">
         
 </div>
@@ -81,17 +88,18 @@ static final TAU = 2*Math.PI;
 <h3>Methods</h3>
 <div class="method"><h4 id="mathRNG">
 <span class="show-code">Code</span>
-<a href="../dart_core/List.html">List</a> <strong>mathRNG</strong>() <a class="anchor-link" href="#mathRNG"
+List <strong>mathRNG</strong>() <a class="anchor-link" href="#mathRNG"
               title="Permalink to Uuid.mathRNG">#</a></h4>
 <div class="doc">
 <p>Math.Random()-based RNG. All platforms, fast, not cryptographically strong.</p>
 <pre class="source">
 List mathRNG() {
   var rand, b = _rndBytes;
-
+  
+  var _rand = new Math.Random();
   for(var i = 0; i &lt; 16; i++) {
     if ((i &amp; 0x03) == 0) {
-      rand = (Math.random() * 0x100000000).floor().toInt();
+      rand = (_rand.nextDouble() * 0x100000000).floor().toInt();
     }
     b[i] = rand &gt;&gt; ((i &amp; 0x03) &lt;&lt; 3) &amp; 0xff;
   }
@@ -103,7 +111,7 @@ List mathRNG() {
 </div>
 <div class="method"><h4 id="parse">
 <span class="show-code">Code</span>
-<a href="../dart_core/List.html">List</a> <strong>parse</strong>(<a href="../dart_core/String.html">String</a> uuid, [<a href="../dart_core/List.html">List</a> buffer, <a href="../dart_core/int.html">int</a> offset = 0]) <a class="anchor-link" href="#parse"
+List <strong>parse</strong>(String uuid, [List buffer, int offset = 0]) <a class="anchor-link" href="#parse"
               title="Permalink to Uuid.parse">#</a></h4>
 <div class="doc">
 <p>Parses the provided 
@@ -142,7 +150,7 @@ List parse(String uuid, [List buffer, int offset=0]) {
 </div>
 <div class="method"><h4 id="unparse">
 <span class="show-code">Code</span>
-<a href="../dart_core/String.html">String</a> <strong>unparse</strong>(<a href="../dart_core/List.html">List</a> buffer, [<a href="../dart_core/int.html">int</a> offset = 0]) <a class="anchor-link" href="#unparse"
+String <strong>unparse</strong>(List buffer, [int offset = 0]) <a class="anchor-link" href="#unparse"
               title="Permalink to Uuid.unparse">#</a></h4>
 <div class="doc">
 <p>Unparses a 
@@ -167,7 +175,7 @@ String unparse(List buffer, [int offset=0]) {
 </div>
 <div class="method"><h4 id="v1">
 <span class="show-code">Code</span>
-<strong>v1</strong>([<a href="../dart_core/Map.html">Map</a> options = null, <a href="../dart_core/List.html">List</a> buffer, <a href="../dart_core/int.html">int</a> offset = 0]) <a class="anchor-link" href="#v1"
+<strong>v1</strong>([Map options = null, List buffer, int offset = 0]) <a class="anchor-link" href="#v1"
               title="Permalink to Uuid.v1">#</a></h4>
 <div class="doc">
 <p>v1() Generates a time-based version 1 UUID</p>
@@ -260,7 +268,7 @@ v1([Map options = null, List buffer, int offset=0]) {
 </div>
 <div class="method"><h4 id="v4">
 <span class="show-code">Code</span>
-<strong>v4</strong>([<a href="../dart_core/Map.html">Map</a> options = null, <a href="../dart_core/List.html">List</a> buffer, <a href="../dart_core/int.html">int</a> offset = 0]) <a class="anchor-link" href="#v4"
+<strong>v4</strong>([Map options = null, List buffer, int offset = 0]) <a class="anchor-link" href="#v4"
               title="Permalink to Uuid.v4">#</a></h4>
 <div class="doc">
 <p>v4() Generates a time-based version 4 UUID</p>
@@ -287,7 +295,7 @@ v4([Map options = null, List buffer, int offset=0]) {
 
   // per 4.4, set bits for version and clockSeq high and reserved
   rnds[6] = (rnds[6] &amp; 0x0f) | 0x40;
-  rnds[8] = (rnds[6] &amp; 0x3f) | 0x80;
+  rnds[8] = (rnds[8] &amp; 0x3f) | 0x80;
 
   // Copy the bytes to the buffer if one is provided.
   if (buffer != null) {
@@ -301,12 +309,142 @@ v4([Map options = null, List buffer, int offset=0]) {
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="v5">
+<span class="show-code">Code</span>
+<strong>v5</strong>(String namespace, String name, [Map options = null, List buffer, int offset = 0]) <a class="anchor-link" href="#v5"
+              title="Permalink to Uuid.v5">#</a></h4>
+<div class="doc">
+<p>v5() Generates a namspace &amp; name-based version 5 UUID</p>
+<p>By default it will generate a string based on a provided uuid namespace and
+name, and will return a string.</p>
+<p>If an optional 
+<span class="param">buffer</span> list is provided, it will put the byte data into
+that buffer and return a buffer.</p>
+<p>Optionally an 
+<span class="param">offset</span> can be provided with a start position in the buffer.</p>
+<p>The first argument is an options map that takes various configuration
+options detailed in the readme.</p>
+<p>http://tools.ietf.org/html/rfc4122.html#section-4.4</p>
+<pre class="source">
+v5(String namespace, String name, [Map options = null, List buffer, int offset = 0]) {
+  var i = offset;
+  options = (options != null) ? options : new Map();
+  
+  // Check if user wants a random namespace generated by v4() or a NIL namespace.
+  var useRandom = (options['randomNamespace'] != null) ? options['randomNamespace'] : true;
+  
+  // If useRandom is true, generate UUIDv4, else use NIL
+  var blankNS = useRandom ? v4() : NAMESPACE_NIL;
+  
+  // Use provided namespace, or use whatever is decided by options.
+  namespace = (namespace != null) ? namespace : blankNS;
+  
+  // Use provided name, 
+  name = (name != null) ? name : '';
+  
+  // Convert namespace UUID to Byte List
+  var bytes = parse(namespace);
+  
+  // Convert name to a list of bytes
+  var nameBytes = new List();
+  for(var singleChar in name.charCodes()) {
+    nameBytes.add(singleChar);
+  }
+  
+  // Generate SHA1 using namespace concatenated with name
+  var hash = new SHA1();
+  hash.update(bytes);
+  hash.update(nameBytes);
+  List hashBytes = hash.digest();
+  
+  // per 4.4, set bits for version and clockSeq high and reserved
+  hashBytes[6] = (hashBytes[6] &amp; 0x0f) | 0x50;
+  hashBytes[8] = (hashBytes[8] &amp; 0x3f) | 0x80;
+  
+  // Copy the bytes to the buffer if one is provided.
+  if (buffer != null) {
+    for (var j = 0; j &lt; 16; j++) {
+      buffer[i+j] = hashBytes[j];
+    }
+  }
+                      
+  return (buffer != null) ? buffer : unparse(hashBytes);
+}
+</pre>
+</div>
+</div>
+<h3>Fields</h3>
+<div class="field"><h4 id="NAMESPACE_DNS">
+<span class="show-code">Code</span>
+var         <strong>NAMESPACE_DNS</strong> <a class="anchor-link"
+            href="#NAMESPACE_DNS"
+            title="Permalink to Uuid.NAMESPACE_DNS">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+const NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="NAMESPACE_NIL">
+<span class="show-code">Code</span>
+var         <strong>NAMESPACE_NIL</strong> <a class="anchor-link"
+            href="#NAMESPACE_NIL"
+            title="Permalink to Uuid.NAMESPACE_NIL">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="NAMESPACE_OID">
+<span class="show-code">Code</span>
+var         <strong>NAMESPACE_OID</strong> <a class="anchor-link"
+            href="#NAMESPACE_OID"
+            title="Permalink to Uuid.NAMESPACE_OID">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+const NAMESPACE_OID = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="NAMESPACE_URL">
+<span class="show-code">Code</span>
+var         <strong>NAMESPACE_URL</strong> <a class="anchor-link"
+            href="#NAMESPACE_URL"
+            title="Permalink to Uuid.NAMESPACE_URL">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+const NAMESPACE_URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="NAMESPACE_X500">
+<span class="show-code">Code</span>
+var         <strong>NAMESPACE_X500</strong> <a class="anchor-link"
+            href="#NAMESPACE_X500"
+            title="Permalink to Uuid.NAMESPACE_X500">#</a>
+        </h4>
+        <div class="doc">
+
+<pre class="source">
+const NAMESPACE_X500= '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
+</pre>
+</div>
+</div>
         </div>
         <div class="clear"></div>
         </div>
         
         <div class="footer">
-          <div>This page generated at 2012-07-09 00:04:56.998</div>
+          <div>This page was generated at 2012-09-10 18:51:04.272</div>
         </div>
         <script async src="../client-live-nav.js"></script>
         </body></html>
