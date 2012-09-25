@@ -177,7 +177,7 @@ var string = uuid.unparse(bytes); // -> '797ff043-11eb-11e1-80d6-510998755d10'
 In dartvm
 
 ```
-dart tests\testUuid.dart
+dart test\uuid_test.dart
 ```
 
 In Browser
