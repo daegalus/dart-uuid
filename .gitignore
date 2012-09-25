@@ -3,3 +3,4 @@ tests/packages
 .children
 .project
 packages/
+packages
