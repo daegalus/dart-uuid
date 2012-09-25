@@ -31,9 +31,9 @@ Note: Reason Crypto strong random # isn't implemented is because, at the moment,
 1. Run tests/testUuid.dart
 
 ```dart
-#import('https://raw.github.com/Daegalus/dart-uuid/master/lib/Uuid.dart'); //pulls it directly from git
+#import('https://raw.github.com/Daegalus/dart-uuid/master/lib/Uuid.dart'); //pulls it directly from github.
 // OR
-#import('package:dart-uuid/Uuid.dart'); //Uses the local one in ./packages/dart-uuid/Uuid.dart
+#import('package:dart-uuid/Uuid.dart'); //Uses the local one in ./packages/dart_uuid/lib/Uuid.dart
 
 var uuid = new Uuid();
 ```
@@ -186,9 +186,12 @@ N/A as I have not used or tested this in the browser.
 
 ### Benchmarking
 
-Not ready for this yet. My code is probably inefficient and messy in many areas. Though
+Not ready for this yet. My code is probably inefficient and messy in many areas. Though it should be pretty quick.
 
 ## Release notes
+v0.0.4
+- Issue wasn't Math.Random() but a bad reseed by me.
+- Cleaned up for new Pub layout.
 
 v0.0.3
 - Added UUIDv5
