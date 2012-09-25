@@ -1,5 +1,5 @@
 #import("package:unittest/unittest.dart");
-#import('../lib/Uuid.dart');
+#import('package:dart_uuid/Uuid.dart');
 #import('dart:math', prefix:"Math");
 
 main() {

@@ -31,7 +31,7 @@ Note: Reason Crypto strong random # isn't implemented is because, at the moment,
 1. Run tests/testUuid.dart
 
 ```dart
-#import('https://raw.github.com/Daegalus/dart-uuid/master/Uuid.dart'); //pulls it directly from git
+#import('https://raw.github.com/Daegalus/dart-uuid/master/lib/Uuid.dart'); //pulls it directly from git
 // OR
 #import('package:dart-uuid/Uuid.dart'); //Uses the local one in ./packages/dart-uuid/Uuid.dart
 
