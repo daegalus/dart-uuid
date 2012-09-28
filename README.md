@@ -19,8 +19,7 @@ Note: Reason Crypto strong random # isn't implemented is because, at the moment,
 ### Notes on Windows (currently)
 
 * Use cmd for pub
-* After a pub install delete the self-referencing link inside the packages folder (Issue 4877)
-* When actually running an application add an extra character to the beginning of your Package-root directory (Issue 4534)
+* When actually running an application add // to the beginning of your Package-root directory ([Issue 4534](http://code.google.com/p/dart/issues/detail?id=4534))
 
 ### Instructions
 
