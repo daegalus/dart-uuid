@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>Uuid Class / Uuid Library / Dart Documentation</title>
+        <title>Uuid class / Uuid Library / Dart Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -24,13 +24,13 @@
       
         <div class="nav">
         
-<h2><div class="icon-library"></div><a href="../Uuid.html">Uuid</a></h2><ul class="icon">
+<h2><div class="icon-library"></div><a href="../AES.html">AES</a></h2><h2><div class="icon-library"></div><a href="../Uuid.html">Uuid</a></h2><ul class="icon">
 <li><div class="icon-class"></div><strong>Uuid</strong></li>
 </ul>
 </div>
 <div class="content">
         <h2><strong>Uuid</strong>
-          Class
+          class
         </h2>
         
 <div class="doc">
@@ -89,6 +89,19 @@ static final TAU = 2*Math.PI;
 </div>
 </div>
 <h3>Methods</h3>
+<div class="method"><h4 id="cryptoRNG">
+<span class="show-code">Code</span>
+<a href="http://api.dartlang.org/dart_core/List.html">List</a> <strong>cryptoRNG</strong>() <a class="anchor-link" href="#cryptoRNG"
+              title="Permalink to Uuid.cryptoRNG">#</a></h4>
+<div class="doc">
+<p>AES-based RNG. All platforms, unknown speed, cryptographically strong (theoretically)</p>
+<pre class="source">
+List cryptoRNG() {
+  return AES.randomBytes();
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="mathRNG">
 <span class="show-code">Code</span>
 <a href="http://api.dartlang.org/dart_core/List.html">List</a> <strong>mathRNG</strong>() <a class="anchor-link" href="#mathRNG"
@@ -275,7 +288,7 @@ v1([Map options = null, List buffer, int offset=0]) {
               title="Permalink to Uuid.v4">#</a></h4>
 <div class="doc">
 <p>v4() Generates a time-based version 4 UUID</p>
-<p>By default it will generate a string based Math.random(), and will return
+<p>By default it will generate a string based AES-based RNG, and will return
 a string.</p>
 <p>If an optional 
 <span class="param">buffer</span> list is provided, it will put the byte data into
@@ -291,7 +304,7 @@ v4([Map options = null, List buffer, int offset=0]) {
   options = (options != null) ? options : new Map();
 
   // Use the built-in RNG or a custom provided RNG
-  var rng = (options['rng'] != null) ? options['rng'] : mathRNG();
+  var rng = (options['rng'] != null) ? options['rng'] : cryptoRNG();
 
   // Use provided values over RNG
   var rnds = (options['random'] != null) ? options['random'] : rng;
@@ -447,7 +460,7 @@ const NAMESPACE_X500= '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
         </div>
         
         <div class="footer">
-          <div>This page was generated at 2012-09-25 16:23:20.830</div>
+          <div>This page was generated at 2012-10-04 00:04:37.761</div>
         </div>
         <script async src="../client-static.js"></script>
         </body></html>

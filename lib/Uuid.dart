@@ -1,6 +1,7 @@
 #library('Uuid');
 #import('dart:crypto');
 #import('dart:math', prefix:"Math");
+#import('./aes/aes.dart');
 
 /**
  *  uuid for Dart
@@ -68,6 +69,13 @@ class Uuid {
     }
 
     return b;
+  }
+
+  /**
+   * AES-based RNG. All platforms, unknown speed, cryptographically strong (theoretically)
+   */
+  List cryptoRNG() {
+    return AES.randomBytes();
   }
 
   /**
@@ -210,7 +218,7 @@ class Uuid {
   /**
    * v4() Generates a time-based version 4 UUID
    *
-   * By default it will generate a string based Math.random(), and will return
+   * By default it will generate a string based AES-based RNG, and will return
    * a string.
    *
    * If an optional [buffer] list is provided, it will put the byte data into
@@ -228,7 +236,7 @@ class Uuid {
     options = (options != null) ? options : new Map();
 
     // Use the built-in RNG or a custom provided RNG
-    var rng = (options['rng'] != null) ? options['rng'] : mathRNG();
+    var rng = (options['rng'] != null) ? options['rng'] : cryptoRNG();
 
     // Use provided values over RNG
     var rnds = (options['random'] != null) ? options['random'] : rng;

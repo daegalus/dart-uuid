@@ -9,7 +9,7 @@ Features:
 
 * Generate RFC4122 version 1, version 4, or version 5 UUIDs
 * Runs in dartvm and hopefully browsers too.
-* __(Currently NOT implemented)__ Cryptographically strong random # generation on supporting platforms
+* Cryptographically strong random # generation on all platforms
 * [Annotated source code](http://daegalus.github.com/dart-uuid/Uuid/Uuid.html)
 
 Note: Reason Crypto strong random # isn't implemented is because, at the moment, Dart hasn't implemented anything thats Crypto strong, at least nothing exposed in public apis. And the Whatwg browser one I haven't included.
@@ -101,7 +101,7 @@ Generate and return a RFC4122 v4 UUID.
 * `options` - (Map) Optional uuid state to apply. Properties may include:
 
   * `random` - (Number[16]) List of 16 numbers (0-255) to use in place of randomly generated values
-  * `rng` - (Function) Random # generator to use. A Custom function that returns an list[16] of byte values.
+  * `rng` - (Function) Random # generator to use. A Custom function that returns an list[16] of byte values or 1 of 2 provided.
 
 * `buffer` - (List) Array or buffer where UUID bytes are to be written.
 * `offset` - (Number) Starting index in `buffer` at which to begin writing.
@@ -188,6 +188,10 @@ N/A as I have not used or tested this in the browser.
 Not ready for this yet. My code is probably inefficient and messy in many areas. Though it should be pretty quick.
 
 ## Release notes
+v0.0.5
+- Added Initial AES for Dart (untested if it actually works/matches other AES encryptors)
+- Use AES cipher to create crypto strong bytes.
+
 v0.0.4
 - Issue wasn't Math.Random() but a bad reseed by me.
 - Cleaned up for new Pub layout.
