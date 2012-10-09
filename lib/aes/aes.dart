@@ -30,13 +30,13 @@ class AES {
 
   static List cipher(List input, List keySchedule) {
     int blockSize = 4; //block size - fixed at 4 for AES
-    int numRounds = (keySchedule.length/blockSize-1).toInt(); // number of rounds (10/12/14 for 128/192/256-bit keys)
+    int numRounds = keySchedule.length ~/ blockSize-1; // number of rounds (10/12/14 for 128/192/256-bit keys)
 
     // Initialize 4xNb byte-array 'state' with input [§3.4]
     var state = [new List(4),new List(4),new List(4),new List(4)];
     for (int i = 0; i < 4*blockSize; i++) {
       int r = i%4;
-      int c = (i/4).floor().toInt();
+      int c = (i~/4).floor();
       state[r][c] = input[i];
     }
 
@@ -54,14 +54,14 @@ class AES {
 
     var output = new List(4*blockSize);
     for (int i=0; i < 4*blockSize; i++) {
-      output[i] = state[i%4][(i/4).floor().toInt()];
+      output[i] = state[i%4][(i~/4).floor()];
     }
     return output;
   }
 
   static List keyExpansion(List key) {
     int blockSize = 4;
-    int keyLength = (key.length/4).toInt();
+    int keyLength = key.length ~/ 4;
     int numRounds = keyLength + 6;
 
     var keySchedule = new List((blockSize*(numRounds+1)).toInt());
@@ -80,7 +80,7 @@ class AES {
       if (i % keyLength == 0) {
         temp = _subWord(_rotWord(temp));
         for (int t=0; t<4; t++) {
-          temp[t] ^= _rCon[(i/keyLength).toInt()][t];
+          temp[t] ^= _rCon[i ~/ keyLength][t];
         }
       }
       else if (keyLength > 6 && i%keyLength == 4) {
