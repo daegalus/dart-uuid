@@ -24,10 +24,17 @@ Note: Reason Crypto strong random # isn't implemented is because, at the moment,
 ### Instructions
 
 1. Install and configure pub (http://www.dartlang.org/docs/pub-package-manager/#installing-and-configuring-pub)
-1. Open a command line and cd to the tests folder inside the dart-uuid repo
-1. pub install
-1. Open the folder dart-uuid in the dart editor
-1. Run tests/testUuid.dart
+2. Open a command line and cd to your projects root folder
+3. In your pubspec, add an entry for dart-uuid to your dependencies (example below)
+3. pub install
+4. If you wish to run tests, go into packages/dart-uuid/ and run 'dart test/uuid_test.dart'
+
+Pubspec:
+```yaml
+dependencies:
+  dart_uuid:
+    git: https://github.com/Daegalus/dart-uuid.git
+```
 
 ```dart
 #import('https://raw.github.com/Daegalus/dart-uuid/master/lib/Uuid.dart'); //pulls it directly from github.
