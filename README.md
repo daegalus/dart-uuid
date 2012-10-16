@@ -12,7 +12,7 @@ Features:
 * Cryptographically strong random # generation on all platforms
 * [Annotated source code](http://daegalus.github.com/dart-uuid/Uuid/Uuid.html)
 
-Note: Reason Crypto strong random # isn't implemented is because, at the moment, Dart hasn't implemented anything thats Crypto strong, at least nothing exposed in public apis. And the Whatwg browser one I haven't included.
+Note: The AES implementation used is a custom written implementation, and I can not guarantee that it actually works. This is only until a standard library version for generating crypt strong random bytes is implemented.
 
 ## Getting Started
 
