@@ -30,16 +30,23 @@ Note: The AES implementation used is a custom written implementation, and I can 
 4. If you wish to run tests, go into packages/dart-uuid/ and run 'dart test/uuid_test.dart'
 
 Pubspec:
+There are 2 options. Directly from git, or from pub.dartlang.org
+pub.dartland.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  dart_uuid:
+  uuid: 0.0.6
+```
+directly from github:
+```yaml
+dependencies:
+  uuid:
     git: https://github.com/Daegalus/dart-uuid.git
 ```
 
 ```dart
-#import('https://raw.github.com/Daegalus/dart-uuid/master/lib/Uuid.dart'); //pulls it directly from github.
+#import('https://raw.github.com/Daegalus/dart-uuid/master/lib/uuid.dart'); //pulls it directly from github.
 // OR
-#import('package:dart-uuid/Uuid.dart'); //Uses the local one in ./packages/dart_uuid/lib/Uuid.dart
+#import('package:dart-uuid/uuid.dart'); //Uses the local one in ./packages/dart_uuid/lib/uuid.dart
 
 var uuid = new Uuid();
 ```
