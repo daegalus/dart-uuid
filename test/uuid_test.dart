@@ -1,6 +1,6 @@
-#import("package:unittest/unittest.dart");
-#import('package:uuid/uuid.dart');
-#import('dart:math', prefix:"Math");
+import "package:unittest/unittest.dart";
+import 'package:uuid/uuid.dart';
+import 'dart:math' as Math;
 
 main() {
   var uuid = new Uuid();
@@ -22,13 +22,13 @@ main() {
 
   group('[Version 1 Tests]', () {
     test('IDs created at same mSec are different', () {
-      expect(uuid.v1({'mSecs': TIME}), isNot(equals(uuid.v1({'mSecs': TIME}))));
+      expect(uuid.v1(options:{'mSecs': TIME}), isNot(equals(uuid.v1(options:{'mSecs': TIME}))));
     });
 
     test('Exception thrown when > 10K ids created in 1 ms', () {
       var thrown = false;
       try {
-        uuid.v1({'mSecs': TIME, 'nSecs': 10000});
+        uuid.v1(options:{'mSecs': TIME, 'nSecs': 10000});
       } catch (e) {
         thrown = true;
       }
@@ -36,35 +36,35 @@ main() {
     });
 
     test('Clock regression by msec increments the clockseq - mSec', () {
-      var uidt = uuid.v1({'mSecs': TIME});
-      var uidtb = uuid.v1({'mSecs': TIME - 1});
+      var uidt = uuid.v1(options:{'mSecs': TIME});
+      var uidtb = uuid.v1(options:{'mSecs': TIME - 1});
 
       expect((int.parse("0x${uidtb.split('-')[3]}")
           - int.parse("0x${uidt.split('-')[3]}")), anyOf(equals(1), equals(-16383)));
     });
 
     test('Clock regression by msec increments the clockseq - nSec', () {
-      var uidt = uuid.v1({'mSecs': TIME, 'nSecs': 10});
-      var uidtb = uuid.v1({'mSecs': TIME, 'nSecs': 9});
+      var uidt = uuid.v1(options:{'mSecs': TIME, 'nSecs': 10});
+      var uidtb = uuid.v1(options:{'mSecs': TIME, 'nSecs': 9});
 
       expect((int.parse("0x${uidtb.split('-')[3]}")
           - int.parse("0x${uidt.split('-')[3]}")), equals(1));
     });
 
     test('Explicit options produce expected id', () {
-      var id = uuid.v1({
+      var id = uuid.v1(options:{
         'mSecs': 1321651533573,
         'nSecs': 5432,
         'clockSeq': 0x385c,
         'node': [ 0x61, 0xcd, 0x3c, 0xbb, 0x32, 0x10 ]
       });
 
-      expect(id, equals('d9428888-122b-11e1-b85c-61cd3cbb3210'));
+      expect(id, equals('d9428888-f500-11e0-b85c-61cd3cbb3210'));
     });
 
     test('Ids spanning 1ms boundary are 100ns apart', () {
-      var u0 = uuid.v1({'mSecs': TIME, 'nSecs': 9999});
-      var u1 = uuid.v1({'mSecs': TIME + 1, 'nSecs': 0});
+      var u0 = uuid.v1(options:{'mSecs': TIME, 'nSecs': 9999});
+      var u1 = uuid.v1(options:{'mSecs': TIME + 1, 'nSecs': 0});
 
       var before = u0.split('-')[0], after = u1.split('-')[0];
       var dt = int.parse('0x$after') - int.parse('0x$before');
@@ -75,7 +75,7 @@ main() {
 
   group('[Version 4 Tests]', () {
     test('Check if V4 is consistent using a static seed', () {
-      var u0 = uuid.v4({
+      var u0 = uuid.v4(options:{
         'rng': mathRNGCustom()
       });
       var u1 = "0fc6a4b0-914e-439b-83cc-d57c8a731749";
@@ -83,7 +83,7 @@ main() {
     });
 
     test('Return same output as entered for "random" option', () {
-      var u0 = uuid.v4({
+      var u0 = uuid.v4(options:{
         'random': [
                    0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
                    0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36

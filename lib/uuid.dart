@@ -1,7 +1,7 @@
-#library('Uuid');
-#import('dart:crypto');
-#import('dart:math', prefix:"Math");
-#import('./aes/aes.dart');
+library Uuid;
+import 'dart:crypto';
+import 'dart:math' as Math;
+import './aes/aes.dart';
 
 /**
  *  uuid for Dart
@@ -83,7 +83,7 @@ class Uuid {
    * Can optionally be provided a [buffer] to write into and
    *  a positional [offset] for where to start inputting into the buffer.
    */
-  List parse(String uuid, [List buffer, int offset=0]) {
+  List parse(String uuid, {List buffer, int offset: 0}) {
     var i = offset, ii = 0;
 
     // Create a 16 item buffer if one hasn't been provided.
@@ -113,7 +113,7 @@ class Uuid {
    * An optional [offset] is allowed if you want to start at a different point
    *  in the buffer.
    */
-  String unparse(List buffer, [int offset=0]) {
+  String unparse(List buffer, {int offset: 0}) {
     var i = offset;
     return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
            '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
@@ -141,7 +141,7 @@ class Uuid {
    *
    * http://tools.ietf.org/html/rfc4122.html#section-4.2.2
    */
-  v1([Map options = null, List buffer, int offset=0]) {
+  v1({Map options: null, List buffer: null, int offset:0 }) {
     var i = offset;
     var buf = (buffer != null) ? buffer : new List(16);
     options = (options != null) ? options : new Map();
@@ -231,7 +231,7 @@ class Uuid {
    *
    * http://tools.ietf.org/html/rfc4122.html#section-4.4
    */
-  v4([Map options = null, List buffer, int offset=0]) {
+  v4({Map options: null, List buffer: null, int offset: 0}) {
     var i = offset;
     options = (options != null) ? options : new Map();
 
@@ -271,7 +271,7 @@ class Uuid {
    *
    * http://tools.ietf.org/html/rfc4122.html#section-4.4
    */
-  v5(String namespace, String name, [Map options = null, List buffer, int offset = 0]) {
+  v5(String namespace, String name, {Map options: null, List buffer: null, int offset: 0}) {
     var i = offset;
     options = (options != null) ? options : new Map();
 
