@@ -33,10 +33,10 @@ Note: The AES implementation used is a custom written implementation, and I can 
 
 There are 2 options. Directly from git, or from pub.dartlang.org
 
-pub.dartland.org: (you can use 'any' instead of a version if you just want the latest always)
+pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.0.7
+  uuid: 0.0.8
 ```
 
 directly from github:
@@ -69,7 +69,7 @@ uuid.v5(uuid.NAMESPACE_URL, 'www.google.com'); // -> 'c74a196f-f19d-5ea9-bffd-a2
 
 ## API
 
-### uuid.v1([Map options = null, List buffer, int offset=0])
+### uuid.v1({Map options: null, List buffer: null, int offset: 0})
 
 Generate and return a RFC4122 v1 (timestamp-based) UUID.
 
@@ -88,7 +88,7 @@ Returns `buffer`, if specified, otherwise the string form of the UUID
 Example: Generate string UUID with fully-specified options
 
 ```dart
-uuid.v1({
+uuid.v1(options: {
     'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
     'clockSeq': 0x1234,
     'mSecs': new Date(2011,11,01).millisecondsSinceEpoch,
@@ -100,18 +100,18 @@ Example: In-place generation of two binary IDs
 
 ```dart
 // Generate two ids in an array
-var buffer = new List(32); // -> []
-uuid.v1(null, buffer, 0);   
+var myBuffer = new List(32); // -> []
+uuid.v1(buffer: myBuffer);   
 // -> [115, 189, 5, 128, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-uuid.v1(null, buffer, 16);  
+uuid.v1(buffer: myBuffer, offset: 16);  
 // -> [115, 189, 5, 128, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128, 115, 189, 5, 129, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128]
 
 // Optionally use uuid.unparse() to get stringify the ids
-uuid.unparse(buffer);    // -> '73bd0580-c95b-11e1-9234-6d0009003480'
-uuid.unparse(buffer, 16) // -> '73bd0581-c95b-11e1-9234-6d0009003480'
+uuid.unparse(buffer: myBuffer);    // -> '73bd0580-c95b-11e1-9234-6d0009003480'
+uuid.unparse(buffer: myBuffer, offset: 16) // -> '73bd0581-c95b-11e1-9234-6d0009003480'
 ```
 
-### uuid.v4([Map options = null, List buffer, int offset=0])
+### uuid.v4({Map options: null, List buffer: null, int offset: 0})
 
 Generate and return a RFC4122 v4 UUID.
 
@@ -128,7 +128,7 @@ Returns `buffer`, if specified, otherwise the string form of the UUID
 Example: Generate string UUID with fully-specified options
 
 ```dart
-uuid.v4({
+uuid.v4(options: {
   'random': [
     0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
     0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
@@ -140,12 +140,12 @@ uuid.v4({
 Example: Generate two IDs in a single buffer
 
 ```dart
-var buffer = new List(32);
-uuid.v4(null, buffer, 0);
-uuid.v4(null, buffer, 16);
+var myBuffer = new List(32);
+uuid.v4(buffer: myBuffer);
+uuid.v4(buffer: myBuffer, offset: 16);
 ```
 
-### uuid.v5(String namespace, String name, [Map options = null, List buffer, int offset=0])
+### uuid.v5(String namespace, String name, {Map options: null, List buffer: null, int offset: 0})
 
 Generate and return a RFC4122 v5 UUID.
 
@@ -168,13 +168,13 @@ uuid.v5(uuid.NAMESPACE_URL, 'www.google.com');
 Example: Generate two IDs in a single buffer
 
 ```dart
-var buffer = new List(32);
-uuid.v5(uuid.NAMESPACE_URL, 'www.google.com', buffer, 0);
-uuid.v5(uuid.NAMESPACE_URL, 'www.google.com', buffer, 16);
+var myBuffer = new List(32);
+uuid.v5(uuid.NAMESPACE_URL, 'www.google.com', buffer: myBuffer);
+uuid.v5(uuid.NAMESPACE_URL, 'www.google.com', buffer: myBuffer, offset: 16);
 ```
 
-### uuid.parse(String uuid, [List buffer, int offset=0])
-### uuid.unparse(List buffer, [int offset=0])
+### uuid.parse(String uuid, {List buffer: null, int offset: 0})
+### uuid.unparse(List buffer, {int offset: 0})
 
 Parse and unparse UUIDs
 
@@ -205,6 +205,18 @@ N/A as I have not used or tested this in the browser.
 Not ready for this yet. My code is probably inefficient and messy in many areas. Though it should be pretty quick.
 
 ## Release notes
+v0.0.8
+- Changed to the new optional paramater syntaxes and usages.
+- Adjusted tests for the new function call style due to parameter change.
+- Fixed Import/Source/Library statements to the new format.
+
+v0.0.7
+- Made changes requested by the Google team to get my package up on pub.dartlang.org
+
+v0.0.6
+- Fixed up some code to make it possibly faster and using better Dart practices.
+- Cleaned up some documentation.
+
 v0.0.5
 - Added Initial AES for Dart (untested if it actually works/matches other AES encryptors)
 - Use AES cipher to create crypto strong bytes.
