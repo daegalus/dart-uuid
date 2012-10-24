@@ -1,3 +1,6 @@
+*PLEASE NOTE: THERE IS A BREAKING API CHANGE IN v0.0.8.*
+Due to a required change of the optional parameter syntax and requirements, I made all my optional paramaters named over having them positional. So you need to prepend the name of the parameter if you are using optional parameters. Please check the examples.
+
 # dart-uuid
 
 Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDS.
