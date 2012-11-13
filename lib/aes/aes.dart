@@ -19,7 +19,7 @@ class AES {
     var pwBytes = new List(nBytes);
 
     SHA256 hasher = new SHA256();
-    List bytes = '${(new Date.now()).millisecondsSinceEpoch}'.charCodes();
+    List bytes = '${(new Date.now()).millisecondsSinceEpoch}'.charCodes;
     hasher.update(bytes);
     pwBytes = hasher.digest().getRange(0, nBytes);
 
