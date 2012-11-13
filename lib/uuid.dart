@@ -95,7 +95,7 @@ class Uuid {
     RegExp regex = const RegExp('[0-9a-f]{2}');
     for(Match match in regex.allMatches(uuid.toLowerCase())) {
       if(ii < 16) {
-        var hex = uuid.toLowerCase().substring(match.start(),match.end());
+        var hex = uuid.toLowerCase().substring(match.start,match.end);
         buffer[i + ii++] = _hexToByte[hex];
       }
     }
@@ -292,7 +292,7 @@ class Uuid {
 
     // Convert name to a list of bytes
     var nameBytes = new List();
-    for(var singleChar in name.charCodes()) {
+    for(var singleChar in name.charCodes) {
       nameBytes.add(singleChar);
     }
 
