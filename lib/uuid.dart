@@ -92,7 +92,7 @@ class Uuid {
     // Convert to lowercase and replace all hex with bytes then
     // string.replaceAll() does a lot of work that I don't need, and a manual
     // regex gives me more control.
-    RegExp regex = const RegExp('[0-9a-f]{2}');
+    final RegExp regex = new RegExp('[0-9a-f]{2}');
     for(Match match in regex.allMatches(uuid.toLowerCase())) {
       if(ii < 16) {
         var hex = uuid.toLowerCase().substring(match.start,match.end);

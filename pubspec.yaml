@@ -1,10 +1,9 @@
 #http://www.dartlang.org/docs/pub-package-manager/
 name: uuid
-version: 0.0.8
+version: 0.0.9
 description: >
   RFC4122(v1,v4,v5) UUID Generator and Parser.
 author: Yulian Kuncheff <yulian@kuncheff.com>
 homepage: https://github.com/Daegalus/dart-uuid
 dependencies:
-  unittest:
-    sdk: unittest
+  unittest: 0.2.8+2

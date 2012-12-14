@@ -1,4 +1,4 @@
-*PLEASE NOTE: THERE IS A BREAKING API CHANGE IN v0.0.8.*
+*PLEASE NOTE: THERE IS A BREAKING API CHANGE IN v0.0.8+ .*
 Due to a required change of the optional parameter syntax and requirements, I made all my optional paramaters named over having them positional. So you need to prepend the name of the parameter if you are using optional parameters. Please check the examples.
 
 # dart-uuid
@@ -39,7 +39,7 @@ There are 2 options. Directly from git, or from pub.dartlang.org
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.0.8
+  uuid: 0.0.9
 ```
 
 directly from github:
@@ -208,6 +208,11 @@ N/A as I have not used or tested this in the browser.
 Not ready for this yet. My code is probably inefficient and messy in many areas. Though it should be pretty quick.
 
 ## Release notes
+v0.0.9
+- Minor fix with a const RegExp
+- Made sure everything builds on latest dart.
+- Fixed pubspec to now import unittest from pub instead of sdk.
+
 v0.0.8
 - Changed to the new optional paramater syntaxes and usages.
 - Adjusted tests for the new function call style due to parameter change.
