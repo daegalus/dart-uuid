@@ -1,4 +1,3 @@
-#http://www.dartlang.org/docs/pub-package-manager/
 name: uuid
 version: 0.0.9
 description: >
@@ -6,4 +5,4 @@ description: >
 author: Yulian Kuncheff <yulian@kuncheff.com>
 homepage: https://github.com/Daegalus/dart-uuid
 dependencies:
-  unittest: 0.2.8+2
+  unittest: any
