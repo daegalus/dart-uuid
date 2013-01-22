@@ -1,5 +1,4 @@
-*PLEASE NOTE: THERE IS A BREAKING API CHANGE IN v0.0.8+ .*
-Due to a required change of the optional parameter syntax and requirements, I made all my optional paramaters named over having them positional. So you need to prepend the name of the parameter if you are using optional parameters. Please check the examples.
+[![](https://drone.io/daegalus/dart-uuid/status.png)](https://drone.io/daegalus/dart-uuid/latest)
 
 # dart-uuid
 
