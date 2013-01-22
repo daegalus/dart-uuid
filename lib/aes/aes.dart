@@ -20,8 +20,8 @@ class AES {
 
     SHA256 hasher = new SHA256();
     List bytes = '${(new Date.now()).millisecondsSinceEpoch}'.charCodes;
-    hasher.update(bytes);
-    pwBytes = hasher.digest().getRange(0, nBytes);
+    hasher.add(bytes);
+    pwBytes = hasher.close().getRange(0, nBytes);
 
     var key = AES.cipher(pwBytes, AES.keyExpansion(pwBytes));
 
