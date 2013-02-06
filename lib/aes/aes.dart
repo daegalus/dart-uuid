@@ -16,10 +16,10 @@ class AES {
     var blockSize = 16;
 
     int nBytes = 32;
-    var pwBytes = new List(nBytes);
+    var pwBytes = new List.fixedLength(nBytes);
 
     SHA256 hasher = new SHA256();
-    List bytes = '${(new Date.now()).millisecondsSinceEpoch}'.charCodes;
+    List bytes = '${(new DateTime.now()).millisecondsSinceEpoch}'.charCodes;
     hasher.add(bytes);
     pwBytes = hasher.close().getRange(0, nBytes);
 
@@ -33,7 +33,7 @@ class AES {
     int numRounds = keySchedule.length ~/ blockSize-1; // number of rounds (10/12/14 for 128/192/256-bit keys)
 
     // Initialize 4xNb byte-array 'state' with input [§3.4]
-    var state = [new List(4),new List(4),new List(4),new List(4)];
+    var state = [new List.fixedLength(4),new List.fixedLength(4),new List.fixedLength(4),new List.fixedLength(4)];
     for (int i = 0; i < 4*blockSize; i++) {
       int r = i%4;
       int c = (i~/4).floor();
@@ -52,7 +52,7 @@ class AES {
     state = _shiftRows(state, blockSize);
     state = _addRoundKey(state, keySchedule, numRounds, blockSize);
 
-    var output = new List(4*blockSize);
+    var output = new List.fixedLength(4*blockSize);
     for (int i=0; i < 4*blockSize; i++) {
       output[i] = state[i%4][(i~/4).floor()];
     }
@@ -64,8 +64,8 @@ class AES {
     int keyLength = key.length ~/ 4;
     int numRounds = keyLength + 6;
 
-    var keySchedule = new List((blockSize*(numRounds+1)).toInt());
-    var temp = new List(4);
+    var keySchedule = new List.fixedLength((blockSize*(numRounds+1)).toInt());
+    var temp = new List.fixedLength(4);
 
     for (int i = 0; i < keyLength; i++) {
       var row = [key[4*i], key[4*i+1], key[4*i+2], key[4*i+3]];
@@ -73,7 +73,7 @@ class AES {
     }
 
     for (int i=keyLength; i < (blockSize*(numRounds+1)); i++) {
-      keySchedule[i] = new List(4);
+      keySchedule[i] = new List.fixedLength(4);
       for (int t=0; t<4; t++) {
         temp[t] = keySchedule[i-1][t];
       }
@@ -104,7 +104,7 @@ class AES {
   }
 
   static _shiftRows(List state, int blockSize) {
-    var temp = new List(4);
+    var temp = new List.fixedLength(4);
     for (int row=1; row<4; row++) {
       for (int column=0; column<4; column++) {
         temp[column] = state[row][(column+row)%blockSize];
@@ -118,8 +118,8 @@ class AES {
 
   static _mixColumns(List state, int blockSize) {
     for (int column=0; column<4; column++) {
-      var a = new List(4);
-      var b = new List(4);
+      var a = new List.fixedLength(4);
+      var b = new List.fixedLength(4);
       for (int i=0; i<4; i++) {
         a[i] = state[i][column];
         b[i] = (state[i][column] & 0x80) != 0 ? state[i][column] << 1 ^ 0x011b : state[i][column]<<1;

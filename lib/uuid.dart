@@ -152,7 +152,7 @@ class Uuid {
     // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
     // milliseconds) and 'nsecs' (100-nanoseconds offset from msecs) since unix
     // epoch, 1970-01-01 00:00.
-    var mSecs = (options['mSecs'] != null) ? options['mSecs'] : (new Date.now()).millisecondsSinceEpoch;
+    var mSecs = (options['mSecs'] != null) ? options['mSecs'] : (new DateTime.now()).millisecondsSinceEpoch;
 
     // Per 4.2.1.2, use count of uuid's generated during the current clock
     // cycle to simulate higher resolution clock
