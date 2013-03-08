@@ -12,7 +12,7 @@ Features:
 * Generate RFC4122 version 1, version 4, or version 5 UUIDs
 * Runs in dartvm and hopefully browsers too.
 * Cryptographically strong random # generation on all platforms
-* [Annotated source code](http://daegalus.github.com/dart-uuid/Uuid/Uuid.html)
+* [Annotated source code](http://daegalus.github.com/annotated/dart-uuid/Uuid/Uuid.html)
 
 Note: The AES implementation used is a custom written implementation, and I can not guarantee that it actually works. This is only until a standard library version for generating crypt strong random bytes is implemented.
 
@@ -38,7 +38,7 @@ There are 2 options. Directly from git, or from pub.dartlang.org
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.1.1
+  uuid: 0.1.2
 ```
 
 directly from github:
@@ -207,6 +207,9 @@ N/A as I have not used or tested this in the browser.
 Not ready for this yet. My code is probably inefficient and messy in many areas. Though it should be pretty quick.
 
 ## Release notes
+v0.1.2
+- Fix change of charCodes to codeUnits
+
 v0.1.1
 - Fixing syntax for upcoming breaking changes.
 

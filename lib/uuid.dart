@@ -292,7 +292,7 @@ class Uuid {
 
     // Convert name to a list of bytes
     var nameBytes = new List();
-    for(var singleChar in name.charCodes) {
+    for(var singleChar in name.codeUnits) {
       nameBytes.add(singleChar);
     }
 
