@@ -38,7 +38,7 @@ There are 2 options. Directly from git, or from pub.dartlang.org
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.1.2
+  uuid: 0.1.3
 ```
 
 directly from github:
@@ -207,6 +207,9 @@ N/A as I have not used or tested this in the browser.
 Not ready for this yet. My code is probably inefficient and messy in many areas. Though it should be pretty quick.
 
 ## Release notes
+v0.1.3
+- Fixing language changes.
+
 v0.1.2
 - Fix change of charCodes to codeUnits
 

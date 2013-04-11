@@ -30,8 +30,8 @@ class Uuid {
   var _byteToHex, _hexToByte;
 
   Uuid() {
-    _rndBytes = new List.fixedLength(16);
-    _byteToHex = new List.fixedLength(256);
+    _rndBytes = new List(16);
+    _byteToHex = new List(256);
     _hexToByte = new Map();
 
     // Easy number <-> hex conversion
@@ -87,7 +87,7 @@ class Uuid {
     var i = offset, ii = 0;
 
     // Create a 16 item buffer if one hasn't been provided.
-    buffer = (buffer != null) ? buffer : new List.fixedLength(16);
+    buffer = (buffer != null) ? buffer : new List(16);
 
     // Convert to lowercase and replace all hex with bytes then
     // string.replaceAll() does a lot of work that I don't need, and a manual
@@ -143,7 +143,7 @@ class Uuid {
    */
   v1({Map options: null, List buffer: null, int offset:0 }) {
     var i = offset;
-    var buf = (buffer != null) ? buffer : new List.fixedLength(16);
+    var buf = (buffer != null) ? buffer : new List(16);
     options = (options != null) ? options : new Map();
 
     var clockSeq = (options['clockSeq'] != null) ? options['clockSeq'] : _clockSeq;
