@@ -96,8 +96,8 @@ main() {
 
   group('[Version 5 Tests]', () {
     test('Using URL namespace and custom name', () {
-      var u0 = uuid.v5(uuid.NAMESPACE_URL, 'www.google.com');
-      var u1 = uuid.v5(uuid.NAMESPACE_URL, 'www.google.com');
+      var u0 = uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com');
+      var u1 = uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com');
 
       expect(u0, equals(u1));
     });
