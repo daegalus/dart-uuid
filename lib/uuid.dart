@@ -1,6 +1,6 @@
 library Uuid;
-import 'dart:crypto';
 import 'dart:math' as Math;
+import 'package:crypto';
 import './aes/aes.dart';
 
 /**
