@@ -1,3 +1,7 @@
+v0.1.6
+- Adjusting usage of constants.
+- Fixing tests.
+
 v0.1.5
 - Stupid typo on import.
 
