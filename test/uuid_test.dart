@@ -78,7 +78,7 @@ main() {
       var u0 = uuid.v4(options:{
         'rng': mathRNGCustom()
       });
-      var u1 = "0fc6a4b0-914e-439b-83cc-d57c8a731749";
+      var u1 = "43ccd57c-8a73-4749-8be9-46b23ab5c874";
       expect(u0, equals(u1));
     });
 
