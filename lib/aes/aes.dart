@@ -1,5 +1,5 @@
 library AES;
-import 'package:crypto';
+import 'package:crypto/crypto.dart';
 /**
  *  AES for Dart
  *
