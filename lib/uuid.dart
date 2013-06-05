@@ -19,11 +19,11 @@ class Uuid {
   static final TAU = 2*Math.PI;
 
   // RFC4122 provided namespaces for v3 and v5 namespace based UUIDs
-  const NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
-  const NAMESPACE_URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
-  const NAMESPACE_OID = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
-  const NAMESPACE_X500= '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
-  const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
+  static const NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+  static const NAMESPACE_URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
+  static const NAMESPACE_OID = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
+  static const NAMESPACE_X500= '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
+  static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
   var _rndBytes, _seedBytes, _nodeId, _clockSeq, _lastMSecs = 0,
       _lastNSecs = 0;
