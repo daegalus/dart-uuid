@@ -1,7 +1,8 @@
 library Uuid;
 import 'dart:math' as Math;
 import 'package:crypto/crypto.dart';
-import './aes/aes.dart';
+import 'package:cipher/cipher.dart';
+import 'dart:typed_data';
 
 /**
  *  uuid for Dart
@@ -30,6 +31,7 @@ class Uuid {
   var _byteToHex, _hexToByte;
 
   Uuid() {
+    initCipher();
     _rndBytes = new List(16);
     _byteToHex = new List(256);
     _hexToByte = new Map();
@@ -75,7 +77,23 @@ class Uuid {
    * AES-based RNG. All platforms, unknown speed, cryptographically strong (theoretically)
    */
   List cryptoRNG() {
-    return AES.randomBytes();
+    int nBytes = 32;
+    var pwBytes = new List(nBytes);
+
+    SHA256 hasher = new SHA256();
+    List bytes = '${(new DateTime.now()).millisecondsSinceEpoch}'.codeUnits;
+    hasher.add(bytes);
+    pwBytes = new Uint8List.fromList(hasher.close().sublist(0, nBytes));
+
+    var params = new KeyParameter( pwBytes );
+    var cipher = new BlockCipher( "AES" )
+      ..init( true, params )
+    ;
+
+    var plainText = pwBytes;
+    var cipherText = new Uint8List( cipher.blockSize );
+    cipher.processBlock( plainText, 0, cipherText, 0 );
+    return cipherText.toList();
   }
 
   /**

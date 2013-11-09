@@ -14,8 +14,6 @@ Features:
 * Cryptographically strong random # generation on all platforms
 * [Annotated source code](http://daegalus.github.com/annotated/dart-uuid/Uuid/Uuid.html)
 
-Note: The AES implementation used is a custom written implementation, and I can not guarantee that it actually works. This is only until a standard library version for generating crypt strong random bytes is implemented.
-
 ## Getting Started
 
 ### Notes on Windows (currently)
@@ -38,7 +36,7 @@ There are 2 options. Directly from git, or from pub.dartlang.org
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.1.6
+  uuid: 0.2.0
 ```
 
 directly from github:
