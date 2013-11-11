@@ -1,5 +1,5 @@
 name: uuid
-version: 0.2.0
+version: 0.2.1
 description: >
   RFC4122(v1,v4,v5) UUID Generator and Parser.
 author: Yulian Kuncheff <yulian@kuncheff.com>
