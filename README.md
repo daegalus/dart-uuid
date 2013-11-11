@@ -47,9 +47,7 @@ dependencies:
 ```
 
 ```dart
-#import('https://raw.github.com/Daegalus/dart-uuid/master/lib/uuid.dart'); //pulls it directly from github.
-// OR
-#import('package:uuid/uuid.dart'); //Uses the local one in ./packages/uuid/lib/uuid.dart
+import 'package:uuid/uuid.dart';
 
 var uuid = new Uuid();
 ```
