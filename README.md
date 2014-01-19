@@ -16,11 +16,6 @@ Features:
 
 ## Getting Started
 
-### Notes on Windows (currently)
-
-* Use cmd for pub
-* When actually running an application add // to the beginning of your Package-root directory ([Issue 4534](http://code.google.com/p/dart/issues/detail?id=4534))
-
 ### Instructions
 
 1. Install and configure pub (http://www.dartlang.org/docs/pub-package-manager/#installing-and-configuring-pub)

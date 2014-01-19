@@ -1,3 +1,6 @@
+v0.2.1
+- Using new version of cipher.
+
 v0.2.0
 - Dart 1.0 Readiness
 - Switched from custom AES to [cipher](https://github.com/izaera/cipher) package AES.
