@@ -1,3 +1,6 @@
+v0.2.2
+- Pegging cipher to 0.4.0 temporarily for browser support
+
 v0.2.1
 - Using new version of cipher.
 
