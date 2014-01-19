@@ -2,7 +2,7 @@
 
 # dart-uuid
 
-Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDS.
+Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDs.
 
 Heavily based on node-uuid by Robert Kieffer (I even copied this readme over and modified it.) 
 Primarily becaue it works, well written, and so on.
@@ -36,20 +36,11 @@ There are 2 options. Directly from git, or from pub.dartlang.org
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.2.0
-```
-
-directly from github:
-```yaml
-dependencies:
-  uuid:
-    git: https://github.com/Daegalus/dart-uuid.git
+  uuid: 0.2.1
 ```
 
 ```dart
-#import('https://raw.github.com/Daegalus/dart-uuid/master/lib/uuid.dart'); //pulls it directly from github.
-// OR
-#import('package:uuid/uuid.dart'); //Uses the local one in ./packages/uuid/lib/uuid.dart
+import 'package:uuid/uuid.dart';
 
 var uuid = new Uuid();
 ```
