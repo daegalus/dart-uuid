@@ -1,8 +1,10 @@
+import 'package:cipher/impl_server.dart';
 import "package:unittest/unittest.dart";
 import 'package:uuid/uuid.dart';
 import 'dart:math' as Math;
 
 main() {
+  initCipher();
   var uuid = new Uuid();
   final int TIME = 1321644961388;
 
@@ -78,7 +80,7 @@ main() {
       var u0 = uuid.v4(options:{
         'rng': mathRNGCustom()
       });
-      var u1 = "43ccd57c-8a73-4749-8be9-46b23ab5c874";
+      var u1 = "09a91894-e93f-4141-a3ec-82eb32f2a3ef";
       expect(u0, equals(u1));
     });
 
