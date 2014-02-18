@@ -31,7 +31,6 @@ class Uuid {
   var _byteToHex, _hexToByte;
 
   Uuid() {
-    initCipher();
     _rndBytes = new List(16);
     _byteToHex = new List(256);
     _hexToByte = new Map();
