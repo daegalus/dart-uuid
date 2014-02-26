@@ -1,5 +1,5 @@
 import "package:unittest/unittest.dart";
-import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid_server.dart';
 import 'dart:math' as Math;
 
 main() {
@@ -78,7 +78,7 @@ main() {
       var u0 = uuid.v4(options:{
         'rng': mathRNGCustom()
       });
-      var u1 = "43ccd57c-8a73-4749-8be9-46b23ab5c874";
+      var u1 = "09a91894-e93f-4141-a3ec-82eb32f2a3ef";
       expect(u0, equals(u1));
     });
 
@@ -91,6 +91,12 @@ main() {
       });
       var u1 = "109156be-c4fb-41ea-b1b4-efe1671c5836";
       expect(u0, equals(u1));
+    });
+
+    test('Make sure that really fast uuid.v4 doesn\'t produce duplicates', () {
+      var list = new List.filled(1000, null).map((something) => uuid.v4()).toList();
+      var setList = list.toSet();
+      expect(list.length, equals(setList.length));
     });
   });
 

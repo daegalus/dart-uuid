@@ -14,7 +14,7 @@ import 'dart:typed_data';
  *  Based on node-uuid by Robert Kieffer.
  */
 
-class Uuid {
+class UuidBase {
 
   // This isn't used, I just am propogated to use of TAU over PI - http://tauday.com/tau-manifesto
   static final TAU = 2*Math.PI;
@@ -30,8 +30,7 @@ class Uuid {
       _lastNSecs = 0;
   var _byteToHex, _hexToByte;
 
-  Uuid() {
-    initCipher();
+  UuidBase() {
     _rndBytes = new List(16);
     _byteToHex = new List(256);
     _hexToByte = new Map();
@@ -56,6 +55,9 @@ class Uuid {
     _clockSeq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3ffff;
   }
 
+  void initCipher(Function initCipher) {
+    initCipher();
+  }
   /**
    * Math.Random()-based RNG. All platforms, fast, not cryptographically strong.
    */
@@ -81,7 +83,7 @@ class Uuid {
     var pwBytes = new List(nBytes);
 
     SHA256 hasher = new SHA256();
-    List bytes = '${(new DateTime.now()).millisecondsSinceEpoch}'.codeUnits;
+    List bytes = mathRNG();
     hasher.add(bytes);
     pwBytes = new Uint8List.fromList(hasher.close().sublist(0, nBytes));
 
