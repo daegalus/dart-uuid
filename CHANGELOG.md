@@ -1,3 +1,7 @@
+v0.3.0
+- Updated to latest Cipher at 0.6.0. This created a breaking change in the imports. Please make sure you update your code.
+- Fixed problem when creating v4 UUIDs too fast, it would create duplicate UUIDs.
+
 v0.2.2
 - Pegging cipher to 0.4.0 temporarily for browser support
 

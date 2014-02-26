@@ -1,5 +1,7 @@
 [![](https://drone.io/daegalus/dart-uuid/status.png)](https://drone.io/daegalus/dart-uuid/latest)
 
+# v0.3.0 is a big breaking change. Please make sure if you update to this version you are aware of the changes.
+
 # dart-uuid
 
 Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDs.
@@ -31,11 +33,11 @@ There are 2 options. Directly from git, or from pub.dartlang.org
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.2.2
+  uuid: 0.3.0
 ```
 
 ```dart
-import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid_server.dart'; // or uuid/uuid_client.dart for the browser
 
 var uuid = new Uuid();
 ```
@@ -188,7 +190,7 @@ N/A as I have not used or tested this in the browser.
 
 ### Benchmarking
 
-Not ready for this yet. My code is probably inefficient and messy in many areas. Though it should be pretty quick.
+Its pretty quick, but no official benchmarking.
 
 ## Release notes
 See CHANGELOG
