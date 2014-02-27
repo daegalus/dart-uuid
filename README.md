@@ -1,6 +1,6 @@
 [![](https://drone.io/daegalus/dart-uuid/status.png)](https://drone.io/daegalus/dart-uuid/latest)
 
-# v0.3.0 is a big breaking change. Please make sure if you update to this version you are aware of the changes.
+## v0.3.0 is a big breaking change. Please make sure if you update to this version you are aware of the changes.
 
 # dart-uuid
 
@@ -186,7 +186,7 @@ dart test\uuid_test.dart
 
 In Browser
 
-N/A as I have not used or tested this in the browser.
+N/A as I have not used or tested this in the browser. But there are users of this library that do, and reported that it does infact work.
 
 ### Benchmarking
 
