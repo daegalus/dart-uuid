@@ -1,3 +1,6 @@
+v0.3.1 
+- Update pubspec to allow installation of the latest Cipher 0.7.
+
 v0.3.0
 - Updated to latest Cipher at 0.6.0. This created a breaking change in the imports. Please make sure you update your code.
 - Fixed problem when creating v4 UUIDs too fast, it would create duplicate UUIDs.
