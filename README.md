@@ -33,7 +33,7 @@ There are 2 options. Directly from git, or from pub.dartlang.org
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.3.1
+  uuid: 0.3.2
 ```
 
 ```dart

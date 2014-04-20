@@ -1,4 +1,7 @@
-v0.3.1 
+v0.3.2
+- Fix import/library bug.
+
+v0.3.1
 - Update pubspec to allow installation of the latest Cipher 0.7.
 
 v0.3.0

@@ -1,10 +1,10 @@
+library Uuid;
 import 'dart:math' as Math;
 import 'package:crypto/crypto.dart';
 import 'package:cipher/cipher.dart';
 import 'package:cipher/impl/base.dart';
 import 'dart:typed_data';
 import 'uuid.dart';
-export 'uuid.dart';
 
 class Uuid extends UuidBase {
 
