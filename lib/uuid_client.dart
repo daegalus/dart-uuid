@@ -1,19 +1,15 @@
-library Uuid;
-import 'dart:math' as Math;
-import 'package:crypto/crypto.dart';
-import 'package:cipher/cipher.dart';
+library uuid_client;
+
+import 'src/uuid.dart';
 import 'package:cipher/impl/client.dart';
-import 'dart:typed_data';
-import 'uuid.dart';
 
 class Uuid extends UuidBase {
 
-  // RFC4122 provided namespaces for v3 and v5 namespace based UUIDs
-  static const NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
-  static const NAMESPACE_URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
-  static const NAMESPACE_OID = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
-  static const NAMESPACE_X500= '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
-  static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
+  static const NAMESPACE_DNS = UuidBase.NAMESPACE_DNS;
+  static const NAMESPACE_URL = UuidBase.NAMESPACE_URL;
+  static const NAMESPACE_OID = UuidBase.NAMESPACE_OID;
+  static const NAMESPACE_X500= UuidBase.NAMESPACE_X500;
+  static const NAMESPACE_NIL = UuidBase.NAMESPACE_NIL;
 
   Uuid() : super() {
     this.initCipher(initCipher);

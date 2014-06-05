@@ -1,4 +1,3 @@
-library Uuid;
 import 'dart:math' as Math;
 import 'package:crypto/crypto.dart';
 import 'package:cipher/cipher.dart';
