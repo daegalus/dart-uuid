@@ -52,7 +52,7 @@ uuid.v1(); // -> '6c84fb90-12c4-11e1-840d-7b25c5ee775a'
 uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
 
 // Generate a v5 (namespace-name-sha1-based) id
-uuid.v5(uuid.NAMESPACE_URL, 'www.google.com'); // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
+uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com'); // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
 ```
 
 ## API
@@ -149,7 +149,7 @@ Returns `buffer`, if specified, otherwise the string form of the UUID
 Example: Generate string UUID with fully-specified options
 
 ```dart
-uuid.v5(uuid.NAMESPACE_URL, 'www.google.com');
+uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com');
 // -> "c74a196f-f19d-5ea9-bffd-a2742432fc9c"
 ```
 
@@ -157,8 +157,8 @@ Example: Generate two IDs in a single buffer
 
 ```dart
 var myBuffer = new List(32);
-uuid.v5(uuid.NAMESPACE_URL, 'www.google.com', buffer: myBuffer);
-uuid.v5(uuid.NAMESPACE_URL, 'www.google.com', buffer: myBuffer, offset: 16);
+uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com', buffer: myBuffer);
+uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com', buffer: myBuffer, offset: 16);
 ```
 
 ### uuid.parse(String uuid, {List buffer: null, int offset: 0})
