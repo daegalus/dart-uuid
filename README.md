@@ -1,6 +1,7 @@
 [![](https://drone.io/daegalus/dart-uuid/status.png)](https://drone.io/daegalus/dart-uuid/latest)
 
-## v0.3.0 is a big breaking change. Please make sure if you update to this version you are aware of the changes.
+## v0.4.0 is a unbreaking big breaking change, in turn making a breaking change. 
+## Please make sure if you update to this version you are aware of the changes.
 
 # dart-uuid
 
@@ -12,17 +13,16 @@ Primarily becaue it works, well written, and so on.
 Features:
 
 * Generate RFC4122 version 1, version 4, or version 5 UUIDs
-* Runs in dartvm and hopefully browsers too.
-* Cryptographically strong random # generation on all platforms
+* Runs in dartvm and browsers.
+* Cryptographically strong random number generation on all platforms
 * [Annotated source code](http://daegalus.github.com/annotated/dart-uuid/Uuid/Uuid.html)
 
 ## Getting Started
 
 ### Instructions
 
-1. Install and configure pub (http://www.dartlang.org/docs/pub-package-manager/#installing-and-configuring-pub)
-2. Open a command line and cd to your projects root folder
-3. In your pubspec, add an entry for dart-uuid to your dependencies (example below)
+1. Open a command line and cd to your projects root folder
+2. In your pubspec, add an entry for dart-uuid to your dependencies (example below)
 3. pub install
 4. If you wish to run tests, go into packages/dart-uuid/ and run 'dart test/uuid_test.dart'
 
@@ -33,11 +33,11 @@ There are 2 options. Directly from git, or from pub.dartlang.org
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.3.2
+  uuid: 0.4.0
 ```
 
 ```dart
-import 'package:uuid/uuid_server.dart'; // or uuid/uuid_client.dart for the browser
+import 'package:uuid/uuid.dart';
 
 var uuid = new Uuid();
 ```

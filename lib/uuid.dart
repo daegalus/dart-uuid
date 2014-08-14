@@ -2,19 +2,20 @@ library Uuid;
 import 'dart:math' as Math;
 import 'package:crypto/crypto.dart';
 import 'package:cipher/cipher.dart';
+import 'package:cipher/impl/base.dart';
 import 'dart:typed_data';
 
 /**
  *  uuid for Dart
  *
- *  Copyright (c) 2012 Yulian Kuncheff
+ *  Copyright (c) 2014 Yulian Kuncheff
  *
  *  Released under MIT License.
  *
  *  Based on node-uuid by Robert Kieffer.
  */
 
-class UuidBase {
+class Uuid {
 
   // This isn't used, I just am propogated to use of TAU over PI - http://tauday.com/tau-manifesto
   static final TAU = 2*Math.PI;
@@ -26,11 +27,11 @@ class UuidBase {
   static const NAMESPACE_X500= '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
-  var _rndBytes, _seedBytes, _nodeId, _clockSeq, _lastMSecs = 0,
-      _lastNSecs = 0;
+  var _rndBytes, _seedBytes, _nodeId, _clockSeq, _lastMSecs = 0, _lastNSecs = 0;
   var _byteToHex, _hexToByte;
 
-  UuidBase() {
+  Uuid() {
+    initCipher();
     _rndBytes = new List(16);
     _byteToHex = new List(256);
     _hexToByte = new Map();
@@ -47,17 +48,12 @@ class UuidBase {
     _seedBytes = mathRNG();
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
-    _nodeId = [_seedBytes[0] | 0x01,
-               _seedBytes[1], _seedBytes[2], _seedBytes[3],
-               _seedBytes[4], _seedBytes[5]];
+    _nodeId = [_seedBytes[0] | 0x01, _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]];
 
     // Per 4.2.2, randomize (14 bit) clockseq
     _clockSeq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3ffff;
   }
 
-  void initCipher(Function initCipher) {
-    initCipher();
-  }
   /**
    * Math.Random()-based RNG. All platforms, fast, not cryptographically strong.
    */
@@ -88,9 +84,7 @@ class UuidBase {
     pwBytes = new Uint8List.fromList(hasher.close().sublist(0, nBytes));
 
     var params = new KeyParameter( pwBytes );
-    var cipher = new BlockCipher( "AES" )
-      ..init( true, params )
-    ;
+    var cipher = new BlockCipher( "AES" )..init( true, params );
 
     var plainText = pwBytes;
     var cipherText = new Uint8List( cipher.blockSize );

@@ -1,3 +1,7 @@
+v0.4.0
+- Use Cipher base.dart, as I don't need entropy generators, and this allows me to merge client/server together again
+  and fix many issues this caused.
+
 v0.3.2
 - Fix import/library bug.
 
