@@ -1,3 +1,6 @@
+v0.4.1
+- Changed initCipher location so that if you ever only use v1 UUIDs, you will get a very small Dart2JS output compared to v4 or v5 that do load it.
+
 v0.4.0
 - Use Cipher base.dart, as I don't need entropy generators, and this allows me to merge client/server together again
   and fix many issues this caused.

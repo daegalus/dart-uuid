@@ -1,8 +1,5 @@
 [![](https://drone.io/daegalus/dart-uuid/status.png)](https://drone.io/daegalus/dart-uuid/latest)
 
-## v0.4.0 is a unbreaking big breaking change, in turn making a breaking change. 
-## Please make sure if you update to this version you are aware of the changes.
-
 # dart-uuid
 
 Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDs.
@@ -33,7 +30,7 @@ There are 2 options. Directly from git, or from pub.dartlang.org
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.4.0
+  uuid: 0.4.1
 ```
 
 ```dart
