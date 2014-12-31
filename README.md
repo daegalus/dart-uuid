@@ -1,3 +1,5 @@
+**0.5.0 WARNING: MathRNG is now the default RNG method when using v4 of v5. If you wish to use CryptoRNG, import uuid_util.dart and use UuidUtil.cryptoRNG() with the RNG option**
+
 [![](https://drone.io/daegalus/dart-uuid/status.png)](https://drone.io/daegalus/dart-uuid/latest)
 
 # dart-uuid
@@ -30,7 +32,7 @@ There are 2 options. Directly from git, or from pub.dartlang.org
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
 ```yaml
 dependencies:
-  uuid: 0.4.1
+  uuid: 0.5.0
 ```
 
 ```dart
@@ -104,11 +106,45 @@ Generate and return a RFC4122 v4 UUID.
 
   * `random` - (Number[16]) List of 16 numbers (0-255) to use in place of randomly generated values
   * `rng` - (Function) Random # generator to use. A Custom function that returns an list[16] of byte values or 1 of 2 provided.
+  * `namedArgs` - (Map<Symbol, dynamic>) The arguments and values you want to pass to your function.
+  * `positionalArgs` - (List) The positional arguments for your functions. if any.
 
 * `buffer` - (List) Array or buffer where UUID bytes are to be written.
 * `offset` - (Number) Starting index in `buffer` at which to begin writing.
 
 Returns `buffer`, if specified, otherwise the string form of the UUID
+
+Example: Generate string UUID with different RNG method
+
+```dart
+import 'package:uuid/uuid_util.dart';
+uuid.v4(options: {
+  'rng': UuidUtil.cryptoRNG
+});
+// -> "109156be-c4fb-41ea-b1b4-efe1671c5836"
+```
+
+Example: Generate string UUID with different RNG method and named parameters
+
+```dart
+import 'package:uuid/uuid_util.dart';
+uuid.v4(options: {
+  'rng': UuidUtil.mathRNG,
+  'namedArgs': new Map.fromIterables([const Symbol('seed')],[1])
+});
+// -> "09a91894-e93f-4141-a3ec-82eb32f2a3ef"
+```
+
+Example: Generate string UUID with different RNG method and positional parameters
+
+```dart
+import 'package:uuid/uuid_util.dart';
+uuid.v4(options: {
+  'rng': UuidUtil.mathRNG,
+  'positionalArgs': [1]
+});
+// -> "09a91894-e93f-4141-a3ec-82eb32f2a3ef"
+```
 
 Example: Generate string UUID with fully-specified options
 
@@ -173,6 +209,8 @@ Example parsing and unparsing a UUID string
 var bytes = uuid.parse('797ff043-11eb-11e1-80d6-510998755d10'); // -> [121, 127, 240, 67, 17, 235, 17, 225, 128, 214, 81, 9, 152, 117, 93, 16]
 var string = uuid.unparse(bytes); // -> '797ff043-11eb-11e1-80d6-510998755d10'
 ```
+
+For more examples or usage, check my test implementations.
 ## Testing
 
 In dartvm

@@ -1,24 +1,10 @@
 import "package:unittest/unittest.dart";
 import 'package:uuid/uuid.dart';
-import 'dart:math' as Math;
+import 'package:uuid/uuid_util.dart';
 
 main() {
   var uuid = new Uuid();
   final int TIME = 1321644961388;
-
-  List mathRNGCustom() {
-    var rand, b = new List(16);
-
-    var _rand = new Math.Random(1);
-    for(var i = 0; i < 16; i++) {
-      if ((i & 0x03) == 0) {
-        rand = (_rand.nextDouble() * 0x100000000).floor().toInt();
-      }
-      b[i] = rand >> ((i & 0x03) << 3) & 0xff;
-    }
-
-    return b;
-  }
 
   group('[Version 1 Tests]', () {
     test('IDs created at same mSec are different', () {
@@ -75,8 +61,9 @@ main() {
 
   group('[Version 4 Tests]', () {
     test('Check if V4 is consistent using a static seed', () {
-      var u0 = uuid.v4(options:{
-        'rng': mathRNGCustom()
+      var u0 = uuid.v4(options: {
+        'rng': UuidUtil.mathRNG,
+        'namedArgs': new Map.fromIterables([const Symbol('seed')],[1])
       });
       var u1 = "09a91894-e93f-4141-a3ec-82eb32f2a3ef";
       expect(u0, equals(u1));

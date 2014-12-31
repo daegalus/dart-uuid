@@ -1,3 +1,11 @@
+v0.5.0
+- Reverted back to custom AES implementation. Moved RNG methods to UuidUtil (import 'package:uuid/uuid_util.dart')
+- Fixed a potential bug with custom RNG method passing and added more ways to pass in custom RNG functions.
+- Cleaned up and refactored some stuff. Using only v1 is only 67kb of js, Using only v4 is 97kb. Using crypt v4 is 118kb. Using both v1 and non-crypto v4 is 126kb.
+- Default RNG for v4 is now the mathRNG function. If you wish to use cryptoRNG, import UuidUtil and pass in cryptoRNG.
+- Updated README.md with more examples and usages.
+- Updated Tests.
+
 v0.4.1
 - Changed initCipher location so that if you ever only use v1 UUIDs, you will get a very small Dart2JS output compared to v4 or v5 that do load it.
 
