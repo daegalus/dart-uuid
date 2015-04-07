@@ -4,6 +4,8 @@
 
 # dart-uuid
 
+[![Join the chat at https://gitter.im/Daegalus/dart-uuid](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Daegalus/dart-uuid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDs.
 
 Heavily based on node-uuid by Robert Kieffer (I even copied this readme over and modified it.) 
