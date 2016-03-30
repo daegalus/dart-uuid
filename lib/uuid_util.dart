@@ -8,8 +8,8 @@ class UuidUtil {
   /**
    * Math.Random()-based RNG. All platforms, fast, not cryptographically strong. Optional Seed passable.
    */
-  static List mathRNG({int seed: null}) {
-    var rand, b = new List(16);
+  static List<int> mathRNG({int seed: null}) {
+    var rand, b = new List<int>(16);
 
     var _rand = (seed == null) ? new Random() : new Random(seed);
     for(var i = 0; i < 16; i++) {
@@ -30,7 +30,7 @@ class UuidUtil {
     var pwBytes = new List(nBytes);
 
     SHA256 hasher = new SHA256();
-    List bytes = mathRNG();
+    var bytes = mathRNG();
     hasher.add(bytes);
     pwBytes = hasher.close().sublist(0, nBytes);
 

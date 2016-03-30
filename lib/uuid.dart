@@ -26,11 +26,12 @@ class Uuid {
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
   var _seedBytes, _nodeId, _clockSeq, _lastMSecs = 0, _lastNSecs = 0;
-  var _byteToHex, _hexToByte;
+  List<String> _byteToHex;
+  Map<String, int> _hexToByte;
 
   Uuid() {
-    _byteToHex = new List(256);
-    _hexToByte = new Map();
+    _byteToHex = new List<String>(256);
+    _hexToByte = new Map<String, int>();
 
     // Easy number <-> hex conversion
     for(var i = 0; i < 256; i++) {
@@ -55,11 +56,11 @@ class Uuid {
    * Can optionally be provided a [buffer] to write into and
    *  a positional [offset] for where to start inputting into the buffer.
    */
-  List parse(String uuid, {List buffer, int offset: 0}) {
+  List<int> parse(String uuid, {List<int> buffer, int offset: 0}) {
     var i = offset, ii = 0;
 
     // Create a 16 item buffer if one hasn't been provided.
-    buffer = (buffer != null) ? buffer : new List(16);
+    buffer = (buffer != null) ? buffer : new List<int>(16);
 
     // Convert to lowercase and replace all hex with bytes then
     // string.replaceAll() does a lot of work that I don't need, and a manual
@@ -203,13 +204,13 @@ class Uuid {
    *
    * http://tools.ietf.org/html/rfc4122.html#section-4.4
    */
-  v4({Map options: null, List buffer: null, int offset: 0}) {
+  v4({Map<String, dynamic> options: null, List buffer: null, int offset: 0}) {
     var i = offset;
-    options = (options != null) ? options : new Map();
+    options = (options != null) ? options : new Map<String, dynamic>();
 
     // Use the built-in RNG or a custom provided RNG
     var positionalArgs = (options['positionalArgs'] != null) ? options['positionalArgs'] : [];
-    var namedArgs = (options['namedArgs'] != null) ? options['namedArgs'] : {};
+    var namedArgs = (options['namedArgs'] != null) ? options['namedArgs'] as Map<Symbol, dynamic> : const <Symbol, dynamic>{};
     var rng = (options['rng'] != null) ? Function.apply(options['rng'], positionalArgs, namedArgs) : UuidUtil.mathRNG();
 
     // Use provided values over RNG
@@ -265,7 +266,7 @@ class Uuid {
     var bytes = parse(namespace);
 
     // Convert name to a list of bytes
-    var nameBytes = new List();
+    var nameBytes = new List<int>();
     for(var singleChar in name.codeUnits) {
       nameBytes.add(singleChar);
     }

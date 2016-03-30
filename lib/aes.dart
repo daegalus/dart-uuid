@@ -17,7 +17,7 @@ class AES {
     int numRounds = keySchedule.length ~/ blockSize-1; // number of rounds (10/12/14 for 128/192/256-bit keys)
 
     // Initialize 4xNb byte-array 'state' with input [§3.4]
-    var state = [new List(4),new List(4),new List(4),new List(4)];
+    var state = <List<int>>[new List(4),new List(4),new List(4),new List(4)];
     for (int i = 0; i < 4*blockSize; i++) {
       int r = i%4;
       int c = (i~/4).floor();
@@ -78,7 +78,7 @@ class AES {
     return keySchedule;
   }
 
-  static _subBytes(List state, int blockSize) {
+  static List<List<int>> _subBytes(List<List<int>> state, int blockSize) {
     for (int row=0; row<4; row++) {
       for (int column=0; column<blockSize; column++) {
         state[row][column] = _sBox[state[row][column]];
@@ -87,7 +87,7 @@ class AES {
     return state;
   }
 
-  static _shiftRows(List state, int blockSize) {
+  static List<List<int>> _shiftRows(List<List<int>> state, int blockSize) {
     var temp = new List(4);
     for (int row=1; row<4; row++) {
       for (int column=0; column<4; column++) {
@@ -100,7 +100,7 @@ class AES {
     return state;
   }
 
-  static _mixColumns(List state, int blockSize) {
+  static List<List<int>> _mixColumns(List<List<int>> state, int blockSize) {
     for (int column=0; column<4; column++) {
       var a = new List(4);
       var b = new List(4);
@@ -117,7 +117,7 @@ class AES {
     return state;
   }
 
-  static _addRoundKey(List state, List keySchedule, int round, int blockSize) {
+  static List<List<int>> _addRoundKey(List<List<int>> state, List keySchedule, int round, int blockSize) {
     for (int row=0; row<4; row++) {
       for (int column=0; column<blockSize; column++) {
         state[row][column] ^= keySchedule[round*4+column][row];
