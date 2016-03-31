@@ -9,4 +9,4 @@ environment:
 dependencies:
   crypto: ">=0.9.0 <0.10.0"
 dev_dependencies:
-  unittest: any
+  test: any
