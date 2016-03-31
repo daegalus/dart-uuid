@@ -1,6 +1,6 @@
 **0.5.0 WARNING: MathRNG is now the default RNG method when using v4 of v5. If you wish to use CryptoRNG, import uuid_util.dart and use UuidUtil.cryptoRNG() with the RNG option**
 
-[![](https://drone.io/daegalus/dart-uuid/status.png)](https://drone.io/daegalus/dart-uuid/latest)
+[![Build Status](https://travis-ci.org/Daegalus/dart-uuid.svg?branch=master)](https://travis-ci.org/Daegalus/dart-uuid)
 
 # dart-uuid
 
