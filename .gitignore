@@ -4,6 +4,7 @@ tests/packages
 .project
 packages/
 packages
+.packages
 *.iml
 .idea/
 out/
