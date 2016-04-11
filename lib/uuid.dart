@@ -2,6 +2,7 @@ library Uuid;
 import 'dart:math';
 import 'uuid_util.dart';
 import 'package:crypto/crypto.dart';
+import 'package:convert/convert.dart' as convert;
 
 /**
  *  uuid for Dart
@@ -37,7 +38,7 @@ class Uuid {
     for(var i = 0; i < 256; i++) {
       var hex = new List<int>();
       hex.add(i);
-      _byteToHex[i] = CryptoUtils.bytesToHex(hex);
+      _byteToHex[i] = convert.hex.encode(hex);
       _hexToByte[_byteToHex[i]] = i;
     }
 
@@ -272,10 +273,7 @@ class Uuid {
     }
 
     // Generate SHA1 using namespace concatenated with name
-    var hash = new SHA1();
-    hash.add(bytes);
-    hash.add(nameBytes);
-    List hashBytes = hash.close();
+    List hashBytes = sha1.convert(new List.from(bytes)..addAll(nameBytes)).bytes;
 
     // per 4.4, set bits for version and clockSeq high and reserved
     hashBytes[6] = (hashBytes[6] & 0x0f) | 0x50;
