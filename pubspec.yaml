@@ -7,6 +7,7 @@ homepage: https://github.com/Daegalus/dart-uuid
 environment:
   sdk: ">=1.0.0 <2.0.0"
 dependencies:
-  crypto: ">=0.9.0 <0.10.0"
+  crypto: ">=1.0.0 <2.0.0"
+  convert: ">=1.0.0 <2.0.0"
 dev_dependencies:
   test: any

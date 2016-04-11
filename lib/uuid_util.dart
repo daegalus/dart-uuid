@@ -29,10 +29,8 @@ class UuidUtil {
     int nBytes = 32;
     var pwBytes = new List(nBytes);
 
-    SHA256 hasher = new SHA256();
     var bytes = mathRNG();
-    hasher.add(bytes);
-    pwBytes = hasher.close().sublist(0, nBytes);
+    pwBytes = sha256.convert(bytes).bytes.sublist(0, nBytes);
 
     return AES.cipher(pwBytes, AES.keyExpansion(pwBytes));
   }
