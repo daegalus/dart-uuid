@@ -1,3 +1,9 @@
+v0.5.2
+- Merged pull request to upgrade crypto library to 1.0.0.
+
+v0.5.1
+- Merged pull request for various updates and cleanup.
+
 v0.5.0
 - Reverted back to custom AES implementation. Moved RNG methods to UuidUtil (import 'package:uuid/uuid_util.dart')
 - Fixed a potential bug with custom RNG method passing and added more ways to pass in custom RNG functions.
