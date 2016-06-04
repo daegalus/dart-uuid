@@ -1,5 +1,6 @@
-v0.5.2+1
-- Support crypto 2.0.0.
+v0.5.3
+- Merged pull request to support crypto 2.0.0
+- Support convert 2.0.0
 
 v0.5.2
 - Merged pull request to upgrade crypto library to 1.0.0.
