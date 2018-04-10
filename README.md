@@ -1,5 +1,3 @@
-**0.5.0 WARNING: MathRNG is now the default RNG method when using v4 of v5. If you wish to use CryptoRNG, import uuid_util.dart and use UuidUtil.cryptoRNG() with the RNG option**
-
 [![Build Status](https://travis-ci.org/Daegalus/dart-uuid.svg?branch=master)](https://travis-ci.org/Daegalus/dart-uuid)
 
 # dart-uuid
@@ -8,7 +6,7 @@
 
 Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDs.
 
-Heavily based on node-uuid by Robert Kieffer (I even copied this readme over and modified it.) 
+Heavily based on node-uuid by Robert Kieffer (I even copied this readme over and modified it.)
 Primarily becaue it works, well written, and so on.
 
 Features:
@@ -16,25 +14,27 @@ Features:
 * Generate RFC4122 version 1, version 4, or version 5 UUIDs
 * Runs in dartvm and browsers.
 * Cryptographically strong random number generation on all platforms
+* * Defaults to non-crypto generator, see UuidUtil for cryptoRNG
 * [Annotated source code](http://daegalus.github.com/annotated/dart-uuid/Uuid/Uuid.html)
 
 ## Getting Started
 
 ### Instructions
 
-1. Open a command line and cd to your projects root folder
-2. In your pubspec, add an entry for dart-uuid to your dependencies (example below)
-3. pub install
-4. If you wish to run tests, go into packages/dart-uuid/ and run 'dart test/uuid_test.dart'
+1.  Open a command line and cd to your projects root folder
+2.  In your pubspec, add an entry for dart-uuid to your dependencies (example below)
+3.  pub install
+4.  If you wish to run tests, go into packages/dart-uuid/ and run 'dart test/uuid_test.dart'
 
 ### Pubspec
 
 There are 2 options. Directly from git, or from pub.dartlang.org
 
 pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
+
 ```yaml
 dependencies:
-  uuid: 0.5.0
+  uuid: 1.0.0
 ```
 
 ```dart
@@ -65,8 +65,8 @@ Generate and return a RFC4122 v1 (timestamp-based) UUID.
 * `options` - (Map) Optional uuid state to apply. Properties may include:
 
   * `node` - (List) Node id as List of 6 bytes (per 4.1.6). Default: Randomnly generated ID.
-  * `clockseq` - (Number between 0 - 0x3fff) RFC clock sequence.  Default: An internally maintained clockseq is used.
-  * `msecs` - (Number) Time in milliseconds since unix Epoch.  Default: The current time is used.
+  * `clockseq` - (Number between 0 - 0x3fff) RFC clock sequence. Default: An internally maintained clockseq is used.
+  * `msecs` - (Number) Time in milliseconds since unix Epoch. Default: The current time is used.
   * `nsecs` - (Number between 0-9999) additional time, in 100-nanosecond units. Ignored if `msecs` is unspecified. Default: internal uuid counter is used, as per 4.2.1.2.
 
 * `buffer` - (List) Array or buffer where UUID bytes are to be written.
@@ -90,7 +90,7 @@ Example: In-place generation of two binary IDs
 ```dart
 // Generate two ids in an array
 var myBuffer = new List(32); // -> []
-uuid.v1(buffer: myBuffer);   
+uuid.v1(buffer: myBuffer);
 // -> [115, 189, 5, 128, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
 uuid.v1(buffer: myBuffer, offset: 16);  
 // -> [115, 189, 5, 128, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128, 115, 189, 5, 129, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128]
@@ -197,13 +197,14 @@ uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com', buffer: myBuffer, offset: 16);
 ```
 
 ### uuid.parse(String uuid, {List buffer: null, int offset: 0})
+
 ### uuid.unparse(List buffer, {int offset: 0})
 
 Parse and unparse UUIDs
 
-  * `id` - (String) UUID(-like) string
-  * `buffer` - (List) Array or buffer where UUID bytes are to be written. Default: A new Array or Buffer is used
-  * `offset` - (Int | Number) Starting index in `buffer` at which to begin writing. Default: 0
+* `id` - (String) UUID(-like) string
+* `buffer` - (List) Array or buffer where UUID bytes are to be written. Default: A new Array or Buffer is used
+* `offset` - (Int | Number) Starting index in `buffer` at which to begin writing. Default: 0
 
 Example parsing and unparsing a UUID string
 
@@ -213,6 +214,7 @@ var string = uuid.unparse(bytes); // -> '797ff043-11eb-11e1-80d6-510998755d10'
 ```
 
 For more examples or usage, check my test implementations.
+
 ## Testing
 
 In dartvm
@@ -230,4 +232,5 @@ N/A as I have not used or tested this in the browser. But there are users of thi
 Its pretty quick, but no official benchmarking.
 
 ## Release notes
+
 See CHANGELOG

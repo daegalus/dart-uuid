@@ -11,21 +11,21 @@ library AES;
  */
 
 class AES {
-
   static List cipher(List input, List keySchedule) {
     int blockSize = 4; //block size - fixed at 4 for AES
-    int numRounds = keySchedule.length ~/ blockSize-1; // number of rounds (10/12/14 for 128/192/256-bit keys)
+    int numRounds = keySchedule.length ~/ blockSize -
+        1; // number of rounds (10/12/14 for 128/192/256-bit keys)
 
     // Initialize 4xNb byte-array 'state' with input [§3.4]
-    var state = <List<int>>[new List(4),new List(4),new List(4),new List(4)];
-    for (int i = 0; i < 4*blockSize; i++) {
-      int r = i%4;
-      int c = (i~/4).floor();
+    var state = <List<int>>[new List(4), new List(4), new List(4), new List(4)];
+    for (int i = 0; i < 4 * blockSize; i++) {
+      int r = i % 4;
+      int c = (i ~/ 4).floor();
       state[r][c] = input[i];
     }
 
     state = _addRoundKey(state, keySchedule, 0, blockSize);
-    for (int round=1; round<numRounds; round++) {
+    for (int round = 1; round < numRounds; round++) {
       state = _subBytes(state, blockSize);
       state = _shiftRows(state, blockSize);
       state = _mixColumns(state, blockSize);
@@ -36,9 +36,9 @@ class AES {
     state = _shiftRows(state, blockSize);
     state = _addRoundKey(state, keySchedule, numRounds, blockSize);
 
-    var output = new List(4*blockSize);
-    for (int i=0; i < 4*blockSize; i++) {
-      output[i] = state[i%4][(i~/4).floor()];
+    var output = new List(4 * blockSize);
+    for (int i = 0; i < 4 * blockSize; i++) {
+      output[i] = state[i % 4][(i ~/ 4).floor()];
     }
     return output;
   }
@@ -48,30 +48,29 @@ class AES {
     int keyLength = key.length ~/ 4;
     int numRounds = keyLength + 6;
 
-    var keySchedule = new List((blockSize*(numRounds+1)).toInt());
+    var keySchedule = new List((blockSize * (numRounds + 1)).toInt());
     var temp = new List(4);
 
     for (int i = 0; i < keyLength; i++) {
-      var row = [key[4*i], key[4*i+1], key[4*i+2], key[4*i+3]];
+      var row = [key[4 * i], key[4 * i + 1], key[4 * i + 2], key[4 * i + 3]];
       keySchedule[i] = row;
     }
 
-    for (int i=keyLength; i < (blockSize*(numRounds+1)); i++) {
+    for (int i = keyLength; i < (blockSize * (numRounds + 1)); i++) {
       keySchedule[i] = new List(4);
-      for (int t=0; t<4; t++) {
-        temp[t] = keySchedule[i-1][t];
+      for (int t = 0; t < 4; t++) {
+        temp[t] = keySchedule[i - 1][t];
       }
       if (i % keyLength == 0) {
         temp = _subWord(_rotWord(temp));
-        for (int t=0; t<4; t++) {
+        for (int t = 0; t < 4; t++) {
           temp[t] ^= _rCon[i ~/ keyLength][t];
         }
-      }
-      else if (keyLength > 6 && i%keyLength == 4) {
+      } else if (keyLength > 6 && i % keyLength == 4) {
         temp = _subWord(temp);
       }
-      for (int t=0; t<4; t++) {
-        keySchedule[i][t] = keySchedule[i-keyLength][t] ^ temp[t];
+      for (int t = 0; t < 4; t++) {
+        keySchedule[i][t] = keySchedule[i - keyLength][t] ^ temp[t];
       }
     }
 
@@ -79,8 +78,8 @@ class AES {
   }
 
   static List<List<int>> _subBytes(List<List<int>> state, int blockSize) {
-    for (int row=0; row<4; row++) {
-      for (int column=0; column<blockSize; column++) {
+    for (int row = 0; row < 4; row++) {
+      for (int column = 0; column < blockSize; column++) {
         state[row][column] = _sBox[state[row][column]];
       }
     }
@@ -89,11 +88,11 @@ class AES {
 
   static List<List<int>> _shiftRows(List<List<int>> state, int blockSize) {
     var temp = new List(4);
-    for (int row=1; row<4; row++) {
-      for (int column=0; column<4; column++) {
-        temp[column] = state[row][(column+row)%blockSize];
+    for (int row = 1; row < 4; row++) {
+      for (int column = 0; column < 4; column++) {
+        temp[column] = state[row][(column + row) % blockSize];
       }
-      for (int column=0; column<4; column++) {
+      for (int column = 0; column < 4; column++) {
         state[row][column] = temp[column];
       }
     }
@@ -101,12 +100,14 @@ class AES {
   }
 
   static List<List<int>> _mixColumns(List<List<int>> state, int blockSize) {
-    for (int column=0; column<4; column++) {
+    for (int column = 0; column < 4; column++) {
       var a = new List(4);
       var b = new List(4);
-      for (int i=0; i<4; i++) {
+      for (int i = 0; i < 4; i++) {
         a[i] = state[i][column];
-        b[i] = (state[i][column] & 0x80) != 0 ? state[i][column] << 1 ^ 0x011b : state[i][column]<<1;
+        b[i] = (state[i][column] & 0x80) != 0
+            ? state[i][column] << 1 ^ 0x011b
+            : state[i][column] << 1;
       }
 
       state[0][column] = b[0] ^ a[1] ^ b[1] ^ a[2] ^ a[3];
@@ -117,17 +118,18 @@ class AES {
     return state;
   }
 
-  static List<List<int>> _addRoundKey(List<List<int>> state, List keySchedule, int round, int blockSize) {
-    for (int row=0; row<4; row++) {
-      for (int column=0; column<blockSize; column++) {
-        state[row][column] ^= keySchedule[round*4+column][row];
+  static List<List<int>> _addRoundKey(
+      List<List<int>> state, List keySchedule, int round, int blockSize) {
+    for (int row = 0; row < 4; row++) {
+      for (int column = 0; column < blockSize; column++) {
+        state[row][column] ^= keySchedule[round * 4 + column][row];
       }
     }
     return state;
   }
 
   static _subWord(List keySchedule) {
-    for (int i=0; i<4; i++) {
+    for (int i = 0; i < 4; i++) {
       _sBox[keySchedule[i]];
     }
     return keySchedule;
@@ -135,8 +137,8 @@ class AES {
 
   static _rotWord(List keySchedule) {
     var temp = keySchedule[0];
-    for (int i=0; i<3; i++) {
-      keySchedule[i] = keySchedule[i+1];
+    for (int i = 0; i < 3; i++) {
+      keySchedule[i] = keySchedule[i + 1];
     }
     keySchedule[3] = temp;
     return keySchedule;
@@ -159,15 +161,17 @@ class AES {
                  0xe1,0xf8,0x98,0x11,0x69,0xd9,0x8e,0x94,0x9b,0x1e,0x87,0xe9,0xce,0x55,0x28,0xdf,
                  0x8c,0xa1,0x89,0x0d,0xbf,0xe6,0x42,0x68,0x41,0x99,0x2d,0x0f,0xb0,0x54,0xbb,0x16];
 
-  static const _rCon = const [const [0x00, 0x00, 0x00, 0x00],
-                              const [0x01, 0x00, 0x00, 0x00],
-                              const [0x02, 0x00, 0x00, 0x00],
-                              const [0x04, 0x00, 0x00, 0x00],
-                              const [0x08, 0x00, 0x00, 0x00],
-                              const [0x10, 0x00, 0x00, 0x00],
-                              const [0x20, 0x00, 0x00, 0x00],
-                              const [0x40, 0x00, 0x00, 0x00],
-                              const [0x80, 0x00, 0x00, 0x00],
-                              const [0x1b, 0x00, 0x00, 0x00],
-                              const [0x36, 0x00, 0x00, 0x00]];
+  static const _rCon = const [
+    const [0x00, 0x00, 0x00, 0x00],
+    const [0x01, 0x00, 0x00, 0x00],
+    const [0x02, 0x00, 0x00, 0x00],
+    const [0x04, 0x00, 0x00, 0x00],
+    const [0x08, 0x00, 0x00, 0x00],
+    const [0x10, 0x00, 0x00, 0x00],
+    const [0x20, 0x00, 0x00, 0x00],
+    const [0x40, 0x00, 0x00, 0x00],
+    const [0x80, 0x00, 0x00, 0x00],
+    const [0x1b, 0x00, 0x00, 0x00],
+    const [0x36, 0x00, 0x00, 0x00]
+  ];
 }

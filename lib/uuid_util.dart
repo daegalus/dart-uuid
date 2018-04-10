@@ -1,10 +1,10 @@
 library UuidUtil;
+
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'aes.dart';
 
 class UuidUtil {
-
   /**
    * Math.Random()-based RNG. All platforms, fast, not cryptographically strong. Optional Seed passable.
    */
@@ -12,7 +12,7 @@ class UuidUtil {
     var rand, b = new List<int>(16);
 
     var _rand = (seed == null) ? new Random() : new Random(seed);
-    for(var i = 0; i < 16; i++) {
+    for (var i = 0; i < 16; i++) {
       if ((i & 0x03) == 0) {
         rand = (_rand.nextDouble() * 0x100000000).floor().toInt();
       }
