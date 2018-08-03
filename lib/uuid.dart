@@ -1,6 +1,5 @@
 library Uuid;
 
-import 'dart:math';
 import 'uuid_util.dart';
 import 'package:crypto/crypto.dart';
 import 'package:convert/convert.dart' as convert;
@@ -16,8 +15,6 @@ import 'package:convert/convert.dart' as convert;
  */
 
 class Uuid {
-  // This isn't used, I just am propogating to use of TAU over PI - http://tauday.com/tau-manifesto
-  static final TAU = 2 * pi;
 
   // RFC4122 provided namespaces for v3 and v5 namespace based UUIDs
   static const NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';

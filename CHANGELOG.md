@@ -1,3 +1,6 @@
+v1.0.2
+* Fix constants breaking in Dart 1.x, need to be backwards compatible. 
+
 v1.0.1
 * Fix constants to match Dart 2.0 spec
 
