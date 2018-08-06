@@ -1,3 +1,6 @@
+v1.0.2+1
+* Updated Dart SDK constraints to version '>=2.0.0 <3.0.0'.
+
 v1.0.2
 * Fix constants breaking in Dart 1.x, need to be backwards compatible. 
 
