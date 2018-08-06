@@ -1,3 +1,6 @@
+v1.0.3
+* Fix SDK constraints to allow Dart 2.0 stable.
+
 v1.0.2
 * Fix constants breaking in Dart 1.x, need to be backwards compatible. 
 
