@@ -5,7 +5,7 @@ description: >
 author: Yulian Kuncheff <yulian@kuncheff.com>
 homepage: https://github.com/Daegalus/dart-uuid
 environment:
-  sdk: ">=1.0.0 <3.0.0"
+  sdk: ">=2.0.0 <3.0.0"
 dependencies:
   crypto: ">=2.0.0 <3.0.0"
   convert: ">=2.0.0 <3.0.0"
