@@ -11,7 +11,7 @@ Features:
 * Generate RFC4122 version 1, version 4, or version 5 UUIDs
 * Runs in dartvm and browsers.
 * Cryptographically strong random number generation on all platforms
-* * Defaults to non-crypto generator, see UuidUtil for cryptoRNG
+* * **Defaults to non-crypto generator, see UuidUtil for cryptoRNG**
 * [Documentation](http://daegalus.github.com/dart-uuid/index.html)
 
 ## Getting Started
