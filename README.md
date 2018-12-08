@@ -1,6 +1,9 @@
 [![Build Status](https://travis-ci.org/Daegalus/dart-uuid.svg?branch=master)](https://travis-ci.org/Daegalus/dart-uuid)
 
 # dart-uuid
+
+**Version 2.0.0 has breaking API changes. Please review them below.**
+
 Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDs.
 
 Originally based on node-uuid by Robert Kieffer (I even copied this readme over and modified it.)
