@@ -12,7 +12,7 @@ Primarily becaue it works, well written, and so on. It has changed considerably 
 Features:
 
 * Generate RFC4122 version 1, version 4, or version 5 UUIDs
-* Runs in dartvm and browsers.
+* Runs in web, server, and flutter
 * Cryptographically strong random number generation on all platforms
   * **Defaults to non-crypto generator, see UuidUtil for cryptoRNG**
 * [Documentation](http://daegalus.github.com/dart-uuid/index.html)
@@ -230,7 +230,7 @@ In dartvm
 dart test\uuid_test.dart
 ```
 
-In Browser
+In Browser/flutter
 
 No in browser testing, but I know many use it in Web and Flutter projects.
 
