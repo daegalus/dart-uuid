@@ -1,9 +1,6 @@
 [![Build Status](https://travis-ci.org/Daegalus/dart-uuid.svg?branch=master)](https://travis-ci.org/Daegalus/dart-uuid)
 
 # dart-uuid
-
-[![Join the chat at https://gitter.im/Daegalus/dart-uuid](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Daegalus/dart-uuid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDs.
 
 Heavily based on node-uuid by Robert Kieffer (I even copied this readme over and modified it.)
@@ -15,7 +12,7 @@ Features:
 * Runs in dartvm and browsers.
 * Cryptographically strong random number generation on all platforms
 * * Defaults to non-crypto generator, see UuidUtil for cryptoRNG
-* [Annotated source code](http://daegalus.github.com/annotated/dart-uuid/Uuid/Uuid.html)
+* [Annotated source code](http://daegalus.github.com/dart-uuid/index.html)
 
 ## Getting Started
 
@@ -34,7 +31,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 1.0.0
+  uuid: 2.0.0
 ```
 
 ```dart
@@ -58,21 +55,23 @@ uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com'); // -> 'c74a196f-f19d-5ea9-bffd-a2
 
 ## API
 
-### uuid.v1({Map options: null, List buffer: null, int offset: 0})
+### uuid.v1({Map<String, dynamic> options: null) -> String
+### uuid.v1buffer(List<int> buffer, {Map<String, dynamic> options: null, int offset: 0}) -> List<int>
 
 Generate and return a RFC4122 v1 (timestamp-based) UUID.
 
-* `options` - (Map) Optional uuid state to apply. Properties may include:
+* `options` - (Map<String, dynamic>) Optional uuid state to apply. Properties may include:
 
-  * `node` - (List) Node id as List of 6 bytes (per 4.1.6). Default: Randomnly generated ID.
+  * `node` - (List<int>) Node id as List of 6 bytes (per 4.1.6). Default: Randomnly generated ID.
   * `clockseq` - (Number between 0 - 0x3fff) RFC clock sequence. Default: An internally maintained clockseq is used.
   * `msecs` - (Number) Time in milliseconds since unix Epoch. Default: The current time is used.
   * `nsecs` - (Number between 0-9999) additional time, in 100-nanosecond units. Ignored if `msecs` is unspecified. Default: internal uuid counter is used, as per 4.2.1.2.
 
-* `buffer` - (List) Array or buffer where UUID bytes are to be written.
+* `buffer` - (List<int>) Array or buffer where UUID bytes are to be written.
 * `offset` - (Int) Starting index in `buffer` at which to begin writing.
 
-Returns `buffer`, if specified, otherwise the string form of the UUID
+v1() returns a string representation of the uuid.
+v1buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
 
 Example: Generate string UUID with fully-specified options
 
@@ -90,31 +89,32 @@ Example: In-place generation of two binary IDs
 ```dart
 // Generate two ids in an array
 var myBuffer = new List(32); // -> []
-uuid.v1(buffer: myBuffer);
+uuid.v1buffer(myBuffer);
 // -> [115, 189, 5, 128, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-uuid.v1(buffer: myBuffer, offset: 16);  
+uuid.v1buffer(myBuffer, offset: 16);  
 // -> [115, 189, 5, 128, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128, 115, 189, 5, 129, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128]
 
 // Optionally use uuid.unparse() to get stringify the ids
-uuid.unparse(buffer: myBuffer);    // -> '73bd0580-c95b-11e1-9234-6d0009003480'
-uuid.unparse(buffer: myBuffer, offset: 16) // -> '73bd0581-c95b-11e1-9234-6d0009003480'
+uuid.unparse(myBuffer);    // -> '73bd0580-c95b-11e1-9234-6d0009003480'
+uuid.unparse(myBuffer, offset: 16) // -> '73bd0581-c95b-11e1-9234-6d0009003480'
 ```
 
-### uuid.v4({Map options: null, List buffer: null, int offset: 0})
-
+### uuid.v4({Map<String, dynamic> options: null})
+### uuid.v4buffer(List<int> buffer, {Map<String, dynamic> options: null, int offset: 0})
 Generate and return a RFC4122 v4 UUID.
 
-* `options` - (Map) Optional uuid state to apply. Properties may include:
+* `options` - (Map<String, dynamic>) Optional uuid state to apply. Properties may include:
 
   * `random` - (Number[16]) List of 16 numbers (0-255) to use in place of randomly generated values
   * `rng` - (Function) Random # generator to use. A Custom function that returns an list[16] of byte values or 1 of 2 provided.
   * `namedArgs` - (Map<Symbol, dynamic>) The arguments and values you want to pass to your function.
   * `positionalArgs` - (List) The positional arguments for your functions. if any.
 
-* `buffer` - (List) Array or buffer where UUID bytes are to be written.
+* `buffer` - (List<int>) Array or buffer where UUID bytes are to be written.
 * `offset` - (Number) Starting index in `buffer` at which to begin writing.
 
-Returns `buffer`, if specified, otherwise the string form of the UUID
+v4() returns a string representation of the uuid.
+v4buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
 
 Example: Generate string UUID with different RNG method
 
@@ -142,7 +142,7 @@ Example: Generate string UUID with different RNG method and positional parameter
 ```dart
 import 'package:uuid/uuid_util.dart';
 uuid.v4(options: {
-  'rng': UuidUtil.mathRNG,
+  'rng': UuidUtil.cryptoRNG,
   'positionalArgs': [1]
 });
 // -> "09a91894-e93f-4141-a3ec-82eb32f2a3ef"
@@ -164,22 +164,23 @@ Example: Generate two IDs in a single buffer
 
 ```dart
 var myBuffer = new List(32);
-uuid.v4(buffer: myBuffer);
-uuid.v4(buffer: myBuffer, offset: 16);
+uuid.v4buffer(myBuffer);
+uuid.v4buffer(myBuffer, offset: 16);
 ```
 
-### uuid.v5(String namespace, String name, {Map options: null, List buffer: null, int offset: 0})
-
+### uuid.v5(String namespace, String name, {Map<String, dynamic> options: null})
+### uuid.v5buffer(String namespace, String name, List<int> buffer, {Map<String, dynamic> options: null, int offset: 0})
 Generate and return a RFC4122 v5 UUID.
 
-* `options` - (Map) Optional uuid state to apply. Properties may include:
+* `options` - (Map<String, dynamic>) Optional uuid state to apply. Properties may include:
 
   * `randomNamespace` - (Boolean) Default True. Returns if you want a v4 generated namespace (true) or NAMESPACE_NIL (false)
 
-* `buffer` - (List) Array or buffer where UUID bytes are to be written.
+* `buffer` - (List<int>) Array or buffer where UUID bytes are to be written.
 * `offset` - (Number) Starting index in `buffer` at which to begin writing.
 
-Returns `buffer`, if specified, otherwise the string form of the UUID
+v5() returns a string representation of the uuid.
+v5buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
 
 Example: Generate string UUID with fully-specified options
 
@@ -192,13 +193,13 @@ Example: Generate two IDs in a single buffer
 
 ```dart
 var myBuffer = new List(32);
-uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com', buffer: myBuffer);
-uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com', buffer: myBuffer, offset: 16);
+uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer);
+uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer, offset: 16);
 ```
 
-### uuid.parse(String uuid, {List buffer: null, int offset: 0})
+### uuid.parse(String uuid, {List<int> buffer: null, int offset: 0})
 
-### uuid.unparse(List buffer, {int offset: 0})
+### uuid.unparse(List<int> buffer, {int offset: 0})
 
 Parse and unparse UUIDs
 
@@ -225,7 +226,7 @@ dart test\uuid_test.dart
 
 In Browser
 
-N/A as I have not used or tested this in the browser. But there are users of this library that do, and reported that it does infact work.
+No in browser testing, but I know many use it in Web and Flutter projects.
 
 ### Benchmarking
 

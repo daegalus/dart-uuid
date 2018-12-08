@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="API docs for the v1 method from the Uuid class, for the Dart programming language.">
+  <title>v1 method - Uuid class - Uuid library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="../..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">uuid</a></li>
+    <li><a href="Uuid/Uuid-library.html">Uuid</a></li>
+    <li><a href="Uuid/Uuid-class.html">Uuid</a></li>
+    <li class="self-crumb">v1 method</li>
+  </ol>
+  <div class="self-name">v1</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <h5>Uuid class</h5>
+    <ol>
+      <li class="section-title"><a href="Uuid/Uuid-class.html#constructors">Constructors</a></li>
+      <li><a href="Uuid/Uuid/Uuid.html">Uuid</a></li>
+    
+      <li class="section-title inherited">
+        <a href="Uuid/Uuid-class.html#instance-properties">Properties</a>
+      </li>
+      <li class="inherited"><a href="Uuid/Uuid/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="Uuid/Uuid/runtimeType.html">runtimeType</a></li>
+    
+      <li class="section-title"><a href="Uuid/Uuid-class.html#instance-methods">Methods</a></li>
+      <li><a href="Uuid/Uuid/parse.html">parse</a></li>
+      <li><a href="Uuid/Uuid/unparse.html">unparse</a></li>
+      <li><a href="Uuid/Uuid/v1.html">v1</a></li>
+      <li><a href="Uuid/Uuid/v1buffer.html">v1buffer</a></li>
+      <li><a href="Uuid/Uuid/v4.html">v4</a></li>
+      <li><a href="Uuid/Uuid/v4buffer.html">v4buffer</a></li>
+      <li><a href="Uuid/Uuid/v5.html">v5</a></li>
+      <li><a href="Uuid/Uuid/v5buffer.html">v5buffer</a></li>
+      <li class="inherited"><a href="Uuid/Uuid/noSuchMethod.html">noSuchMethod</a></li>
+      <li class="inherited"><a href="Uuid/Uuid/toString.html">toString</a></li>
+    
+      <li class="section-title inherited"><a href="Uuid/Uuid-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="Uuid/Uuid/operator_equals.html">operator ==</a></li>
+    
+    
+    
+      <li class="section-title"><a href="Uuid/Uuid-class.html#constants">Constants</a></li>
+      <li><a href="Uuid/Uuid/NAMESPACE_DNS-constant.html">NAMESPACE_DNS</a></li>
+      <li><a href="Uuid/Uuid/NAMESPACE_NIL-constant.html">NAMESPACE_NIL</a></li>
+      <li><a href="Uuid/Uuid/NAMESPACE_OID-constant.html">NAMESPACE_OID</a></li>
+      <li><a href="Uuid/Uuid/NAMESPACE_URL-constant.html">NAMESPACE_URL</a></li>
+      <li><a href="Uuid/Uuid/NAMESPACE_X500-constant.html">NAMESPACE_X500</a></li>
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div class="col-xs-12 col-sm-9 col-md-8 main-content">
+    <h1>v1 method</h1>
+
+    <section class="multi-line-signature">
+      <span class="returntype">String</span>
+      <span class="name ">v1</span>
+(<wbr>{<span class="parameter" id="v1-param-options"><span class="type-annotation">Map<span class="signature">&lt;<wbr><span class="type-parameter">String</span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">options</span>: <span class="default-value">null</span></span> })
+      
+    </section>
+    <section class="desc markdown">
+      <p>v1() Generates a time-based version 1 UUID</p>
+<p>By default it will generate a string based off current time, and will
+return a string.</p>
+<p>If an optional <code>buffer</code> list is provided, it will put the byte data into
+that buffer and return a buffer.</p>
+<p>Optionally an <code>offset</code> can be provided with a start position in the buffer.</p>
+<p>The first argument is an options map that takes various configuration
+options detailed in the readme.</p>
+<p><a href="http://tools.ietf.org/html/rfc4122.html#section-4.2.2">http://tools.ietf.org/html/rfc4122.html#section-4.2.2</a></p>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span> </h2>
+      <pre class="language-dart"><code class="language-dart">String v1({Map&lt;String, dynamic&gt; options: null}) {
+  var i = 0;
+  var buf = new List&lt;int&gt;(16);
+  options = (options != null) ? options : new Map();
+
+  var clockSeq =
+      (options[&#39;clockSeq&#39;] != null) ? options[&#39;clockSeq&#39;] : _clockSeq;
+
+  &#47;&#47; UUID timestamps are 100 nano-second units since the Gregorian epoch,
+  &#47;&#47; (1582-10-15 00:00). Time is handled internally as &#39;msecs&#39; (integer
+  &#47;&#47; milliseconds) and &#39;nsecs&#39; (100-nanoseconds offset from msecs) since unix
+  &#47;&#47; epoch, 1970-01-01 00:00.
+  var mSecs = (options[&#39;mSecs&#39;] != null)
+      ? options[&#39;mSecs&#39;]
+      : (new DateTime.now()).millisecondsSinceEpoch;
+
+  &#47;&#47; Per 4.2.1.2, use count of uuid&#39;s generated during the current clock
+  &#47;&#47; cycle to simulate higher resolution clock
+  var nSecs = (options[&#39;nSecs&#39;] != null) ? options[&#39;nSecs&#39;] : _lastNSecs + 1;
+
+  &#47;&#47; Time since last uuid creation (in msecs)
+  var dt = (mSecs - _lastMSecs) + (nSecs - _lastNSecs) &#47; 10000;
+
+  &#47;&#47; Per 4.2.1.2, Bump clockseq on clock regression
+  if (dt &lt; 0 &amp;&amp; options[&#39;clockSeq&#39;] == null) {
+    clockSeq = clockSeq + 1 &amp; 0x3fff;
+  }
+
+  &#47;&#47; Reset nsecs if clock regresses (new clockseq) or we&#39;ve moved onto a new
+  &#47;&#47; time interval
+  if ((dt &lt; 0 || mSecs &gt; _lastMSecs) &amp;&amp; options[&#39;nSecs&#39;] == null) {
+    nSecs = 0;
+  }
+
+  &#47;&#47; Per 4.2.1.2 Throw error if too many uuids are requested
+  if (nSecs &gt;= 10000) {
+    throw new Exception(&#39;uuid.v1(): Can\&#39;t create more than 10M uuids&#47;sec&#39;);
+  }
+
+  _lastMSecs = mSecs;
+  _lastNSecs = nSecs;
+  _clockSeq = clockSeq;
+
+  &#47;&#47; Per 4.1.4 - Convert from unix epoch to Gregorian epoch
+  mSecs += 12219292800000;
+
+  &#47;&#47; time Low
+  var tl = ((mSecs &amp; 0xfffffff) * 10000 + nSecs) % 0x100000000;
+  buf[i++] = tl &gt;&gt; 24 &amp; 0xff;
+  buf[i++] = tl &gt;&gt; 16 &amp; 0xff;
+  buf[i++] = tl &gt;&gt; 8 &amp; 0xff;
+  buf[i++] = tl &amp; 0xff;
+
+  &#47;&#47; time mid
+  var tmh = (mSecs ~&#47; 0x100000000 * 10000) &amp; 0xfffffff;
+  buf[i++] = tmh &gt;&gt; 8 &amp; 0xff;
+  buf[i++] = tmh &amp; 0xff;
+
+  &#47;&#47; time high and version
+  buf[i++] = tmh &gt;&gt; 24 &amp; 0xf | 0x10; &#47;&#47; include version
+  buf[i++] = tmh &gt;&gt; 16 &amp; 0xff;
+
+  &#47;&#47; clockSeq high and reserved (Per 4.2.2 - include variant)
+  buf[i++] = clockSeq &gt;&gt; 8 | 0x80;
+
+  &#47;&#47; clockSeq low
+  buf[i++] = clockSeq &amp; 0xff;
+
+  &#47;&#47; node
+  var node = (options[&#39;node&#39;] != null) ? options[&#39;node&#39;] : _nodeId;
+  for (var n = 0; n &lt; 6; n++) {
+    buf[i + n] = node[n];
+  }
+
+  return unparse(buf);
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    uuid 2.0.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>

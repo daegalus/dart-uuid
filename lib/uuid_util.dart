@@ -1,8 +1,6 @@
 library UuidUtil;
 
 import 'dart:math';
-import 'package:crypto/crypto.dart';
-import 'aes.dart';
 
 class UuidUtil {
   /**
@@ -23,15 +21,14 @@ class UuidUtil {
   }
 
   /**
-   * AES-based RNG. All platforms, unknown speed, cryptographically strong (theoretically)
+   * Crypto-Strong RNG. All platforms, unknown speed, cryptographically strong (theoretically)
    */
-  static List cryptoRNG() {
-    int nBytes = 32;
-    var pwBytes = new List(nBytes);
-
-    var bytes = mathRNG();
-    pwBytes = sha256.convert(bytes).bytes.sublist(0, nBytes);
-
-    return AES.cipher(pwBytes, AES.keyExpansion(pwBytes));
+  static List<int> cryptoRNG() {
+    var b = new List<int>(16);
+    var rand = Random.secure();
+    for (var i = 0; i < 16; i++) {
+      b[i] = rand.nextInt(1 << 8);
+    }
+    return b;
   }
 }

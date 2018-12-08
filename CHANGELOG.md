@@ -1,3 +1,10 @@
+v2.0.0
+* Fixup the API to split out Buffer and Non-buffer usages.
+* Switch to build in Random.secure() and remove custom AES implementation.
+* Less dependencies.
+* Docs
+* Cleanup
+
 v1.0.3
 * Fix SDK constraints to allow Dart 2.0 stable.
 
