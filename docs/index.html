@@ -177,6 +177,15 @@ var string = uuid.unparse(bytes); // -&gt; '797ff043-11eb-11e1-80d6-510998755d10
 <p>No in browser testing, but I know many use it in Web and Flutter projects.</p>
 <h3 id="benchmarking">Benchmarking</h3>
 <p>Its pretty quick, but no official benchmarking.</p>
+<h3 id="dart2js-output-size-minified">Dart2js output size (minified)</h3>
+<p>v1 only: 51.5kb
+v4 only: 66kb
+v4 crypto only: 66.5kb
+v5 only: 77kb
+v1 + v4: 70.2kb (includes crypto)
+v4 + v5: 77.5kb (includes crypto)</p>
+<p>ALL: 80kb
+v1 + v5: same as ALL (v5 uses v4 for certain use-cases)</p>
 <h2 id="release-notes">Release notes</h2>
 <p>See CHANGELOG</p>
       </section>
