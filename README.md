@@ -234,15 +234,15 @@ Its pretty quick, but no official benchmarking.
 
 ### Dart2js output size (minified)
 
-v1 only: 51.5kb
-v4 only: 66kb
-v4 crypto only: 66.5kb
-v5 only: 77kb
-v1 + v4: 70.2kb (includes crypto)
-v4 + v5: 77.5kb (includes crypto)
+* v1 only: 51.5kb
+* v4 only: 66kb
+* v4 crypto only: 66.5kb
+* v5 only: 77kb
+* v1 + v4: 70.2kb (includes crypto)
+* v4 + v5: 77.5kb (includes crypto)
 
-ALL: 80kb
-v1 + v5: same as ALL (v5 uses v4 for certain use-cases)
+* ALL: 80kb
+* v1 + v5: same as ALL (v5 uses v4 for certain use-cases)
 
 ## Release notes
 
