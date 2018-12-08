@@ -12,7 +12,7 @@ Features:
 * Runs in dartvm and browsers.
 * Cryptographically strong random number generation on all platforms
 * * Defaults to non-crypto generator, see UuidUtil for cryptoRNG
-* [Annotated source code](http://daegalus.github.com/dart-uuid/index.html)
+* [Annotated source code](http://daegalus.github.com/dart-uuid/api/index.html)
 
 ## Getting Started
 
