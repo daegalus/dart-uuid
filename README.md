@@ -74,6 +74,7 @@ Generate and return a RFC4122 v1 (timestamp-based) UUID.
 * `offset` - (Int) Starting index in `buffer` at which to begin writing.
 
 v1() returns a string representation of the uuid.
+
 v1buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
 
 Example: Generate string UUID with fully-specified options
@@ -117,6 +118,7 @@ Generate and return a RFC4122 v4 UUID.
 * `offset` - (Number) Starting index in `buffer` at which to begin writing.
 
 v4() returns a string representation of the uuid.
+
 v4buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
 
 Example: Generate string UUID with different RNG method
@@ -183,6 +185,7 @@ Generate and return a RFC4122 v5 UUID.
 * `offset` - (Number) Starting index in `buffer` at which to begin writing.
 
 v5() returns a string representation of the uuid.
+
 v5buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
 
 Example: Generate string UUID with fully-specified options
