@@ -7,7 +7,7 @@
 Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDs.
 
 Originally based on node-uuid by Robert Kieffer (I even copied this readme over and modified it.)
-Primarily becaue it works, well written, and so on. It has changed considerably since the start though.
+Primarily because it works, well written, and so on. It has changed considerably since the start though.
 
 Features:
 
