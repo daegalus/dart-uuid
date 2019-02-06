@@ -4,13 +4,9 @@ import 'uuid_util.dart';
 import 'package:crypto/crypto.dart';
 import 'package:convert/convert.dart' as convert;
 
-/**
- *  uuid for Dart
- *
- *  Author: Yulian Kuncheff
- *
- *  Released under MIT License.
- */
+/// uuid for Dart
+/// Author: Yulian Kuncheff
+/// Released under MIT License.
 
 class Uuid {
   // RFC4122 provided namespaces for v3 and v5 namespace based UUIDs
@@ -53,12 +49,10 @@ class Uuid {
     _clockSeq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3ffff;
   }
 
-  /**
-   * Parses the provided [uuid] into a list of byte values.
-   * Can optionally be provided a [buffer] to write into and
-   *  a positional [offset] for where to start inputting into the buffer.
-   */
-  List<int> parse(String uuid, {List<int> buffer, int offset: 0}) {
+  ///Parses the provided [uuid] into a list of byte values.
+  /// Can optionally be provided a [buffer] to write into and
+  ///  a positional [offset] for where to start inputting into the buffer.
+  List<int> parse(String uuid, {List<int> buffer, int offset = 0}) {
     var i = offset, ii = 0;
 
     // Create a 16 item buffer if one hasn't been provided.
@@ -83,12 +77,10 @@ class Uuid {
     return buffer;
   }
 
-  /**
-   * Unparses a [buffer] of bytes and outputs a proper UUID string.
-   * An optional [offset] is allowed if you want to start at a different point
-   *  in the buffer.
-   */
-  String unparse(List<int> buffer, {int offset: 0}) {
+  /// Unparses a [buffer] of bytes and outputs a proper UUID string.
+  /// An optional [offset] is allowed if you want to start at a different point
+  /// in the buffer.
+  String unparse(List<int> buffer, {int offset = 0}) {
     var i = offset;
     return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
@@ -100,23 +92,21 @@ class Uuid {
         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}';
   }
 
-  /**
-   * v1() Generates a time-based version 1 UUID
-   *
-   * By default it will generate a string based off current time, and will
-   * return a string.
-   *
-   * If an optional [buffer] list is provided, it will put the byte data into
-   * that buffer and return a buffer.
-   *
-   * Optionally an [offset] can be provided with a start position in the buffer.
-   *
-   * The first argument is an options map that takes various configuration
-   * options detailed in the readme.
-   *
-   * http://tools.ietf.org/html/rfc4122.html#section-4.2.2
-   */
-  String v1({Map<String, dynamic> options: null}) {
+  /// v1() Generates a time-based version 1 UUID
+  ///
+  /// By default it will generate a string based off current time, and will
+  /// return a string.
+  ///
+  /// If an optional [buffer] list is provided, it will put the byte data into
+  /// that buffer and return a buffer.
+  ///
+  /// Optionally an [offset] can be provided with a start position in the buffer.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
+  String v1({Map<String, dynamic> options}) {
     var i = 0;
     var buf = new List<int>(16);
     options = (options != null) ? options : new Map();
@@ -193,23 +183,21 @@ class Uuid {
     return unparse(buf);
   }
 
-  /**
-   * v1buffer() Generates a time-based version 1 UUID
-   *
-   * By default it will generate a string based off current time, and will
-   * place the result into the provided [buffer]. The [buffer] will also be returned..
-   *
-   * Optionally an [offset] can be provided with a start position in the buffer.
-   *
-   * The first argument is an options map that takes various configuration
-   * options detailed in the readme.
-   *
-   * http://tools.ietf.org/html/rfc4122.html#section-4.2.2
-   */
+  /// v1buffer() Generates a time-based version 1 UUID
+  ///
+  /// By default it will generate a string based off current time, and will
+  /// place the result into the provided [buffer]. The [buffer] will also be returned..
+  ///
+  /// Optionally an [offset] can be provided with a start position in the buffer.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
   List<int> v1buffer(
     List<int> buffer, {
-    Map<String, dynamic> options: null,
-    int offset: 0,
+    Map<String, dynamic> options,
+    int offset = 0,
   }) {
     var _buf = parse(v1(options: options));
 
@@ -220,18 +208,16 @@ class Uuid {
     return buffer;
   }
 
-  /**
-   * v4() Generates a RNG version 4 UUID
-   *
-   * By default it will generate a string based mathRNG, and will return
-   * a string. If you wish to use crypto-strong RNG, pass in UuidUtil.cryptoRNG
-   *
-   * The first argument is an options map that takes various configuration
-   * options detailed in the readme.
-   *
-   * http://tools.ietf.org/html/rfc4122.html#section-4.4
-   */
-  String v4({Map<String, dynamic> options: null}) {
+  /// v4() Generates a RNG version 4 UUID
+  ///
+  /// By default it will generate a string based mathRNG, and will return
+  /// a string. If you wish to use crypto-strong RNG, pass in UuidUtil.cryptoRNG
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// http://tools.ietf.org/html/rfc4122.html#section-4.4
+  String v4({Map<String, dynamic> options}) {
     options = (options != null) ? options : new Map<String, dynamic>();
 
     // Use the built-in RNG or a custom provided RNG
@@ -254,24 +240,22 @@ class Uuid {
     return unparse(rnds);
   }
 
-  /**
-   * v4buffer() Generates a RNG version 4 UUID
-   *
-   * By default it will generate a string based off mathRNG, and will
-   * place the result into the provided [buffer]. The [buffer] will also be returned.
-   * If you wish to have crypto-strong RNG, pass in UuidUtil.cryptoRNG.
-   *
-   * Optionally an [offset] can be provided with a start position in the buffer.
-   *
-   * The first argument is an options map that takes various configuration
-   * options detailed in the readme.
-   *
-   * http://tools.ietf.org/html/rfc4122.html#section-4.4
-   */
+  /// v4buffer() Generates a RNG version 4 UUID
+  ///
+  /// By default it will generate a string based off mathRNG, and will
+  /// place the result into the provided [buffer]. The [buffer] will also be returned.
+  /// If you wish to have crypto-strong RNG, pass in UuidUtil.cryptoRNG.
+  ///
+  /// Optionally an [offset] can be provided with a start position in the buffer.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   List<int> v4buffer(
     List<int> buffer, {
-    Map<String, dynamic> options: null,
-    int offset: 0,
+    Map<String, dynamic> options,
+    int offset = 0,
   }) {
     var _buf = parse(v4(options: options));
 
@@ -282,18 +266,16 @@ class Uuid {
     return buffer;
   }
 
-  /**
-   * v5() Generates a namspace & name-based version 5 UUID
-   *
-   * By default it will generate a string based on a provided uuid namespace and
-   * name, and will return a string.
-   *
-   * The first argument is an options map that takes various configuration
-   * options detailed in the readme.
-   *
-   * http://tools.ietf.org/html/rfc4122.html#section-4.4
-   */
-  String v5(String namespace, String name, {Map options: null}) {
+  /// v5() Generates a namspace & name-based version 5 UUID
+  ///
+  /// By default it will generate a string based on a provided uuid namespace and
+  /// name, and will return a string.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// http://tools.ietf.org/html/rfc4122.html#section-4.4
+  String v5(String namespace, String name, {Map<String, dynamic> options}) {
     options = (options != null) ? options : new Map();
 
     // Check if user wants a random namespace generated by v4() or a NIL namespace.
@@ -330,25 +312,23 @@ class Uuid {
     return unparse(hashBytes);
   }
 
-  /**
-   * v5buffer() Generates a RNG version 4 UUID
-   *
-   * By default it will generate a string based off current time, and will
-   * place the result into the provided [buffer]. The [buffer] will also be returned..
-   *
-   * Optionally an [offset] can be provided with a start position in the buffer.
-   *
-   * The first argument is an options map that takes various configuration
-   * options detailed in the readme.
-   *
-   * http://tools.ietf.org/html/rfc4122.html#section-4.4
-   */
+  /// v5buffer() Generates a RNG version 4 UUID
+  ///
+  /// By default it will generate a string based off current time, and will
+  /// place the result into the provided [buffer]. The [buffer] will also be returned..
+  ///
+  /// Optionally an [offset] can be provided with a start position in the buffer.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   List<int> v5buffer(
     String namespace,
     String name,
     List<int> buffer, {
-    Map<String, dynamic> options: null,
-    int offset: 0,
+    Map<String, dynamic> options,
+    int offset = 0,
   }) {
     var _buf = parse(v5(namespace, name, options: options));
 

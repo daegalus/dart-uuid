@@ -2,7 +2,7 @@ import "package:test/test.dart";
 import 'package:uuid/uuid.dart';
 import 'package:uuid/uuid_util.dart';
 
-main() {
+void main() {
   var uuid = new Uuid();
   final int TIME = 1321644961388;
 
