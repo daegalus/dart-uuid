@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/truongsinh/dart-uuid.svg?branch=master)](https://travis-ci.org/truongsinh/dart-uuid)
+[![Build Status](https://api.cirrus-ci.com/github/truongsinh/dart-uuid.svg)](https://cirrus-ci.com/github/truongsinh/dart-uuid/master)
+[![codecov](https://codecov.io/gh/truongsinh/dart-uuid/branch/master/graph/badge.svg)](https://codecov.io/gh/truongsinh/dart-uuid)
+[![pub package](https://img.shields.io/pub/v/uuid_enhanced.svg)](https://pub.dartlang.org/packages/uuid_enhanced)
 
 # dart-uuid
 
@@ -15,7 +17,7 @@ Features:
 * Runs in web, server, and flutter
 * Cryptographically strong random number generation on all platforms
   * **Defaults to non-crypto generator, see UuidUtil for cryptoRNG**
-* [Documentation](http://truongsinh.github.com/dart-uuid/index.html)
+* [Documentation](https://pub.dartlang.org/documentation/uuid_enhanced/latest)
 
 ## Getting Started
 

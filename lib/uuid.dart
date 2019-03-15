@@ -4,10 +4,6 @@ import 'package:crypto/crypto.dart';
 import 'package:convert/convert.dart' as convert;
 import 'uuid_util.dart';
 
-/// uuid for Dart
-/// Author: Yulian Kuncheff
-/// Released under MIT License.
-
 class Uuid {
   Uuid() {
     _byteToHex = List<String>(256);
