@@ -11,7 +11,7 @@ void main() {
   uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
 
   // Generate a v4 (crypto-random) id
-  uuid.v4(options: <String, dynamic>{'rng': UuidUtil.cryptoRNG});
+  uuid.v4(rng: UuidUtil.cryptoRNG());
   // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
 
   // Generate a v5 (namespace-name-sha1-based) id

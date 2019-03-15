@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:test/test.dart';
 import 'package:uuid_enhanced/uuid.dart';
 import 'package:uuid_enhanced/uuid_util.dart';
@@ -8,15 +9,15 @@ void main() {
 
   group('[Version 1 Tests]', () {
     test('IDs created at same mSec are different', () {
-      final String uuid1 = uuid.v1(options: <String, int>{'mSecs': TIME});
-      final String uuid2 = uuid.v1(options: <String, int>{'mSecs': TIME});
+      final String uuid1 = uuid.v1(mSecs: TIME);
+      final String uuid2 = uuid.v1(mSecs: TIME);
       expect(uuid1, isNot(equals(uuid2)));
     });
 
     test('Exception thrown when > 10K ids created in 1 ms', () {
       bool thrown = false;
       try {
-        uuid.v1(options: <String, int>{'mSecs': TIME, 'nSecs': 10000});
+        uuid.v1(mSecs: TIME, nSecs: 10000);
       } catch (e) {
         thrown = true;
       }
@@ -25,8 +26,8 @@ void main() {
 
     test('Clock regression by msec increments the clockseq - mSec', () {
       // @todo can be const
-      final String uidt = uuid.v1(options: <String, int>{'mSecs': TIME});
-      final String uidtb = uuid.v1(options: <String, int>{'mSecs': TIME - 1});
+      final String uidt = uuid.v1(mSecs: TIME);
+      final String uidtb = uuid.v1(mSecs: TIME - 1);
 
       expect(
           int.parse("0x${uidtb.split('-')[3]}") -
@@ -35,10 +36,8 @@ void main() {
     });
 
     test('Clock regression by msec increments the clockseq - nSec', () {
-      final String uidt =
-          uuid.v1(options: <String, int>{'mSecs': TIME, 'nSecs': 10});
-      final String uidtb =
-          uuid.v1(options: <String, int>{'mSecs': TIME, 'nSecs': 9});
+      final String uidt = uuid.v1(mSecs: TIME, nSecs: 10);
+      final String uidtb = uuid.v1(mSecs: TIME, nSecs: 9);
 
       expect(
           int.parse("0x${uidtb.split('-')[3]}") -
@@ -47,21 +46,19 @@ void main() {
     });
 
     test('Explicit options produce expected id', () {
-      final String id = uuid.v1(options: <String, dynamic>{
-        'mSecs': 1321651533573,
-        'nSecs': 5432,
-        'clockSeq': 0x385c,
-        'node': <int>[0x61, 0xcd, 0x3c, 0xbb, 0x32, 0x10]
-      });
+      final String id = uuid.v1(
+        mSecs: 1321651533573,
+        nSecs: 5432,
+        node: Uint8List.fromList(<int>[0x61, 0xcd, 0x3c, 0xbb, 0x32, 0x10]),
+        clockSequence: 0x385c,
+      );
 
       expect(id, equals('d9428888-f500-11e0-b85c-61cd3cbb3210'));
     });
 
     test('Ids spanning 1ms boundary are 100ns apart', () {
-      final String u0 =
-          uuid.v1(options: <String, int>{'mSecs': TIME, 'nSecs': 9999});
-      final String u1 =
-          uuid.v1(options: <String, int>{'mSecs': TIME + 1, 'nSecs': 0});
+      final String u0 = uuid.v1(mSecs: TIME, nSecs: 9999);
+      final String u1 = uuid.v1(mSecs: TIME + 1, nSecs: 0);
 
       final String before = u0.split('-')[0], after = u1.split('-')[0];
       final int dt = int.parse('0x$after') - int.parse('0x$before');
@@ -72,36 +69,31 @@ void main() {
 
   group('[Version 4 Tests]', () {
     test('Check if V4 is consistent using a static seed', () {
-      final String u0 = uuid.v4(options: <String, dynamic>{
-        'rng': UuidUtil.mathRNG,
-        'namedArgs': <Symbol, int>{const Symbol('seed'): 1}
-      });
+      final String u0 = uuid.v4(rng: UuidUtil.mathRNG(seed: 1));
       const String u1 = '09a91894-e93f-4141-a3ec-82eb32f2a3ef';
       expect(u0, equals(u1));
     });
 
     test('Return same output as entered for "random" option', () {
-      final String u0 = uuid.v4(options: <String, dynamic>{
-        // @todo Uint8?
-        'random': <int>[
-          0x10,
-          0x91,
-          0x56,
-          0xbe,
-          0xc4,
-          0xfb,
-          0xc1,
-          0xea,
-          0x71,
-          0xb4,
-          0xef,
-          0xe1,
-          0x67,
-          0x1c,
-          0x58,
-          0x36
-        ]
-      });
+      final String u0 = uuid.v4(
+          random: Uint8List.fromList(<int>[
+        0x10,
+        0x91,
+        0x56,
+        0xbe,
+        0xc4,
+        0xfb,
+        0xc1,
+        0xea,
+        0x71,
+        0xb4,
+        0xef,
+        0xe1,
+        0x67,
+        0x1c,
+        0x58,
+        0x36
+      ]));
       const String u1 = '109156be-c4fb-41ea-b1b4-efe1671c5836';
       expect(u0, equals(u1));
     });
@@ -127,6 +119,12 @@ void main() {
       final String u1 = uuid.v5(null, 'www.google.com');
 
       expect(u0, isNot(equals(u1)));
+    });
+
+    test('do not use randomNamespace', () {
+      final String u0 = uuid.v5(null, 'www.google.com', randomNamespace: false);
+      final String u1 = uuid.v5(null, 'www.google.com', randomNamespace: false);
+      expect(u0, equals(u1));
     });
   });
 

@@ -1,6 +1,7 @@
 library uuid;
 
-import 'package:crypto/crypto.dart';
+import 'dart:typed_data' show Uint8List;
+import 'package:crypto/crypto.dart' show sha1;
 import 'package:convert/convert.dart' as convert;
 import 'uuid_util.dart';
 
@@ -11,8 +12,8 @@ class Uuid {
 
     // Easy number <-> hex conversion
     for (int i = 0; i < 256; i++) {
-      final List<int> hex = <int>[];
-      hex.add(i);
+      final Uint8List hex = Uint8List(1);
+      hex[0] = i;
       _byteToHex[i] = convert.hex.encode(hex);
       _hexToByte[_byteToHex[i]] = i;
     }
@@ -21,14 +22,14 @@ class Uuid {
     _seedBytes = UuidUtil.cryptoRNG();
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
-    _nodeId = <int>[
+    _nodeId = Uint8List.fromList(<int>[
       _seedBytes[0] | 0x01,
       _seedBytes[1],
       _seedBytes[2],
       _seedBytes[3],
       _seedBytes[4],
       _seedBytes[5]
-    ];
+    ]);
 
     // Per 4.2.2, randomize (14 bit) clockseq
     _clockSeq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3ffff;
@@ -41,7 +42,7 @@ class Uuid {
   static const String NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
   static const String NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
-  List<int> _seedBytes, _nodeId;
+  Uint8List _seedBytes, _nodeId;
   int _clockSeq, _lastMSecs = 0, _lastNSecs = 0;
   List<String> _byteToHex;
   Map<String, int> _hexToByte;
@@ -49,12 +50,12 @@ class Uuid {
   ///Parses the provided [uuid] into a list of byte values.
   /// Can optionally be provided a [buffer] to write into and
   ///  a positional [offset] for where to start inputting into the buffer.
-  List<int> parse(String uuid, {List<int> buffer, int offset = 0}) {
+  Uint8List parse(String uuid, {Uint8List buffer, int offset = 0}) {
     final int i = offset;
     int ii = 0;
 
     // Create a 16 item buffer if one hasn't been provided.
-    buffer = (buffer != null) ? buffer : List<int>(16);
+    buffer = (buffer != null) ? buffer : Uint8List(16);
 
     // Convert to lowercase and replace all hex with bytes then
     // string.replaceAll() does a lot of work that I don't need, and a manual
@@ -78,7 +79,7 @@ class Uuid {
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.
   /// An optional [offset] is allowed if you want to start at a different point
   /// in the buffer.
-  String unparse(List<int> buffer, {int offset = 0}) {
+  String unparse(Uint8List buffer, {int offset = 0}) {
     int i = offset;
     return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
@@ -104,38 +105,38 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
-  String v1({Map<String, dynamic> options}) {
+  String v1({
+    int mSecs,
+    int nSecs,
+    final int clockSequence,
+    Uint8List node,
+  }) {
     int i = 0;
-    final List<int> buf = List<int>(16);
-    options = (options != null) ? options : <String, dynamic>{};
+    final Uint8List buf = Uint8List(16);
 
-    int clockSeq =
-        (options['clockSeq'] != null) ? options['clockSeq'] : _clockSeq;
+    int clockSeq = clockSequence ?? _clockSeq;
 
     // UUID timestamps are 100 nano-second units since the Gregorian epoch,
     // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
     // milliseconds) and 'nsecs' (100-nanoseconds offset from msecs) since unix
     // epoch, 1970-01-01 00:00.
-    int mSecs = (options['mSecs'] != null)
-        ? options['mSecs']
-        : DateTime.now().millisecondsSinceEpoch;
+    mSecs ??= DateTime.now().millisecondsSinceEpoch;
 
     // Per 4.2.1.2, use count of uuid's generated during the current clock
     // cycle to simulate higher resolution clock
-    int nSecs = (options['nSecs'] != null) ? options['nSecs'] : _lastNSecs + 1;
+    nSecs ??= _lastNSecs + 1;
 
     // Time since last uuid creation (in msecs)
-    // @todo should be int
-    final double dt = (mSecs - _lastMSecs) + (nSecs - _lastNSecs) / 10000;
+    final int dt = (mSecs - _lastMSecs) * 10000 + (nSecs - _lastNSecs);
 
     // Per 4.2.1.2, Bump clockseq on clock regression
-    if (dt < 0 && options['clockSeq'] == null) {
+    if (dt < 0 && clockSequence == null) {
       clockSeq = clockSeq + 1 & 0x3fff;
     }
 
     // Reset nsecs if clock regresses (clockseq) or we've moved onto a new
     // time interval
-    if ((dt < 0 || mSecs > _lastMSecs) && options['nSecs'] == null) {
+    if ((dt < 0 || mSecs > _lastMSecs) && nSecs == null) {
       nSecs = 0;
     }
 
@@ -174,9 +175,7 @@ class Uuid {
     buf[i++] = clockSeq & 0xff;
 
     // node
-    // @todo should be List<int>
-    final List<dynamic> node =
-        (options['node'] != null) ? options['node'] : _nodeId;
+    node ??= _nodeId;
     for (int n = 0; n < 6; n++) {
       buf[i + n] = node[n];
     }
@@ -195,12 +194,20 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
-  List<int> v1buffer(
-    List<int> buffer, {
-    Map<String, dynamic> options,
+  Uint8List v1buffer(
+    Uint8List buffer, {
+    int mSecs,
+    int nSecs,
+    final int clockSequence,
+    Uint8List node,
     int offset = 0,
   }) {
-    final List<int> _buf = parse(v1(options: options));
+    final Uint8List _buf = parse(v1(
+      mSecs: mSecs,
+      nSecs: nSecs,
+      clockSequence: clockSequence,
+      node: node,
+    ));
 
     if (buffer != null) {
       buffer.setRange(offset, offset + 16, _buf);
@@ -218,23 +225,14 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  String v4({Map<String, dynamic> options}) {
-    options = (options != null) ? options : <String, dynamic>{};
-
-    // Use the built-in RNG or a custom provided RNG
-    final List<int> positionalArgs = (options['positionalArgs'] != null)
-        ? options['positionalArgs']
-        : <int>[];
-    final Map<Symbol, dynamic> namedArgs = (options['namedArgs'] != null)
-        ? options['namedArgs']
-        : const <Symbol, dynamic>{};
-    final List<int> rng = (options['rng'] != null)
-        ? Function.apply(options['rng'], positionalArgs, namedArgs)
-        : UuidUtil.mathRNG();
+  String v4({
+    Uint8List rng,
+    Uint8List random,
+  }) {
+    rng ??= UuidUtil.mathRNG();
 
     // Use provided values over RNG
-    final List<int> rnds =
-        (options['random'] != null) ? options['random'] : rng;
+    final Uint8List rnds = random ?? rng;
 
     // per 4.4, set bits for version and clockSeq high and reserved
     rnds[6] = (rnds[6] & 0x0f) | 0x40;
@@ -255,12 +253,13 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  List<int> v4buffer(
-    List<int> buffer, {
-    Map<String, dynamic> options,
+  Uint8List v4buffer(
+    Uint8List buffer, {
+    Uint8List rng,
+    Uint8List random,
     int offset = 0,
   }) {
-    final List<int> _buf = parse(v4(options: options));
+    final Uint8List _buf = parse(v4(rng: rng, random: random));
 
     if (buffer != null) {
       buffer.setRange(offset, offset + 16, _buf);
@@ -278,16 +277,16 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  String v5(String namespace, String name, {Map<String, dynamic> options}) {
-    options = (options != null) ? options : <String, dynamic>{};
-
+  String v5(
+    String namespace,
+    String name, {
+    bool randomNamespace,
+  }) {
     // Check if user wants a random namespace generated by v4() or a NIL namespace.
-    final bool useRandom = (options['randomNamespace'] != null)
-        ? options['randomNamespace']
-        : true;
+    randomNamespace ??= true;
 
-    // If useRandom is true, generate UUIDv4, else use NIL
-    final String blankNS = useRandom ? v4() : NAMESPACE_NIL;
+    // If randomNamespace is true, generate UUIDv4, else use NIL
+    final String blankNS = randomNamespace ? v4() : NAMESPACE_NIL;
 
     // Use provided namespace, or use whatever is decided by options.
     namespace = (namespace != null) ? namespace : blankNS;
@@ -296,19 +295,14 @@ class Uuid {
     name = (name != null) ? name : '';
 
     // Convert namespace UUID to Byte List
-    final List<int> bytes = parse(namespace);
+    final Uint8List bytes = parse(namespace);
 
     // Convert name to a list of bytes
-    final List<int> nameBytes = <int>[];
-    // @todo prefer_foreach vs avoid_function_literals_in_foreach_calls
-    // ignore: prefer_foreach
-    for (int singleChar in name.codeUnits) {
-      nameBytes.add(singleChar);
-    }
+    final Uint8List nameBytes = Uint8List.fromList(name.codeUnits);
 
     // Generate SHA1 using namespace concatenated with name
-    final List<int> hashBytes =
-        sha1.convert(List<int>.from(bytes)..addAll(nameBytes)).bytes;
+    final Uint8List hashBytes =
+        Uint8List.fromList(sha1.convert(bytes + nameBytes).bytes);
 
     // per 4.4, set bits for version and clockSeq high and reserved
     hashBytes[6] = (hashBytes[6] & 0x0f) | 0x50;
@@ -328,14 +322,15 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  List<int> v5buffer(
+  Uint8List v5buffer(
     String namespace,
     String name,
-    List<int> buffer, {
-    Map<String, dynamic> options,
+    Uint8List buffer, {
+    bool randomNamespace,
     int offset = 0,
   }) {
-    final List<int> _buf = parse(v5(namespace, name, options: options));
+    final Uint8List _buf =
+        parse(v5(namespace, name, randomNamespace: randomNamespace));
 
     if (buffer != null) {
       buffer.setRange(offset, offset + 16, _buf);

@@ -4,7 +4,7 @@
 
 # dart-uuid
 
-**Version 2.0.0 has breaking API changes. Please review them below.**
+**Version 3.0.0 has breaking API changes. Please review them below.**
 
 Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDs.
 
@@ -61,23 +61,23 @@ uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com'); // -> 'c74a196f-f19d-5ea9-bffd-a2
 ## API
 
 ### uuid.v1({Map<String, dynamic> options: null) -> String
-### uuid.v1buffer(List<int> buffer, {Map<String, dynamic> options: null, int offset: 0}) -> List<int>
+### uuid.v1buffer(Uint8List buffer, {Map<String, dynamic> options: null, int offset: 0}) -> Uint8List
 
 Generate and return a RFC4122 v1 (timestamp-based) UUID.
 
 * `options` - (Map<String, dynamic>) Optional uuid state to apply. Properties may include:
 
-  * `node` - (List<int>) Node id as List of 6 bytes (per 4.1.6). Default: Randomnly generated ID.
+  * `node` - (Uint8List) Node id as List of 6 bytes (per 4.1.6). Default: Randomnly generated ID.
   * `clockseq` - (Number between 0 - 0x3fff) RFC clock sequence. Default: An internally maintained clockseq is used.
   * `msecs` - (Number) Time in milliseconds since unix Epoch. Default: The current time is used.
   * `nsecs` - (Number between 0-9999) additional time, in 100-nanosecond units. Ignored if `msecs` is unspecified. Default: internal uuid counter is used, as per 4.2.1.2.
 
-* `buffer` - (List<int>) Array or buffer where UUID bytes are to be written.
+* `buffer` - (Uint8List) Array or buffer where UUID bytes are to be written.
 * `offset` - (Int) Starting index in `buffer` at which to begin writing.
 
 v1() returns a string representation of the uuid.
 
-v1buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
+v1buffer() Returns a Uint8List `buffer`, if specified, also writes the data to the provided buffer.
 
 Example: Generate string UUID with fully-specified options
 
@@ -106,7 +106,7 @@ uuid.unparse(myBuffer, offset: 16) // -> '73bd0581-c95b-11e1-9234-6d0009003480'
 ```
 
 ### uuid.v4({Map<String, dynamic> options: null})
-### uuid.v4buffer(List<int> buffer, {Map<String, dynamic> options: null, int offset: 0})
+### uuid.v4buffer(Uint8List buffer, {Map<String, dynamic> options: null, int offset: 0})
 Generate and return a RFC4122 v4 UUID.
 
 * `options` - (Map<String, dynamic>) Optional uuid state to apply. Properties may include:
@@ -116,12 +116,12 @@ Generate and return a RFC4122 v4 UUID.
   * `namedArgs` - (Map<Symbol, dynamic>) The arguments and values you want to pass to your function.
   * `positionalArgs` - (List) The positional arguments for your functions. if any.
 
-* `buffer` - (List<int>) Array or buffer where UUID bytes are to be written.
+* `buffer` - (Uint8List) Array or buffer where UUID bytes are to be written.
 * `offset` - (Number) Starting index in `buffer` at which to begin writing.
 
 v4() returns a string representation of the uuid.
 
-v4buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
+v4buffer() Returns a Uint8List `buffer`, if specified, also writes the data to the provided buffer.
 
 Example: Generate string UUID with different RNG method
 
@@ -176,19 +176,19 @@ uuid.v4buffer(myBuffer, offset: 16);
 ```
 
 ### uuid.v5(String namespace, String name, {Map<String, dynamic> options: null})
-### uuid.v5buffer(String namespace, String name, List<int> buffer, {Map<String, dynamic> options: null, int offset: 0})
+### uuid.v5buffer(String namespace, String name, Uint8List buffer, {Map<String, dynamic> options: null, int offset: 0})
 Generate and return a RFC4122 v5 UUID.
 
 * `options` - (Map<String, dynamic>) Optional uuid state to apply. Properties may include:
 
   * `randomNamespace` - (Boolean) Default True. Returns if you want a v4 generated namespace (true) or NAMESPACE_NIL (false)
 
-* `buffer` - (List<int>) Array or buffer where UUID bytes are to be written.
+* `buffer` - (Uint8List) Array or buffer where UUID bytes are to be written.
 * `offset` - (Number) Starting index in `buffer` at which to begin writing.
 
 v5() returns a string representation of the uuid.
 
-v5buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
+v5buffer() Returns a Uint8List `buffer`, if specified, also writes the data to the provided buffer.
 
 Example: Generate string UUID with fully-specified options
 
@@ -205,9 +205,9 @@ uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer);
 uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer, offset: 16);
 ```
 
-### uuid.parse(String uuid, {List<int> buffer: null, int offset: 0})
+### uuid.parse(String uuid, {Uint8List buffer: null, int offset: 0})
 
-### uuid.unparse(List<int> buffer, {int offset: 0})
+### uuid.unparse(Uint8List buffer, {int offset: 0})
 
 Parse and unparse UUIDs
 

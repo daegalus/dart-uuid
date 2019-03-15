@@ -209,7 +209,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a1db0e4b673a3e9c147b41b494ce533b788c4e25
+      resolved-ref: "8175f7d23b85b11341bff673c819505850dcd67c"
       url: "https://github.com/truongsinh/perfectionist"
     source: git
     version: "1.5.0"

@@ -1,3 +1,7 @@
+v3.0.0-1
+* Use `Uint8List` instead of `List<int>` for performance
+* All options are now named arguments instead of a map
+
 v2.0.1
 * Strong mode on `dartanalyze`
 
