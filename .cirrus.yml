@@ -1,0 +1,13 @@
+container:
+  image: cirrusci/flutter:latest
+
+test_task:
+  #pub_cache:
+    # folder: $HOME/.pub-cache
+    # fingerprint_script: cat pubspec.lock
+    # populate_script: pub get
+  pub_script: pub get
+  format_script: dartfmt **/*.dart -n --set-exit-if-changed
+  analyze_script: dartanalyzer --fatal-infos .
+  publishable_script: pub publish --dry-run
+  test_script: dart test/*

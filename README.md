@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Daegalus/dart-uuid.svg?branch=master)](https://travis-ci.org/Daegalus/dart-uuid)
+[![Build Status](https://travis-ci.org/truongsinh/dart-uuid.svg?branch=master)](https://travis-ci.org/truongsinh/dart-uuid)
 
 # dart-uuid
 
@@ -15,7 +15,7 @@ Features:
 * Runs in web, server, and flutter
 * Cryptographically strong random number generation on all platforms
   * **Defaults to non-crypto generator, see UuidUtil for cryptoRNG**
-* [Documentation](http://daegalus.github.com/dart-uuid/index.html)
+* [Documentation](http://truongsinh.github.com/dart-uuid/index.html)
 
 ## Getting Started
 

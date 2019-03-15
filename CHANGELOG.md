@@ -1,3 +1,6 @@
+v2.0.1
+* Strong mode on `dartanalyze`
+
 v2.0.0
 * Fixup the API to split out Buffer and Non-buffer usages.
 * Switch to build in Random.secure() and remove custom AES implementation.
