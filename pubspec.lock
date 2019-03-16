@@ -37,7 +37,7 @@ packages:
     source: hosted
     version: "1.1.2"
   collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: collection
       url: "https://pub.dartlang.org"
@@ -207,12 +207,10 @@ packages:
   perfectionist:
     dependency: "direct dev"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "8175f7d23b85b11341bff673c819505850dcd67c"
-      url: "https://github.com/truongsinh/perfectionist"
-    source: git
-    version: "1.5.0"
+      name: perfectionist
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   plugin:
     dependency: transitive
     description:

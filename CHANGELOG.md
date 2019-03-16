@@ -1,6 +1,15 @@
-v3.0.0-1
+v3.0.0
 * Use `Uint8List` instead of `List<int>` for performance
 * All options are now named arguments instead of a map
+* `Uuid` is a type now (subtype of `Uint8List`)
+* No more singleton, all creating methods are not static ones
+* Proper implementation of `==` and `hashCode`
+* `v1` renamed to `fromTime`,
+  `v4` renamed to `emptyUuid`,
+  `v5` renamed to `fromName`,
+  `parse` renamed to `fromString`,
+  `unparse` changed to instance method `toString` 
+* New APIs `isFromTime`, `millisecondsSinceEpoch`, `clockSequence`
 
 v2.0.1
 * Strong mode on `dartanalyze`
