@@ -33,7 +33,7 @@ class Uuid extends UnmodifiableUint8ListView {
     return Uuid.fromBytes(bytes);
   }
 
-  /// fromTime() Generates a time-based version 1 UUID
+  /// Generates a time-based version 1 UUID
   ///
   /// By default it will generate a string based off current time.
   ///
@@ -117,7 +117,7 @@ class Uuid extends UnmodifiableUint8ListView {
     return Uuid.fromBytes(bytes);
   }
 
-  /// randomUuid() Generates a RNG version 4 UUID
+  /// Generates a RNG version 4 UUID
   ///
   /// By default it will generate a string based off mathRNG.
   /// If you wish to have crypto-strong RNG, pass in UuidUtil.cryptoRNG.
@@ -135,7 +135,7 @@ class Uuid extends UnmodifiableUint8ListView {
     return Uuid.fromBytes(random);
   }
 
-  /// fromName() Generates a namspace & name-based version 5 UUID
+  /// Generates a namspace & name-based version 5 UUID
   ///
   /// By default it will generate a string based on a provided uuid namespace and
   /// name, and will return a string.
@@ -178,10 +178,10 @@ class Uuid extends UnmodifiableUint8ListView {
 
   @override
   bool operator ==(dynamic other) =>
-      other is Uuid && equality.equals(other, this);
+      other is Uuid && _equality.equals(other, this);
 
   @override
-  int get hashCode => equality.hash(this);
+  int get hashCode => _equality.hash(this);
 
   // RFC4122 provided namespaces for v3 and v5 namespace based UUIDs
   static const String NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
@@ -190,7 +190,7 @@ class Uuid extends UnmodifiableUint8ListView {
   static const String NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
   static const String NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
-  static const ListEquality<int> equality = ListEquality<int>();
+  static const ListEquality<int> _equality = ListEquality<int>();
 
 // Sets initial seedBytes, node, and clock seq based on cryptoRNG.
   static final Uint8List _seedBytes = UuidUtil.cryptoRNG();
