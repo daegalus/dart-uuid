@@ -1,3 +1,6 @@
+v3.0.1
+* use `factory` rather than `static` method to create new `Uuid`
+
 v3.0.0
 * Use `Uint8List` instead of `List<int>` for performance
 * All options are now named arguments instead of a map

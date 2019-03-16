@@ -7,55 +7,9 @@ import 'package:collection/collection.dart';
 import 'uuid_util.dart';
 
 class Uuid extends UnmodifiableUint8ListView {
-  Uuid._(Uint8List list) : super(list);
+  Uuid.fromBytes(Uint8List list) : super(list);
 
-  @override
-  bool operator ==(dynamic other) =>
-      other is Uuid && equality.equals(other, this);
-
-  @override
-  int get hashCode => equality.hash(this);
-
-  // RFC4122 provided namespaces for v3 and v5 namespace based UUIDs
-  static const String NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
-  static const String NAMESPACE_URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
-  static const String NAMESPACE_OID = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
-  static const String NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
-  static const String NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
-
-  static const ListEquality<int> equality = ListEquality<int>();
-
-// Sets initial seedBytes, node, and clock seq based on cryptoRNG.
-  static final Uint8List _seedBytes = UuidUtil.cryptoRNG();
-
-  static int _lastMSecs = 0;
-  static int _lastNSecs = 0;
-  // Per 4.2.2, randomize (14 bit) clockseq
-  static int _clockSeq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3ffff;
-
-// Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
-  static final Uint8List _nodeId = Uint8List.fromList(<int>[
-    _seedBytes[0] | 0x01,
-    _seedBytes[1],
-    _seedBytes[2],
-    _seedBytes[3],
-    _seedBytes[4],
-    _seedBytes[5]
-  ]);
-
-// Easy number <-> hex conversion
-  static final Map<String, int> _hexToByte = <String, int>{};
-  static final List<String> _byteToHex =
-      List<String>(256).asMap().entries.map((MapEntry<int, String> entry) {
-    final Uint8List hex = Uint8List(1);
-    hex[0] = entry.key;
-    final String hexValue = convert.hex.encode(hex);
-    _hexToByte[hexValue] = entry.key;
-    return hexValue;
-  }).toList();
-
-  /// Parses the provided [uuid] into a list of byte values.
-  static Uuid fromString(String uuid) {
+  factory Uuid.fromString(String uuid) {
     int ii = 0;
 
     final Uint8List bytes = Uint8List(16);
@@ -76,48 +30,17 @@ class Uuid extends UnmodifiableUint8ListView {
       bytes[ii++] = 0;
     }
 
-    return Uuid._(bytes);
-  }
-
-  // @todo implement this
-  bool get isFromTime {
-    return true;
-  }
-
-  int get millisecondsSinceEpoch {
-    return (this[0] << 8 * 3) +
-        (this[1] << 8 * 2) +
-        (this[2] << 8 * 1) +
-        (this[3] << 8 * 0);
-  }
-
-  int get clockSequence {
-    return (this[8] << 8) + this[9];
-  }
-
-  /// outputs a proper UUID string.
-  @override
-  String toString() {
-    int i = 0;
-    return '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}'
-        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}-'
-        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}-'
-        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}-'
-        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}-'
-        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}'
-        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}'
-        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}';
+    return Uuid.fromBytes(bytes);
   }
 
   /// fromTime() Generates a time-based version 1 UUID
   ///
   /// By default it will generate a string based off current time.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// @todo explain options
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
-  static Uuid fromTime({
+  factory Uuid.fromTime({
     int mSecs,
     int nSecs,
     final int clockSequence,
@@ -191,7 +114,7 @@ class Uuid extends UnmodifiableUint8ListView {
       bytes[10 + n] = node[n];
     }
 
-    return Uuid._(bytes);
+    return Uuid.fromBytes(bytes);
   }
 
   /// randomUuid() Generates a RNG version 4 UUID
@@ -199,11 +122,8 @@ class Uuid extends UnmodifiableUint8ListView {
   /// By default it will generate a string based off mathRNG.
   /// If you wish to have crypto-strong RNG, pass in UuidUtil.cryptoRNG.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
-  ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  static Uuid randomUuid({
+  factory Uuid.randomUuid({
     Uint8List random,
   }) {
     // Use provided values over RNG
@@ -212,7 +132,7 @@ class Uuid extends UnmodifiableUint8ListView {
     // per 4.4, set bits for version and clockSeq high and reserved
     random[6] = (random[6] & 0x0f) | 0x40;
     random[8] = (random[8] & 0x3f) | 0x80;
-    return Uuid._(random);
+    return Uuid.fromBytes(random);
   }
 
   /// fromName() Generates a namspace & name-based version 5 UUID
@@ -224,7 +144,7 @@ class Uuid extends UnmodifiableUint8ListView {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  static Uuid fromName(
+  factory Uuid.fromName(
     // @non-nullable
     String name, {
     String namespace,
@@ -234,10 +154,11 @@ class Uuid extends UnmodifiableUint8ListView {
   }) {
     // Use provided namespace, or use whatever is decided by options.
     // If randomNamespace is true, generate UUIDv4, else use NIL
-    namespace ??= randomNamespace ? randomUuid().toString() : NAMESPACE_NIL;
+    namespace ??=
+        randomNamespace ? Uuid.randomUuid().toString() : NAMESPACE_NIL;
 
     // Convert namespace UUID to Byte List
-    final Uint8List bytes = fromString(namespace);
+    final Uint8List bytes = Uuid.fromString(namespace);
 
     // Convert name to a list of bytes
     final Uint8List nameBytes = Uint8List.fromList(name.codeUnits);
@@ -250,6 +171,83 @@ class Uuid extends UnmodifiableUint8ListView {
     hashBytes[6] = (hashBytes[6] & 0x0f) | 0x50;
     hashBytes[8] = (hashBytes[8] & 0x3f) | 0x80;
 
-    return Uuid._(hashBytes);
+    return Uuid.fromBytes(hashBytes);
+  }
+
+  // final Uint8List _list;
+
+  @override
+  bool operator ==(dynamic other) =>
+      other is Uuid && equality.equals(other, this);
+
+  @override
+  int get hashCode => equality.hash(this);
+
+  // RFC4122 provided namespaces for v3 and v5 namespace based UUIDs
+  static const String NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+  static const String NAMESPACE_URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
+  static const String NAMESPACE_OID = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
+  static const String NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
+  static const String NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
+
+  static const ListEquality<int> equality = ListEquality<int>();
+
+// Sets initial seedBytes, node, and clock seq based on cryptoRNG.
+  static final Uint8List _seedBytes = UuidUtil.cryptoRNG();
+
+  static int _lastMSecs = 0;
+  static int _lastNSecs = 0;
+  // Per 4.2.2, randomize (14 bit) clockseq
+  static int _clockSeq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3ffff;
+
+// Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
+  static final Uint8List _nodeId = Uint8List.fromList(<int>[
+    _seedBytes[0] | 0x01,
+    _seedBytes[1],
+    _seedBytes[2],
+    _seedBytes[3],
+    _seedBytes[4],
+    _seedBytes[5]
+  ]);
+
+// Easy number <-> hex conversion
+  static final Map<String, int> _hexToByte = <String, int>{};
+  static final List<String> _byteToHex =
+      List<String>(256).asMap().entries.map((MapEntry<int, String> entry) {
+    final Uint8List hex = Uint8List(1);
+    hex[0] = entry.key;
+    final String hexValue = convert.hex.encode(hex);
+    _hexToByte[hexValue] = entry.key;
+    return hexValue;
+  }).toList();
+
+  // @todo implement this
+  bool get isFromTime {
+    return true;
+  }
+
+  int get millisecondsSinceEpoch {
+    return (this[0] << 8 * 3) +
+        (this[1] << 8 * 2) +
+        (this[2] << 8 * 1) +
+        (this[3] << 8 * 0);
+  }
+
+  int get clockSequence {
+    return (this[8] << 8) + this[9];
+  }
+
+  /// outputs a proper UUID string.
+  @override
+  String toString() {
+    int i = 0;
+    return '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}'
+        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}-'
+        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}-'
+        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}-'
+        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}-'
+        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}'
+        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}'
+        '${_byteToHex[this[i++]]}${_byteToHex[this[i++]]}';
   }
 }
