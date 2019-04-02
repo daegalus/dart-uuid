@@ -1,3 +1,9 @@
+v2.0.1
+* Fix regression where CryptoRNG was default, moved back to MathRNG
+* Added ability to set RNG globally to skip having to set it in every function call
+* Allows you to set the v1 clock sequence, nodeID, and seed bytes to use cryptoRNG separately from globalRNG.
+
+
 v2.0.0
 * Fixup the API to split out Buffer and Non-buffer usages.
 * Switch to build in Random.secure() and remove custom AES implementation.

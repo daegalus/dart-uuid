@@ -17,10 +17,12 @@ class Uuid {
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
   var _seedBytes, _nodeId, _clockSeq, _lastMSecs = 0, _lastNSecs = 0;
+  Function _globalRNG;
   List<String> _byteToHex;
   Map<String, int> _hexToByte;
 
-  Uuid() {
+  Uuid({Map<String, dynamic> options}) {
+    options = (options != null) ? options : new Map();
     _byteToHex = new List<String>(256);
     _hexToByte = new Map<String, int>();
 
@@ -32,8 +34,29 @@ class Uuid {
       _hexToByte[_byteToHex[i]] = i;
     }
 
-    // Sets initial seedBytes, node, and clock seq based on cryptoRNG.
-    _seedBytes = UuidUtil.cryptoRNG();
+    // Sets initial seedBytes, node, and clock seq based on mathRNG.
+    var v1PositionalArgs = (options['v1rngPositionalArgs'] != null)
+        ? options['v1rngPositionalArgs']
+        : [];
+    var v1NamedArgs = (options['v1rngNamedArgs'] != null)
+        ? options['v1rngNamedArgs'] as Map<Symbol, dynamic>
+        : const <Symbol, dynamic>{};
+    _seedBytes = (options['v1rng'] != null)
+        ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
+        : UuidUtil.mathRNG();
+
+    // Set the globalRNG function to mathRNG with the option to set an alternative globally
+    var gPositionalArgs = (options['grngPositionalArgs'] != null)
+        ? options['grngPositionalArgs']
+        : [];
+    var gNamedArgs = (options['grngNamedArgs'] != null)
+        ? options['grngNamedArgs'] as Map<Symbol, dynamic>
+        : const <Symbol, dynamic>{};
+    _globalRNG = () {
+      return (options['grng'] != null)
+          ? Function.apply(options['grng'], gPositionalArgs, gNamedArgs)
+          : UuidUtil.mathRNG();
+    };
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
     _nodeId = [
@@ -228,7 +251,7 @@ class Uuid {
         : const <Symbol, dynamic>{};
     var rng = (options['rng'] != null)
         ? Function.apply(options['rng'], positionalArgs, namedArgs)
-        : UuidUtil.mathRNG();
+        : _globalRNG();
 
     // Use provided values over RNG
     var rnds = (options['random'] != null) ? options['random'] : rng;

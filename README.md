@@ -58,6 +58,32 @@ uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com'); // -> 'c74a196f-f19d-5ea9-bffd-a2
 
 ## API
 
+### Uuid({Map<String, dynamic> options: null}) -> Uuid (Consturctor)
+
+Constructor supports setting some global RNG sertings so you don't have to specify them on each function call for v4 or v5
+
+* `options` - (Map<String, dynamic>) Optional uuid state to apply. Properties may include:
+
+  * `grng` - (Function) Random # generator to use as a global rng function. A Custom function that returns an list[16] of byte values or 1 of 2 provided.
+  * `gNamedArgs` - (Map<Symbol, dynamic>) The arguments and values you want to pass to your global rng function.
+  * `gPositionalArgs` - (List) The positional arguments for your global rng functions, if any.
+  * `v1rng` - (Function) Random # generator to use as a rng function for v1 seed. A Custom function that returns an list[16] of byte values or 1 of 2 provided.
+  * `v1rngNamedArgs` - (Map<Symbol, dynamic>) The arguments and values you want to pass to your v1 rng function.
+  * `v1rngPositionalArgs` - (List) The positional arguments for your v1 rng functions, if any.
+
+Defaults are `Uuid.mathRNG`
+
+Example: Using CryptoRNG globally
+
+```dart
+var uuid = new Uuid(options: {
+  'grng': UuidUtil.cryptoRNG
+})
+
+// Generate a v4 (random) id that will use cryptRNG for its rng function
+uuid.v4();
+```
+
 ### uuid.v1({Map<String, dynamic> options: null) -> String
 ### uuid.v1buffer(List<int> buffer, {Map<String, dynamic> options: null, int offset: 0}) -> List<int>
 
@@ -234,21 +260,17 @@ In Browser/flutter
 
 No in browser testing, but I know many use it in Web and Flutter projects.
 
-### Benchmarking
+### Dart2js output size (minified, optimized with -O2)
 
-Its pretty quick, but no official benchmarking.
+* v1 only: 56kb
+* v4 only: 54kb
+* v4 crypto only: 55kb
+* v5 only: 67kb
+* v1 + v4: 59kb (includes crypto)
+* v4 + v5: 68kb (includes crypto)
 
-### Dart2js output size (minified)
-
-* v1 only: 51.5kb
-* v4 only: 66kb
-* v4 crypto only: 66.5kb
-* v5 only: 77kb
-* v1 + v4: 70.2kb (includes crypto)
-* v4 + v5: 77.5kb (includes crypto)
-
-* ALL: 80kb
-* v1 + v5: same as ALL (v5 uses v4 for certain use-cases)
+* ALL: 72kb
+* v1 + v5: 70kb
 
 ## Release notes
 
