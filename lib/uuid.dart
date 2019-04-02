@@ -20,7 +20,7 @@ class Uuid {
   List<String> _byteToHex;
   Map<String, int> _hexToByte;
 
-  Uuid() {
+  Uuid({Map<String, dynamic> options}) {
     _byteToHex = new List<String>(256);
     _hexToByte = new Map<String, int>();
 
@@ -32,8 +32,16 @@ class Uuid {
       _hexToByte[_byteToHex[i]] = i;
     }
 
+    var positionalArgs =
+      (options['positionalArgs'] != null) ? options['positionalArgs'] : [];
+    var namedArgs = (options['namedArgs'] != null)
+        ? options['namedArgs'] as Map<Symbol, dynamic>
+        : const <Symbol, dynamic>{};
     // Sets initial seedBytes, node, and clock seq based on cryptoRNG.
-    _seedBytes = UuidUtil.cryptoRNG();
+    _seedBytes = (options['rng'] != null)
+        ? Function.apply(options['rng'], positionalArgs, namedArgs)
+        : UuidUtil.cryptoRNG();
+
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
     _nodeId = [
