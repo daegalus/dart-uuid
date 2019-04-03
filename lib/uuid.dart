@@ -20,7 +20,7 @@ class Uuid {
   List<String> _byteToHex;
   Map<String, int> _hexToByte;
 
-  Uuid({Map<String, dynamic> options={}}) {
+  Uuid({Map<String, dynamic> options=const{}}) {
     _byteToHex = new List<String>(256);
     _hexToByte = new Map<String, int>();
 
