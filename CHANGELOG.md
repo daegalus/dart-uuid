@@ -1,3 +1,7 @@
+v2.0.2
+* Merge fix for time precision loss in V1 time based UUIDs.
+
+
 v2.0.1
 * Fix regression where CryptoRNG was default, moved back to MathRNG
 * Added ability to set RNG globally to skip having to set it in every function call
