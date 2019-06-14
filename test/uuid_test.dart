@@ -50,7 +50,7 @@ void main() {
         'node': [0x61, 0xcd, 0x3c, 0xbb, 0x32, 0x10]
       });
 
-      expect(id, equals('d9428888-f500-11e0-b85c-61cd3cbb3210'));
+      expect(id, equals('d9428888-122b-11e0-b85c-61cd3cbb3210'));
     });
 
     test('Ids spanning 1ms boundary are 100ns apart', () {
