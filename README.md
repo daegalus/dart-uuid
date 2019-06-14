@@ -109,9 +109,9 @@ Example: Generate string UUID with fully-specified options
 uuid.v1(options: {
     'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
     'clockSeq': 0x1234,
-    'mSecs': new Date(2011,11,01).millisecondsSinceEpoch,
+    'mSecs': new DateTime.utc(2011,11,01).millisecondsSinceEpoch,
     'nSecs': 5678
-})   // -> "1d6a6e2e-0457-11e1-9234-0123456789ab"
+})   // -> "710b962e-041c-11e1-9234-0123456789ab"
 ```
 
 Example: In-place generation of two binary IDs
