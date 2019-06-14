@@ -183,7 +183,7 @@ class Uuid {
     buf[i++] = tl & 0xff;
 
     // time mid
-    var tmh = (mSecs ~/ 0x100000000 * 10000) & 0xfffffff;
+    var tmh = (mSecs / 0x100000000 * 10000).floor() & 0xfffffff;
     buf[i++] = tmh >> 8 & 0xff;
     buf[i++] = tmh & 0xff;
 
