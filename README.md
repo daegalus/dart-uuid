@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/Daegalus/dart-uuid.svg?branch=master)](https://travis-ci.org/Daegalus/dart-uuid)
 
-# dart-uuid
+# uuid
 
 **Version 2.0.0 has breaking API changes. Please review them below.**
 
