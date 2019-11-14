@@ -1,3 +1,7 @@
+v2.0.4
+
+* Remove new keyword where not needed. (forgot to rerun before releasing 2.0.3)
+
 v2.0.3
 
 * Do some analyzer fixes and formatting/renaming.

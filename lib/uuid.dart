@@ -22,22 +22,20 @@ class Uuid {
   Map<String, int> _hexToByte;
 
   Uuid({Map<String, dynamic> options}) {
-    options = (options != null) ? options : new Map();
-    _byteToHex = new List<String>(256);
-    _hexToByte = new Map<String, int>();
+    options = (options != null) ? options : Map();
+    _byteToHex = List<String>(256);
+    _hexToByte = Map<String, int>();
 
     // Easy number <-> hex conversion
     for (var i = 0; i < 256; i++) {
-      var hex = new List<int>();
+      var hex = List<int>();
       hex.add(i);
       _byteToHex[i] = convert.hex.encode(hex);
       _hexToByte[_byteToHex[i]] = i;
     }
 
     // Sets initial seedBytes, node, and clock seq based on mathRNG.
-    var v1PositionalArgs = (options['v1rngPositionalArgs'] != null)
-        ? options['v1rngPositionalArgs']
-        : [];
+    var v1PositionalArgs = (options['v1rngPositionalArgs'] != null) ? options['v1rngPositionalArgs'] : [];
     var v1NamedArgs = (options['v1rngNamedArgs'] != null)
         ? options['v1rngNamedArgs'] as Map<Symbol, dynamic>
         : const <Symbol, dynamic>{};
@@ -46,9 +44,7 @@ class Uuid {
         : UuidUtil.mathRNG();
 
     // Set the globalRNG function to mathRNG with the option to set an alternative globally
-    var gPositionalArgs = (options['grngPositionalArgs'] != null)
-        ? options['grngPositionalArgs']
-        : [];
+    var gPositionalArgs = (options['grngPositionalArgs'] != null) ? options['grngPositionalArgs'] : [];
     var gNamedArgs = (options['grngNamedArgs'] != null)
         ? options['grngNamedArgs'] as Map<Symbol, dynamic>
         : const <Symbol, dynamic>{};
@@ -59,14 +55,7 @@ class Uuid {
     };
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
-    _nodeId = [
-      _seedBytes[0] | 0x01,
-      _seedBytes[1],
-      _seedBytes[2],
-      _seedBytes[3],
-      _seedBytes[4],
-      _seedBytes[5]
-    ];
+    _nodeId = [_seedBytes[0] | 0x01, _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]];
 
     // Per 4.2.2, randomize (14 bit) clockseq
     _clockSeq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3ffff;
@@ -79,12 +68,12 @@ class Uuid {
     var i = offset, ii = 0;
 
     // Create a 16 item buffer if one hasn't been provided.
-    buffer = (buffer != null) ? buffer : new List<int>(16);
+    buffer = (buffer != null) ? buffer : List<int>(16);
 
     // Convert to lowercase and replace all hex with bytes then
     // string.replaceAll() does a lot of work that I don't need, and a manual
     // regex gives me more control.
-    final RegExp regex = new RegExp('[0-9a-f]{2}');
+    final RegExp regex = RegExp('[0-9a-f]{2}');
     for (Match match in regex.allMatches(uuid.toLowerCase())) {
       if (ii < 16) {
         var hex = uuid.toLowerCase().substring(match.start, match.end);
@@ -131,19 +120,16 @@ class Uuid {
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
   String v1({Map<String, dynamic> options}) {
     var i = 0;
-    var buf = new List<int>(16);
-    options = (options != null) ? options : new Map();
+    var buf = List<int>(16);
+    options = (options != null) ? options : Map();
 
-    var clockSeq =
-        (options['clockSeq'] != null) ? options['clockSeq'] : _clockSeq;
+    var clockSeq = (options['clockSeq'] != null) ? options['clockSeq'] : _clockSeq;
 
     // UUID timestamps are 100 nano-second units since the Gregorian epoch,
     // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
     // milliseconds) and 'nsecs' (100-nanoseconds offset from msecs) since unix
     // epoch, 1970-01-01 00:00.
-    var mSecs = (options['mSecs'] != null)
-        ? options['mSecs']
-        : (new DateTime.now()).millisecondsSinceEpoch;
+    var mSecs = (options['mSecs'] != null) ? options['mSecs'] : (DateTime.now()).millisecondsSinceEpoch;
 
     // Per 4.2.1.2, use count of uuid's generated during the current clock
     // cycle to simulate higher resolution clock
@@ -165,7 +151,7 @@ class Uuid {
 
     // Per 4.2.1.2 Throw error if too many uuids are requested
     if (nSecs >= 10000) {
-      throw new Exception('uuid.v1(): Can\'t create more than 10M uuids/sec');
+      throw Exception('uuid.v1(): Can\'t create more than 10M uuids/sec');
     }
 
     _lastMSecs = mSecs;
@@ -241,17 +227,13 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   String v4({Map<String, dynamic> options}) {
-    options = (options != null) ? options : new Map<String, dynamic>();
+    options = (options != null) ? options : Map<String, dynamic>();
 
     // Use the built-in RNG or a custom provided RNG
-    var positionalArgs =
-        (options['positionalArgs'] != null) ? options['positionalArgs'] : [];
-    var namedArgs = (options['namedArgs'] != null)
-        ? options['namedArgs'] as Map<Symbol, dynamic>
-        : const <Symbol, dynamic>{};
-    var rng = (options['rng'] != null)
-        ? Function.apply(options['rng'], positionalArgs, namedArgs)
-        : _globalRNG();
+    var positionalArgs = (options['positionalArgs'] != null) ? options['positionalArgs'] : [];
+    var namedArgs =
+        (options['namedArgs'] != null) ? options['namedArgs'] as Map<Symbol, dynamic> : const <Symbol, dynamic>{};
+    var rng = (options['rng'] != null) ? Function.apply(options['rng'], positionalArgs, namedArgs) : _globalRNG();
 
     // Use provided values over RNG
     var rnds = (options['random'] != null) ? options['random'] : rng;
@@ -299,12 +281,10 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   String v5(String namespace, String name, {Map<String, dynamic> options}) {
-    options = (options != null) ? options : new Map();
+    options = (options != null) ? options : Map();
 
     // Check if user wants a random namespace generated by v4() or a NIL namespace.
-    var useRandom = (options['randomNamespace'] != null)
-        ? options['randomNamespace']
-        : true;
+    var useRandom = (options['randomNamespace'] != null) ? options['randomNamespace'] : true;
 
     // If useRandom is true, generate UUIDv4, else use NIL
     var blankNS = useRandom ? v4() : NAMESPACE_NIL;
@@ -319,14 +299,13 @@ class Uuid {
     var bytes = parse(namespace);
 
     // Convert name to a list of bytes
-    var nameBytes = new List<int>();
+    var nameBytes = List<int>();
     for (var singleChar in name.codeUnits) {
       nameBytes.add(singleChar);
     }
 
     // Generate SHA1 using namespace concatenated with name
-    List hashBytes =
-        sha1.convert(new List.from(bytes)..addAll(nameBytes)).bytes;
+    List hashBytes = sha1.convert(List.from(bytes)..addAll(nameBytes)).bytes;
 
     // per 4.4, set bits for version and clockSeq high and reserved
     hashBytes[6] = (hashBytes[6] & 0x0f) | 0x50;
