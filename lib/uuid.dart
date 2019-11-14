@@ -1,4 +1,4 @@
-library Uuid;
+library uuid;
 
 import 'uuid_util.dart';
 import 'package:crypto/crypto.dart';

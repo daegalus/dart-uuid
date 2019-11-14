@@ -1,4 +1,4 @@
-library UuidUtil;
+library uuid_util;
 
 import 'dart:math';
 

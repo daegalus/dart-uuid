@@ -1,14 +1,14 @@
 name: uuid
-version: 2.0.2
+version: 2.0.3
 description: >
   RFC4122 (v1, v4, v5) UUID Generator and Parser for all Dart platforms (Web, VM, Flutter)
 author: Yulian Kuncheff <yulian@kuncheff.com>
 homepage: https://github.com/Daegalus/dart-uuid
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: ">=2.0.0 <3.0.0"
 dependencies:
-  crypto: '>=2.0.0 <3.0.0'
-  convert: '>=2.0.0 <3.0.0'
+  crypto: ">=2.0.0 <3.0.0"
+  convert: ">=2.0.0 <3.0.0"
 dev_dependencies:
-  pedantic: '>=1.0.0'
+  pedantic: ">=1.0.0"
   test: any

@@ -1,14 +1,19 @@
+v2.0.3
+
+* Do some analyzer fixes and formatting/renaming.
+
 v2.0.2
+
 * Merge fix for time precision loss in V1 time based UUIDs.
 
-
 v2.0.1
+
 * Fix regression where CryptoRNG was default, moved back to MathRNG
 * Added ability to set RNG globally to skip having to set it in every function call
 * Allows you to set the v1 clock sequence, nodeID, and seed bytes to use cryptoRNG separately from globalRNG.
 
-
 v2.0.0
+
 * Fixup the API to split out Buffer and Non-buffer usages.
 * Switch to build in Random.secure() and remove custom AES implementation.
 * Less dependencies.
@@ -16,12 +21,15 @@ v2.0.0
 * Cleanup
 
 v1.0.3
+
 * Fix SDK constraints to allow Dart 2.0 stable.
 
 v1.0.2
+
 * Fix constants breaking in Dart 1.x, need to be backwards compatible. 
 
 v1.0.1
+
 * Fix constants to match Dart 2.0 spec
 
 v1.0.0

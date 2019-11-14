@@ -34,13 +34,13 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 2.0.2
+  uuid: 2.0.3
 ```
 
 ```dart
 import 'package:uuid/uuid.dart';
 
-var uuid = new Uuid();
+var uuid = Uuid();
 ```
 
 Then create some ids ...
