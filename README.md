@@ -58,7 +58,7 @@ uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com'); // -> 'c74a196f-f19d-5ea9-bffd-a2
 
 ## API
 
-### Uuid({Map<String, dynamic> options: null}) -> Uuid (Consturctor)
+### Uuid({Map<String, dynamic> options: null}) -> Uuid (Constructor)
 
 Constructor supports setting some global RNG sertings so you don't have to specify them on each function call for v4 or v5
 
