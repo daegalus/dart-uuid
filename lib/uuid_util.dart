@@ -1,20 +1,20 @@
 library uuid_util;
 
 import 'dart:math';
+import 'package:crypto/crypto.dart';
 
 class UuidUtil {
   /// Math.Random()-based RNG. All platforms, fast, not cryptographically strong. Optional Seed passable.
   static List<int> mathRNG({int seed = -1}) {
-    var rand, b = List<int>(16);
+    var b = List<int>(16);
 
-    var _rand = (seed == -1) ? Random() : Random(seed);
+    var rand = (seed == -1) ? Random() : Random(seed);
     for (var i = 0; i < 16; i++) {
-      if ((i & 0x03) == 0) {
-        rand = (_rand.nextDouble() * 0x100000000).floor().toInt();
-      }
-      b[i] = rand >> ((i & 0x03) << 3) & 0xff;
+      b[i] = rand.nextInt(256);
     }
-
+    
+    (seed == -1) ? b.shuffle() : b.shuffle(Random(seed));
+    
     return b;
   }
 
@@ -23,7 +23,7 @@ class UuidUtil {
     var b = List<int>(16);
     var rand = Random.secure();
     for (var i = 0; i < 16; i++) {
-      b[i] = rand.nextInt(1 << 8);
+      b[i] = rand.nextInt(256);
     }
     return b;
   }

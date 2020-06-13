@@ -62,6 +62,23 @@ void main() {
 
       expect(dt, equals(1));
     });
+
+    test('Generate lots of codes to see if we get v1 collisions.', () {
+      var uuids = Set();
+      var collisions = 0;
+      for (var i = 0; i < 10000000; i++) {
+        var code = uuid.v1();
+        if (uuids.contains(code)) {
+          collisions++;
+          print("Collision of code: $code");
+        } else {
+          uuids.add(code);
+        }
+      }
+
+      expect(collisions, equals(0));
+      expect(uuids.length, equals(10000000));
+    });
   });
 
   group('[Version 4 Tests]', () {
@@ -70,7 +87,7 @@ void main() {
         'rng': UuidUtil.mathRNG,
         'namedArgs': new Map.fromIterables([const Symbol('seed')], [1])
       });
-      var u1 = "09a91894-e93f-4141-a3ec-82eb32f2a3ef";
+      var u1 = "4dff2ea7-7bc8-4fea-8da0-a4993073bdb3";
       expect(u0, equals(u1));
     });
 
@@ -104,6 +121,27 @@ void main() {
           new List.filled(1000, null).map((something) => uuid.v4()).toList();
       var setList = list.toSet();
       expect(list.length, equals(setList.length));
+    });
+
+    test(
+        'Another round of testing uuid.v4 to make sure it doesn\'t produce duplicates on high amounts of entries.',
+        () {
+      final numToGenerate = 3 * 1000 * 1000;
+      final values = <String>{}; // set of strings
+      var generator = Uuid();
+
+      var numDuplicates = 0;
+      for (var i = 0; i < numToGenerate; i++) {
+        final uuid = generator.v4();
+
+        if (!values.contains(uuid)) {
+          values.add(uuid);
+        } else {
+          numDuplicates++;
+        }
+      }
+
+      expect(numDuplicates, equals(0), reason: 'duplicate UUIDs generated');
     });
   });
 
