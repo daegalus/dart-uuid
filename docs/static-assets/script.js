@@ -100,6 +100,13 @@ function initSearch(name) {
     'constructor' : 4
   };
 
+  var baseHref = '';
+  if (!$('body').data('using-base-href')) {
+    // If dartdoc did not add a base-href tag, we will need to add the relative
+    // path ourselves.
+    baseHref = $('body').data('base-href');
+  }
+
   function findMatches(q) {
     var allMatches = []; // list of matches
 
@@ -226,7 +233,7 @@ function initSearch(name) {
           if (suggestion.length > 0) {
             var href = suggestion.data("href");
             if (href != null) {
-              window.location = href;
+              window.location = baseHref + href;
             }
           }
         }
@@ -235,12 +242,12 @@ function initSearch(name) {
 
     typeaheadElement.bind('typeahead:select', function(ev, suggestion) {
         selectedSuggestion = suggestion;
-        window.location = suggestion.href;
+        window.location = baseHref + suggestion.href;
     });
   }
 
   var jsonReq = new XMLHttpRequest();
-  jsonReq.open('GET', 'index.json', true);
+  jsonReq.open('GET', baseHref + 'index.json', true);
   jsonReq.addEventListener('load', function() {
     searchIndex = JSON.parse(jsonReq.responseText);
     initTypeahead();
