@@ -175,7 +175,7 @@ options detailed in the readme.</p>
   buf[i++] = tmh &gt;&gt; 16 &amp; 0xff;
 
   &#47;&#47; clockSeq high and reserved (Per 4.2.2 - include variant)
-  buf[i++] = clockSeq &gt;&gt; 8 | 0x80;
+  buf[i++] = (clockSeq &amp; 0x3F00) &gt;&gt; 8 | 0x80;
 
   &#47;&#47; clockSeq low
   buf[i++] = clockSeq &amp; 0xff;
@@ -200,7 +200,7 @@ options detailed in the readme.</p>
 <footer>
   <span class="no-break">
     uuid
-      2.1.0
+      2.2.0
   </span>
 
 </footer>

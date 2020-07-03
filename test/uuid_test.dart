@@ -79,6 +79,14 @@ void main() {
       expect(collisions, equals(0));
       expect(uuids.length, equals(10000000));
     });
+
+    test('Generate lots of codes to check we don\'t generate variant 2 V1 codes.', () {
+      for (var i = 0; i < 10000; i++) {
+        var code = Uuid().v1();
+        expect(code[19], isNot(equals('d')));
+        expect(code[19], isNot(equals('c')));
+      }
+    });
   });
 
   group('[Version 4 Tests]', () {

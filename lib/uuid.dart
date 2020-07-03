@@ -178,7 +178,7 @@ class Uuid {
     buf[i++] = tmh >> 16 & 0xff;
 
     // clockSeq high and reserved (Per 4.2.2 - include variant)
-    buf[i++] = clockSeq >> 8 | 0x80;
+    buf[i++] = (clockSeq & 0x3F00) >> 8 | 0x80;
 
     // clockSeq low
     buf[i++] = clockSeq & 0xff;
