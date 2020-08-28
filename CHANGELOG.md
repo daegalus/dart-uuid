@@ -1,3 +1,7 @@
+v2.2.1
+
+* Update pedantic analyzer options, fix linting issues, and increase SDK minimium to 2.2 to support set literals
+
 v2.2.0
 
 * fix v1 clock high to properly ignore c and d variants. (fixes #47)

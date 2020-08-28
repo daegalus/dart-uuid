@@ -1,10 +1,10 @@
-import "package:test/test.dart";
+import 'package:test/test.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/uuid_util.dart';
 
 void main() {
-  var uuid = new Uuid();
-  final int TIME = 1321644961388;
+  var uuid = Uuid();
+  const TIME = 1321644961388;
 
   group('[Version 1 Tests]', () {
     test('IDs created at same mSec are different', () {
@@ -64,13 +64,13 @@ void main() {
     });
 
     test('Generate lots of codes to see if we get v1 collisions.', () {
-      var uuids = Set();
+      var uuids = <dynamic>{};
       var collisions = 0;
       for (var i = 0; i < 10000000; i++) {
         var code = uuid.v1();
         if (uuids.contains(code)) {
           collisions++;
-          print("Collision of code: $code");
+          print('Collision of code: $code');
         } else {
           uuids.add(code);
         }
@@ -80,7 +80,9 @@ void main() {
       expect(uuids.length, equals(10000000));
     });
 
-    test('Generate lots of codes to check we don\'t generate variant 2 V1 codes.', () {
+    test(
+        'Generate lots of codes to check we don\'t generate variant 2 V1 codes.',
+        () {
       for (var i = 0; i < 10000; i++) {
         var code = Uuid().v1();
         expect(code[19], isNot(equals('d')));
@@ -93,9 +95,9 @@ void main() {
     test('Check if V4 is consistent using a static seed', () {
       var u0 = uuid.v4(options: {
         'rng': UuidUtil.mathRNG,
-        'namedArgs': new Map.fromIterables([const Symbol('seed')], [1])
+        'namedArgs': Map.fromIterables([const Symbol('seed')], [1])
       });
-      var u1 = "4dff2ea7-7bc8-4fea-8da0-a4993073bdb3";
+      var u1 = '4dff2ea7-7bc8-4fea-8da0-a4993073bdb3';
       expect(u0, equals(u1));
     });
 
@@ -120,13 +122,12 @@ void main() {
           0x36
         ]
       });
-      var u1 = "109156be-c4fb-41ea-b1b4-efe1671c5836";
+      var u1 = '109156be-c4fb-41ea-b1b4-efe1671c5836';
       expect(u0, equals(u1));
     });
 
     test('Make sure that really fast uuid.v4 doesn\'t produce duplicates', () {
-      var list =
-          new List.filled(1000, null).map((something) => uuid.v4()).toList();
+      var list = List.filled(1000, null).map((something) => uuid.v4()).toList();
       var setList = list.toSet();
       expect(list.length, equals(setList.length));
     });
