@@ -4,7 +4,7 @@
 
 **Version 2.0.0 has breaking API changes. Please review them below.**
 
-Simple, fast generation of [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) UUIDs.
+Simple, fast generation of [RFC4122](https://www.ietf.org/rfc/rfc4122.txt) UUIDs.
 
 Originally based on node-uuid by Robert Kieffer (I even copied this readme over and modified it.)
 Primarily because it works, well written, and so on. It has changed considerably since the start though.
@@ -15,7 +15,7 @@ Features:
 * Runs in web, server, and flutter
 * Cryptographically strong random number generation on all platforms
   * **Defaults to non-crypto generator, see UuidUtil for cryptoRNG**
-* [Documentation](http://daegalus.github.com/dart-uuid/index.html)
+* [Documentation](https://daegalus.github.com/dart-uuid/index.html)
 
 ## Getting Started
 
@@ -34,7 +34,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 2.2.1
+  uuid: 2.2.2
 ```
 
 ```dart
