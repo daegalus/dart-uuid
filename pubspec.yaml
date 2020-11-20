@@ -4,10 +4,18 @@ description: >
   RFC4122 (v1, v4, v5) UUID Generator and Parser for all Dart platforms (Web, VM, Flutter)
 homepage: https://github.com/Daegalus/dart-uuid
 environment:
-  sdk: ">=2.2.0 <3.0.0"
+  sdk: ">=2.12.0-0 <3.0.0"
 dependencies:
-  crypto: ">=2.0.0 <3.0.0"
-  convert: ">=2.0.0 <3.0.0"
+  crypto: "^3.0.0-nullsafety"
+  convert: "^3.0.0-nullsafety"
 dev_dependencies:
   pedantic: ">=1.9.0"
-  test: any
+  test: ^1.16.0-nullsafety
+dependency_overrides:
+  crypto:
+    git:
+      url: https://github.com/dart-lang/crypto.git
+      ref: "3.0"
+  # test depends on shelf_static which requires convert <3.0.0, so temporarily
+  # add an override.
+  convert: ^3.0.0-nullsafety
