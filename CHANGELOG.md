@@ -1,3 +1,7 @@
+v2.3.0-nullsafety.0
+
+* Migrate package to null-safety, increase minimum SDK version to 2.12
+
 v2.2.1 & v2.2.2
 
 * Update pedantic analyzer options, fix linting issues, and increase SDK minimium to 2.2 to support set literals
