@@ -1,5 +1,7 @@
 library uuid;
 
+import 'dart:typed_data';
+
 import 'uuid_util.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:convert/convert.dart' as convert;
@@ -74,7 +76,7 @@ class Uuid {
     var i = offset, ii = 0;
 
     // Create a 16 item buffer if one hasn't been provided.
-    buffer = (buffer != null) ? buffer : List<int>.filled(16, 0);
+    buffer = (buffer != null) ? buffer : Uint8List(16);
 
     // Convert to lowercase and replace all hex with bytes then
     // string.replaceAll() does a lot of work that I don't need, and a manual
@@ -126,7 +128,7 @@ class Uuid {
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
   String v1({Map<String, dynamic>? options}) {
     var i = 0;
-    var buf = List<int>.filled(16, 0);
+    var buf = Uint8List(16);
     options = (options != null) ? options : {};
 
     var clockSeq =
