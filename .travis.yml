@@ -1,6 +1,7 @@
 language: dart
 dart:
   - dev
-  - stable
+#  - stable
+  - beta
 
 sudo: false

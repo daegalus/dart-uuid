@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:test/test.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/uuid_util.dart';
@@ -89,6 +91,16 @@ void main() {
         expect(code[19], isNot(equals('c')));
       }
     });
+
+    test('Using buffers', () {
+      var buffer = Uint8List(16);
+      var options = {'mSecs': TIME, 'nSecs': 0};
+
+      var wihoutBuffer = uuid.v1(options: options);
+      uuid.v1buffer(buffer, options: options);
+
+      expect(uuid.unparse(buffer), equals(wihoutBuffer));
+    });
   });
 
   group('[Version 4 Tests]', () {
@@ -99,6 +111,17 @@ void main() {
       });
       var u1 = '4dff2ea7-7bc8-4fea-8da0-a4993073bdb3';
       expect(u0, equals(u1));
+    });
+
+    test('Consistency check with buffer', () {
+      var buffer = Uint8List(16);
+      uuid.v4buffer(buffer, options: {
+        'rng': UuidUtil.mathRNG,
+        'namedArgs': Map.fromIterables([const Symbol('seed')], [1])
+      });
+
+      var u1 = '4dff2ea7-7bc8-4fea-8da0-a4993073bdb3';
+      expect(uuid.unparse(buffer), equals(u1));
     });
 
     test('Return same output as entered for "random" option', () {
@@ -167,6 +190,16 @@ void main() {
       var u1 = uuid.v5(null, 'www.google.com');
 
       expect(u0, isNot(equals(u1)));
+    });
+
+    test('Using buffers', () {
+      var buffer = Uint8List(16);
+      var wihoutBuffer =
+          uuid.v5(null, 'www.google.com', options: {'randomNamespace': false});
+      uuid.v5buffer(null, 'www.google.com', buffer,
+          options: {'randomNamespace': false});
+
+      expect(uuid.unparse(buffer), equals(wihoutBuffer));
     });
   });
 
