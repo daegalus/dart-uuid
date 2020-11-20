@@ -16,23 +16,16 @@ class Uuid {
   static const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
+  // Easy number <-> hex conversion
+  static final List<String> _byteToHex = List<String>.generate(256, (i) {
+    return convert.hex.encode([i]);
+  });
+
   var _seedBytes, _nodeId, _clockSeq, _lastMSecs = 0, _lastNSecs = 0;
-  Function _globalRNG;
-  List<String> _byteToHex;
-  Map<String, int> _hexToByte;
+  late List<int> Function() _globalRNG;
 
-  Uuid({Map<String, dynamic> options}) {
-    options = (options != null) ? options : {};
-    _byteToHex = List<String>(256);
-    _hexToByte = <String, int>{};
-
-    // Easy number <-> hex conversion
-    for (var i = 0; i < 256; i++) {
-      var hex = <int>[];
-      hex.add(i);
-      _byteToHex[i] = convert.hex.encode(hex);
-      _hexToByte[_byteToHex[i]] = i;
-    }
+  Uuid({Map<String, dynamic>? options}) {
+    options ??= const {};
 
     // Sets initial seedBytes, node, and clock seq based on mathRNG.
     var v1PositionalArgs = (options['v1rngPositionalArgs'] != null)
@@ -52,11 +45,13 @@ class Uuid {
     var gNamedArgs = (options['grngNamedArgs'] != null)
         ? options['grngNamedArgs'] as Map<Symbol, dynamic>
         : const <Symbol, dynamic>{};
-    _globalRNG = () {
-      return (options['grng'] != null)
-          ? Function.apply(options['grng'], gPositionalArgs, gNamedArgs)
-          : UuidUtil.mathRNG();
-    };
+
+    final gnrg = options['grng'];
+    if (gnrg != null) {
+      _globalRNG = () => Function.apply(gnrg, gPositionalArgs, gNamedArgs);
+    } else {
+      _globalRNG = UuidUtil.mathRNG;
+    }
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
     _nodeId = [
@@ -75,11 +70,11 @@ class Uuid {
   ///Parses the provided [uuid] into a list of byte values.
   /// Can optionally be provided a [buffer] to write into and
   ///  a positional [offset] for where to start inputting into the buffer.
-  List<int> parse(String uuid, {List<int> buffer, int offset = 0}) {
+  List<int> parse(String uuid, {List<int>? buffer, int offset = 0}) {
     var i = offset, ii = 0;
 
     // Create a 16 item buffer if one hasn't been provided.
-    buffer = (buffer != null) ? buffer : List<int>(16);
+    buffer = (buffer != null) ? buffer : List<int>.filled(16, 0);
 
     // Convert to lowercase and replace all hex with bytes then
     // string.replaceAll() does a lot of work that I don't need, and a manual
@@ -88,7 +83,7 @@ class Uuid {
     for (Match match in regex.allMatches(uuid.toLowerCase())) {
       if (ii < 16) {
         var hex = uuid.toLowerCase().substring(match.start, match.end);
-        buffer[i + ii++] = _hexToByte[hex];
+        buffer[i + ii++] = int.parse(hex, radix: 16);
       }
     }
 
@@ -129,9 +124,9 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
-  String v1({Map<String, dynamic> options}) {
+  String v1({Map<String, dynamic>? options}) {
     var i = 0;
-    var buf = List<int>(16);
+    var buf = List<int>.filled(16, 0);
     options = (options != null) ? options : {};
 
     var clockSeq =
@@ -218,17 +213,11 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
   List<int> v1buffer(
-    List<int> buffer, {
-    Map<String, dynamic> options,
+    List<int>? buffer, {
+    Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    var _buf = parse(v1(options: options));
-
-    if (buffer != null) {
-      buffer.setRange(offset, offset + 16, _buf);
-    }
-
-    return buffer;
+    return parse(v1(options: options), buffer: buffer, offset: offset);
   }
 
   /// v4() Generates a RNG version 4 UUID
@@ -240,7 +229,7 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  String v4({Map<String, dynamic> options}) {
+  String v4({Map<String, dynamic>? options}) {
     options = (options != null) ? options : <String, dynamic>{};
 
     // Use the built-in RNG or a custom provided RNG
@@ -277,16 +266,10 @@ class Uuid {
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   List<int> v4buffer(
     List<int> buffer, {
-    Map<String, dynamic> options,
+    Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    var _buf = parse(v4(options: options));
-
-    if (buffer != null) {
-      buffer.setRange(offset, offset + 16, _buf);
-    }
-
-    return buffer;
+    return parse(v4(options: options), buffer: buffer, offset: offset);
   }
 
   /// v5() Generates a namspace & name-based version 5 UUID
@@ -298,7 +281,7 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  String v5(String namespace, String name, {Map<String, dynamic> options}) {
+  String v5(String? namespace, String? name, {Map<String, dynamic>? options}) {
     options = (options != null) ? options : {};
 
     // Check if user wants a random namespace generated by v4() or a NIL namespace.
@@ -325,8 +308,7 @@ class Uuid {
     }
 
     // Generate SHA1 using namespace concatenated with name
-    List hashBytes =
-        crypto.sha1.convert(List.from(bytes)..addAll(nameBytes)).bytes;
+    var hashBytes = crypto.sha1.convert([...bytes, ...nameBytes]).bytes;
 
     // per 4.4, set bits for version and clockSeq high and reserved
     hashBytes[6] = (hashBytes[6] & 0x0f) | 0x50;
@@ -347,18 +329,13 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   List<int> v5buffer(
-    String namespace,
-    String name,
-    List<int> buffer, {
-    Map<String, dynamic> options,
+    String? namespace,
+    String? name,
+    List<int>? buffer, {
+    Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    var _buf = parse(v5(namespace, name, options: options));
-
-    if (buffer != null) {
-      buffer.setRange(offset, offset + 16, _buf);
-    }
-
-    return buffer;
+    return parse(v5(namespace, name, options: options),
+        buffer: buffer, offset: offset);
   }
 }
