@@ -9,3 +9,4 @@ packages
 .idea/
 out/
 .dart_tool
+.vscode/

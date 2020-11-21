@@ -48,12 +48,10 @@ class Uuid {
         ? options['grngNamedArgs'] as Map<Symbol, dynamic>
         : const <Symbol, dynamic>{};
 
-    final gnrg = options['grng'];
-    if (gnrg != null) {
-      _globalRNG = () => Function.apply(gnrg, gPositionalArgs, gNamedArgs);
-    } else {
-      _globalRNG = UuidUtil.mathRNG;
-    }
+    final grng = options['grng'];
+    _globalRNG = (grng != null)
+        ? () => Function.apply(grng, gPositionalArgs, gNamedArgs)
+        : UuidUtil.mathRNG;
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
     _nodeId = [
@@ -215,7 +213,7 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
   List<int> v1buffer(
-    List<int>? buffer, {
+    List<int> buffer, {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
