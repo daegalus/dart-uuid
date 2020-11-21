@@ -1,7 +1,0 @@
-language: dart
-dart:
-  - dev
-#  - stable
-  - beta
-
-sudo: false
