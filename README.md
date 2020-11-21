@@ -1,4 +1,4 @@
-![Build Status](https://github.com/Daegalus/dart-uuid/workflows/dart/badge.svg?branch=master&event=push)
+![Build Status](https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&event=push)
 
 # uuid
 
