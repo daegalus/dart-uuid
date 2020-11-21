@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Daegalus/dart-uuid.svg?branch=master)](https://travis-ci.org/Daegalus/dart-uuid)
+![Build Status](https://github.com/Daegalus/dart-uuid/workflows/dart/badge.svg?branch=master&event=push)
 
 # uuid
 
@@ -34,7 +34,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 2.2.2
+  uuid: 2.3.0-nullsafety.0
 ```
 
 ```dart
