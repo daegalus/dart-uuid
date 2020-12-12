@@ -2,12 +2,7 @@
 
 # uuid
 
-**Version 2.0.0 has breaking API changes. Please review them below.**
-
 Simple, fast generation of [RFC4122](https://www.ietf.org/rfc/rfc4122.txt) UUIDs.
-
-Originally based on node-uuid by Robert Kieffer (I even copied this readme over and modified it.)
-Primarily because it works, well written, and so on. It has changed considerably since the start though.
 
 Features:
 
