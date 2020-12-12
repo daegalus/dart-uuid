@@ -1,4 +1,4 @@
-v2.3.0-nullsafety.0
+v3.0.0-nullsafety.0
 
 * Migrate package to null-safety, increase minimum SDK version to 2.12 (Thanks @simolus3)
 
