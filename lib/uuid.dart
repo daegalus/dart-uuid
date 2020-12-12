@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import 'uuid_util.dart';
 import 'package:crypto/crypto.dart' as crypto;
-import 'package:convert/convert.dart' as convert;
 
 /// uuid for Dart
 /// Author: Yulian Kuncheff
@@ -20,7 +19,7 @@ class Uuid {
 
   // Easy number <-> hex conversion
   static final List<String> _byteToHex = List<String>.generate(256, (i) {
-    return convert.hex.encode([i]);
+    return i.toRadixString(16).padLeft(2, '0');
   });
 
   var _seedBytes, _nodeId, _clockSeq, _lastMSecs = 0, _lastNSecs = 0;
