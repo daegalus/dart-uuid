@@ -1,3 +1,4 @@
+/// Utility functions for UUID library.
 library uuid_util;
 
 import 'dart:math';

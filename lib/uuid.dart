@@ -1,3 +1,4 @@
+/// Generates UUID v1, v4, v5 following RFC4122 standard.
 library uuid;
 
 import 'dart:typed_data';
@@ -113,11 +114,6 @@ class Uuid {
   ///
   /// By default it will generate a string based off current time, and will
   /// return a string.
-  ///
-  /// If an optional [buffer] list is provided, it will put the byte data into
-  /// that buffer and return a buffer.
-  ///
-  /// Optionally an [offset] can be provided with a start position in the buffer.
   ///
   /// The first argument is an options map that takes various configuration
   /// options detailed in the readme.
