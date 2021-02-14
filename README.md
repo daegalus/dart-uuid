@@ -310,15 +310,15 @@ No in browser testing, but I know many use it in Web and Flutter projects.
 
 ### Dart2js output size (minified, optimized with -O2)
 
-* v1 only: 56kb
+* v1 only: 59kb
 * v4 only: 54kb
-* v4 crypto only: 55kb
-* v5 only: 67kb
-* v1 + v4: 59kb (includes crypto)
-* v4 + v5: 68kb (includes crypto)
+* v4 crypto only: 61kb
+* v5 only: 69kb
+* v1 + v4: 66kb (includes crypto)
+* v4 + v5: 76kb (includes crypto)
 
-* ALL: 72kb
-* v1 + v5: 70kb
+* ALL: 76kb
+* v1 + v5: 77kb
 
 ## Release notes
 
