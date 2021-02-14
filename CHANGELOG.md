@@ -1,3 +1,11 @@
+v3.0.0-nullsafety.1
+
+* [BREAKING CHANGE] Changed `parse()` to throw a FormatException instead of returning NIL uuids or partially handled UUIDs.
+* Changed `Uuid` constructor to be constant, and adjusted all the code accordingly.
+* New `isValidUUID` function for validating UUIDs.
+* [BREAKING CHANGE] `parse` and `unparse` are now static functions.
+* [Exprimental] Object version of the UUID instead of a string or list of bytes.
+
 v3.0.0-nullsafety.0
 
 * Migrate package to null-safety, increase minimum SDK version to 2.12 (Thanks @simolus3)

@@ -99,7 +99,16 @@ void main() {
       var wihoutBuffer = uuid.v1(options: options);
       uuid.v1buffer(buffer, options: options);
 
-      expect(uuid.unparse(buffer), equals(wihoutBuffer));
+      expect(Uuid.unparse(buffer), equals(wihoutBuffer));
+    });
+
+    test('Using Objects', () {
+      var options = {'mSecs': TIME, 'nSecs': 0};
+
+      var regular = uuid.v1(options: options);
+      var obj = uuid.v1obj(options: options);
+
+      expect(obj.uuid, equals(regular));
     });
   });
 
@@ -121,7 +130,20 @@ void main() {
       });
 
       var u1 = '4dff2ea7-7bc8-4fea-8da0-a4993073bdb3';
-      expect(uuid.unparse(buffer), equals(u1));
+      expect(Uuid.unparse(buffer), equals(u1));
+    });
+
+    test('Using Objects', () {
+      var regular = uuid.v4(options: {
+        'rng': UuidUtil.mathRNG,
+        'namedArgs': Map.fromIterables([const Symbol('seed')], [1])
+      });
+      var obj = uuid.v4obj(options: {
+        'rng': UuidUtil.mathRNG,
+        'namedArgs': Map.fromIterables([const Symbol('seed')], [1])
+      });
+
+      expect(obj.uuid, equals(regular));
     });
 
     test('Return same output as entered for "random" option', () {
@@ -199,21 +221,30 @@ void main() {
       uuid.v5buffer(null, 'www.google.com', buffer,
           options: {'randomNamespace': false});
 
-      expect(uuid.unparse(buffer), equals(wihoutBuffer));
+      expect(Uuid.unparse(buffer), equals(wihoutBuffer));
+    });
+
+    test('Using Objects', () {
+      var regular =
+          uuid.v5(null, 'www.google.com', options: {'randomNamespace': false});
+      var obj = uuid
+          .v5obj(null, 'www.google.com', options: {'randomNamespace': false});
+
+      expect(obj.uuid, equals(regular));
     });
   });
 
   group('[Parse/Unparse Tests]', () {
     test('Parsing a short/cut-off UUID', () {
       var id = '00112233445566778899aabbccddeeff';
-      expect(uuid.unparse(uuid.parse(id.substring(0, 10))),
-          equals('00112233-4400-0000-0000-000000000000'));
+      expect(() => Uuid.parse(id.substring(0, 10)),
+          throwsA(isA<FormatException>()));
     });
 
     test('Parsing a dirty string with a UUID in it', () {
       var id = '00112233445566778899aabbccddeeff';
-      expect(uuid.unparse(uuid.parse('(this is the uuid -> $id$id')),
-          equals('00112233-4455-6677-8899-aabbccddeeff'));
+      expect(() => Uuid.unparse(Uuid.parse('(this is the uuid -> $id$id')),
+          throwsA(isA<FormatException>()));
     });
   });
 }

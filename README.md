@@ -1,3 +1,5 @@
+**Version 3.0.0 has breaking changes, please review changelog and documentation.**
+
 ![Build Status](https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&event=push)
 
 # uuid
@@ -71,7 +73,7 @@ Defaults are `Uuid.mathRNG`
 Example: Using CryptoRNG globally
 
 ```dart
-var uuid = new Uuid(options: {
+var uuid = Uuid(options: {
   'grng': UuidUtil.cryptoRNG
 })
 
@@ -80,6 +82,7 @@ uuid.v4();
 ```
 
 ### uuid.v1({Map<String, dynamic> options: null) -> String
+### uuid.v1obj({Map<String, dynamic> options: null) -> UuidValue
 ### uuid.v1buffer(List<int> buffer, {Map<String, dynamic> options: null, int offset: 0}) -> List<int>
 
 Generate and return a RFC4122 v1 (timestamp-based) UUID.
@@ -97,6 +100,8 @@ Generate and return a RFC4122 v1 (timestamp-based) UUID.
 v1() returns a string representation of the uuid.
 
 v1buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
+
+v1obj() Returns a UuidValue, which has a validation check and some internal functions wrapping the string.
 
 Example: Generate string UUID with fully-specified options
 
@@ -124,8 +129,23 @@ uuid.unparse(myBuffer);    // -> '73bd0580-c95b-11e1-9234-6d0009003480'
 uuid.unparse(myBuffer, offset: 16) // -> '73bd0581-c95b-11e1-9234-6d0009003480'
 ```
 
-### uuid.v4({Map<String, dynamic> options: null})
-### uuid.v4buffer(List<int> buffer, {Map<String, dynamic> options: null, int offset: 0})
+Example: UuidValue usage
+
+```dart
+uuidValue = uuid.v1Obj(options: {
+    'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
+    'clockSeq': 0x1234,
+    'mSecs': new DateTime.utc(2011,11,01).millisecondsSinceEpoch,
+    'nSecs': 5678
+}) // -> UuidValue{uuid: '710b962e-041c-11e1-9234-0123456789ab'}
+
+print(uuidValue) -> // -> '710b962e-041c-11e1-9234-0123456789ab'
+uuidValue.toBytes() -> // -> [...]
+```
+
+### uuid.v4({Map<String, dynamic> options: null}) -> String
+### uuid.v4obj({Map<String, dynamic> options: null}) -> UuidValue
+### uuid.v4buffer(List<int> buffer, {Map<String, dynamic> options: null, int offset: 0}) -> List<int>
 Generate and return a RFC4122 v4 UUID.
 
 * `options` - (Map<String, dynamic>) Optional uuid state to apply. Properties may include:
@@ -141,6 +161,8 @@ Generate and return a RFC4122 v4 UUID.
 v4() returns a string representation of the uuid.
 
 v4buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
+
+v4obj() Returns a UuidValue, which has a validation check and some internal functions wrapping the string.
 
 Example: Generate string UUID with different RNG method
 
@@ -194,8 +216,23 @@ uuid.v4buffer(myBuffer);
 uuid.v4buffer(myBuffer, offset: 16);
 ```
 
-### uuid.v5(String namespace, String name, {Map<String, dynamic> options: null})
-### uuid.v5buffer(String namespace, String name, List<int> buffer, {Map<String, dynamic> options: null, int offset: 0})
+Example: UuidValue usage
+
+```dart
+uuidValue = uuid.v4obj(options: {
+  'random': [
+    0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
+    0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
+  ]
+}) // -> UuidValue{uuid: '109156be-c4fb-41ea-b1b4-efe1671c5836'}
+
+print(uuidValue) -> // -> '109156be-c4fb-41ea-b1b4-efe1671c5836'
+uuidValue.toBytes() -> // -> [...]
+```
+
+### uuid.v5(String namespace, String name, {Map<String, dynamic> options: null}) -> String
+### uuid.v5obj(String namespace, String name, {Map<String, dynamic> options: null}) -> UuidValue
+### uuid.v5buffer(String namespace, String name, List<int> buffer, {Map<String, dynamic> options: null, int offset: 0}) -> List<int>
 Generate and return a RFC4122 v5 UUID.
 
 * `options` - (Map<String, dynamic>) Optional uuid state to apply. Properties may include:
@@ -208,6 +245,8 @@ Generate and return a RFC4122 v5 UUID.
 v5() returns a string representation of the uuid.
 
 v5buffer() Returns a List<int> `buffer`, if specified, also writes the data to the provided buffer.
+
+v5obj() Returns a UuidValue, which has a validation check and some internal functions wrapping the string.
 
 Example: Generate string UUID with fully-specified options
 
@@ -224,15 +263,29 @@ uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer);
 uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer, offset: 16);
 ```
 
-### uuid.parse(String uuid, {List<int> buffer: null, int offset: 0})
+Example: UuidValue usage
 
-### uuid.unparse(List<int> buffer, {int offset: 0})
+```dart
+uuidValue = uuid.v5obj(Uuid.NAMESPACE_URL, 'www.google.com'); 
+// -> UuidValue(uuid: "c74a196f-f19d-5ea9-bffd-a2742432fc9c")
+
+print(uuidValue) -> // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
+uuidValue.toBytes() -> // -> [...]
+```
+
+### uuid.parse(String uuid, {List<int> buffer: null, int offset: 0}) -> List<int>
+
+### uuid.unparse(List<int> buffer, {int offset: 0}) -> String
 
 Parse and unparse UUIDs
 
 * `id` - (String) UUID(-like) string
 * `buffer` - (List) Array or buffer where UUID bytes are to be written. Default: A new Array or Buffer is used
 * `offset` - (Int | Number) Starting index in `buffer` at which to begin writing. Default: 0
+
+**Throws**: 
+parse() -> FormatException - when not a valid UUID
+unparse() -> Exception - when length of list contents is not 16
 
 Example parsing and unparsing a UUID string
 
