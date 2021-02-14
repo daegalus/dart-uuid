@@ -77,7 +77,7 @@ function initScrollSave() {
   var mainContent = document.getElementById('dartdoc-main-content');
   var rightSidebar = document.getElementById('dartdoc-sidebar-right');
 
-  // For portablility, use two different ways of attaching saveLeftScroll to events.
+  // For portability, use two different ways of attaching saveLeftScroll to events.
   leftSidebar.onscroll = saveLeftScroll;
   leftSidebar.addEventListener("scroll", saveLeftScroll, true);
   mainContent.onscroll = saveMainContentScroll;
@@ -177,12 +177,14 @@ function initSearch(name) {
   };
 
   function initTypeahead() {
-    var search = new URI().query(true)["search"];
-    if (search) {
-      var matches = findMatches(search);
-      if (matches.length != 0) {
-        window.location = matches[0].href;
-        return;
+    if ('URLSearchParams' in window) {
+      var search = new URLSearchParams(window.location.search).get('search');
+      if (search) {
+        var matches = findMatches(search);
+        if (matches.length !== 0) {
+          window.location = baseHref + matches[0].href;
+          return;
+        }
       }
     }
 

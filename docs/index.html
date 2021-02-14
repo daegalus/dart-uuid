@@ -4,12 +4,13 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="generator" content="made with love by dartdoc 0.37.0">
+  <meta name="generator" content="made with love by dartdoc 0.39.0">
   <meta name="description" content="uuid API docs, for the Dart programming language.">
   <title>uuid - Dart API docs</title>
 
   
-  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="static-assets/github.css">
   <link rel="stylesheet" href="static-assets/styles.css">
@@ -35,7 +36,7 @@
 
 <main>
 
-  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <header id="header-search-sidebar" class="hidden-l">
       <form class="search-sidebar" role="search">
         <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -54,9 +55,10 @@
     </ol>
   </div>
 
-  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+  <div id="dartdoc-main-content" class="main-content">
       <section class="desc markdown">
-        <p><img src="https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&amp;event=push" alt="Build Status"></p>
+        <p><strong>Version 3.0.0 has breaking changes, please review changelog and documentation.</strong></p>
+<p><img src="https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&amp;event=push" alt="Build Status"></p>
 <h1 id="uuid">uuid</h1>
 <p>Simple, fast generation of <a href="https://www.ietf.org/rfc/rfc4122.txt">RFC4122</a> UUIDs.</p>
 <p>Features:</p>
@@ -82,7 +84,7 @@
 <p>There are 2 options. Directly from git, or from pub.dartlang.org</p>
 <p>pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  uuid: 3.0.0-nullsafety.0
+  uuid: 3.0.0-nullsafety.1
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:uuid/uuid.dart';
 
@@ -116,7 +118,7 @@ uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com'); // -&gt; 'c74a196f-f19d-5ea9-bffd
 </ul>
 <p>Defaults are <code>Uuid.mathRNG</code></p>
 <p>Example: Using CryptoRNG globally</p>
-<pre class="language-dart"><code class="language-dart">var uuid = new Uuid(options: {
+<pre class="language-dart"><code class="language-dart">var uuid = Uuid(options: {
   'grng': UuidUtil.cryptoRNG
 })
 
@@ -124,6 +126,7 @@ uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com'); // -&gt; 'c74a196f-f19d-5ea9-bffd
 uuid.v4();
 </code></pre>
 <h3 id="uuidv1mapstring-dynamic-options-null---string">uuid.v1({Map&lt;String, dynamic&gt; options: null) -&gt; String</h3>
+<h3 id="uuidv1objmapstring-dynamic-options-null---uuidvalue">uuid.v1obj({Map&lt;String, dynamic&gt; options: null) -&gt; UuidValue</h3>
 <h3 id="uuidv1bufferlistint-buffer-mapstring-dynamic-options-null-int-offset-0---listint">uuid.v1buffer(List<int> buffer, {Map&lt;String, dynamic&gt; options: null, int offset: 0}) -&gt; List<int></int></int></h3>
 <p>Generate and return a RFC4122 v1 (timestamp-based) UUID.</p>
 <ul>
@@ -145,6 +148,7 @@ uuid.v4();
 </ul>
 <p>v1() returns a string representation of the uuid.</p>
 <p>v1buffer() Returns a List<int> <code>buffer</code>, if specified, also writes the data to the provided buffer.</int></p>
+<p>v1obj() Returns a UuidValue, which has a validation check and some internal functions wrapping the string.</p>
 <p>Example: Generate string UUID with fully-specified options</p>
 <pre class="language-dart"><code class="language-dart">uuid.v1(options: {
     'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
@@ -165,8 +169,20 @@ uuid.v1buffer(myBuffer, offset: 16);
 uuid.unparse(myBuffer);    // -&gt; '73bd0580-c95b-11e1-9234-6d0009003480'
 uuid.unparse(myBuffer, offset: 16) // -&gt; '73bd0581-c95b-11e1-9234-6d0009003480'
 </code></pre>
-<h3 id="uuidv4mapstring-dynamic-options-null">uuid.v4({Map&lt;String, dynamic&gt; options: null})</h3>
-<h3 id="uuidv4bufferlistint-buffer-mapstring-dynamic-options-null-int-offset-0">uuid.v4buffer(List<int> buffer, {Map&lt;String, dynamic&gt; options: null, int offset: 0})</int></h3>
+<p>Example: UuidValue usage</p>
+<pre class="language-dart"><code class="language-dart">uuidValue = uuid.v1Obj(options: {
+    'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
+    'clockSeq': 0x1234,
+    'mSecs': new DateTime.utc(2011,11,01).millisecondsSinceEpoch,
+    'nSecs': 5678
+}) // -&gt; UuidValue{uuid: '710b962e-041c-11e1-9234-0123456789ab'}
+
+print(uuidValue) -&gt; // -&gt; '710b962e-041c-11e1-9234-0123456789ab'
+uuidValue.toBytes() -&gt; // -&gt; [...]
+</code></pre>
+<h3 id="uuidv4mapstring-dynamic-options-null---string">uuid.v4({Map&lt;String, dynamic&gt; options: null}) -&gt; String</h3>
+<h3 id="uuidv4objmapstring-dynamic-options-null---uuidvalue">uuid.v4obj({Map&lt;String, dynamic&gt; options: null}) -&gt; UuidValue</h3>
+<h3 id="uuidv4bufferlistint-buffer-mapstring-dynamic-options-null-int-offset-0---listint">uuid.v4buffer(List<int> buffer, {Map&lt;String, dynamic&gt; options: null, int offset: 0}) -&gt; List<int></int></int></h3>
 <p>Generate and return a RFC4122 v4 UUID.</p>
 <ul>
 <li>
@@ -187,6 +203,7 @@ uuid.unparse(myBuffer, offset: 16) // -&gt; '73bd0581-c95b-11e1-9234-6d000900348
 </ul>
 <p>v4() returns a string representation of the uuid.</p>
 <p>v4buffer() Returns a List<int> <code>buffer</code>, if specified, also writes the data to the provided buffer.</int></p>
+<p>v4obj() Returns a UuidValue, which has a validation check and some internal functions wrapping the string.</p>
 <p>Example: Generate string UUID with different RNG method</p>
 <pre class="language-dart"><code class="language-dart">import 'package:uuid/uuid_util.dart';
 uuid.v4(options: {
@@ -224,8 +241,20 @@ uuid.v4(options: {
 uuid.v4buffer(myBuffer);
 uuid.v4buffer(myBuffer, offset: 16);
 </code></pre>
-<h3 id="uuidv5string-namespace-string-name-mapstring-dynamic-options-null">uuid.v5(String namespace, String name, {Map&lt;String, dynamic&gt; options: null})</h3>
-<h3 id="uuidv5bufferstring-namespace-string-name-listint-buffer-mapstring-dynamic-options-null-int-offset-0">uuid.v5buffer(String namespace, String name, List<int> buffer, {Map&lt;String, dynamic&gt; options: null, int offset: 0})</int></h3>
+<p>Example: UuidValue usage</p>
+<pre class="language-dart"><code class="language-dart">uuidValue = uuid.v4obj(options: {
+  'random': [
+    0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
+    0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
+  ]
+}) // -&gt; UuidValue{uuid: '109156be-c4fb-41ea-b1b4-efe1671c5836'}
+
+print(uuidValue) -&gt; // -&gt; '109156be-c4fb-41ea-b1b4-efe1671c5836'
+uuidValue.toBytes() -&gt; // -&gt; [...]
+</code></pre>
+<h3 id="uuidv5string-namespace-string-name-mapstring-dynamic-options-null---string">uuid.v5(String namespace, String name, {Map&lt;String, dynamic&gt; options: null}) -&gt; String</h3>
+<h3 id="uuidv5objstring-namespace-string-name-mapstring-dynamic-options-null---uuidvalue">uuid.v5obj(String namespace, String name, {Map&lt;String, dynamic&gt; options: null}) -&gt; UuidValue</h3>
+<h3 id="uuidv5bufferstring-namespace-string-name-listint-buffer-mapstring-dynamic-options-null-int-offset-0---listint">uuid.v5buffer(String namespace, String name, List<int> buffer, {Map&lt;String, dynamic&gt; options: null, int offset: 0}) -&gt; List<int></int></int></h3>
 <p>Generate and return a RFC4122 v5 UUID.</p>
 <ul>
 <li>
@@ -243,6 +272,7 @@ uuid.v4buffer(myBuffer, offset: 16);
 </ul>
 <p>v5() returns a string representation of the uuid.</p>
 <p>v5buffer() Returns a List<int> <code>buffer</code>, if specified, also writes the data to the provided buffer.</int></p>
+<p>v5obj() Returns a UuidValue, which has a validation check and some internal functions wrapping the string.</p>
 <p>Example: Generate string UUID with fully-specified options</p>
 <pre class="language-dart"><code class="language-dart">uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com');
 // -&gt; "c74a196f-f19d-5ea9-bffd-a2742432fc9c"
@@ -252,14 +282,24 @@ uuid.v4buffer(myBuffer, offset: 16);
 uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer);
 uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer, offset: 16);
 </code></pre>
-<h3 id="uuidparsestring-uuid-listint-buffer-null-int-offset-0">uuid.parse(String uuid, {List<int> buffer: null, int offset: 0})</int></h3>
-<h3 id="uuidunparselistint-buffer-int-offset-0">uuid.unparse(List<int> buffer, {int offset: 0})</int></h3>
+<p>Example: UuidValue usage</p>
+<pre class="language-dart"><code class="language-dart">uuidValue = uuid.v5obj(Uuid.NAMESPACE_URL, 'www.google.com'); 
+// -&gt; UuidValue(uuid: "c74a196f-f19d-5ea9-bffd-a2742432fc9c")
+
+print(uuidValue) -&gt; // -&gt; 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
+uuidValue.toBytes() -&gt; // -&gt; [...]
+</code></pre>
+<h3 id="uuidparsestring-uuid-listint-buffer-null-int-offset-0---listint">uuid.parse(String uuid, {List<int> buffer: null, int offset: 0}) -&gt; List<int></int></int></h3>
+<h3 id="uuidunparselistint-buffer-int-offset-0---string">uuid.unparse(List<int> buffer, {int offset: 0}) -&gt; String</int></h3>
 <p>Parse and unparse UUIDs</p>
 <ul>
 <li><code>id</code> - (String) UUID(-like) string</li>
 <li><code>buffer</code> - (List) Array or buffer where UUID bytes are to be written. Default: A new Array or Buffer is used</li>
 <li><code>offset</code> - (Int | Number) Starting index in <code>buffer</code> at which to begin writing. Default: 0</li>
 </ul>
+<p><strong>Throws</strong>: 
+parse() -&gt; FormatException - when not a valid UUID
+unparse() -&gt; Exception - when length of list contents is not 16</p>
 <p>Example parsing and unparsing a UUID string</p>
 <pre class="language-dart"><code class="language-dart">var bytes = uuid.parse('797ff043-11eb-11e1-80d6-510998755d10'); // -&gt; [121, 127, 240, 67, 17, 235, 17, 225, 128, 214, 81, 9, 152, 117, 93, 16]
 var string = uuid.unparse(bytes); // -&gt; '797ff043-11eb-11e1-80d6-510998755d10'
@@ -322,7 +362,7 @@ var string = uuid.unparse(bytes); // -&gt; '797ff043-11eb-11e1-80d6-510998755d10
 
   </div> <!-- /.main-content -->
 
-  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div>
 
 </main>
@@ -330,7 +370,7 @@ var string = uuid.unparse(bytes); // -&gt; '797ff043-11eb-11e1-80d6-510998755d10
 <footer>
   <span class="no-break">
     uuid
-      3.0.0-nullsafety.0
+      3.0.0-nullsafety.1
   </span>
 
 </footer>
@@ -338,7 +378,6 @@ var string = uuid.unparse(bytes); // -&gt; '797ff043-11eb-11e1-80d6-510998755d10
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="static-assets/typeahead.bundle.min.js"></script>
 <script src="static-assets/highlight.pack.js"></script>
-<script src="static-assets/URI.js"></script>
 <script src="static-assets/script.js"></script>
 
 

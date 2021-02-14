@@ -245,7 +245,7 @@ a:hover {
 }
 
 pre.prettyprint {
-  font-family: 'Source Code Pro', Menlo, monospace;
+  font-family: 'Roboto Mono', Menlo, monospace;
   color: black;
   border-radius: 0;
   font-size: 15px;
@@ -273,7 +273,7 @@ pre {
 }
 
 code {
-  font-family: 'Source Code Pro', Menlo, monospace;
+  font-family: 'Roboto Mono', Menlo, monospace;
   /* overriding bootstrap */
   color: inherit;
   padding: 0.2em 0.4em;
@@ -476,6 +476,10 @@ h1 .category {
   font-size: 12px;
   padding: 1px 6px;
   margin: 0 8px 0 0;
+}
+
+a.feature:hover {
+  border-color: #13B9FD;
 }
 
 h1 .feature {
@@ -734,13 +738,13 @@ ul.subnav li:last-of-type {
 .sidebar ol li {
   text-overflow: ellipsis;
   overflow: hidden;
-  padding: 3px 0;
+  padding: 3px 0 3px 3px;
 }
 
 .sidebar h5 {
   color: #727272;
   font-size: 18px;
-  margin: 0 0 25px 0;
+  margin: 0 0 22px 0;
   padding-top: 0;
 }
 
@@ -765,7 +769,7 @@ ul.subnav li:last-of-type {
 }
 
 .sidebar ol li:first-child {
-  padding-top: 0;
+  padding-top: 3px;
   margin-top: 0;
 }
 

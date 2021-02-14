@@ -3,8 +3,6 @@ library uuid;
 
 import 'dart:typed_data';
 
-import 'package:uuid/uuid_value.dart';
-
 import 'uuid_util.dart';
 import 'package:crypto/crypto.dart' as crypto;
 
@@ -438,5 +436,29 @@ class Uuid {
       {Map<String, dynamic>? options}) {
     var uuid = v5(namespace, name, options: options);
     return UuidValue(uuid);
+  }
+}
+
+class UuidValue {
+  final String uuid;
+
+  UuidValue(this.uuid) {
+    Uuid.isValidUUID(uuid);
+  }
+
+  // toBytes() converts the internal string representation to a list of bytes.
+  List<int> toBytes() {
+    return Uuid.parse(uuid);
+  }
+
+  // toString() returns the String representation of the UUID
+  @override
+  String toString() {
+    return uuid;
+  }
+
+  // equals() compares to UuidValue objects' uuids.
+  bool equals(UuidValue other) {
+    return uuid == other.uuid;
   }
 }
