@@ -31,7 +31,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 3.0.0-nullsafety.1
+  uuid: 3.0.0
 ```
 
 ```dart

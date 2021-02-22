@@ -1,3 +1,7 @@
+v3.0.0
+
+* Release nullsafety version 
+
 v3.0.0-nullsafety.1
 
 * [BREAKING CHANGE] Changed `parse()` to throw a FormatException instead of returning NIL uuids or partially handled UUIDs.
