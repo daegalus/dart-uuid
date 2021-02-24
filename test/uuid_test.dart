@@ -118,7 +118,7 @@ void main() {
         'rng': UuidUtil.mathRNG,
         'namedArgs': Map.fromIterables([const Symbol('seed')], [1])
       });
-      var u1 = '4dff2ea7-7bc8-4fea-8da0-a4993073bdb3';
+      var u1 = 'a473ff7b-b3cd-4899-a04d-ea0fbd30a72e';
       expect(u0, equals(u1));
     });
 
@@ -129,7 +129,7 @@ void main() {
         'namedArgs': Map.fromIterables([const Symbol('seed')], [1])
       });
 
-      var u1 = '4dff2ea7-7bc8-4fea-8da0-a4993073bdb3';
+      var u1 = 'a473ff7b-b3cd-4899-a04d-ea0fbd30a72e';
       expect(Uuid.unparse(buffer), equals(u1));
     });
 
