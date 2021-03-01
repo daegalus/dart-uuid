@@ -93,17 +93,19 @@
       
     </section>
     <section class="desc markdown">
-      <p>Crypto-Strong RNG. All platforms, unknown speed, cryptographically strong (theoretically)</p>
+      <p>Crypto-Strong RNG. All platforms, unknown speed, cryptographically strong
+(theoretically)</p>
     </section>
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span></h2>
       <pre class="language-dart"><code class="language-dart">static Uint8List cryptoRNG() {
-  var b = Uint8List(16);
-  var rand = Random.secure();
+  final b = Uint8List(16);
+
   for (var i = 0; i &lt; 16; i++) {
-    b[i] = rand.nextInt(256);
+    b[i] = _secureRandom.nextInt(256);
   }
+
   return b;
 }</code></pre>
     </section>
@@ -118,7 +120,7 @@
 <footer>
   <span class="no-break">
     uuid
-      3.0.0-nullsafety.1
+      3.0.1
   </span>
 
 </footer>

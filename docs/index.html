@@ -57,7 +57,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <section class="desc markdown">
-        <p><strong>Version 3.0.0 has breaking changes, please review changelog and documentation.</strong></p>
+        <p><strong>Version 3.0.x has breaking changes, please review changelog and documentation.</strong></p>
 <p><img src="https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&amp;event=push" alt="Build Status"></p>
 <h1 id="uuid">uuid</h1>
 <p>Simple, fast generation of <a href="https://www.ietf.org/rfc/rfc4122.txt">RFC4122</a> UUIDs.</p>
@@ -84,7 +84,7 @@
 <p>There are 2 options. Directly from git, or from pub.dartlang.org</p>
 <p>pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  uuid: 3.0.0-nullsafety.1
+  uuid: 3.0.1
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:uuid/uuid.dart';
 
@@ -314,28 +314,28 @@ var string = uuid.unparse(bytes); // -&gt; '797ff043-11eb-11e1-80d6-510998755d10
 <h3 id="dart2js-output-size-minified-optimized-with--o2">Dart2js output size (minified, optimized with -O2)</h3>
 <ul>
 <li>
-<p>v1 only: 56kb</p>
+<p>v1 only: 59kb</p>
 </li>
 <li>
 <p>v4 only: 54kb</p>
 </li>
 <li>
-<p>v4 crypto only: 55kb</p>
+<p>v4 crypto only: 61kb</p>
 </li>
 <li>
-<p>v5 only: 67kb</p>
+<p>v5 only: 69kb</p>
 </li>
 <li>
-<p>v1 + v4: 59kb (includes crypto)</p>
+<p>v1 + v4: 66kb (includes crypto)</p>
 </li>
 <li>
-<p>v4 + v5: 68kb (includes crypto)</p>
+<p>v4 + v5: 76kb (includes crypto)</p>
 </li>
 <li>
-<p>ALL: 72kb</p>
+<p>ALL: 76kb</p>
 </li>
 <li>
-<p>v1 + v5: 70kb</p>
+<p>v1 + v5: 77kb</p>
 </li>
 </ul>
 <h2 id="release-notes">Release notes</h2>
@@ -370,7 +370,7 @@ var string = uuid.unparse(bytes); // -&gt; '797ff043-11eb-11e1-80d6-510998755d10
 <footer>
   <span class="no-break">
     uuid
-      3.0.0-nullsafety.1
+      3.0.1
   </span>
 
 </footer>
