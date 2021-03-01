@@ -1,3 +1,7 @@
+v3.0.1
+
+* Fix RNG to not need shuffling and improve performance/memory usage (Thanks @julemand101)
+
 v3.0.0
 
 * Release nullsafety version 

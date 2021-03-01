@@ -1,4 +1,4 @@
-**Version 3.0.0 has breaking changes, please review changelog and documentation.**
+**Version 3.0.x has breaking changes, please review changelog and documentation.**
 
 ![Build Status](https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&event=push)
 
@@ -31,7 +31,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 3.0.0
+  uuid: 3.0.1
 ```
 
 ```dart
