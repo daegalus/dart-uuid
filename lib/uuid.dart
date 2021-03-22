@@ -58,9 +58,11 @@ class Uuid {
   ///Parses the provided [uuid] into a list of byte values.
   /// Can optionally be provided a [buffer] to write into and
   ///  a positional [offset] for where to start inputting into the buffer.
-  /// Throws FormatException if the UUID is invalid.
-  static List<int> parse(String uuid, {List<int>? buffer, int offset = 0}) {
-    if (!isValidUUID(uuid)) {
+  /// Throws FormatException if the UUID is invalid. Optionally you can set
+  /// [validate] to false to disable validation of the UUID before parsing.
+  static List<int> parse(String uuid,
+      {List<int>? buffer, int offset = 0, bool validate = true}) {
+    if (validate && !isValidUUID(uuid)) {
       throw FormatException('The provided UUID is invalid.', uuid);
     }
     var i = offset, ii = 0;
@@ -442,8 +444,16 @@ class Uuid {
 class UuidValue {
   final String uuid;
 
-  UuidValue(this.uuid) {
-    Uuid.isValidUUID(uuid);
+  /// UuidValue() Constructor for creating a uuid value.
+  ///
+  /// Takes in a string representation of a [uuid] to wrap.
+  ///
+  /// Optioanlly, you can disable the validation check in the constructor
+  /// by setting [validate] to `true`.
+  UuidValue(this.uuid, [bool validate = true]) {
+    if (validate) {
+      Uuid.isValidUUID(uuid);
+    }
   }
 
   // toBytes() converts the internal string representation to a list of bytes.

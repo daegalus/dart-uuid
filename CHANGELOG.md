@@ -1,3 +1,7 @@
+v3.0.2
+
+* Add flags to UuidValue constructor and parse to disable validation of the UUID, primarily to allow Microsoft GUIDs to not break things.
+
 v3.0.1
 
 * Fix RNG to not need shuffling and improve performance/memory usage (Thanks @julemand101)

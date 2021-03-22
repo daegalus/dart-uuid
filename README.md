@@ -31,7 +31,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 3.0.1
+  uuid: 3.0.2
 ```
 
 ```dart
@@ -282,6 +282,7 @@ Parse and unparse UUIDs
 * `id` - (String) UUID(-like) string
 * `buffer` - (List) Array or buffer where UUID bytes are to be written. Default: A new Array or Buffer is used
 * `offset` - (Int | Number) Starting index in `buffer` at which to begin writing. Default: 0
+* `validate` - (bool, default: true) Allows you to disable UUID validation, mostly useful for Microsoft GUID nonsense.
 
 **Throws**: 
 parse() -> FormatException - when not a valid UUID
