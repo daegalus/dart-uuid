@@ -87,6 +87,7 @@
     <li class="section-title"><a href="../../uuid/Uuid-class.html#static-methods">Static methods</a></li>
     <li><a href="../../uuid/Uuid/isValidUUID.html">isValidUUID</a></li>
     <li><a href="../../uuid/Uuid/parse.html">parse</a></li>
+    <li><a href="../../uuid/Uuid/parseAsByteList.html">parseAsByteList</a></li>
     <li><a href="../../uuid/Uuid/unparse.html">unparse</a></li>
 
     <li class="section-title"><a href="../../uuid/Uuid-class.html#constants">Constants</a></li>
@@ -114,18 +115,18 @@
       
     </section>
     <section class="desc markdown">
-      <p>Parses the provided <code>uuid</code> into a list of byte values.
+      <p>Parses the provided <code>uuid</code> into a list of byte values as a List<int>.
 Can optionally be provided a <code>buffer</code> to write into and
  a positional <code>offset</code> for where to start inputting into the buffer.
 Throws FormatException if the UUID is invalid. Optionally you can set
-<code>validate</code> to false to disable validation of the UUID before parsing.</p>
+<code>validate</code> to false to disable validation of the UUID before parsing.</int></p>
     </section>
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span></h2>
       <pre class="language-dart"><code class="language-dart">static List&lt;int&gt; parse(String uuid,
     {List&lt;int&gt;? buffer, int offset = 0, bool validate = true}) {
-  if (validate &amp;&amp; !isValidUUID(uuid)) {
+  if (validate &amp;&amp; !isValidUUID(fromString: uuid)) {
     throw FormatException(&#39;The provided UUID is invalid.&#39;, uuid);
   }
   var i = offset, ii = 0;
