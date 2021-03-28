@@ -1,6 +1,15 @@
+v3.0.3
+
+* [Experimental] Fixed UuidValue to properly check things are valid. (Thanks @FlorianUlivi)
+* [Experimental] Added new constructors `fromByteList` and `fromList` to `UuidValue`
+* [Experimental] Added `==` operator override and hashcode override. (Thanks @giorgiofran for suggestion)
+* Added `parseAsByteList` to offer a direct output to `Uint8List`
+* [Experimental][BREAKING CHANGE] Change `toBytes` in `UuidValue` to return `Uint8List` instead of `List<int>`
+* [Experimental][BREAKING CHANGE] `isValidUuid` function signature has changed, now takes 2 optional parameters `fromString` and `fromList` that will do the appropriate validation on different sources.
+
 v3.0.2
 
-* Add flags to UuidValue constructor and parse to disable validation of the UUID, primarily to allow Microsoft GUIDs to not break things.
+* [Experimental] Add flags to UuidValue constructor and parse to disable validation of the UUID, primarily to allow Microsoft GUIDs to not break things.
 
 v3.0.1
 

@@ -1,4 +1,5 @@
 **Version 3.0.x has breaking changes, please review changelog and documentation.**
+**UuidValue is still Experimental and the API for it is in flux, please pay attention to changelogs and versions.**
 
 ![Build Status](https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&event=push)
 
@@ -31,7 +32,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 3.0.2
+  uuid: 3.0.3
 ```
 
 ```dart
@@ -274,6 +275,8 @@ uuidValue.toBytes() -> // -> [...]
 ```
 
 ### uuid.parse(String uuid, {List<int> buffer: null, int offset: 0}) -> List<int>
+
+### uuid.parseAsByteList(String uuid, {List<int> buffer: null, int offset: 0}) -> Uint8List
 
 ### uuid.unparse(List<int> buffer, {int offset: 0}) -> String
 

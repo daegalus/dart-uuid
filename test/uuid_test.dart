@@ -251,19 +251,19 @@ void main() {
   group('[UuidValue]', () {
     test('Construct UuidValue instance', () {
       const VALID_UUID = '87cd4eb3-cb88-449b-a1da-e468fd829310';
-      expect(Uuid.isValidUUID(VALID_UUID), true);
+      expect(Uuid.isValidUUID(fromString: VALID_UUID), true);
       final uuidval = UuidValue(VALID_UUID, true);
       expect(uuidval.uuid, VALID_UUID);
     });
 
     test('Pass invalid Uuid to constructor', () {
       const INVALID_UUID = 'For sure not a valid UUID';
-      expect(Uuid.isValidUUID(INVALID_UUID), false);
+      expect(Uuid.isValidUUID(fromString: INVALID_UUID), false);
       expect(
           () => UuidValue(INVALID_UUID, true), throwsA(isA<FormatException>()));
 
       final uuidval = UuidValue(INVALID_UUID, false);
-      expect(uuidval.uuid, INVALID_UUID);
+      expect(uuidval.uuid, INVALID_UUID.toLowerCase());
     });
   });
 }

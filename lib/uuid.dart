@@ -36,14 +36,21 @@ class Uuid {
 
   const Uuid({Map<String, dynamic>? this.options});
 
-  static bool isValidUUID(String uuid) {
+  /// Validates the provided [uuid] to make sure it has all the necessary
+  /// components and formatting and returns a [bool]
+  /// You can choose to validate from a string or from a byte list based on
+  /// which parameter is passed.
+  static bool isValidUUID({String fromString = '', Uint8List? fromByteList}) {
+    if (fromByteList != null) {
+      fromString = unparse(fromByteList);
+    }
     // UUID of all 0s is ok.
-    if (uuid == NAMESPACE_NIL) {
+    if (fromString == NAMESPACE_NIL) {
       return true;
     }
 
     // If its not 36 characters in length, don't bother (including dashes).
-    if (uuid.length != 36) {
+    if (fromString.length != 36) {
       return false;
     }
 
@@ -51,18 +58,18 @@ class Uuid {
     const pattern =
         r'^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$';
     final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
-    final match = regex.hasMatch(uuid);
+    final match = regex.hasMatch(fromString);
     return match;
   }
 
-  ///Parses the provided [uuid] into a list of byte values.
+  ///Parses the provided [uuid] into a list of byte values as a List<int>.
   /// Can optionally be provided a [buffer] to write into and
   ///  a positional [offset] for where to start inputting into the buffer.
   /// Throws FormatException if the UUID is invalid. Optionally you can set
   /// [validate] to false to disable validation of the UUID before parsing.
   static List<int> parse(String uuid,
       {List<int>? buffer, int offset = 0, bool validate = true}) {
-    if (validate && !isValidUUID(uuid)) {
+    if (validate && !isValidUUID(fromString: uuid)) {
       throw FormatException('The provided UUID is invalid.', uuid);
     }
     var i = offset, ii = 0;
@@ -87,6 +94,17 @@ class Uuid {
     }
 
     return buffer;
+  }
+
+  ///Parses the provided [uuid] into a list of byte values as a Uint8List.
+  /// Can optionally be provided a [buffer] to write into and
+  ///  a positional [offset] for where to start inputting into the buffer.
+  /// Throws FormatException if the UUID is invalid. Optionally you can set
+  /// [validate] to false to disable validation of the UUID before parsing.
+  static Uint8List parseAsByteList(String uuid,
+      {List<int>? buffer, int offset = 0, bool validate = true}) {
+    return Uint8List.fromList(
+        parse(uuid, buffer: buffer, offset: offset, validate: validate));
   }
 
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.
@@ -450,15 +468,27 @@ class UuidValue {
   ///
   /// Optionally , you can disable the validation check in the constructor
   /// by setting [validate] to `false`.
-  UuidValue(this.uuid, [bool validate = true]) {
-    if (validate && !Uuid.isValidUUID(uuid)) {
+  factory UuidValue(String uuid, [bool validate = true]) {
+    if (validate && !Uuid.isValidUUID(fromString: uuid)) {
       throw FormatException('The provided UUID is invalid.', uuid);
     }
+
+    return UuidValue._(uuid.toLowerCase());
   }
 
+  factory UuidValue.fromByteList(Uint8List byteList, {int? offset}) {
+    return UuidValue(Uuid.unparse(byteList, offset: offset ?? 0));
+  }
+
+  factory UuidValue.fromList(List<int> byteList, {int? offset}) {
+    return UuidValue(Uuid.unparse(byteList, offset: offset ?? 0));
+  }
+
+  UuidValue._(this.uuid);
+
   // toBytes() converts the internal string representation to a list of bytes.
-  List<int> toBytes() {
-    return Uuid.parse(uuid);
+  Uint8List toBytes() {
+    return Uuid.parseAsByteList(uuid);
   }
 
   // toString() returns the String representation of the UUID
@@ -471,4 +501,10 @@ class UuidValue {
   bool equals(UuidValue other) {
     return uuid == other.uuid;
   }
+
+  @override
+  bool operator ==(Object other) => other is UuidValue && uuid == other.uuid;
+
+  @override
+  int get hashCode => uuid.hashCode;
 }
