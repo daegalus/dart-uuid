@@ -259,7 +259,8 @@ void main() {
     test('Pass invalid Uuid to constructor', () {
       const INVALID_UUID = 'For sure not a valid UUID';
       expect(Uuid.isValidUUID(INVALID_UUID), false);
-      expect(UuidValue(INVALID_UUID, true), throwsException);
+      expect(
+          () => UuidValue(INVALID_UUID, true), throwsA(isA<FormatException>()));
 
       final uuidval = UuidValue(INVALID_UUID, false);
       expect(uuidval.uuid, INVALID_UUID);

@@ -448,11 +448,11 @@ class UuidValue {
   ///
   /// Takes in a string representation of a [uuid] to wrap.
   ///
-  /// Optioanlly, you can disable the validation check in the constructor
-  /// by setting [validate] to `true`.
+  /// Optionally , you can disable the validation check in the constructor
+  /// by setting [validate] to `false`.
   UuidValue(this.uuid, [bool validate = true]) {
-    if (validate) {
-      Uuid.isValidUUID(uuid);
+    if (validate && !Uuid.isValidUUID(uuid)) {
+      throw FormatException('The provided UUID is invalid.', uuid);
     }
   }
 
