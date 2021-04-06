@@ -197,6 +197,13 @@ void main() {
 
       expect(numDuplicates, equals(0), reason: 'duplicate UUIDs generated');
     });
+
+    test('Check if V4 supports Microsoft Guid', () {
+      var guidString = '2400ee73-282c-4334-e153-08d8f922d1f9';
+
+      var isValid = Uuid.isValidUUID(fromString: guidString);
+      expect(isValid, true);
+    });
   });
 
   group('[Version 5 Tests]', () {
