@@ -32,7 +32,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 3.0.3
+  uuid: 3.0.4
 ```
 
 ```dart
@@ -274,9 +274,9 @@ print(uuidValue) -> // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
 uuidValue.toBytes() -> // -> [...]
 ```
 
-### uuid.parse(String uuid, {List<int> buffer: null, int offset: 0}) -> List<int>
+### uuid.parse(String uuid, {List<int> buffer: null, int offset: 0, bool validate: true, ValidationMode validationMode: ValidationMode.strictRFC4122}) -> List<int>
 
-### uuid.parseAsByteList(String uuid, {List<int> buffer: null, int offset: 0}) -> Uint8List
+### uuid.parseAsByteList(String uuid, {List<int> buffer: null, int offset: 0, bool validate: true, ValidationMode validationMode: ValidationMode.strictRFC4122}) -> Uint8List
 
 ### uuid.unparse(List<int> buffer, {int offset: 0}) -> String
 

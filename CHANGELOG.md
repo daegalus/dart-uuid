@@ -1,3 +1,9 @@
+v3.0.4
+
+* `isValidUUID` now handles some Microsoft GUIDs better that only deviate in the Variant setting. (Thanks @FluentChange)
+* Improve error output so that it better explains how to handle the above change in your code if you encounter it. (Thanks @FluentChange)
+* Improve validation logic to better handle multiple validation cases, error output, and feedback to developers. (Thanks @FluentChange)
+
 v3.0.3
 
 * [Experimental] Fixed UuidValue to properly check things are valid. (Thanks @FlorianUlivi)

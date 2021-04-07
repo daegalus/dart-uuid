@@ -57,7 +57,7 @@ class Uuid {
       return false;
     }
 
-    // Make sure if it passes the above, that its valid.
+    // Make sure if it passes the above, that it's a valid UUID or GUID.
     switch (validationMode) {
       case ValidationMode.strictRFC4122:
         {
@@ -77,7 +77,7 @@ class Uuid {
         }
       default:
         {
-          throw Exception('Not implemented validationMode $validationMode');
+          throw Exception('`$validationMode` is an invalid ValidationMode.');
         }
     }
   }
@@ -101,7 +101,7 @@ class Uuid {
 
         if (isValidNonStrict) {
           throw FormatException(
-              'The provided UUID is not RFC4122. Probably you are using a Microsoft GUID. Try to set validationMode=nonStrict',
+              'The provided UUID is not RFC4122 compliant. It seems you might be using a Microsoft GUID. Try setting `validationMode = ValidationMode.nonStrict`',
               fromString);
         }
       }
@@ -155,9 +155,15 @@ class Uuid {
   /// Throws FormatException if the UUID is invalid. Optionally you can set
   /// [validate] to false to disable validation of the UUID before parsing.
   static Uint8List parseAsByteList(String uuid,
-      {List<int>? buffer, int offset = 0, bool validate = true}) {
-    return Uint8List.fromList(
-        parse(uuid, buffer: buffer, offset: offset, validate: validate));
+      {List<int>? buffer,
+      int offset = 0,
+      bool validate = true,
+      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+    return Uint8List.fromList(parse(uuid,
+        buffer: buffer,
+        offset: offset,
+        validate: validate,
+        validationMode: validationMode));
   }
 
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.

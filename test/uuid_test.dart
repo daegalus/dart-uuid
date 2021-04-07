@@ -289,7 +289,7 @@ void main() {
           throwsA(isA<FormatException>().having(
             (error) => error.message,
             'message',
-            'The provided UUID is not RFC4122. Probably you are using a Microsoft GUID. Try to set validationMode=nonStrict',
+            'The provided UUID is not RFC4122 compliant. It seems you might be using a Microsoft GUID. Try setting `validationMode = ValidationMode.nonStrict`',
           )));
 
       final uuidval = UuidValue(VALID_GUID, false);
