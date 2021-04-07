@@ -201,8 +201,16 @@ void main() {
     test('Check if V4 supports Microsoft Guid', () {
       var guidString = '2400ee73-282c-4334-e153-08d8f922d1f9';
 
-      var isValid = Uuid.isValidUUID(fromString: guidString);
-      expect(isValid, true);
+      var isValidDefault = Uuid.isValidUUID(fromString: guidString);
+      expect(isValidDefault, false);
+
+      var isValidRFC = Uuid.isValidUUID(
+          fromString: guidString, validationMode: ValidationMode.strictRFC4122);
+      expect(isValidRFC, false);
+
+      var isValidNonStrict = Uuid.isValidUUID(
+          fromString: guidString, validationMode: ValidationMode.nonStrict);
+      expect(isValidNonStrict, true);
     });
   });
 
@@ -271,6 +279,32 @@ void main() {
 
       final uuidval = UuidValue(INVALID_UUID, false);
       expect(uuidval.uuid, INVALID_UUID.toLowerCase());
+    });
+
+    test('Pass valid Guid to constructor without validation mode', () {
+      const VALID_GUID = '2400ee73-282c-4334-e153-08d8f922d1f9';
+      expect(Uuid.isValidUUID(fromString: VALID_GUID), false);
+      expect(
+          () => UuidValue(VALID_GUID, true),
+          throwsA(isA<FormatException>().having(
+            (error) => error.message,
+            'message',
+            'The provided UUID is not RFC4122. Probably you are using a Microsoft GUID. Try to set validationMode=nonStrict',
+          )));
+
+      final uuidval = UuidValue(VALID_GUID, false);
+      expect(uuidval.uuid, VALID_GUID.toLowerCase());
+    });
+
+    test('Pass valid Guid to constructor with validation mode nonStrict', () {
+      const VALID_GUID = '2400ee73-282c-4334-e153-08d8f922d1f9';
+      expect(
+          Uuid.isValidUUID(
+              fromString: VALID_GUID, validationMode: ValidationMode.nonStrict),
+          true);
+
+      final uuidval = UuidValue(VALID_GUID, true, ValidationMode.nonStrict);
+      expect(uuidval.uuid, VALID_GUID.toLowerCase());
     });
   });
 }
