@@ -85,6 +85,7 @@
 
 
     <li class="section-title"><a href="../../uuid/Uuid-class.html#static-methods">Static methods</a></li>
+    <li><a href="../../uuid/Uuid/isValidOrThrow.html">isValidOrThrow</a></li>
     <li><a href="../../uuid/Uuid/isValidUUID.html">isValidUUID</a></li>
     <li><a href="../../uuid/Uuid/parse.html">parse</a></li>
     <li><a href="../../uuid/Uuid/parseAsByteList.html">parseAsByteList</a></li>
@@ -108,7 +109,8 @@
       <span class="returntype"><a href="https://api.dart.dev/stable/2.12.2/dart-core/bool-class.html">bool</a></span>
             <span class="name ">isValidUUID</span>
 (<wbr><ol class="parameter-list"><li><span class="parameter" id="isValidUUID-param-fromString">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
-<li><span class="parameter" id="isValidUUID-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>}</span></li>
+<li><span class="parameter" id="isValidUUID-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span></li>
+<li><span class="parameter" id="isValidUUID-param-validationMode"><span class="type-annotation"><a href="../../uuid/ValidationMode-class.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span></li>
 </ol>)
       
     </section>
@@ -121,7 +123,10 @@ which parameter is passed.</p>
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span></h2>
-      <pre class="language-dart"><code class="language-dart">static bool isValidUUID({String fromString = &#39;&#39;, Uint8List? fromByteList}) {
+      <pre class="language-dart"><code class="language-dart">static bool isValidUUID(
+    {String fromString = &#39;&#39;,
+    Uint8List? fromByteList,
+    ValidationMode validationMode = ValidationMode.strictRFC4122}) {
   if (fromByteList != null) {
     fromString = unparse(fromByteList);
   }
@@ -135,12 +140,29 @@ which parameter is passed.</p>
     return false;
   }
 
-  &#47;&#47; Make sure if it passes the above, that its valid.
-  const pattern =
-      r&#39;^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$&#39;;
-  final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
-  final match = regex.hasMatch(fromString);
-  return match;
+  &#47;&#47; Make sure if it passes the above, that it&#39;s a valid UUID or GUID.
+  switch (validationMode) {
+    case ValidationMode.strictRFC4122:
+      {
+        const pattern =
+            r&#39;^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$&#39;;
+        final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
+        final match = regex.hasMatch(fromString);
+        return match;
+      }
+    case ValidationMode.nonStrict:
+      {
+        const pattern =
+            r&#39;^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$&#39;;
+        final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
+        final match = regex.hasMatch(fromString);
+        return match;
+      }
+    default:
+      {
+        throw Exception(&#39;`$validationMode` is an invalid ValidationMode.&#39;);
+      }
+  }
 }</code></pre>
     </section>
 
@@ -154,7 +176,7 @@ which parameter is passed.</p>
 <footer>
   <span class="no-break">
     uuid
-      3.0.2
+      3.0.4
   </span>
 
 </footer>

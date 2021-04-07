@@ -59,7 +59,7 @@
       <section class="desc markdown">
         <p><strong>Version 3.0.x has breaking changes, please review changelog and documentation.</strong>
 <strong>UuidValue is still Experimental and the API for it is in flux, please pay attention to changelogs and versions.</strong></p>
-<p><img src="https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&amp;event=push" alt="Build Status"></p>
+<p><a href="https://github.com/Daegalus/dart-uuid/actions"><img src="https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&amp;event=push" alt="Build Status"></a></p>
 <h1 id="uuid">uuid</h1>
 <p>Simple, fast generation of <a href="https://www.ietf.org/rfc/rfc4122.txt">RFC4122</a> UUIDs.</p>
 <p>Features:</p>
@@ -85,7 +85,7 @@
 <p>There are 2 options. Directly from git, or from pub.dartlang.org</p>
 <p>pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  uuid: 3.0.3
+  uuid: 3.0.4
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:uuid/uuid.dart';
 
@@ -290,8 +290,8 @@ uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer, offset: 16);
 print(uuidValue) -&gt; // -&gt; 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
 uuidValue.toBytes() -&gt; // -&gt; [...]
 </code></pre>
-<h3 id="uuidparsestring-uuid-listint-buffer-null-int-offset-0---listint">uuid.parse(String uuid, {List<int> buffer: null, int offset: 0}) -&gt; List<int></int></int></h3>
-<h3 id="uuidparseasbyteliststring-uuid-listint-buffer-null-int-offset-0---uint8list">uuid.parseAsByteList(String uuid, {List<int> buffer: null, int offset: 0}) -&gt; Uint8List</int></h3>
+<h3 id="uuidparsestring-uuid-listint-buffer-null-int-offset-0-bool-validate-true-validationmode-validationmode-validationmodestrictrfc4122---listint">uuid.parse(String uuid, {List<int> buffer: null, int offset: 0, bool validate: true, ValidationMode validationMode: ValidationMode.strictRFC4122}) -&gt; List<int></int></int></h3>
+<h3 id="uuidparseasbyteliststring-uuid-listint-buffer-null-int-offset-0-bool-validate-true-validationmode-validationmode-validationmodestrictrfc4122---uint8list">uuid.parseAsByteList(String uuid, {List<int> buffer: null, int offset: 0, bool validate: true, ValidationMode validationMode: ValidationMode.strictRFC4122}) -&gt; Uint8List</int></h3>
 <h3 id="uuidunparselistint-buffer-int-offset-0---string">uuid.unparse(List<int> buffer, {int offset: 0}) -&gt; String</int></h3>
 <p>Parse and unparse UUIDs</p>
 <ul>
@@ -373,7 +373,7 @@ var string = uuid.unparse(bytes); // -&gt; '797ff043-11eb-11e1-80d6-510998755d10
 <footer>
   <span class="no-break">
     uuid
-      3.0.2
+      3.0.4
   </span>
 
 </footer>

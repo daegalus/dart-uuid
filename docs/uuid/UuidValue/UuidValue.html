@@ -91,7 +91,8 @@
     <section class="multi-line-signature">
       
       <span class="name ">UuidValue</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, </span></li>
-<li><span class="parameter" id="-param-validate">[<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>]</span></li>
+<li><span class="parameter" id="-param-validate">[<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="-param-validationMode"><span class="type-annotation"><a href="../../uuid/ValidationMode-class.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>]</span></li>
 </ol>)
     </section>
 
@@ -104,9 +105,11 @@ by setting <code>validate</code> to <code>false</code>.</p>
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span></h2>
-      <pre class="language-dart"><code class="language-dart">factory UuidValue(String uuid, [bool validate = true]) {
-  if (validate &amp;&amp; !Uuid.isValidUUID(fromString: uuid)) {
-    throw FormatException(&#39;The provided UUID is invalid.&#39;, uuid);
+      <pre class="language-dart"><code class="language-dart">factory UuidValue(String uuid,
+    [bool validate = true,
+    ValidationMode validationMode = ValidationMode.strictRFC4122]) {
+  if (validate) {
+    Uuid.isValidOrThrow(fromString: uuid, validationMode: validationMode);
   }
 
   return UuidValue._(uuid.toLowerCase());
@@ -123,7 +126,7 @@ by setting <code>validate</code> to <code>false</code>.</p>
 <footer>
   <span class="no-break">
     uuid
-      3.0.2
+      3.0.4
   </span>
 
 </footer>

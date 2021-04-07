@@ -61,6 +61,8 @@
 
 
 
+  <li class="section-title"><a href="../uuid/uuid-library.html#enums">Enums</a></li>
+  <li><a href="../uuid/ValidationMode-class.html">ValidationMode</a></li>
 
 
 </ol>
@@ -247,8 +249,17 @@ Released under MIT License.</p>
     <section class="summary offset-anchor" id="static-methods">
       <h2>Static Methods</h2>
       <dl class="callables">
+        <dt id="isValidOrThrow" class="callable">
+          <span class="name"><a href="../uuid/Uuid/isValidOrThrow.html">isValidOrThrow</a></span><span class="signature">(<wbr><span class="parameter" id="isValidOrThrow-param-fromString">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span><span class="parameter" id="isValidOrThrow-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span><span class="parameter" id="isValidOrThrow-param-validationMode"><span class="type-annotation"><a href="../uuid/ValidationMode-class.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+                  </dt>
+        <dd>
+           
+                  
+</dd>
         <dt id="isValidUUID" class="callable">
-          <span class="name"><a href="../uuid/Uuid/isValidUUID.html">isValidUUID</a></span><span class="signature">(<wbr><span class="parameter" id="isValidUUID-param-fromString">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span><span class="parameter" id="isValidUUID-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>}</span>)
+          <span class="name"><a href="../uuid/Uuid/isValidUUID.html">isValidUUID</a></span><span class="signature">(<wbr><span class="parameter" id="isValidUUID-param-fromString">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span><span class="parameter" id="isValidUUID-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span><span class="parameter" id="isValidUUID-param-validationMode"><span class="type-annotation"><a href="../uuid/ValidationMode-class.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span>)
             <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.2/dart-core/bool-class.html">bool</a></span>
           </span>
                   </dt>
@@ -260,7 +271,7 @@ which parameter is passed.
                   
 </dd>
         <dt id="parse" class="callable">
-          <span class="name"><a href="../uuid/Uuid/parse.html">parse</a></span><span class="signature">(<wbr><span class="parameter" id="parse-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="parse-param-buffer">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.12.2/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="parse-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span><span class="parameter" id="parse-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>}</span>)
+          <span class="name"><a href="../uuid/Uuid/parse.html">parse</a></span><span class="signature">(<wbr><span class="parameter" id="parse-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="parse-param-buffer">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.12.2/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="parse-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span><span class="parameter" id="parse-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span><span class="parameter" id="parse-param-validationMode"><span class="type-annotation"><a href="../uuid/ValidationMode-class.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span>)
             <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.12.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
           </span>
                   </dt>
@@ -273,7 +284,7 @@ Throws FormatException if the UUID is invalid. Optionally you can set
                   
 </dd>
         <dt id="parseAsByteList" class="callable">
-          <span class="name"><a href="../uuid/Uuid/parseAsByteList.html">parseAsByteList</a></span><span class="signature">(<wbr><span class="parameter" id="parseAsByteList-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="parseAsByteList-param-buffer">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.12.2/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="parseAsByteList-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span><span class="parameter" id="parseAsByteList-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>}</span>)
+          <span class="name"><a href="../uuid/Uuid/parseAsByteList.html">parseAsByteList</a></span><span class="signature">(<wbr><span class="parameter" id="parseAsByteList-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="parseAsByteList-param-buffer">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.12.2/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="parseAsByteList-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span><span class="parameter" id="parseAsByteList-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span><span class="parameter" id="parseAsByteList-param-validationMode"><span class="type-annotation"><a href="../uuid/ValidationMode-class.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span>)
             <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.2/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
           </span>
                   </dt>
@@ -397,6 +408,7 @@ Throws an exception if the buffer does not have a length of 16
 
 
     <li class="section-title"><a href="../uuid/Uuid-class.html#static-methods">Static methods</a></li>
+    <li><a href="../uuid/Uuid/isValidOrThrow.html">isValidOrThrow</a></li>
     <li><a href="../uuid/Uuid/isValidUUID.html">isValidUUID</a></li>
     <li><a href="../uuid/Uuid/parse.html">parse</a></li>
     <li><a href="../uuid/Uuid/parseAsByteList.html">parseAsByteList</a></li>
@@ -417,7 +429,7 @@ Throws an exception if the buffer does not have a length of 16
 <footer>
   <span class="no-break">
     uuid
-      3.0.2
+      3.0.4
   </span>
 
 </footer>
