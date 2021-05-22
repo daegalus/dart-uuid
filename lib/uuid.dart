@@ -3,8 +3,18 @@ library uuid;
 
 import 'dart:typed_data';
 
-import 'uuid_util.dart';
-import 'package:crypto/crypto.dart' as crypto;
+import 'package:uuid/validation.dart';
+
+import 'enums.dart';
+import 'parsing.dart';
+import 'uuid_value.dart';
+import 'v1.dart';
+import 'v4.dart';
+import 'v5.dart';
+import 'v6.dart';
+
+export 'uuid_value.dart';
+export 'enums.dart';
 
 /// uuid for Dart
 /// Author: Yulian Kuncheff
@@ -18,97 +28,19 @@ class Uuid {
   static const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
-  // Easy number <-> hex conversion
-  static final List<String> _byteToHex = List<String>.generate(256, (i) {
-    return i.toRadixString(16).padLeft(2, '0');
-  });
-
   final options;
-  static final _state = {
-    'seedBytes': null,
-    'node': null,
-    'clockSeq': null,
-    'mSecs': 0,
-    'nSecs': 0,
-    'hasInitV1': false,
-    'hasInitV4': false
-  };
+  final UuidV1 _uuidv1;
+  final UuidV4 _uuidv4;
+  final UuidV5 _uuidv5;
+  final UuidV6 _uuidv6;
 
-  const Uuid({Map<String, dynamic>? this.options});
-
-  /// Validates the provided [uuid] to make sure it has all the necessary
-  /// components and formatting and returns a [bool]
-  /// You can choose to validate from a string or from a byte list based on
-  /// which parameter is passed.
-  static bool isValidUUID(
-      {String fromString = '',
-      Uint8List? fromByteList,
-      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
-    if (fromByteList != null) {
-      fromString = unparse(fromByteList);
-    }
-    // UUID of all 0s is ok.
-    if (fromString == NAMESPACE_NIL) {
-      return true;
-    }
-
-    // If its not 36 characters in length, don't bother (including dashes).
-    if (fromString.length != 36) {
-      return false;
-    }
-
-    // Make sure if it passes the above, that it's a valid UUID or GUID.
-    switch (validationMode) {
-      case ValidationMode.strictRFC4122:
-        {
-          const pattern =
-              r'^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$';
-          final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
-          final match = regex.hasMatch(fromString);
-          return match;
-        }
-      case ValidationMode.nonStrict:
-        {
-          const pattern =
-              r'^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$';
-          final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
-          final match = regex.hasMatch(fromString);
-          return match;
-        }
-      default:
-        {
-          throw Exception('`$validationMode` is an invalid ValidationMode.');
-        }
-    }
+  factory Uuid({Map<String, dynamic>? options}) {
+    return Uuid._(
+        UuidV1(options), UuidV4(options), UuidV5(options), UuidV6(options),
+        options: options);
   }
-
-  static void isValidOrThrow(
-      {String fromString = '',
-      Uint8List? fromByteList,
-      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
-    final isValid = isValidUUID(
-        fromString: fromString,
-        fromByteList: fromByteList,
-        validationMode: validationMode);
-
-    if (!isValid) {
-      // let's check if it is a non RFC4122 uuid and help the developer
-      if (validationMode != ValidationMode.nonStrict) {
-        final isValidNonStrict = isValidUUID(
-            fromString: fromString,
-            fromByteList: fromByteList,
-            validationMode: ValidationMode.nonStrict);
-
-        if (isValidNonStrict) {
-          throw FormatException(
-              'The provided UUID is not RFC4122 compliant. It seems you might be using a Microsoft GUID. Try setting `validationMode = ValidationMode.nonStrict`',
-              fromString);
-        }
-      }
-
-      throw FormatException('The provided UUID is invalid.', fromString);
-    }
-  }
+  const Uuid._(this._uuidv1, this._uuidv4, this._uuidv5, this._uuidv6,
+      {Map<String, dynamic>? this.options});
 
   ///Parses the provided [uuid] into a list of byte values as a List<int>.
   /// Can optionally be provided a [buffer] to write into and
@@ -122,31 +54,11 @@ class Uuid {
     bool validate = true,
     ValidationMode validationMode = ValidationMode.strictRFC4122,
   }) {
-    if (validate) {
-      isValidOrThrow(fromString: uuid, validationMode: validationMode);
-    }
-    var i = offset, ii = 0;
-
-    // Create a 16 item buffer if one hasn't been provided.
-    buffer = (buffer != null) ? buffer : Uint8List(16);
-
-    // Convert to lowercase and replace all hex with bytes then
-    // string.replaceAll() does a lot of work that I don't need, and a manual
-    // regex gives me more control.
-    final regex = RegExp('[0-9a-f]{2}');
-    for (Match match in regex.allMatches(uuid.toLowerCase())) {
-      if (ii < 16) {
-        var hex = uuid.toLowerCase().substring(match.start, match.end);
-        buffer[i + ii++] = int.parse(hex, radix: 16);
-      }
-    }
-
-    // Zero out any left over bytes if the string was too short.
-    while (ii < 16) {
-      buffer[i + ii++] = 0;
-    }
-
-    return buffer;
+    return UuidParsing.parse(uuid,
+        buffer: buffer,
+        offset: offset,
+        validate: validate,
+        validationMode: validationMode);
   }
 
   ///Parses the provided [uuid] into a list of byte values as a Uint8List.
@@ -159,11 +71,11 @@ class Uuid {
       int offset = 0,
       bool validate = true,
       ValidationMode validationMode = ValidationMode.strictRFC4122}) {
-    return Uint8List.fromList(parse(uuid,
+    return UuidParsing.parseAsByteList(uuid,
         buffer: buffer,
         offset: offset,
         validate: validate,
-        validationMode: validationMode));
+        validationMode: validationMode);
   }
 
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.
@@ -171,78 +83,21 @@ class Uuid {
   /// in the buffer.
   /// Throws an exception if the buffer does not have a length of 16
   static String unparse(List<int> buffer, {int offset = 0}) {
-    if (buffer.length != 16) {
-      throw Exception('The provided buffer needs to have a length of 16.');
-    }
-    var i = offset;
-    return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}';
+    return UuidParsing.unparse(buffer, offset: offset);
   }
 
-  void _initV1(Map<String, dynamic>? options) {
-    options ??= const {};
-
-    if (!(_state['hasInitV1']! as bool)) {
-      var v1PositionalArgs = (options['v1rngPositionalArgs'] != null)
-          ? options['v1rngPositionalArgs']
-          : [];
-      var v1NamedArgs = (options['v1rngNamedArgs'] != null)
-          ? options['v1rngNamedArgs'] as Map<Symbol, dynamic>
-          : const <Symbol, dynamic>{};
-      Uint8List seedBytes = (options['v1rng'] != null)
-          ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
-          : UuidUtil.mathRNG();
-
-      (_state['seedBytes'] != null)
-          ? _state['seedBytes']
-          : _state['seedBytes'] = seedBytes;
-
-      // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
-      var nodeId = [
-        seedBytes[0] | 0x01,
-        seedBytes[1],
-        seedBytes[2],
-        seedBytes[3],
-        seedBytes[4],
-        seedBytes[5]
-      ];
-      (_state['node'] != null) ? _state['node'] : _state['node'] = nodeId;
-
-      // Per 4.2.2, randomize (14 bit) clockseq
-      var clockSeq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3ffff;
-      _state['clockSeq'] ??= clockSeq;
-
-      _state['mSecs'] = 0;
-      _state['nSecs'] = 0;
-      _state['hasInitV1'] = true;
-    }
-  }
-
-  void _initV4(Map<String, dynamic>? options) {
-    options ??= {};
-
-    if (!(_state['hasInitV4']! as bool)) {
-      // Set the globalRNG function to mathRNG with the option to set an alternative globally
-      var gPositionalArgs = (options['grngPositionalArgs'] != null)
-          ? options['grngPositionalArgs']
-          : [];
-      var gNamedArgs = (options['grngNamedArgs'] != null)
-          ? options['grngNamedArgs'] as Map<Symbol, dynamic>
-          : const <Symbol, dynamic>{};
-
-      final grng = options['grng'];
-      _state['globalRNG'] = (grng != null)
-          ? () => Function.apply(grng, gPositionalArgs, gNamedArgs)
-          : UuidUtil.mathRNG;
-
-      _state['hasInitV4'] = true;
-    }
+  /// Validates the provided [uuid] to make sure it has all the necessary
+  /// components and formatting and returns a [bool]
+  /// You can choose to validate from a string or from a byte list based on
+  /// which parameter is passed.
+  static bool isValidUUID(
+      {String fromString = '',
+      Uint8List? fromByteList,
+      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+    return UuidValidation.isValidUUID(
+        fromString: fromString,
+        fromByteList: fromByteList,
+        validationMode: validationMode);
   }
 
   /// v1() Generates a time-based version 1 UUID
@@ -255,84 +110,7 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
   String v1({Map<String, dynamic>? options}) {
-    var i = 0;
-    var buf = Uint8List(16);
-    options ??= {};
-
-    _initV1(options);
-    var clockSeq = (options['clockSeq'] != null)
-        ? options['clockSeq']
-        : _state['clockSeq'] as int;
-
-    // UUID timestamps are 100 nano-second units since the Gregorian epoch,
-    // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
-    // milliseconds) and 'nsecs' (100-nanoseconds offset from msecs) since unix
-    // epoch, 1970-01-01 00:00.
-    var mSecs = (options['mSecs'] != null)
-        ? options['mSecs']
-        : (DateTime.now()).millisecondsSinceEpoch;
-
-    // Per 4.2.1.2, use count of uuid's generated during the current clock
-    // cycle to simulate higher resolution clock
-    var nSecs = (options['nSecs'] != null)
-        ? options['nSecs']
-        : (_state['nSecs']! as int) + 1;
-
-    // Time since last uuid creation (in msecs)
-    var dt = (mSecs - _state['mSecs']) + (nSecs - _state['nSecs']) / 10000;
-
-    // Per 4.2.1.2, Bump clockseq on clock regression
-    if (dt < 0 && options['clockSeq'] == null) {
-      clockSeq = clockSeq + 1 & 0x3fff;
-    }
-
-    // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
-    // time interval
-    if ((dt < 0 || mSecs > _state['mSecs']) && options['nSecs'] == null) {
-      nSecs = 0;
-    }
-
-    // Per 4.2.1.2 Throw error if too many uuids are requested
-    if (nSecs >= 10000) {
-      throw Exception('uuid.v1(): Can\'t create more than 10M uuids/sec');
-    }
-
-    _state['mSecs'] = mSecs;
-    _state['nSecs'] = nSecs;
-    _state['clockSeq'] = clockSeq;
-
-    // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
-    mSecs += 12219292800000;
-
-    // time Low
-    var tl = ((mSecs & 0xfffffff) * 10000 + nSecs) % 0x100000000;
-    buf[i++] = tl >> 24 & 0xff;
-    buf[i++] = tl >> 16 & 0xff;
-    buf[i++] = tl >> 8 & 0xff;
-    buf[i++] = tl & 0xff;
-
-    // time mid
-    var tmh = (mSecs / 0x100000000 * 10000).floor() & 0xfffffff;
-    buf[i++] = tmh >> 8 & 0xff;
-    buf[i++] = tmh & 0xff;
-
-    // time high and version
-    buf[i++] = tmh >> 24 & 0xf | 0x10; // include version
-    buf[i++] = tmh >> 16 & 0xff;
-
-    // clockSeq high and reserved (Per 4.2.2 - include variant)
-    buf[i++] = (clockSeq & 0x3F00) >> 8 | 0x80;
-
-    // clockSeq low
-    buf[i++] = clockSeq & 0xff;
-
-    // node
-    var node = (options['node'] != null) ? options['node'] : _state['node'];
-    for (var n = 0; n < 6; n++) {
-      buf[i + n] = node[n];
-    }
-
-    return unparse(buf);
+    return UuidV1(options).generate(options);
   }
 
   /// v1buffer() Generates a time-based version 1 UUID
@@ -351,7 +129,8 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return parse(v1(options: options), buffer: buffer, offset: offset);
+    return UuidParsing.parse(v1(options: options),
+        buffer: buffer, offset: offset);
   }
 
   /// v1obj() Generates a time-based version 1 UUID
@@ -364,8 +143,7 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
   UuidValue v1obj({Map<String, dynamic>? options}) {
-    var uuid = v1(options: options);
-    return UuidValue(uuid);
+    return UuidValue(v1(options: options));
   }
 
   /// v4() Generates a RNG version 4 UUID
@@ -378,27 +156,7 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   String v4({Map<String, dynamic>? options}) {
-    options = (options != null) ? options : <String, dynamic>{};
-
-    _initV4(options);
-    // Use the built-in RNG or a custom provided RNG
-    var positionalArgs =
-        (options['positionalArgs'] != null) ? options['positionalArgs'] : [];
-    var namedArgs = (options['namedArgs'] != null)
-        ? options['namedArgs'] as Map<Symbol, dynamic>
-        : const <Symbol, dynamic>{};
-    var rng = (options['rng'] != null)
-        ? Function.apply(options['rng'], positionalArgs, namedArgs)
-        : (_state['globalRNG']! as Function)();
-
-    // Use provided values over RNG
-    var rnds = (options['random'] != null) ? options['random'] : rng;
-
-    // per 4.4, set bits for version and clockSeq high and reserved
-    rnds[6] = (rnds[6] & 0x0f) | 0x40;
-    rnds[8] = (rnds[8] & 0x3f) | 0x80;
-
-    return unparse(rnds);
+    return UuidV4(options).generate(options);
   }
 
   /// v4buffer() Generates a RNG version 4 UUID
@@ -418,7 +176,8 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return parse(v4(options: options), buffer: buffer, offset: offset);
+    return UuidParsing.parse(v4(options: options),
+        buffer: buffer, offset: offset);
   }
 
   /// v4obj() Generates a RNG version 4 UUID
@@ -431,8 +190,7 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   UuidValue v4obj({Map<String, dynamic>? options}) {
-    var uuid = v4(options: options);
-    return UuidValue(uuid);
+    return UuidValue(v4(options: options));
   }
 
   /// v5() Generates a namspace & name-based version 5 UUID
@@ -445,39 +203,7 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   String v5(String? namespace, String? name, {Map<String, dynamic>? options}) {
-    options = (options != null) ? options : {};
-
-    // Check if user wants a random namespace generated by v4() or a NIL namespace.
-    var useRandom = (options['randomNamespace'] != null)
-        ? options['randomNamespace']
-        : true;
-
-    // If useRandom is true, generate UUIDv4, else use NIL
-    var blankNS = useRandom ? v4() : NAMESPACE_NIL;
-
-    // Use provided namespace, or use whatever is decided by options.
-    namespace = (namespace != null) ? namespace : blankNS;
-
-    // Use provided name,
-    name = (name != null) ? name : '';
-
-    // Convert namespace UUID to Byte List
-    var bytes = parse(namespace);
-
-    // Convert name to a list of bytes
-    var nameBytes = <int>[];
-    for (var singleChar in name.codeUnits) {
-      nameBytes.add(singleChar);
-    }
-
-    // Generate SHA1 using namespace concatenated with name
-    var hashBytes = crypto.sha1.convert([...bytes, ...nameBytes]).bytes;
-
-    // per 4.4, set bits for version and clockSeq high and reserved
-    hashBytes[6] = (hashBytes[6] & 0x0f) | 0x50;
-    hashBytes[8] = (hashBytes[8] & 0x3f) | 0x80;
-
-    return unparse(hashBytes.sublist(0, 16));
+    return UuidV5(options).generate(namespace, name);
   }
 
   /// v5buffer() Generates a RNG version 4 UUID
@@ -498,7 +224,7 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return parse(v5(namespace, name, options: options),
+    return UuidParsing.parse(v5(namespace, name, options: options),
         buffer: buffer, offset: offset);
   }
 
@@ -513,61 +239,52 @@ class Uuid {
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   UuidValue v5obj(String? namespace, String? name,
       {Map<String, dynamic>? options}) {
-    var uuid = v5(namespace, name, options: options);
-    return UuidValue(uuid);
+    return UuidValue(v5(namespace, name, options: options));
   }
-}
 
-enum ValidationMode { nonStrict, strictRFC4122 }
-
-class UuidValue {
-  final String uuid;
-
-  /// UuidValue() Constructor for creating a uuid value.
+  /// v6() Generates a time-based version 6 UUID
   ///
-  /// Takes in a string representation of a [uuid] to wrap.
+  /// By default it will generate a string based off current time, and will
+  /// return a string.
   ///
-  /// Optionally , you can disable the validation check in the constructor
-  /// by setting [validate] to `false`.
-  factory UuidValue(String uuid,
-      [bool validate = true,
-      ValidationMode validationMode = ValidationMode.strictRFC4122]) {
-    if (validate) {
-      Uuid.isValidOrThrow(fromString: uuid, validationMode: validationMode);
-    }
-
-    return UuidValue._(uuid.toLowerCase());
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
+  String v6({Map<String, dynamic>? options}) {
+    return UuidV6(options).generate(options);
   }
 
-  factory UuidValue.fromByteList(Uint8List byteList, {int? offset}) {
-    return UuidValue(Uuid.unparse(byteList, offset: offset ?? 0));
+  /// v6buffer() Generates a time-based version 1 UUID
+  ///
+  /// By default it will generate a string based off current time, and will
+  /// place the result into the provided [buffer]. The [buffer] will also be returned..
+  ///
+  /// Optionally an [offset] can be provided with a start position in the buffer.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
+  List<int> v6buffer(
+    List<int> buffer, {
+    Map<String, dynamic>? options,
+    int offset = 0,
+  }) {
+    return UuidParsing.parse(v1(options: options),
+        buffer: buffer, offset: offset);
   }
 
-  factory UuidValue.fromList(List<int> byteList, {int? offset}) {
-    return UuidValue(Uuid.unparse(byteList, offset: offset ?? 0));
+  /// v6obj() Generates a time-based version 1 UUID
+  ///
+  /// By default it will generate a string based off current time, and will
+  /// return it as a [UuidValue] object.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
+  UuidValue v6obj({Map<String, dynamic>? options}) {
+    return UuidValue(v1(options: options));
   }
-
-  UuidValue._(this.uuid);
-
-  // toBytes() converts the internal string representation to a list of bytes.
-  Uint8List toBytes() {
-    return Uuid.parseAsByteList(uuid);
-  }
-
-  // toString() returns the String representation of the UUID
-  @override
-  String toString() {
-    return uuid;
-  }
-
-  // equals() compares to UuidValue objects' uuids.
-  bool equals(UuidValue other) {
-    return uuid == other.uuid;
-  }
-
-  @override
-  bool operator ==(Object other) => other is UuidValue && uuid == other.uuid;
-
-  @override
-  int get hashCode => uuid.hashCode;
 }
