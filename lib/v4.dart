@@ -4,15 +4,12 @@ import 'uuid_util.dart';
 class UuidV4 {
   late Function globalRNG;
 
-  factory UuidV4(Map<String, dynamic>? options) {
+  factory UuidV4({Map<String, dynamic>? options}) {
     options ??= {};
     // Set the globalRNG function to mathRNG with the option to set an alternative globally
-    var gPositionalArgs = (options['grngPositionalArgs'] != null)
-        ? options['grngPositionalArgs']
-        : [];
-    var gNamedArgs = (options['grngNamedArgs'] != null)
-        ? options['grngNamedArgs'] as Map<Symbol, dynamic>
-        : const <Symbol, dynamic>{};
+    var gPositionalArgs = options['grngPositionalArgs'] ?? [];
+    Map<Symbol, dynamic> gNamedArgs =
+        options['grngNamedArgs'] ?? const <Symbol, dynamic>{};
 
     Function grng = (options['grng'] != null)
         ? () => Function.apply(options!['grng'], gPositionalArgs, gNamedArgs)
@@ -20,6 +17,7 @@ class UuidV4 {
 
     return UuidV4._(grng);
   }
+
   UuidV4._(this.globalRNG);
 
   /// v4() Generates a RNG version 4 UUID
@@ -31,21 +29,19 @@ class UuidV4 {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  String generate(Map<String, dynamic>? options) {
-    options = (options != null) ? options : <String, dynamic>{};
+  String generate({Map<String, dynamic>? options}) {
+    options ??= {};
 
     // Use the built-in RNG or a custom provided RNG
-    var positionalArgs =
-        (options['positionalArgs'] != null) ? options['positionalArgs'] : [];
-    var namedArgs = (options['namedArgs'] != null)
-        ? options['namedArgs'] as Map<Symbol, dynamic>
-        : const <Symbol, dynamic>{};
+    var positionalArgs = options['positionalArgs'] ?? [];
+    Map<Symbol, dynamic> namedArgs =
+        options['namedArgs'] ?? const <Symbol, dynamic>{};
     var rng = (options['rng'] != null)
         ? Function.apply(options['rng'], positionalArgs, namedArgs)
         : globalRNG();
 
     // Use provided values over RNG
-    var rnds = (options['random'] != null) ? options['random'] : rng;
+    var rnds = options['random'] ?? rng;
 
     // per 4.4, set bits for version and clockSeq high and reserved
     rnds[6] = (rnds[6] & 0x0f) | 0x40;

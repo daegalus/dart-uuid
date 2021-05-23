@@ -28,19 +28,19 @@ class Uuid {
   static const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
-  final options;
+  final goptions;
   final UuidV1 _uuidv1;
   final UuidV4 _uuidv4;
   final UuidV5 _uuidv5;
   final UuidV6 _uuidv6;
 
   factory Uuid({Map<String, dynamic>? options}) {
-    return Uuid._(
-        UuidV1(options), UuidV4(options), UuidV5(options), UuidV6(options),
-        options: options);
+    return Uuid._(UuidV1(options: options), UuidV4(options: options),
+        UuidV5(options), UuidV6(options),
+        goptions: options);
   }
   const Uuid._(this._uuidv1, this._uuidv4, this._uuidv5, this._uuidv6,
-      {Map<String, dynamic>? this.options});
+      {Map<String, dynamic>? this.goptions});
 
   ///Parses the provided [uuid] into a list of byte values as a List<int>.
   /// Can optionally be provided a [buffer] to write into and
@@ -110,7 +110,7 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
   String v1({Map<String, dynamic>? options}) {
-    return UuidV1(options).generate(options);
+    return _uuidv1.generate(options: options);
   }
 
   /// v1buffer() Generates a time-based version 1 UUID
@@ -156,7 +156,7 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   String v4({Map<String, dynamic>? options}) {
-    return UuidV4(options).generate(options);
+    return _uuidv4.generate(options: options);
   }
 
   /// v4buffer() Generates a RNG version 4 UUID
@@ -203,7 +203,7 @@ class Uuid {
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   String v5(String? namespace, String? name, {Map<String, dynamic>? options}) {
-    return UuidV5(options).generate(namespace, name);
+    return _uuidv5.generate(namespace, name, options: options);
   }
 
   /// v5buffer() Generates a RNG version 4 UUID
@@ -252,7 +252,7 @@ class Uuid {
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
   String v6({Map<String, dynamic>? options}) {
-    return UuidV6(options).generate(options);
+    return _uuidv6.generate(options: options);
   }
 
   /// v6buffer() Generates a time-based version 1 UUID
@@ -271,7 +271,7 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v1(options: options),
+    return UuidParsing.parse(v6(options: options),
         buffer: buffer, offset: offset);
   }
 
@@ -285,6 +285,6 @@ class Uuid {
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
   UuidValue v6obj({Map<String, dynamic>? options}) {
-    return UuidValue(v1(options: options));
+    return UuidValue(v6(options: options));
   }
 }

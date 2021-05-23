@@ -12,11 +12,12 @@ class UuidV5 {
   static const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
+  final _goptions;
   factory UuidV5(Map<String, dynamic>? options) {
     options ??= {};
-    return UuidV5._();
+    return UuidV5._(options);
   }
-  UuidV5._();
+  UuidV5._(this._goptions);
 
   /// v5() Generates a namspace & name-based version 5 UUID
   ///
@@ -37,7 +38,9 @@ class UuidV5 {
         : true;
 
     // If useRandom is true, generate UUIDv4, else use NIL
-    var blankNS = useRandom ? UuidV4({}).generate({}) : Namespace.NIL;
+    var blankNS = useRandom
+        ? UuidV4(options: _goptions).generate(options: options)
+        : Namespace.NIL;
 
     // Use provided namespace, or use whatever is decided by options.
     namespace = (namespace != null) ? namespace : blankNS;

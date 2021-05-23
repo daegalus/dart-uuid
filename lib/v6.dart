@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 import 'parsing.dart';
 import 'uuid_util.dart';
@@ -7,19 +8,14 @@ class UuidV6 {
   late List<int> nodeId;
   late int clockSeq;
   int mSecs = 0;
-  int prevMSecs = 0;
   int nSecs = 0;
-  int prevNSecs = 0;
-  late Map<String, dynamic>? options;
+  late Map<String, dynamic>? goptions;
 
   factory UuidV6(Map<String, dynamic>? options) {
     options ??= {};
-    var v1PositionalArgs = (options['v1rngPositionalArgs'] != null)
-        ? options['v1rngPositionalArgs']
-        : [];
-    var v1NamedArgs = (options['v1rngNamedArgs'] != null)
-        ? options['v1rngNamedArgs'] as Map<Symbol, dynamic>
-        : const <Symbol, dynamic>{};
+    var v1PositionalArgs = options['v1rngPositionalArgs'] ?? [];
+    Map<Symbol, dynamic> v1NamedArgs =
+        options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
     var seedBytes = (options['v1rng'] != null)
         ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
         : UuidUtil.mathRNG();
@@ -37,9 +33,10 @@ class UuidV6 {
     // Per 4.2.2, randomize (14 bit) clockseq
     var clockSeq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3ffff;
 
-    return UuidV6._(seedBytes, nodeId, clockSeq, 0, 0);
+    return UuidV6._(seedBytes, nodeId, clockSeq, 0, 0, options);
   }
-  UuidV6._(this.seedBytes, this.nodeId, this.clockSeq, this.mSecs, this.nSecs);
+  UuidV6._(this.seedBytes, this.nodeId, this.clockSeq, this.mSecs, this.nSecs,
+      this.goptions);
 
   /// v6() Generates a time-based version 6 UUID
   ///
@@ -50,27 +47,25 @@ class UuidV6 {
   /// options detailed in the readme.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
-  String generate(Map<String, dynamic>? options) {
+  String generate({Map<String, dynamic>? options}) {
     var i = 0;
     var buf = Uint8List(16);
-    options ??= {};
+    options ??= const {};
 
-    clockSeq = (options['clockSeq'] != null) ? options['clockSeq'] : clockSeq;
+    var clockSeq = options['clockSeq'] ?? this.clockSeq;
 
     // UUID timestamps are 100 nano-second units since the Gregorian epoch,
     // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
     // milliseconds) and 'nsecs' (100-nanoseconds offset from msecs) since unix
     // epoch, 1970-01-01 00:00.
-    mSecs = (options['mSecs'] != null)
-        ? options['mSecs']
-        : (DateTime.now()).millisecondsSinceEpoch;
+    int mSecs = options['mSecs'] ?? (DateTime.now()).millisecondsSinceEpoch;
 
     // Per 4.2.1.2, use count of uuid's generated during the current clock
     // cycle to simulate higher resolution clock
-    nSecs = (options['nSecs'] != null) ? options['nSecs'] : nSecs + 1;
+    int nSecs = options['nSecs'] ?? this.nSecs + 1;
 
     // Time since last uuid creation (in msecs)
-    var dt = (mSecs - prevMSecs) + (nSecs - prevNSecs) / 10000;
+    var dt = (mSecs - this.mSecs) + (nSecs - this.nSecs) / 10000;
 
     // Per 4.2.1.2, Bump clockseq on clock regression
     if (dt < 0 && options['clockSeq'] == null) {
@@ -79,7 +74,7 @@ class UuidV6 {
 
     // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
     // time interval
-    if ((dt < 0 || mSecs > prevMSecs) && options['nSecs'] == null) {
+    if ((dt < 0 || mSecs > this.mSecs) && options['nSecs'] == null) {
       nSecs = 0;
     }
 
@@ -88,39 +83,24 @@ class UuidV6 {
       throw Exception('uuid.v6(): Can\'t create more than 10M uuids/sec');
     }
 
-    prevMSecs = mSecs;
-    prevMSecs = nSecs;
+    this.mSecs = mSecs;
+    this.nSecs = nSecs;
+    this.clockSeq = clockSeq;
 
     // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
     mSecs += 12219292800000;
 
-    // time high and version
-    var tmh = (mSecs / 0x100000000 * 10000).floor() & 0xfffffff;
-    buf[i++] = tmh >> 24 & 0xff;
-    buf[i++] = tmh >> 16 & 0xff;
-    buf[i++] = tmh >> 8 & 0xff;
-    buf[i++] = tmh & 0xff;
+    var uuid_time = mSecs * 10000 + nSecs;
 
-    // time mid
-    var tml = ((mSecs & 0xfffffff) * 10000 + nSecs) % 0x100000000;
-    buf[i++] = tml >> 8 & 0xff;
-    buf[i++] = tml & 0xff;
+    var high = uuid_time << 4;
+    var low = uuid_time & 0x0fff | 0x6000;
+    var clock = (clockSeq & 0x3fff) | 0x8000;
+    buf..buffer.asByteData().setUint64(0, high);
+    buf..buffer.asByteData().setUint16(6, low);
+    buf..buffer.asByteData().setUint16(8, clock);
 
-    // time low and version
-    buf[i++] = tml >> 24 & 0xf | 0x60; // include version
-    buf[i++] = tml >> 16 & 0xff;
-
-    // clockSeq high and reserved (Per 4.2.2 - include variant)
-    buf[i++] = (clockSeq & 0x3F00) >> 8 | 0x80;
-
-    // clockSeq low
-    buf[i++] = clockSeq & 0xff;
-
-    // node
     var node = (options['node'] != null) ? options['node'] : nodeId;
-    for (var n = 0; n < 6; n++) {
-      buf[i + n] = node[n];
-    }
+    buf.setAll(10, node);
 
     return UuidParsing.unparse(buf);
   }
