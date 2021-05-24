@@ -12,6 +12,7 @@ import 'v1.dart';
 import 'v4.dart';
 import 'v5.dart';
 import 'v6.dart';
+import 'v7.dart';
 
 export 'uuid_value.dart';
 export 'enums.dart';
@@ -33,13 +34,15 @@ class Uuid {
   final UuidV4 _uuidv4;
   final UuidV5 _uuidv5;
   final UuidV6 _uuidv6;
+  final UuidV7 _uuidv7;
 
   factory Uuid({Map<String, dynamic>? options}) {
     return Uuid._(UuidV1(options: options), UuidV4(options: options),
-        UuidV5(options), UuidV6(options),
+        UuidV5(options), UuidV6(options), UuidV7(options),
         goptions: options);
   }
-  const Uuid._(this._uuidv1, this._uuidv4, this._uuidv5, this._uuidv6,
+  const Uuid._(
+      this._uuidv1, this._uuidv4, this._uuidv5, this._uuidv6, this._uuidv7,
       {Map<String, dynamic>? this.goptions});
 
   ///Parses the provided [uuid] into a list of byte values as a List<int>.
@@ -242,10 +245,10 @@ class Uuid {
     return UuidValue(v5(namespace, name, options: options));
   }
 
-  /// v6() Generates a time-based version 6 UUID
+  /// v6() Generates a draft time-based version 6 UUID
   ///
-  /// By default it will generate a string based off current time, and will
-  /// return a string.
+  /// By default it will generate a string based off current Gregorian epoch time
+  /// in milliseconds, and will return a string.
   ///
   /// The first argument is an options map that takes various configuration
   /// options detailed in the readme.
@@ -255,10 +258,11 @@ class Uuid {
     return _uuidv6.generate(options: options);
   }
 
-  /// v6buffer() Generates a time-based version 1 UUID
+  /// v6buffer() Generates a draft time-based version 1 UUID
   ///
-  /// By default it will generate a string based off current time, and will
-  /// place the result into the provided [buffer]. The [buffer] will also be returned..
+  /// By default it will generate a string based off current Gregorian epoch time, and will
+  /// in milliseconds, and will place the result into the provided [buffer].
+  /// The [buffer] will also be returned.
   ///
   /// Optionally an [offset] can be provided with a start position in the buffer.
   ///
@@ -275,10 +279,10 @@ class Uuid {
         buffer: buffer, offset: offset);
   }
 
-  /// v6obj() Generates a time-based version 1 UUID
+  /// v6obj() Generates a draft time-based version 6 UUID
   ///
-  /// By default it will generate a string based off current time, and will
-  /// return it as a [UuidValue] object.
+  /// By default it will generate a string based off current Gregorian Epoch time
+  /// in milliseconds, and will return it as a [UuidValue] object.
   ///
   /// The first argument is an options map that takes various configuration
   /// options detailed in the readme.
@@ -286,5 +290,52 @@ class Uuid {
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
   UuidValue v6obj({Map<String, dynamic>? options}) {
     return UuidValue(v6(options: options));
+  }
+
+  /// v7() Generates a draft time-based version 7 UUID
+  ///
+  /// By default it will generate a string based off current Unix epoch time in
+  /// microseconds, and will return a string.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  String v7({Map<String, dynamic>? options}) {
+    return _uuidv7.generate(options: options);
+  }
+
+  /// v7buffer() Generates a draft time-based version 7 UUID
+  ///
+  /// By default it will generate a string based off current Unix epoch time in
+  /// microseconds, and will place the result into the provided [buffer].
+  /// The [buffer] will also be returned..
+  ///
+  /// Optionally an [offset] can be provided with a start position in the buffer.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  List<int> v7buffer(
+    List<int> buffer, {
+    Map<String, dynamic>? options,
+    int offset = 0,
+  }) {
+    return UuidParsing.parse(v7(options: options),
+        buffer: buffer, offset: offset);
+  }
+
+  /// v7obj() Generates a draft time-based version 7 UUID
+  ///
+  /// By default it will generate a string based off current Unix epoch time in
+  /// microseconds, and will return it as a [UuidValue] object.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  UuidValue v7obj({Map<String, dynamic>? options}) {
+    return UuidValue(v7(options: options));
   }
 }

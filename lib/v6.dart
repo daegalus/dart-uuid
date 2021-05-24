@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 import 'parsing.dart';
 import 'uuid_util.dart';
@@ -40,15 +39,14 @@ class UuidV6 {
 
   /// v6() Generates a time-based version 6 UUID
   ///
-  /// By default it will generate a string based off current time, and will
-  /// return a string.
+  /// By default it will generate a string based off current Gregorian epoch
+  /// time, and will return a string.
   ///
   /// The first argument is an options map that takes various configuration
   /// options detailed in the readme.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
   String generate({Map<String, dynamic>? options}) {
-    var i = 0;
     var buf = Uint8List(16);
     options ??= const {};
 

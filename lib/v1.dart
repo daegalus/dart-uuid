@@ -42,8 +42,8 @@ class UuidV1 {
 
   /// v1() Generates a time-based version 1 UUID
   ///
-  /// By default it will generate a string based off current time, and will
-  /// return a string.
+  /// By default it will generate a string based off current Gregorian epoch
+  /// time, and will return a string.
   ///
   /// The first argument is an options map that takes various configuration
   /// options detailed in the readme.

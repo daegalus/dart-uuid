@@ -293,11 +293,6 @@ void main() {
         'clockSeq': 0x385c,
         'node': [0x61, 0xcd, 0x3c, 0xbb, 0x32, 0x10]
       });
-      sleep(Duration(seconds: 1));
-      for (var i = 0; i < 10; i++) {
-        var code = uuid.v6();
-        print(code);
-      }
 
       expect(id, equals('1e1122bd-9428-6888-b85c-61cd3cbb3210'));
     });
@@ -361,6 +356,116 @@ void main() {
     });
   });
 
+  group('[Version 7 Tests]', () {
+    test('IDs created at same mSec are different', () {
+      expect(uuid.v7(options: {'mSecs': TIME}),
+          isNot(equals(uuid.v7(options: {'mSecs': TIME}))));
+    });
+
+    test('Exception thrown when > 10K ids created in 1 ms', () {
+      var thrown = false;
+      try {
+        uuid.v7(options: {'mSecs': TIME, 'nSecs': 10000});
+      } catch (e) {
+        thrown = true;
+      }
+      expect(thrown, equals(true));
+    });
+
+    test('Clock regression by msec increments the clockseq - mSec', () {
+      var uidt = uuid.v7(options: {'mSecs': TIME});
+      var uidtb = uuid.v7(options: {'mSecs': TIME - 1});
+
+      expect(
+          (int.parse("0x${uidtb.split('-')[3]}") -
+              int.parse("0x${uidt.split('-')[3]}")),
+          anyOf(equals(1), equals(-16383)));
+    });
+
+    test('Clock regression by msec increments the clockseq - nSec', () {
+      var uidt = uuid.v7(options: {'mSecs': TIME, 'nSecs': 10});
+      var uidtb = uuid.v7(options: {'mSecs': TIME, 'nSecs': 9});
+
+      expect(
+          (int.parse("0x${uidtb.split('-')[3]}") -
+              int.parse("0x${uidt.split('-')[3]}")),
+          equals(1));
+    });
+
+    test('Explicit options produce expected id', () {
+      var id = uuid.v7(options: {
+        'mSecs': 1321651533573,
+        'nSecs': 5432,
+        'clockSeq': 0x385c,
+        'node': [0x61, 0xcd, 0x3c, 0xbb, 0x32, 0x10]
+      });
+      sleep(Duration(seconds: 1));
+      for (var i = 0; i < 10; i++) {
+        var code = uuid.v7();
+        print(code);
+      }
+
+      expect(id, equals('04ec6cd4-155e-7008-b85c-61cd3cbb3210'));
+    });
+
+    test('Ids spanning 1ms boundary are 100ns apart', () {
+      var u0 = uuid.v7(options: {'mSecs': TIME, 'nSecs': 9999});
+      var u1 = uuid.v7(options: {'mSecs': TIME + 1, 'nSecs': 0});
+
+      print(u0);
+      print(u1);
+      var before = u0.split('-')[2], after = u1.split('-')[2];
+      var dt = int.parse('0x$after') - int.parse('0x$before');
+
+      expect(dt, equals(1));
+    });
+
+    test('Generate lots of codes to see if we get v7 collisions.', () {
+      var uuids = <dynamic>{};
+      var collisions = 0;
+      for (var i = 0; i < 10000000; i++) {
+        var code = uuid.v7();
+        if (uuids.contains(code)) {
+          collisions++;
+          //print('Collision of code: $code');
+        } else {
+          uuids.add(code);
+        }
+      }
+
+      expect(collisions, equals(0));
+      expect(uuids.length, equals(10000000));
+    });
+
+    test(
+        'Generate lots of codes to check we don\'t generate variant 2 V6 codes.',
+        () {
+      for (var i = 0; i < 10000; i++) {
+        var code = Uuid().v7();
+        expect(code[19], isNot(equals('d')));
+        expect(code[19], isNot(equals('c')));
+      }
+    });
+
+    test('Using buffers', () {
+      var buffer = Uint8List(16);
+      var options = {'mSecs': TIME, 'nSecs': 0};
+
+      var wihoutBuffer = uuid.v7(options: options);
+      uuid.v7buffer(buffer, options: options);
+
+      expect(Uuid.unparse(buffer), equals(wihoutBuffer));
+    });
+
+    test('Using Objects', () {
+      var options = {'mSecs': TIME, 'nSecs': 0};
+
+      var regular = uuid.v7(options: options);
+      var obj = uuid.v7obj(options: options);
+
+      expect(obj.uuid, equals(regular));
+    });
+  });
   group('[Parse/Unparse Tests]', () {
     test('Parsing a short/cut-off UUID', () {
       var id = '00112233445566778899aabbccddeeff';

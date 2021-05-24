@@ -25,20 +25,33 @@ void main() {
   var v5 = uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com');
   // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
 
-  var v6 = uuid.v6(options: {'nSecs': 5678});
+  // Generate a v6 (time-based) id
+  var v6 = uuid.v6(); // -> '1ebbc608-7459-6a20-bc85-0d10b6a52acd'
 
   var v6_exact = uuid.v6(options: {
     'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
     'clockSeq': 0x1234,
     'mSecs': DateTime.utc(2011, 11, 01).millisecondsSinceEpoch,
-    'nSecs': 5678
-  });
+    'nSecs': 5678,
+  }); // -> '1e1041c7-10b9-662e-9234-0123456789ab'
 
-  print(v1);
-  print(v1_exact);
-  print(v4);
-  print(v4_crypto);
-  print(v5);
-  print(v6);
-  print(v6_exact);
+  // Generate a v7 (time-based) id
+  var v7 = uuid.v7(); // -> 060ab53c-0bb2-7482-8000-ab029e8fa2ea
+
+  var v7_exact = uuid.v7(options: {
+    'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
+    'clockSeq': 0x1234,
+    'uSecs':
+        DateTime.utc(2011, 10, 9, 8, 7, 6, 543, 210).microsecondsSinceEpoch,
+  }); // -> '04e91562-0884-7fea-9234-0123456789ab'
+
+  print('v1        | ' + v1);
+  print('v1 exact  | ' + v1_exact);
+  print('v4        | ' + v4);
+  print('v4 crypto | ' + v4_crypto);
+  print('v5        | ' + v5);
+  print('v6        | ' + v6);
+  print('v6 exact  | ' + v6_exact);
+  print('v7        | ' + v7);
+  print('v7 exact  | ' + v7_exact);
 }
