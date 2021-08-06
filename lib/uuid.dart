@@ -70,7 +70,7 @@ class Uuid {
       case ValidationMode.nonStrict:
         {
           const pattern =
-              r'^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$';
+              r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$';
           final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
           final match = regex.hasMatch(fromString);
           return match;
