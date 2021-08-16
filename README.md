@@ -13,7 +13,7 @@ Features:
 * Runs in web, server, and flutter
 * Cryptographically strong random number generation on all platforms
   * **Defaults to non-crypto generator, see UuidUtil for cryptoRNG**
-* [Documentation](https://daegalus.github.com/dart-uuid/index.html)
+* [Documentation](https://daegalus.github.io/dart-uuid/index.html)
 
 ## Getting Started
 
