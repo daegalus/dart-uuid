@@ -24,17 +24,19 @@ class Uuid {
   });
 
   final options;
-  final _state = {
-    'seedBytes': null,
-    'node': null,
-    'clockSeq': null,
-    'mSecs': 0,
-    'nSecs': 0,
-    'hasInitV1': false,
-    'hasInitV4': false
-  };
 
-  Uuid({Map<String, dynamic>? this.options});
+  static final _stateExpando = Expando<Map<String, dynamic>>();
+  Map<String, dynamic> get _state => _stateExpando[this] ??= {
+        'seedBytes': null,
+        'node': null,
+        'clockSeq': null,
+        'mSecs': 0,
+        'nSecs': 0,
+        'hasInitV1': false,
+        'hasInitV4': false
+      };
+
+  const Uuid({Map<String, dynamic>? this.options});
 
   /// Validates the provided [uuid] to make sure it has all the necessary
   /// components and formatting and returns a [bool]
