@@ -24,7 +24,7 @@ class Uuid {
   });
 
   final options;
-  static final _state = {
+  final _state = {
     'seedBytes': null,
     'node': null,
     'clockSeq': null,
@@ -34,7 +34,7 @@ class Uuid {
     'hasInitV4': false
   };
 
-  const Uuid({Map<String, dynamic>? this.options});
+  Uuid({Map<String, dynamic>? this.options});
 
   /// Validates the provided [uuid] to make sure it has all the necessary
   /// components and formatting and returns a [bool]
@@ -185,8 +185,8 @@ class Uuid {
         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}';
   }
 
-  void _initV1(Map<String, dynamic>? options) {
-    options ??= const {};
+  void _initV1() {
+    final options = this.options ?? const {};
 
     if (!(_state['hasInitV1']! as bool)) {
       var v1PositionalArgs = (options['v1rngPositionalArgs'] != null)
@@ -224,16 +224,16 @@ class Uuid {
     }
   }
 
-  void _initV4(Map<String, dynamic>? options) {
-    options ??= {};
+  void _initV4() {
+    final options = this.options ?? const {};
 
     if (!(_state['hasInitV4']! as bool)) {
       // Set the globalRNG function to mathRNG with the option to set an alternative globally
-      var gPositionalArgs = (options['grngPositionalArgs'] != null)
-          ? options['grngPositionalArgs']
-          : [];
-      var gNamedArgs = (options['grngNamedArgs'] != null)
-          ? options['grngNamedArgs'] as Map<Symbol, dynamic>
+      var gPositionalArgs = (options['gPositionalArgs'] != null)
+          ? options['gPositionalArgs']
+          : const [];
+      var gNamedArgs = (options['gNamedArgs'] != null)
+          ? options['gNamedArgs'] as Map<Symbol, dynamic>
           : const <Symbol, dynamic>{};
 
       final grng = options['grng'];
@@ -259,7 +259,7 @@ class Uuid {
     var buf = Uint8List(16);
     options ??= {};
 
-    _initV1(options);
+    _initV1();
     var clockSeq = (options['clockSeq'] != null)
         ? options['clockSeq']
         : _state['clockSeq'] as int;
@@ -380,7 +380,7 @@ class Uuid {
   String v4({Map<String, dynamic>? options}) {
     options = (options != null) ? options : <String, dynamic>{};
 
-    _initV4(options);
+    _initV4();
     // Use the built-in RNG or a custom provided RNG
     var positionalArgs =
         (options['positionalArgs'] != null) ? options['positionalArgs'] : [];

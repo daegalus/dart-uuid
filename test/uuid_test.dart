@@ -307,4 +307,70 @@ void main() {
       expect(uuidval.uuid, VALID_GUID.toLowerCase());
     });
   });
+
+  group('[global options]', () {
+    final customCalls = <List<int>>[];
+    Uint8List customRng(int pos, {required int named}) {
+      customCalls.add([pos, named]);
+      return Uint8List.fromList(List.filled(16, pos + named));
+    }
+
+    var customUuid = Uuid(options: {
+      'grng': customRng,
+      'gPositionalArgs': const [10],
+      'gNamedArgs': const <Symbol, dynamic>{
+        #named: 5,
+      },
+      'v1rng': customRng,
+      'v1rngPositionalArgs': const [15],
+      'v1rngNamedArgs': const <Symbol, dynamic>{
+        #named: 20,
+      },
+    });
+
+    Matcher containsPair(int pos, int named) => contains(
+          allOf(
+            hasLength(2),
+            predicate<List<int>>(
+              (data) => data[0] == pos,
+              'first element is $pos',
+            ),
+            predicate<List<int>>(
+              (data) => data[1] == named,
+              'second element is $named',
+            ),
+          ),
+        );
+
+    setUp(() {
+      customCalls.clear();
+    });
+
+    test('uses custom v4 generator', () {
+      final v4Uuid = customUuid.v4();
+
+      expect(v4Uuid, '0f0f0f0f-0f0f-4f0f-8f0f-0f0f0f0f0f0f');
+
+      expect(customCalls, containsPair(10, 5));
+    });
+
+    test('uses v4 call options over global options', () {
+      final v4Uuid = customUuid.v4(options: {
+        'rng': (int arg) => customRng(arg, named: arg + 1),
+        'positionalArgs': const [3],
+      });
+
+      expect(v4Uuid, '07070707-0707-4707-8707-070707070707');
+
+      expect(customCalls, containsPair(3, 4));
+    });
+
+    test('uses custom v1 generator', () {
+      final v1Uuid = customUuid.v1();
+
+      expect(v1Uuid, endsWith('-232323232323'));
+
+      expect(customCalls, containsPair(15, 20));
+    });
+  });
 }
