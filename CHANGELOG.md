@@ -1,3 +1,10 @@
+v3.0.5
+
+* Global options were incorrectly being ignored. #76 (Thanks @Skycoder42)
+* V4 Global Options were incorrectly named. #76 (Thanks @Skycoder42)
+* Global state was static, not per instance. #76 (Thanks @Skycoder42)
+* Additional tests to make sure the above doesn't regress. #76 (Thanks @Skycoder42)
+
 v3.0.4
 
 * `isValidUUID` now handles some Microsoft GUIDs better that only deviate in the Variant setting. (Thanks @FluentChange)

@@ -4,19 +4,23 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="generator" content="made with love by dartdoc 0.39.0">
+  <meta name="generator" content="made with love by dartdoc 2.0.0">
   <meta name="description" content="uuid API docs, for the Dart programming language.">
   <title>uuid - Dart API docs</title>
+
 
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="static-assets/github.css">
-  <link rel="stylesheet" href="static-assets/styles.css">
-  <link rel="icon" href="static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
 
+  
 </head>
+
 
 <body data-base-href=""
       data-using-base-href="false">
@@ -36,28 +40,11 @@
 
 <main>
 
-  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
-      <form class="search-sidebar" role="search">
-        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
-      </form>
-    </header>
-    
-    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-      <li><a href="https://github.com/Daegalus/dart-uuid">uuid package</a></li>
-    </ol>
-    
-    <h5 class="hidden-xs"><span class="package-name">uuid</span> <span class="package-kind">package</span></h5>
-    <ol>
-          <li class="section-title">Libraries</li>
-          <li><a href="uuid/uuid-library.html">uuid</a></li>
-          <li><a href="uuid_util/uuid_util-library.html">uuid_util</a></li>
-    </ol>
-  </div>
 
   <div id="dartdoc-main-content" class="main-content">
-      <section class="desc markdown">
-        <p><strong>Version 3.0.x has breaking changes, please review changelog and documentation.</strong>
+      
+<section class="desc markdown">
+  <p><strong>Version 3.0.x has breaking changes, please review changelog and documentation.</strong>
 <strong>UuidValue is still Experimental and the API for it is in flux, please pay attention to changelogs and versions.</strong></p>
 <p><a href="https://github.com/Daegalus/dart-uuid/actions"><img src="https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&amp;event=push" alt="Build Status"></a></p>
 <h1 id="uuid">uuid</h1>
@@ -71,7 +58,7 @@
 <li><strong>Defaults to non-crypto generator, see UuidUtil for cryptoRNG</strong></li>
 </ul>
 </li>
-<li><a href="https://daegalus.github.com/dart-uuid/index.html">Documentation</a></li>
+<li><a href="https://daegalus.github.io/dart-uuid/index.html">Documentation</a></li>
 </ul>
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="instructions">Instructions</h3>
@@ -85,7 +72,7 @@
 <p>There are 2 options. Directly from git, or from pub.dartlang.org</p>
 <p>pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  uuid: 3.0.4
+  uuid: 3.0.5
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:uuid/uuid.dart';
 
@@ -343,27 +330,51 @@ var string = uuid.unparse(bytes); // -&gt; '797ff043-11eb-11e1-80d6-510998755d10
 </ul>
 <h2 id="release-notes">Release notes</h2>
 <p>See CHANGELOG</p>
-      </section>
-      
+</section>
+
+
       <section class="summary">
           <h2>Libraries</h2>
         <dl>
           <dt id="uuid">
-            <span class="name"><a href="uuid/uuid-library.html">uuid</a></span>           
-          </dt>
-          <dd>
-            Generates UUID v1, v4, v5 following RFC4122 standard. 
-          </dd>
+  <span class="name"><a href="uuid/uuid-library.html">uuid</a></span> 
+
+</dt>
+<dd>Generates UUID v1, v4, v5 following RFC4122 standard. 
+</dd>
+
           <dt id="uuid_util">
-            <span class="name"><a href="uuid_util/uuid_util-library.html">uuid_util</a></span>           
-          </dt>
-          <dd>
-            Utility functions for UUID library. 
-          </dd>
+  <span class="name"><a href="uuid_util/uuid_util-library.html">uuid_util</a></span> 
+
+</dt>
+<dd>Utility functions for UUID library. 
+</dd>
+
         </dl>
       </section>
 
   </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="https://github.com/Daegalus/dart-uuid">uuid package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">uuid</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="uuid/uuid-library.html">uuid</a></li>
+      <li><a href="uuid_util/uuid_util-library.html">uuid_util</a></li>
+</ol>
+
+  </div>
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div>
@@ -373,17 +384,20 @@ var string = uuid.unparse(bytes); // -&gt; '797ff043-11eb-11e1-80d6-510998755d10
 <footer>
   <span class="no-break">
     uuid
-      3.0.4
+      3.0.5
   </span>
 
+  
 </footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="static-assets/typeahead.bundle.min.js"></script>
-<script src="static-assets/highlight.pack.js"></script>
-<script src="static-assets/script.js"></script>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/script.js?v1"></script>
+
 
 
 </body>
 
 </html>
+
