@@ -437,7 +437,7 @@ class Uuid {
     return UuidValue(uuid);
   }
 
-  /// v5() Generates a namspace & name-based version 5 UUID
+  /// v5() Generates a namespace & name-based version 5 UUID
   ///
   /// By default it will generate a string based on a provided uuid namespace and
   /// name, and will return a string.
