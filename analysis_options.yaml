@@ -3,6 +3,7 @@ include: package:pedantic/analysis_options.yaml
 linter:
   rules:
     - always_declare_return_types
+    - avoid_dynamic_calls
     - camel_case_types
     - empty_constructor_bodies
     - annotate_overrides
