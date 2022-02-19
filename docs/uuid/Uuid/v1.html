@@ -52,8 +52,8 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/String-class.html">String</a></span>
-<span class="name ">v1</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="v1-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>}</span></li>
+<span class="returntype"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/String-class.html">String</a></span>
+<span class="name ">v1</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="v1-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>}</span></li>
 </ol>)
 
       
@@ -79,8 +79,8 @@ options detailed in the readme.</p>
   options ??= {};
 
   _initV1();
-  var clockSeq = (options[&#39;clockSeq&#39;] != null)
-      ? options[&#39;clockSeq&#39;]
+  var clockSeq = options[&#39;clockSeq&#39;] != null
+      ? options[&#39;clockSeq&#39;] as int
       : _state[&#39;clockSeq&#39;] as int;
 
   &#47;&#47; UUID timestamps are 100 nano-second units since the Gregorian epoch,
@@ -88,13 +88,13 @@ options detailed in the readme.</p>
   &#47;&#47; milliseconds) and &#39;nsecs&#39; (100-nanoseconds offset from msecs) since unix
   &#47;&#47; epoch, 1970-01-01 00:00.
   var mSecs = (options[&#39;mSecs&#39;] != null)
-      ? options[&#39;mSecs&#39;]
-      : (DateTime.now()).millisecondsSinceEpoch;
+      ? (options[&#39;mSecs&#39;] as int)
+      : DateTime.now().millisecondsSinceEpoch;
 
   &#47;&#47; Per 4.2.1.2, use count of uuid&#39;s generated during the current clock
   &#47;&#47; cycle to simulate higher resolution clock
-  var nSecs = (options[&#39;nSecs&#39;] != null)
-      ? options[&#39;nSecs&#39;]
+  var nSecs = options[&#39;nSecs&#39;] != null
+      ? (options[&#39;nSecs&#39;] as int)
       : (_state[&#39;nSecs&#39;]! as int) + 1;
 
   &#47;&#47; Time since last uuid creation (in msecs)
@@ -146,7 +146,9 @@ options detailed in the readme.</p>
   buf[i++] = clockSeq &amp; 0xff;
 
   &#47;&#47; node
-  var node = (options[&#39;node&#39;] != null) ? options[&#39;node&#39;] : _state[&#39;node&#39;];
+  var node = options[&#39;node&#39;] != null
+      ? options[&#39;node&#39;] as List
+      : _state[&#39;node&#39;] as List;
   for (var n = 0; n &lt; 6; n++) {
     buf[i + n] = node[n];
   }
@@ -183,13 +185,13 @@ options detailed in the readme.</p>
     <li class="section-title">
       <a href="../../uuid/Uuid-class.html#instance-properties">Properties</a>
     </li>
-    <li class="inherited"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../uuid/Uuid/options.html">options</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../../uuid/Uuid-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Object/toString.html">toString</a></li>
     <li><a href="../../uuid/Uuid/v1.html">v1</a></li>
     <li><a href="../../uuid/Uuid/v1buffer.html">v1buffer</a></li>
     <li><a href="../../uuid/Uuid/v1obj.html">v1obj</a></li>
@@ -201,7 +203,7 @@ options detailed in the readme.</p>
     <li><a href="../../uuid/Uuid/v5obj.html">v5obj</a></li>
 
     <li class="section-title inherited"><a href="../../uuid/Uuid-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -230,7 +232,7 @@ options detailed in the readme.</p>
 <footer>
   <span class="no-break">
     uuid
-      3.0.5
+      3.0.6
   </span>
 
   

@@ -1,3 +1,7 @@
+v3.0.6
+
+* Enable `avoid_dynamic_calls` linting and fix appropriately. (Thanks @devoncarew)
+
 v3.0.5
 
 * Global options were incorrectly being ignored. #76 (Thanks @Skycoder42)

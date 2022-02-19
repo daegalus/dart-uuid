@@ -52,8 +52,8 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/String-class.html">String</a></span>
-<span class="name ">v4</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="v4-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>}</span></li>
+<span class="returntype"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/String-class.html">String</a></span>
+<span class="name ">v4</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="v4-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>}</span></li>
 </ol>)
 
       
@@ -74,7 +74,7 @@ options detailed in the readme.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String v4({Map&lt;String, dynamic&gt;? options}) {
-  options = (options != null) ? options : &lt;String, dynamic&gt;{};
+  options ??= {};
 
   _initV4();
   &#47;&#47; Use the built-in RNG or a custom provided RNG
@@ -83,12 +83,14 @@ options detailed in the readme.</p>
   var namedArgs = (options[&#39;namedArgs&#39;] != null)
       ? options[&#39;namedArgs&#39;] as Map&lt;Symbol, dynamic&gt;
       : const &lt;Symbol, dynamic&gt;{};
+  &#47;&#47; We cast to &#39;dynamic Function()&#39; below instead of &#39;List&lt;int&gt; Function()&#39;
+  &#47;&#47; as existing code may not return a closure of the correct type.
   var rng = (options[&#39;rng&#39;] != null)
-      ? Function.apply(options[&#39;rng&#39;], positionalArgs, namedArgs)
-      : (_state[&#39;globalRNG&#39;]! as Function)();
+      ? Function.apply(options[&#39;rng&#39;], positionalArgs, namedArgs) as List&lt;int&gt;
+      : (_state[&#39;globalRNG&#39;]! as dynamic Function())() as List&lt;int&gt;;
 
   &#47;&#47; Use provided values over RNG
-  var rnds = (options[&#39;random&#39;] != null) ? options[&#39;random&#39;] : rng;
+  var rnds = options[&#39;random&#39;] != null ? options[&#39;random&#39;] as List&lt;int&gt; : rng;
 
   &#47;&#47; per 4.4, set bits for version and clockSeq high and reserved
   rnds[6] = (rnds[6] &amp; 0x0f) | 0x40;
@@ -126,13 +128,13 @@ options detailed in the readme.</p>
     <li class="section-title">
       <a href="../../uuid/Uuid-class.html#instance-properties">Properties</a>
     </li>
-    <li class="inherited"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../uuid/Uuid/options.html">options</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../../uuid/Uuid-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Object/toString.html">toString</a></li>
     <li><a href="../../uuid/Uuid/v1.html">v1</a></li>
     <li><a href="../../uuid/Uuid/v1buffer.html">v1buffer</a></li>
     <li><a href="../../uuid/Uuid/v1obj.html">v1obj</a></li>
@@ -144,7 +146,7 @@ options detailed in the readme.</p>
     <li><a href="../../uuid/Uuid/v5obj.html">v5obj</a></li>
 
     <li class="section-title inherited"><a href="../../uuid/Uuid-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/dev/2.15.0-82.0.dev/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/dev/2.16.0-124.0.dev/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -173,7 +175,7 @@ options detailed in the readme.</p>
 <footer>
   <span class="no-break">
     uuid
-      3.0.5
+      3.0.6
   </span>
 
   
