@@ -1,3 +1,20 @@
+v4.0.0-beta1
+
+* Break up versions into individual objects that can be used standalone.
+* No more colliding global states between versions
+* Added UUID v6, v7, v8 from the new RFC.
+* Add `time`, `version`, and `variant` functions to UuidValue
+v3.0.6
+
+* Enable `avoid_dynamic_calls` linting and fix appropriately. (Thanks @devoncarew)
+
+v3.0.5
+
+* Global options were incorrectly being ignored. #76 (Thanks @Skycoder42)
+* V4 Global Options were incorrectly named. #76 (Thanks @Skycoder42)
+* Global state was static, not per instance. #76 (Thanks @Skycoder42)
+* Additional tests to make sure the above doesn't regress. #76 (Thanks @Skycoder42)
+
 v3.0.4
 
 * `isValidUUID` now handles some Microsoft GUIDs better that only deviate in the Variant setting. (Thanks @FluentChange)

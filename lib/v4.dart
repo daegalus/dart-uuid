@@ -7,9 +7,8 @@ class UuidV4 {
   factory UuidV4({Map<String, dynamic>? options}) {
     options ??= {};
     // Set the globalRNG function to mathRNG with the option to set an alternative globally
-    var gPositionalArgs = options['grngPositionalArgs'] ?? [];
-    Map<Symbol, dynamic> gNamedArgs =
-        options['grngNamedArgs'] ?? const <Symbol, dynamic>{};
+    List gPositionalArgs = options['gPositionalArgs'] ?? [];
+    Map<Symbol, dynamic> gNamedArgs = options['gNamedArgs'] ?? const <Symbol, dynamic>{};
 
     Function grng = (options['grng'] != null)
         ? () => Function.apply(options!['grng'], gPositionalArgs, gNamedArgs)
@@ -33,15 +32,12 @@ class UuidV4 {
     options ??= {};
 
     // Use the built-in RNG or a custom provided RNG
-    var positionalArgs = options['positionalArgs'] ?? [];
-    Map<Symbol, dynamic> namedArgs =
-        options['namedArgs'] ?? const <Symbol, dynamic>{};
-    var rng = (options['rng'] != null)
-        ? Function.apply(options['rng'], positionalArgs, namedArgs)
-        : globalRNG();
+    List positionalArgs = options['positionalArgs'] ?? [];
+    Map<Symbol, dynamic> namedArgs = options['namedArgs'] ?? const <Symbol, dynamic>{};
+    List<int> rng = (options['rng'] != null) ? Function.apply(options['rng'], positionalArgs, namedArgs) : globalRNG();
 
     // Use provided values over RNG
-    var rnds = options['random'] ?? rng;
+    List<int> rnds = options['random'] ?? rng;
 
     // per 4.4, set bits for version and clockSeq high and reserved
     rnds[6] = (rnds[6] & 0x0f) | 0x40;

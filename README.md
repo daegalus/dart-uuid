@@ -1,4 +1,4 @@
-**Version 3.0.x has breaking changes, please review changelog and documentation.**
+**Version 4.0.x is a complete redesign of the underlying setup, but tries to be API compatible or similar to 3.x**
 **UuidValue is still Experimental and the API for it is in flux, please pay attention to changelogs and versions.**
 
 [![Build Status](https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&event=push)](https://github.com/Daegalus/dart-uuid/actions)
@@ -13,7 +13,7 @@ Features:
 * Runs in web, server, and flutter
 * Cryptographically strong random number generation on all platforms
   * **Defaults to non-crypto generator, see UuidUtil for cryptoRNG**
-* [Documentation](https://daegalus.github.com/dart-uuid/index.html)
+* [Documentation](https://daegalus.github.io/dart-uuid/index.html)
 
 ## Getting Started
 
@@ -32,7 +32,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 3.0.4
+  uuid: 4.0.0
 ```
 
 ```dart

@@ -39,11 +39,17 @@ void main() {
   var v7 = uuid.v7(); // -> 060ab53c-0bb2-7482-8000-ab029e8fa2ea
 
   var v7_exact = uuid.v7(options: {
-    'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
-    'clockSeq': 0x1234,
-    'uSecs':
-        DateTime.utc(2011, 10, 9, 8, 7, 6, 543, 210).microsecondsSinceEpoch,
+    'randomBytes': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0x01, 0x23, 0x45, 0x67],
+    'time': DateTime.utc(2011, 10, 9, 8, 7, 6, 543, 210).millisecondsSinceEpoch,
   }); // -> '04e91562-0884-7fea-9234-0123456789ab'
+
+  // Generate a v8 (time-random) id
+  var v8 = uuid.v8(); // -> '1e1041c7-10b9-662e-9234-0123456789ab'
+
+  var v8_exact = uuid.v8(options: {
+    'randomBytes': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0x01, 0x23, 0x45, 0x67],
+    'time': DateTime.utc(2011, 10, 9, 8, 7, 6, 543, 210),
+  }); // -> '1e1041c7-10b9-662e-9234-0123456789ab'
 
   print('v1        | ' + v1);
   print('v1 exact  | ' + v1_exact);
@@ -54,4 +60,6 @@ void main() {
   print('v6 exact  | ' + v6_exact);
   print('v7        | ' + v7);
   print('v7 exact  | ' + v7_exact);
+  print('v8        | ' + v8);
+  print('v8 exact  | ' + v8_exact);
 }

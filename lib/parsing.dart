@@ -4,10 +4,26 @@ import 'enums.dart';
 import 'validation.dart';
 
 class UuidParsing {
-  // Easy number <-> hex conversion
+  /// Easy number -> hex conversion
   static final List<String> _byteToHex = List<String>.generate(256, (i) {
     return i.toRadixString(16).padLeft(2, '0');
   });
+
+  /// Convert Hex String to Uint8List
+  static Uint8List parseHexToBytes(String hex) {
+    if (hex.length % 2 != 0) {
+      throw ArgumentError('Invalid hex string');
+    }
+    if (hex.startsWith('0x')) {
+      hex = hex.substring(2);
+    }
+
+    var bytes = Uint8List(hex.length ~/ 2);
+    for (var i = 0; i < hex.length; i += 2) {
+      bytes[i ~/ 2] = int.parse(hex.substring(i, i + 2), radix: 16);
+    }
+    return bytes;
+  }
 
   ///Parses the provided [uuid] into a list of byte values as a List<int>.
   /// Can optionally be provided a [buffer] to write into and
@@ -22,8 +38,7 @@ class UuidParsing {
     ValidationMode validationMode = ValidationMode.strictRFC4122,
   }) {
     if (validate) {
-      UuidValidation.isValidOrThrow(
-          fromString: uuid, validationMode: validationMode);
+      UuidValidation.isValidOrThrow(fromString: uuid, validationMode: validationMode);
     }
     var i = offset, ii = 0;
 
@@ -59,11 +74,8 @@ class UuidParsing {
       int offset = 0,
       bool validate = true,
       ValidationMode validationMode = ValidationMode.strictRFC4122}) {
-    return Uint8List.fromList(parse(uuid,
-        buffer: buffer,
-        offset: offset,
-        validate: validate,
-        validationMode: validationMode));
+    return Uint8List.fromList(
+        parse(uuid, buffer: buffer, offset: offset, validate: validate, validationMode: validationMode));
   }
 
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.

@@ -3,10 +3,7 @@ import 'parsing.dart';
 import 'uuid_util.dart';
 
 class UuidV7 {
-  int clockSeq = 0;
   int time = 0;
-  int secs = 0;
-  int uSecs = 0;
   late Map<String, dynamic>? goptions;
 
   factory UuidV7(Map<String, dynamic>? options) {
@@ -29,60 +26,47 @@ class UuidV7 {
     var buf = Uint8List(16);
     options ??= const {};
 
-    var clockSeq = options['clockSeq'] ?? this.clockSeq;
-
-    int time =
-        options['uSecs'] ?? (DateTime.now().toUtc()).microsecondsSinceEpoch;
-    var secs = time ~/ 1000000;
-    var uSecs = time % 1000000;
-
-    // Time since last uuid creation (in uSecs)
-    var dt = time - this.time;
-
-    // Per 4.4.2, Bump clockseq on clock regression
-    if (dt <= 0 && options['clockSeq'] == null) {
-      clockSeq = clockSeq + 1 & 0x3fff;
-    }
+    int time = options['time'] ?? (DateTime.now().toUtc()).millisecondsSinceEpoch;
 
     this.time = time;
-    this.secs = secs;
-    this.uSecs = uSecs;
-    this.clockSeq = clockSeq;
 
-    buf..buffer.asByteData().setUint32(0, secs >> 4);
-    buf..buffer.asByteData().setUint8(4, secs << 4);
+    var timeList = Uint8List(8)..buffer.asUint64List()[0] = time;
+    var endIndex = timeList.length - 1;
+    while (endIndex >= 0 && timeList[endIndex] == 0) endIndex--;
+    timeList = timeList.sublist(0, endIndex + 1);
 
-    buf..buffer.asByteData().setUint8(4, uSecs >> 16);
-    buf..buffer.asByteData().setUint8(5, uSecs >> 12);
-    buf..buffer.asByteData().setUint8(6, uSecs >> 5 & 0xf | 0x70);
-    buf..buffer.asByteData().setUint8(7, uSecs);
-    buf..buffer.asByteData().setUint16(8, clockSeq | 0x8000);
+    buf.setAll(0, timeList.reversed);
+    var randomBytes = (options['randomBytes'] != null) ? (options['randomBytes'] as List<int>) : randomData();
 
-    var node =
-        (options['node'] != null) ? (options['node'] as List<int>) : newNode();
-    buf.setAll(10, node);
+    buf.setRange(7, 16, randomBytes);
+    buf.setRange(6, 7, [buf.getRange(6, 7).last & 0x0f | 0x70]);
+    buf.setRange(8, 9, [buf.getRange(8, 9).last & 0x3f | 0x80]);
 
     return UuidParsing.unparse(buf);
   }
 
-  List<int> newNode() {
+  List<int> randomData() {
     var options = goptions ?? const {};
     var v1PositionalArgs = options['v1rngPositionalArgs'] ?? [];
-    Map<Symbol, dynamic> v1NamedArgs =
-        options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
+    Map<Symbol, dynamic> v1NamedArgs = options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
     var seedBytes = (options['v1rng'] != null)
         ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
         : UuidUtil.mathRNG();
 
-    List<int> nodeId = [
-      seedBytes[0] | 0x01,
+    // ignore: omit_local_variable_types
+    List<int> randomData = [
+      seedBytes[0],
       seedBytes[1],
       seedBytes[2],
       seedBytes[3],
       seedBytes[4],
-      seedBytes[5]
+      seedBytes[5],
+      seedBytes[6],
+      seedBytes[7],
+      seedBytes[8],
+      seedBytes[9]
     ];
 
-    return nodeId;
+    return randomData;
   }
 }

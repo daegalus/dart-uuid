@@ -12,9 +12,7 @@ class UuidV1 {
 
   factory UuidV1({Map<String, dynamic>? options}) {
     options ??= {};
-    var v1PositionalArgs = (options['v1rngPositionalArgs'] != null)
-        ? options['v1rngPositionalArgs']
-        : [];
+    var v1PositionalArgs = (options['v1rngPositionalArgs'] != null) ? options['v1rngPositionalArgs'] : [];
     var v1NamedArgs = (options['v1rngNamedArgs'] != null)
         ? options['v1rngNamedArgs'] as Map<Symbol, dynamic>
         : const <Symbol, dynamic>{};
@@ -23,22 +21,14 @@ class UuidV1 {
         : UuidUtil.mathRNG();
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
-    List<int> nodeId = [
-      seedBytes[0] | 0x01,
-      seedBytes[1],
-      seedBytes[2],
-      seedBytes[3],
-      seedBytes[4],
-      seedBytes[5]
-    ];
+    List<int> nodeId = [seedBytes[0] | 0x01, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
 
     // Per 4.2.2, randomize (14 bit) clockseq
     var clockSeq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3ffff;
 
     return UuidV1._(seedBytes, nodeId, clockSeq, 0, 0, options);
   }
-  UuidV1._(this.seedBytes, this.nodeId, this.clockSeq, this.mSecs, this.nSecs,
-      this.goptions);
+  UuidV1._(this.seedBytes, this.nodeId, this.clockSeq, this.mSecs, this.nSecs, this.goptions);
 
   /// v1() Generates a time-based version 1 UUID
   ///
@@ -54,7 +44,7 @@ class UuidV1 {
     var buf = Uint8List(16);
     options ??= const {};
 
-    var clockSeq = options['clockSeq'] ?? this.clockSeq;
+    int clockSeq = options['clockSeq'] ?? this.clockSeq;
 
     // UUID timestamps are 100 nano-second units since the Gregorian epoch,
     // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
@@ -118,7 +108,7 @@ class UuidV1 {
     buf[6] = buf[6] & 0xf | 0x10;
     buf[8] = buf[8] | 0x80;
     // node
-    var node = (options['node'] != null) ? options['node'] : nodeId;
+    List<int> node = (options['node'] != null) ? options['node'] : nodeId;
     for (var n = 0; n < 6; n++) {
       buf[i + n] = node[n];
     }

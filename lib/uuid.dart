@@ -13,6 +13,7 @@ import 'v4.dart';
 import 'v5.dart';
 import 'v6.dart';
 import 'v7.dart';
+import 'v8.dart';
 
 export 'uuid_value.dart';
 export 'enums.dart';
@@ -29,21 +30,20 @@ class Uuid {
   static const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
-  final goptions;
+  final Map<String, dynamic>? goptions;
   final UuidV1 _uuidv1;
   final UuidV4 _uuidv4;
   final UuidV5 _uuidv5;
   final UuidV6 _uuidv6;
   final UuidV7 _uuidv7;
+  final UuidV8 _uuidv8;
 
   factory Uuid({Map<String, dynamic>? options}) {
-    return Uuid._(UuidV1(options: options), UuidV4(options: options),
-        UuidV5(options), UuidV6(options), UuidV7(options),
+    return Uuid._(UuidV1(options: options), UuidV4(options: options), UuidV5(options), UuidV6(options), UuidV7(options),
+        UuidV8(options),
         goptions: options);
   }
-  const Uuid._(
-      this._uuidv1, this._uuidv4, this._uuidv5, this._uuidv6, this._uuidv7,
-      {Map<String, dynamic>? this.goptions});
+  const Uuid._(this._uuidv1, this._uuidv4, this._uuidv5, this._uuidv6, this._uuidv7, this._uuidv8, {this.goptions});
 
   ///Parses the provided [uuid] into a list of byte values as a List<int>.
   /// Can optionally be provided a [buffer] to write into and
@@ -57,11 +57,7 @@ class Uuid {
     bool validate = true,
     ValidationMode validationMode = ValidationMode.strictRFC4122,
   }) {
-    return UuidParsing.parse(uuid,
-        buffer: buffer,
-        offset: offset,
-        validate: validate,
-        validationMode: validationMode);
+    return UuidParsing.parse(uuid, buffer: buffer, offset: offset, validate: validate, validationMode: validationMode);
   }
 
   ///Parses the provided [uuid] into a list of byte values as a Uint8List.
@@ -75,10 +71,7 @@ class Uuid {
       bool validate = true,
       ValidationMode validationMode = ValidationMode.strictRFC4122}) {
     return UuidParsing.parseAsByteList(uuid,
-        buffer: buffer,
-        offset: offset,
-        validate: validate,
-        validationMode: validationMode);
+        buffer: buffer, offset: offset, validate: validate, validationMode: validationMode);
   }
 
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.
@@ -94,13 +87,9 @@ class Uuid {
   /// You can choose to validate from a string or from a byte list based on
   /// which parameter is passed.
   static bool isValidUUID(
-      {String fromString = '',
-      Uint8List? fromByteList,
-      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+      {String fromString = '', Uint8List? fromByteList, ValidationMode validationMode = ValidationMode.strictRFC4122}) {
     return UuidValidation.isValidUUID(
-        fromString: fromString,
-        fromByteList: fromByteList,
-        validationMode: validationMode);
+        fromString: fromString, fromByteList: fromByteList, validationMode: validationMode);
   }
 
   /// v1() Generates a time-based version 1 UUID
@@ -132,8 +121,7 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v1(options: options),
-        buffer: buffer, offset: offset);
+    return UuidParsing.parse(v1(options: options), buffer: buffer, offset: offset);
   }
 
   /// v1obj() Generates a time-based version 1 UUID
@@ -179,8 +167,7 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v4(options: options),
-        buffer: buffer, offset: offset);
+    return UuidParsing.parse(v4(options: options), buffer: buffer, offset: offset);
   }
 
   /// v4obj() Generates a RNG version 4 UUID
@@ -196,7 +183,7 @@ class Uuid {
     return UuidValue(v4(options: options));
   }
 
-  /// v5() Generates a namspace & name-based version 5 UUID
+  /// v5() Generates a namespace & name-based version 5 UUID
   ///
   /// By default it will generate a string based on a provided uuid namespace and
   /// name, and will return a string.
@@ -209,10 +196,10 @@ class Uuid {
     return _uuidv5.generate(namespace, name, options: options);
   }
 
-  /// v5buffer() Generates a RNG version 4 UUID
+  /// v5buffer() GGenerates a namespace & name-based version 5 UUID
   ///
-  /// By default it will generate a string based off current time, and will
-  /// place the result into the provided [buffer]. The [buffer] will also be returned..
+  /// By default it will generate a string based on a provided uuid namespace and
+  /// place the result into the provided [buffer]. The [buffer] will also be returned.
   ///
   /// Optionally an [offset] can be provided with a start position in the buffer.
   ///
@@ -227,11 +214,10 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v5(namespace, name, options: options),
-        buffer: buffer, offset: offset);
+    return UuidParsing.parse(v5(namespace, name, options: options), buffer: buffer, offset: offset);
   }
 
-  /// v5obj() Generates a namspace & name-based version 5 UUID
+  /// v5obj() Generates a namespace & name-based version 5 UUID
   ///
   /// By default it will generate a string based on a provided uuid namespace and
   /// name, and will return a [UuidValue] object.
@@ -240,8 +226,7 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  UuidValue v5obj(String? namespace, String? name,
-      {Map<String, dynamic>? options}) {
+  UuidValue v5obj(String? namespace, String? name, {Map<String, dynamic>? options}) {
     return UuidValue(v5(namespace, name, options: options));
   }
 
@@ -275,8 +260,7 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v6(options: options),
-        buffer: buffer, offset: offset);
+    return UuidParsing.parse(v6(options: options), buffer: buffer, offset: offset);
   }
 
   /// v6obj() Generates a draft time-based version 6 UUID
@@ -295,7 +279,7 @@ class Uuid {
   /// v7() Generates a draft time-based version 7 UUID
   ///
   /// By default it will generate a string based off current Unix epoch time in
-  /// microseconds, and will return a string.
+  /// milliseconds, and will return a string.
   ///
   /// The first argument is an options map that takes various configuration
   /// options detailed in the readme.
@@ -308,7 +292,7 @@ class Uuid {
   /// v7buffer() Generates a draft time-based version 7 UUID
   ///
   /// By default it will generate a string based off current Unix epoch time in
-  /// microseconds, and will place the result into the provided [buffer].
+  /// milliseconds, and will place the result into the provided [buffer].
   /// The [buffer] will also be returned..
   ///
   /// Optionally an [offset] can be provided with a start position in the buffer.
@@ -322,14 +306,13 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v7(options: options),
-        buffer: buffer, offset: offset);
+    return UuidParsing.parse(v7(options: options), buffer: buffer, offset: offset);
   }
 
   /// v7obj() Generates a draft time-based version 7 UUID
   ///
   /// By default it will generate a string based off current Unix epoch time in
-  /// microseconds, and will return it as a [UuidValue] object.
+  /// milliseconds, and will return it as a [UuidValue] object.
   ///
   /// The first argument is an options map that takes various configuration
   /// options detailed in the readme.
@@ -337,5 +320,51 @@ class Uuid {
   /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
   UuidValue v7obj({Map<String, dynamic>? options}) {
     return UuidValue(v7(options: options));
+  }
+
+  /// v8() Generates a draft time-based version 8 UUID
+  ///
+  /// By default it will generate a string based off current Unix epoch time in
+  /// milliseconds, and will return a string.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  String v8({Map<String, dynamic>? options}) {
+    return _uuidv8.generate(options: options);
+  }
+
+  /// v8buffer() Generates a draft time-based version 8 UUID
+  ///
+  /// By default it will generate a string based off current Unix epoch time in
+  /// milliseconds, and will place the result into the provided [buffer].
+  /// The [buffer] will also be returned..
+  ///
+  /// Optionally an [offset] can be provided with a start position in the buffer.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  List<int> v8buffer(
+    List<int> buffer, {
+    Map<String, dynamic>? options,
+    int offset = 0,
+  }) {
+    return UuidParsing.parse(v8(options: options), buffer: buffer, offset: offset);
+  }
+
+  /// v8obj() Generates a draft time-based version 8 UUID
+  ///
+  /// By default it will generate a string based off current Unix epoch time in
+  /// milliseconds, and will return it as a [UuidValue] object.
+  ///
+  /// The first argument is an options map that takes various configuration
+  /// options detailed in the readme.
+  ///
+  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  UuidValue v8obj({Map<String, dynamic>? options}) {
+    return UuidValue(v8(options: options));
   }
 }

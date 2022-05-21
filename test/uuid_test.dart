@@ -11,8 +11,7 @@ void main() {
 
   group('[Version 1 Tests]', () {
     test('IDs created at same mSec are different', () {
-      expect(uuid.v1(options: {'mSecs': TIME}),
-          isNot(equals(uuid.v1(options: {'mSecs': TIME}))));
+      expect(uuid.v1(options: {'mSecs': TIME}), isNot(equals(uuid.v1(options: {'mSecs': TIME}))));
     });
 
     test('Exception thrown when > 10K ids created in 1 ms', () {
@@ -29,9 +28,7 @@ void main() {
       var uidt = uuid.v1(options: {'mSecs': TIME});
       var uidtb = uuid.v1(options: {'mSecs': TIME - 1});
 
-      expect(
-          (int.parse("0x${uidtb.split('-')[3]}") -
-              int.parse("0x${uidt.split('-')[3]}")),
+      expect((int.parse("0x${uidtb.split('-')[3]}") - int.parse("0x${uidt.split('-')[3]}")),
           anyOf(equals(1), equals(-16383)));
     });
 
@@ -39,10 +36,7 @@ void main() {
       var uidt = uuid.v1(options: {'mSecs': TIME, 'nSecs': 10});
       var uidtb = uuid.v1(options: {'mSecs': TIME, 'nSecs': 9});
 
-      expect(
-          (int.parse("0x${uidtb.split('-')[3]}") -
-              int.parse("0x${uidt.split('-')[3]}")),
-          equals(1));
+      expect((int.parse("0x${uidtb.split('-')[3]}") - int.parse("0x${uidt.split('-')[3]}")), equals(1));
     });
 
     test('Explicit options produce expected id', () {
@@ -83,9 +77,7 @@ void main() {
       expect(uuids.length, equals(10000000));
     });
 
-    test(
-        'Generate lots of codes to check we don\'t generate variant 2 V1 codes.',
-        () {
+    test('Generate lots of codes to check we don\'t generate variant 2 V1 codes.', () {
       for (var i = 0; i < 10000; i++) {
         var code = Uuid().v1();
         expect(code[19], isNot(equals('d')));
@@ -149,24 +141,7 @@ void main() {
 
     test('Return same output as entered for "random" option', () {
       var u0 = uuid.v4(options: {
-        'random': [
-          0x10,
-          0x91,
-          0x56,
-          0xbe,
-          0xc4,
-          0xfb,
-          0xc1,
-          0xea,
-          0x71,
-          0xb4,
-          0xef,
-          0xe1,
-          0x67,
-          0x1c,
-          0x58,
-          0x36
-        ]
+        'random': [0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea, 0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36]
       });
       var u1 = '109156be-c4fb-41ea-b1b4-efe1671c5836';
       expect(u0, equals(u1));
@@ -178,8 +153,7 @@ void main() {
       expect(list.length, equals(setList.length));
     });
 
-    test(
-        'Another round of testing uuid.v4 to make sure it doesn\'t produce duplicates on high amounts of entries.',
+    test('Another round of testing uuid.v4 to make sure it doesn\'t produce duplicates on high amounts of entries.',
         () {
       final numToGenerate = 3 * 1000 * 1000;
       final values = <String>{}; // set of strings
@@ -205,12 +179,10 @@ void main() {
       var isValidDefault = Uuid.isValidUUID(fromString: guidString);
       expect(isValidDefault, false);
 
-      var isValidRFC = Uuid.isValidUUID(
-          fromString: guidString, validationMode: ValidationMode.strictRFC4122);
+      var isValidRFC = Uuid.isValidUUID(fromString: guidString, validationMode: ValidationMode.strictRFC4122);
       expect(isValidRFC, false);
 
-      var isValidNonStrict = Uuid.isValidUUID(
-          fromString: guidString, validationMode: ValidationMode.nonStrict);
+      var isValidNonStrict = Uuid.isValidUUID(fromString: guidString, validationMode: ValidationMode.nonStrict);
       expect(isValidNonStrict, true);
     });
   });
@@ -232,19 +204,15 @@ void main() {
 
     test('Using buffers', () {
       var buffer = Uint8List(16);
-      var wihoutBuffer =
-          uuid.v5(null, 'www.google.com', options: {'randomNamespace': false});
-      uuid.v5buffer(null, 'www.google.com', buffer,
-          options: {'randomNamespace': false});
+      var wihoutBuffer = uuid.v5(null, 'www.google.com', options: {'randomNamespace': false});
+      uuid.v5buffer(null, 'www.google.com', buffer, options: {'randomNamespace': false});
 
       expect(Uuid.unparse(buffer), equals(wihoutBuffer));
     });
 
     test('Using Objects', () {
-      var regular =
-          uuid.v5(null, 'www.google.com', options: {'randomNamespace': false});
-      var obj = uuid
-          .v5obj(null, 'www.google.com', options: {'randomNamespace': false});
+      var regular = uuid.v5(null, 'www.google.com', options: {'randomNamespace': false});
+      var obj = uuid.v5obj(null, 'www.google.com', options: {'randomNamespace': false});
 
       expect(obj.uuid, equals(regular));
     });
@@ -252,8 +220,7 @@ void main() {
 
   group('[Version 6 Tests]', () {
     test('IDs created at same mSec are different', () {
-      expect(uuid.v6(options: {'mSecs': TIME}),
-          isNot(equals(uuid.v6(options: {'mSecs': TIME}))));
+      expect(uuid.v6(options: {'mSecs': TIME}), isNot(equals(uuid.v6(options: {'mSecs': TIME}))));
     });
 
     test('Exception thrown when > 10K ids created in 1 ms', () {
@@ -270,9 +237,7 @@ void main() {
       var uidt = uuid.v6(options: {'mSecs': TIME});
       var uidtb = uuid.v6(options: {'mSecs': TIME - 1});
 
-      expect(
-          (int.parse("0x${uidtb.split('-')[3]}") -
-              int.parse("0x${uidt.split('-')[3]}")),
+      expect((int.parse("0x${uidtb.split('-')[3]}") - int.parse("0x${uidt.split('-')[3]}")),
           anyOf(equals(1), equals(-16383)));
     });
 
@@ -280,10 +245,7 @@ void main() {
       var uidt = uuid.v6(options: {'mSecs': TIME, 'nSecs': 10});
       var uidtb = uuid.v6(options: {'mSecs': TIME, 'nSecs': 9});
 
-      expect(
-          (int.parse("0x${uidtb.split('-')[3]}") -
-              int.parse("0x${uidt.split('-')[3]}")),
-          equals(1));
+      expect((int.parse("0x${uidtb.split('-')[3]}") - int.parse("0x${uidt.split('-')[3]}")), equals(1));
     });
 
     test('Explicit options produce expected id', () {
@@ -326,9 +288,7 @@ void main() {
       expect(uuids.length, equals(10000000));
     });
 
-    test(
-        'Generate lots of codes to check we don\'t generate variant 2 V6 codes.',
-        () {
+    test('Generate lots of codes to check we don\'t generate variant 2 V6 codes.', () {
       for (var i = 0; i < 10000; i++) {
         var code = Uuid().v6();
         expect(code[19], isNot(equals('d')));
@@ -354,12 +314,15 @@ void main() {
 
       expect(obj.uuid, equals(regular));
     });
+
+    test('UUIDv6 Test Vector Draft 3', () {
+      var options = {};
+    });
   });
 
   group('[Version 7 Tests]', () {
     test('IDs created at same mSec are different', () {
-      expect(uuid.v7(options: {'mSecs': TIME}),
-          isNot(equals(uuid.v7(options: {'mSecs': TIME}))));
+      expect(uuid.v7(options: {'mSecs': TIME}), isNot(equals(uuid.v7(options: {'mSecs': TIME}))));
     });
 
     test('Exception thrown when > 10K ids created in 1 ms', () {
@@ -376,9 +339,7 @@ void main() {
       var uidt = uuid.v7(options: {'mSecs': TIME});
       var uidtb = uuid.v7(options: {'mSecs': TIME - 1});
 
-      expect(
-          (int.parse("0x${uidtb.split('-')[3]}") -
-              int.parse("0x${uidt.split('-')[3]}")),
+      expect((int.parse("0x${uidtb.split('-')[3]}") - int.parse("0x${uidt.split('-')[3]}")),
           anyOf(equals(1), equals(-16383)));
     });
 
@@ -386,10 +347,7 @@ void main() {
       var uidt = uuid.v7(options: {'mSecs': TIME, 'nSecs': 10});
       var uidtb = uuid.v7(options: {'mSecs': TIME, 'nSecs': 9});
 
-      expect(
-          (int.parse("0x${uidtb.split('-')[3]}") -
-              int.parse("0x${uidt.split('-')[3]}")),
-          equals(1));
+      expect((int.parse("0x${uidtb.split('-')[3]}") - int.parse("0x${uidt.split('-')[3]}")), equals(1));
     });
 
     test('Explicit options produce expected id', () {
@@ -437,9 +395,7 @@ void main() {
       expect(uuids.length, equals(10000000));
     });
 
-    test(
-        'Generate lots of codes to check we don\'t generate variant 2 V6 codes.',
-        () {
+    test('Generate lots of codes to check we don\'t generate variant 2 V6 codes.', () {
       for (var i = 0; i < 10000; i++) {
         var code = Uuid().v7();
         expect(code[19], isNot(equals('d')));
@@ -469,14 +425,12 @@ void main() {
   group('[Parse/Unparse Tests]', () {
     test('Parsing a short/cut-off UUID', () {
       var id = '00112233445566778899aabbccddeeff';
-      expect(() => Uuid.parse(id.substring(0, 10)),
-          throwsA(isA<FormatException>()));
+      expect(() => Uuid.parse(id.substring(0, 10)), throwsA(isA<FormatException>()));
     });
 
     test('Parsing a dirty string with a UUID in it', () {
       var id = '00112233445566778899aabbccddeeff';
-      expect(() => Uuid.unparse(Uuid.parse('(this is the uuid -> $id$id')),
-          throwsA(isA<FormatException>()));
+      expect(() => Uuid.unparse(Uuid.parse('(this is the uuid -> $id$id')), throwsA(isA<FormatException>()));
     });
   });
 
@@ -491,8 +445,7 @@ void main() {
     test('Pass invalid Uuid to constructor', () {
       const INVALID_UUID = 'For sure not a valid UUID';
       expect(Uuid.isValidUUID(fromString: INVALID_UUID), false);
-      expect(
-          () => UuidValue(INVALID_UUID, true), throwsA(isA<FormatException>()));
+      expect(() => UuidValue(INVALID_UUID, true), throwsA(isA<FormatException>()));
 
       final uuidval = UuidValue(INVALID_UUID, false);
       expect(uuidval.uuid, INVALID_UUID.toLowerCase());
@@ -515,10 +468,7 @@ void main() {
 
     test('Pass valid Guid to constructor with validation mode nonStrict', () {
       const VALID_GUID = '2400ee73-282c-4334-e153-08d8f922d1f9';
-      expect(
-          Uuid.isValidUUID(
-              fromString: VALID_GUID, validationMode: ValidationMode.nonStrict),
-          true);
+      expect(Uuid.isValidUUID(fromString: VALID_GUID, validationMode: ValidationMode.nonStrict), true);
 
       final uuidval = UuidValue(VALID_GUID, true, ValidationMode.nonStrict);
       expect(uuidval.uuid, VALID_GUID.toLowerCase());
