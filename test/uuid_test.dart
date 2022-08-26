@@ -261,6 +261,44 @@ void main() {
       expect(() => Uuid.unparse(Uuid.parse('(this is the uuid -> $id$id')),
           throwsA(isA<FormatException>()));
     });
+
+    group('buffer:', () {
+      const size = 64;
+      final buffer = Uint8List(size);
+
+      group('offset good:', () {
+        for (final testCase in {
+          'offset=0': 0,
+          'offset=1': 1,
+          'offset in the middle': 32,
+          'offset 16 bytes before the end': size - 16,
+        }.entries) {
+          test(testCase.key, () {
+            final v = Uuid.parse(Uuid.NAMESPACE_OID,
+                buffer: buffer, offset: testCase.value);
+
+            expect(Uuid.unparse(v, offset: testCase.value),
+                equals(Uuid.NAMESPACE_OID));
+          });
+        }
+      });
+
+      group('offset bad:', () {
+        for (final testCase in {
+          'offset 15 bytes before end': size - 15,
+          'offset at end of buffer': size,
+          'offset after end of buffer': size + 1,
+          'offset is negative': -1
+        }.entries) {
+          test(testCase.key, () {
+            expect(
+                () => Uuid.parse(Uuid.NAMESPACE_OID,
+                    buffer: buffer, offset: testCase.value),
+                throwsA(isA<RangeError>()));
+          });
+        }
+      });
+    });
   });
 
   group('[UuidValue]', () {
