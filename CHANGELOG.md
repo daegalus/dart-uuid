@@ -1,3 +1,7 @@
+v3.0.7
+
+* Fixed parse to allow buffers larger than 16 bytes to be used.
+
 v3.0.6
 
 * Enable `avoid_dynamic_calls` linting and fix appropriately. (Thanks @devoncarew)
