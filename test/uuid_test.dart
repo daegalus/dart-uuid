@@ -565,8 +565,8 @@ void main() {
     group('[UUID8]', () {
       for (final testCase in {
         'Tuesday, February 22, 2022 2:22:22.222000 PM GMT-05:00': [
-          DateTime.fromMillisecondsSinceEpoch(1645557742222),
-          '20220222-1122-8422-B222-B3CDC899A04D'
+          DateTime.fromMillisecondsSinceEpoch(1645557742222).toUtc(),
+          '20220222-1922-8422-B222-B3CDC899A04D'
         ],
       }.entries) {
         test(testCase.key, () {
