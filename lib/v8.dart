@@ -48,7 +48,7 @@ class UuidV8 {
     var buf = Uint8List(16);
     options ??= const {};
 
-    var time = options['time'] ?? DateTime.now().toUtc();
+    DateTime time = options['time'] ?? DateTime.now().toUtc();
 
     this.time = time;
 
@@ -65,7 +65,9 @@ class UuidV8 {
     buf.setRange(8, 9, [buf.getRange(8, 9).last & 0x3f | 0x80]);
 
     buf.setRange(7, 8, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.second])));
-    buf.setRange(9, 11, UuidParsing.parseHexToBytes(sprintf('0x%04i', [time.millisecond])));
+    var milliBytes = UuidParsing.parseHexToBytes(sprintf('0x%04i', [time.millisecond]));
+    milliBytes[0] = milliBytes[0] & 0x0f | buf.getRange(8, 9).last & 0xf0;
+    buf.setRange(8, 10, milliBytes);
 
     return UuidParsing.unparse(buf);
   }
@@ -74,7 +76,7 @@ class UuidV8 {
     var options = goptions ?? const {};
     var v1PositionalArgs = options['v1rngPositionalArgs'] ?? [];
     Map<Symbol, dynamic> v1NamedArgs = options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
-    var seedBytes = (options['v1rng'] != null)
+    Uint8List seedBytes = (options['v1rng'] != null)
         ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
         : UuidUtil.mathRNG();
 

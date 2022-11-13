@@ -19,10 +19,10 @@ Features:
 
 ### Instructions
 
-1.  Open a command line and cd to your projects root folder
-2.  In your pubspec, add an entry for dart-uuid to your dependencies (example below)
-3.  pub install
-4.  If you wish to run tests, go into packages/dart-uuid/ and run 'dart test/uuid_test.dart'
+1. Open a command line and cd to your projects root folder
+2. In your pubspec, add an entry for dart-uuid to your dependencies (example below)
+3. pub install
+4. If you wish to run tests, go into packages/dart-uuid/ and run 'dart test/uuid_test.dart'
 
 ### Pubspec
 
@@ -32,7 +32,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  uuid: 4.0.0
+  uuid: 4.0.0-beta1
 ```
 
 ```dart

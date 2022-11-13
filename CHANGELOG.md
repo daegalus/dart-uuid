@@ -4,6 +4,11 @@ v4.0.0-beta1
 * No more colliding global states between versions
 * Added UUID v6, v7, v8 from the new RFC.
 * Add `time`, `version`, and `variant` functions to UuidValue
+
+v3.0.7
+
+* Fixed parse to allow buffers larger than 16 bytes to be used. [Thanks @hoylen]
+
 v3.0.6
 
 * Enable `avoid_dynamic_calls` linting and fix appropriately. (Thanks @devoncarew)

@@ -25,11 +25,21 @@ class UuidParsing {
     return bytes;
   }
 
-  ///Parses the provided [uuid] into a list of byte values as a List<int>.
+  /// Parses the provided [uuid] into a list of byte values as a List<int>.
   /// Can optionally be provided a [buffer] to write into and
-  ///  a positional [offset] for where to start inputting into the buffer.
-  /// Throws FormatException if the UUID is invalid. Optionally you can set
+  /// a positional [offset] for where to start inputting into the buffer.
+  ///
+  /// Returns the [buffer] containing the bytes. If no [buffer] was provided,
+  /// a new [buffer] is created and returned. If a [buffer] was provided, it
+  /// is returned (even if the uuid bytes are not placed at the beginning of
+  /// that [buffer]).
+  ///
+  /// Throws [FormatException] if the UUID is invalid. Optionally you can set
   /// [validate] to false to disable validation of the UUID before parsing.
+  ///
+  /// Throws [RangeError] if a [buffer] is provided and it is too small.
+  /// It is also thrown if a non-zero [offset] is provided without providing
+  /// a [buffer].
   static List<int> parse(
     String uuid, {
     List<int>? buffer,
@@ -42,8 +52,20 @@ class UuidParsing {
     }
     var i = offset, ii = 0;
 
-    // Create a 16 item buffer if one hasn't been provided.
-    buffer = (buffer != null) ? buffer : Uint8List(16);
+    // Get buffer to store the result
+    if (buffer == null) {
+      // Buffer not provided: create a 16 item buffer
+      if (offset != 0) {
+        throw RangeError('non-zero offset without providing a buffer');
+      }
+      buffer = Uint8List(16);
+    } else {
+      // Buffer provided: check it is large enough
+      if (buffer.length - offset < 16) {
+        throw RangeError('buffer too small: need 16: length=${buffer.length}'
+            '${offset != 0 ? ', offset=$offset' : ''}');
+      }
+    }
 
     // Convert to lowercase and replace all hex with bytes then
     // string.replaceAll() does a lot of work that I don't need, and a manual
@@ -81,10 +103,14 @@ class UuidParsing {
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.
   /// An optional [offset] is allowed if you want to start at a different point
   /// in the buffer.
-  /// Throws an exception if the buffer does not have a length of 16
+  ///
+  /// Throws a [RangeError] exception if the [buffer] is not large enough to
+  /// hold the bytes. That is, if the length of the [buffer] after the [offset]
+  /// is less than 16.
   static String unparse(List<int> buffer, {int offset = 0}) {
-    if (buffer.length != 16) {
-      throw Exception('The provided buffer needs to have a length of 16.');
+    if (buffer.length - offset < 16) {
+      throw RangeError('buffer too small: need 16: length=${buffer.length}'
+          '${offset != 0 ? ', offset=$offset' : ''}');
     }
     var i = offset;
     return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'

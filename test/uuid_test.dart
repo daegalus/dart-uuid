@@ -325,57 +325,12 @@ void main() {
       expect(uuid.v7(options: {'mSecs': TIME}), isNot(equals(uuid.v7(options: {'mSecs': TIME}))));
     });
 
-    test('Exception thrown when > 10K ids created in 1 ms', () {
-      var thrown = false;
-      try {
-        uuid.v7(options: {'mSecs': TIME, 'nSecs': 10000});
-      } catch (e) {
-        thrown = true;
-      }
-      expect(thrown, equals(true));
-    });
-
-    test('Clock regression by msec increments the clockseq - mSec', () {
-      var uidt = uuid.v7(options: {'mSecs': TIME});
-      var uidtb = uuid.v7(options: {'mSecs': TIME - 1});
-
-      expect((int.parse("0x${uidtb.split('-')[3]}") - int.parse("0x${uidt.split('-')[3]}")),
-          anyOf(equals(1), equals(-16383)));
-    });
-
-    test('Clock regression by msec increments the clockseq - nSec', () {
-      var uidt = uuid.v7(options: {'mSecs': TIME, 'nSecs': 10});
-      var uidtb = uuid.v7(options: {'mSecs': TIME, 'nSecs': 9});
-
-      expect((int.parse("0x${uidtb.split('-')[3]}") - int.parse("0x${uidt.split('-')[3]}")), equals(1));
-    });
-
     test('Explicit options produce expected id', () {
-      var id = uuid.v7(options: {
-        'mSecs': 1321651533573,
-        'nSecs': 5432,
-        'clockSeq': 0x385c,
-        'node': [0x61, 0xcd, 0x3c, 0xbb, 0x32, 0x10]
-      });
-      sleep(Duration(seconds: 1));
-      for (var i = 0; i < 10; i++) {
-        var code = uuid.v7();
-        print(code);
-      }
+      final rand = UuidUtil.mathRNG(seed: 1);
+      var options = {'time': 1321651533573, 'randomBytes': rand};
+      var id = uuid.v7(options: options);
 
-      expect(id, equals('04ec6cd4-155e-7008-b85c-61cd3cbb3210'));
-    });
-
-    test('Ids spanning 1ms boundary are 100ns apart', () {
-      var u0 = uuid.v7(options: {'mSecs': TIME, 'nSecs': 9999});
-      var u1 = uuid.v7(options: {'mSecs': TIME + 1, 'nSecs': 0});
-
-      print(u0);
-      print(u1);
-      var before = u0.split('-')[2], after = u1.split('-')[2];
-      var dt = int.parse('0x$after') - int.parse('0x$before');
-
-      expect(dt, equals(1));
+      expect(id, equals('0133b891-f705-7473-bf7b-b3cdc899a04d'));
     });
 
     test('Generate lots of codes to see if we get v7 collisions.', () {
@@ -395,7 +350,7 @@ void main() {
       expect(uuids.length, equals(10000000));
     });
 
-    test('Generate lots of codes to check we don\'t generate variant 2 V6 codes.', () {
+    test('Generate lots of codes to check we don\'t generate variant 2 V7 codes.', () {
       for (var i = 0; i < 10000; i++) {
         var code = Uuid().v7();
         expect(code[19], isNot(equals('d')));
@@ -405,7 +360,8 @@ void main() {
 
     test('Using buffers', () {
       var buffer = Uint8List(16);
-      var options = {'mSecs': TIME, 'nSecs': 0};
+      final rand = UuidUtil.mathRNG(seed: 1);
+      var options = {'time': TIME, 'randomBytes': rand};
 
       var wihoutBuffer = uuid.v7(options: options);
       uuid.v7buffer(buffer, options: options);
@@ -414,7 +370,8 @@ void main() {
     });
 
     test('Using Objects', () {
-      var options = {'mSecs': TIME, 'nSecs': 0};
+      final rand = UuidUtil.mathRNG(seed: 1);
+      var options = {'time': TIME, 'randomBytes': rand};
 
       var regular = uuid.v7(options: options);
       var obj = uuid.v7obj(options: options);
@@ -431,6 +388,38 @@ void main() {
     test('Parsing a dirty string with a UUID in it', () {
       var id = '00112233445566778899aabbccddeeff';
       expect(() => Uuid.unparse(Uuid.parse('(this is the uuid -> $id$id')), throwsA(isA<FormatException>()));
+    });
+
+    const size = 64;
+    final buffer = Uint8List(size);
+
+    group('Buffer offset good:', () {
+      for (final testCase in {
+        'offset=0': 0,
+        'offset=1': 1,
+        'offset in the middle': 32,
+        'offset 16 bytes before the end': size - 16,
+      }.entries) {
+        test(testCase.key, () {
+          final v = Uuid.parse(Uuid.NAMESPACE_OID, buffer: buffer, offset: testCase.value);
+
+          expect(Uuid.unparse(v, offset: testCase.value), equals(Uuid.NAMESPACE_OID));
+        });
+      }
+    });
+
+    group('Buffer offset bad:', () {
+      for (final testCase in {
+        'offset 15 bytes before end': size - 15,
+        'offset at end of buffer': size,
+        'offset after end of buffer': size + 1,
+        'offset is negative': -1
+      }.entries) {
+        test(testCase.key, () {
+          expect(
+              () => Uuid.parse(Uuid.NAMESPACE_OID, buffer: buffer, offset: testCase.value), throwsA(isA<RangeError>()));
+        });
+      }
     });
   });
 
@@ -472,6 +461,56 @@ void main() {
 
       final uuidval = UuidValue(VALID_GUID, true, ValidationMode.nonStrict);
       expect(uuidval.uuid, VALID_GUID.toLowerCase());
+    });
+  });
+
+  group('[Test Vectors]', () {
+    group('[UUID6]', () {
+      for (final testCase in {
+        'Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00': [
+          1645557742000,
+          '1EC9414C-232A-6B00-B3C8-9E6BDECED846'
+        ],
+      }.entries) {
+        test(testCase.key, () {
+          var nodeId = <int>[0x9E, 0x6B, 0xDE, 0xCE, 0xD8, 0x46];
+          var clockSeq = (0xB3 << 8 | 0xC8) & 0x3ffff;
+          final uuid =
+              Uuid().v6(options: {'mSecs': testCase.value[0], 'nSecs': 0, 'node': nodeId, 'clockSeq': clockSeq});
+          expect(uuid.toUpperCase(), equals(testCase.value[1]));
+        });
+      }
+    });
+
+    group('[UUID7]', () {
+      for (final testCase in {
+        'Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00': [
+          1645557742000,
+          '017F22E2-79B0-7CC3-98C4-DC0C0C07398F'
+        ],
+      }.entries) {
+        test(testCase.key, () {
+          final rand = [0x0C, 0xC3, 0x18, 0xC4, 0xDC, 0x0C, 0x0C, 0x07, 0x39, 0x8F];
+
+          final uuid = Uuid().v7(options: {'time': testCase.value[0], 'randomBytes': rand});
+          expect(uuid.toUpperCase(), equals(testCase.value[1]));
+        });
+      }
+    });
+
+    group('[UUID8]', () {
+      for (final testCase in {
+        'Tuesday, February 22, 2022 2:22:22.222000 PM GMT-05:00': [
+          DateTime.fromMillisecondsSinceEpoch(1645557742222),
+          '20220222-1122-8422-B222-B3CDC899A04D'
+        ],
+      }.entries) {
+        test(testCase.key, () {
+          final rand = UuidUtil.mathRNG(seed: 1);
+          final uuid = Uuid().v8(options: {'time': testCase.value[0], 'randomBytes': rand});
+          expect(uuid.toUpperCase(), equals(testCase.value[1]));
+        });
+      }
     });
   });
 }

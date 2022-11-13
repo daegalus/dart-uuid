@@ -14,12 +14,12 @@ class UuidV6 {
     options ??= {};
     var v1PositionalArgs = options['v1rngPositionalArgs'] ?? [];
     Map<Symbol, dynamic> v1NamedArgs = options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
-    var seedBytes = (options['v1rng'] != null)
+    Uint8List seedBytes = (options['v1rng'] != null)
         ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
         : UuidUtil.mathRNG();
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
-    List<int> nodeId = [seedBytes[0] | 0x01, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
+    var nodeId = [seedBytes[0] | 0x01, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
 
     // Per 4.2.2, randomize (14 bit) clockseq
     var clockSeq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3ffff;
@@ -41,7 +41,7 @@ class UuidV6 {
     var buf = Uint8List(16);
     options ??= const {};
 
-    var clockSeq = options['clockSeq'] ?? this.clockSeq;
+    int clockSeq = options['clockSeq'] ?? this.clockSeq;
 
     // UUID timestamps are 100 nano-second units since the Gregorian epoch,
     // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
