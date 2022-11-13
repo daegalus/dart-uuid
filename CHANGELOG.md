@@ -1,3 +1,7 @@
+v4.0.0-beta1-1
+
+* Mostly cleanup, linting, updating depedencies, etc.
+
 v4.0.0-beta1
 
 * Break up versions into individual objects that can be used standalone.
