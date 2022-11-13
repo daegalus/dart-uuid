@@ -32,7 +32,9 @@ class UuidV7 {
 
     var timeList = Uint8List(8)..buffer.asUint64List()[0] = time;
     var endIndex = timeList.length - 1;
-    while (endIndex >= 0 && timeList[endIndex] == 0) endIndex--;
+    while (endIndex >= 0 && timeList[endIndex] == 0) {
+      endIndex--;
+    }
     timeList = timeList.sublist(0, endIndex + 1);
 
     buf.setAll(0, timeList.reversed);

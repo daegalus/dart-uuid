@@ -16,7 +16,7 @@ class UuidV1 {
     var v1NamedArgs = (options['v1rngNamedArgs'] != null)
         ? options['v1rngNamedArgs'] as Map<Symbol, dynamic>
         : const <Symbol, dynamic>{};
-    var seedBytes = (options['v1rng'] != null)
+    Uint8List seedBytes = (options['v1rng'] != null)
         ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
         : UuidUtil.mathRNG();
 

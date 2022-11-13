@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'enums.dart';
 import 'parsing.dart';
 import 'v4.dart';
@@ -12,7 +14,7 @@ class UuidV5 {
   static const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
-  final _goptions;
+  final Map<String, dynamic> _goptions;
   factory UuidV5(Map<String, dynamic>? options) {
     options ??= {};
     return UuidV5._(options);

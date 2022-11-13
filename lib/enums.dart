@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class Namespace {
   // RFC4122 provided namespaces for v3 and v5 namespace based UUIDs
   static const DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';

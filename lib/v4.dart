@@ -2,7 +2,7 @@ import 'parsing.dart';
 import 'uuid_util.dart';
 
 class UuidV4 {
-  late Function globalRNG;
+  late List<int> Function() globalRNG;
 
   factory UuidV4({Map<String, dynamic>? options}) {
     options ??= {};
@@ -10,7 +10,7 @@ class UuidV4 {
     List gPositionalArgs = options['gPositionalArgs'] ?? [];
     Map<Symbol, dynamic> gNamedArgs = options['gNamedArgs'] ?? const <Symbol, dynamic>{};
 
-    Function grng = (options['grng'] != null)
+    List<int> Function() grng = (options['grng'] != null)
         ? () => Function.apply(options!['grng'], gPositionalArgs, gNamedArgs)
         : UuidUtil.mathRNG;
 

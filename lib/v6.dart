@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_single_cascade_in_expression_statements
+
 import 'dart:typed_data';
 import 'parsing.dart';
 import 'uuid_util.dart';
@@ -79,10 +81,10 @@ class UuidV6 {
     // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
     mSecs += 12219292800000;
 
-    var uuid_time = mSecs * 10000 + nSecs;
+    var uuidTime = mSecs * 10000 + nSecs;
 
-    var high = uuid_time << 4;
-    var low = uuid_time & 0x0fff | 0x6000;
+    var high = uuidTime << 4;
+    var low = uuidTime & 0x0fff | 0x6000;
     var clock = (clockSeq & 0x3fff) | 0x8000;
     buf..buffer.asByteData().setUint64(0, high);
     buf..buffer.asByteData().setUint16(6, low);

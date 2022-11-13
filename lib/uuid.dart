@@ -1,4 +1,6 @@
 /// Generates UUID v1, v4, v5 following RFC4122 standard.
+// ignore_for_file: constant_identifier_names
+
 library uuid;
 
 import 'dart:typed_data';
