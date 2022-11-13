@@ -8,7 +8,9 @@ class UuidValidation {
   /// You can choose to validate from a string or from a byte list based on
   /// which parameter is passed.
   static bool isValidUUID(
-      {String fromString = '', Uint8List? fromByteList, ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+      {String fromString = '',
+      Uint8List? fromByteList,
+      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
     if (fromByteList != null) {
       fromString = UuidParsing.unparse(fromByteList);
     }
@@ -26,14 +28,16 @@ class UuidValidation {
     switch (validationMode) {
       case ValidationMode.strictRFC4122:
         {
-          const pattern = r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$';
+          const pattern =
+              r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$';
           final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
           final match = regex.hasMatch(fromString);
           return match;
         }
       case ValidationMode.nonStrict:
         {
-          const pattern = r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$';
+          const pattern =
+              r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$';
           final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
           final match = regex.hasMatch(fromString);
           return match;
@@ -46,14 +50,21 @@ class UuidValidation {
   }
 
   static void isValidOrThrow(
-      {String fromString = '', Uint8List? fromByteList, ValidationMode validationMode = ValidationMode.strictRFC4122}) {
-    final isValid = isValidUUID(fromString: fromString, fromByteList: fromByteList, validationMode: validationMode);
+      {String fromString = '',
+      Uint8List? fromByteList,
+      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+    final isValid = isValidUUID(
+        fromString: fromString,
+        fromByteList: fromByteList,
+        validationMode: validationMode);
 
     if (!isValid) {
       // let's check if it is a non RFC4122 uuid and help the developer
       if (validationMode != ValidationMode.nonStrict) {
-        final isValidNonStrict =
-            isValidUUID(fromString: fromString, fromByteList: fromByteList, validationMode: ValidationMode.nonStrict);
+        final isValidNonStrict = isValidUUID(
+            fromString: fromString,
+            fromByteList: fromByteList,
+            validationMode: ValidationMode.nonStrict);
 
         if (isValidNonStrict) {
           throw FormatException(

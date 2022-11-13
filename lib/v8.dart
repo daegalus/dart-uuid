@@ -52,20 +52,29 @@ class UuidV8 {
 
     this.time = time;
 
-    buf.setRange(0, 2, UuidParsing.parseHexToBytes(sprintf('0x%04i', [time.year])));
-    buf.setRange(2, 3, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.month])));
-    buf.setRange(3, 4, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.day])));
-    buf.setRange(4, 5, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.hour])));
-    buf.setRange(5, 6, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.minute])));
+    buf.setRange(
+        0, 2, UuidParsing.parseHexToBytes(sprintf('0x%04i', [time.year])));
+    buf.setRange(
+        2, 3, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.month])));
+    buf.setRange(
+        3, 4, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.day])));
+    buf.setRange(
+        4, 5, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.hour])));
+    buf.setRange(
+        5, 6, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.minute])));
 
-    var randomBytes = (options['randomBytes'] != null) ? (options['randomBytes'] as List<int>) : randomData();
+    var randomBytes = (options['randomBytes'] != null)
+        ? (options['randomBytes'] as List<int>)
+        : randomData();
 
     buf.setRange(6, 16, randomBytes);
     buf.setRange(6, 7, [buf.getRange(6, 7).last & 0x0f | 0x80]);
     buf.setRange(8, 9, [buf.getRange(8, 9).last & 0x3f | 0x80]);
 
-    buf.setRange(7, 8, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.second])));
-    var milliBytes = UuidParsing.parseHexToBytes(sprintf('0x%04i', [time.millisecond]));
+    buf.setRange(
+        7, 8, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.second])));
+    var milliBytes =
+        UuidParsing.parseHexToBytes(sprintf('0x%04i', [time.millisecond]));
     milliBytes[0] = milliBytes[0] & 0x0f | buf.getRange(8, 9).last & 0xf0;
     buf.setRange(8, 10, milliBytes);
 
@@ -75,7 +84,8 @@ class UuidV8 {
   List<int> randomData() {
     var options = goptions ?? const {};
     var v1PositionalArgs = options['v1rngPositionalArgs'] ?? [];
-    Map<Symbol, dynamic> v1NamedArgs = options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
+    Map<Symbol, dynamic> v1NamedArgs =
+        options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
     Uint8List seedBytes = (options['v1rng'] != null)
         ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
         : UuidUtil.mathRNG();

@@ -15,20 +15,29 @@ class UuidV6 {
   factory UuidV6(Map<String, dynamic>? options) {
     options ??= {};
     var v1PositionalArgs = options['v1rngPositionalArgs'] ?? [];
-    Map<Symbol, dynamic> v1NamedArgs = options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
+    Map<Symbol, dynamic> v1NamedArgs =
+        options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
     Uint8List seedBytes = (options['v1rng'] != null)
         ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
         : UuidUtil.mathRNG();
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
-    var nodeId = [seedBytes[0] | 0x01, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
+    var nodeId = [
+      seedBytes[0] | 0x01,
+      seedBytes[1],
+      seedBytes[2],
+      seedBytes[3],
+      seedBytes[4],
+      seedBytes[5]
+    ];
 
     // Per 4.2.2, randomize (14 bit) clockseq
     var clockSeq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3ffff;
 
     return UuidV6._(seedBytes, nodeId, clockSeq, 0, 0, options);
   }
-  UuidV6._(this.seedBytes, this.nodeId, this.clockSeq, this.mSecs, this.nSecs, this.goptions);
+  UuidV6._(this.seedBytes, this.nodeId, this.clockSeq, this.mSecs, this.nSecs,
+      this.goptions);
 
   /// v6() Generates a time-based version 6 UUID
   ///

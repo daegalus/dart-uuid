@@ -8,7 +8,8 @@ class UuidV4 {
     options ??= {};
     // Set the globalRNG function to mathRNG with the option to set an alternative globally
     List gPositionalArgs = options['gPositionalArgs'] ?? [];
-    Map<Symbol, dynamic> gNamedArgs = options['gNamedArgs'] ?? const <Symbol, dynamic>{};
+    Map<Symbol, dynamic> gNamedArgs =
+        options['gNamedArgs'] ?? const <Symbol, dynamic>{};
 
     List<int> Function() grng = (options['grng'] != null)
         ? () => Function.apply(options!['grng'], gPositionalArgs, gNamedArgs)
@@ -33,8 +34,11 @@ class UuidV4 {
 
     // Use the built-in RNG or a custom provided RNG
     List positionalArgs = options['positionalArgs'] ?? [];
-    Map<Symbol, dynamic> namedArgs = options['namedArgs'] ?? const <Symbol, dynamic>{};
-    List<int> rng = (options['rng'] != null) ? Function.apply(options['rng'], positionalArgs, namedArgs) : globalRNG();
+    Map<Symbol, dynamic> namedArgs =
+        options['namedArgs'] ?? const <Symbol, dynamic>{};
+    List<int> rng = (options['rng'] != null)
+        ? Function.apply(options['rng'], positionalArgs, namedArgs)
+        : globalRNG();
 
     // Use provided values over RNG
     List<int> rnds = options['random'] ?? rng;

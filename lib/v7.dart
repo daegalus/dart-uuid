@@ -26,7 +26,8 @@ class UuidV7 {
     var buf = Uint8List(16);
     options ??= const {};
 
-    int time = options['time'] ?? (DateTime.now().toUtc()).millisecondsSinceEpoch;
+    int time =
+        options['time'] ?? (DateTime.now().toUtc()).millisecondsSinceEpoch;
 
     this.time = time;
 
@@ -38,7 +39,9 @@ class UuidV7 {
     timeList = timeList.sublist(0, endIndex + 1);
 
     buf.setAll(0, timeList.reversed);
-    var randomBytes = (options['randomBytes'] != null) ? (options['randomBytes'] as List<int>) : randomData();
+    var randomBytes = (options['randomBytes'] != null)
+        ? (options['randomBytes'] as List<int>)
+        : randomData();
 
     buf.setRange(6, 16, randomBytes);
     buf.setRange(6, 7, [buf.getRange(6, 7).last & 0x0f | 0x70]);
@@ -50,7 +53,8 @@ class UuidV7 {
   List<int> randomData() {
     var options = goptions ?? const {};
     var v1PositionalArgs = options['v1rngPositionalArgs'] ?? [];
-    Map<Symbol, dynamic> v1NamedArgs = options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
+    Map<Symbol, dynamic> v1NamedArgs =
+        options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
     Uint8List seedBytes = (options['v1rng'] != null)
         ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
         : UuidUtil.mathRNG();

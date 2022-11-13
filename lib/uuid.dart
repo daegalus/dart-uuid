@@ -41,11 +41,13 @@ class Uuid {
   final UuidV8 _uuidv8;
 
   factory Uuid({Map<String, dynamic>? options}) {
-    return Uuid._(UuidV1(options: options), UuidV4(options: options), UuidV5(options), UuidV6(options), UuidV7(options),
-        UuidV8(options),
+    return Uuid._(UuidV1(options: options), UuidV4(options: options),
+        UuidV5(options), UuidV6(options), UuidV7(options), UuidV8(options),
         goptions: options);
   }
-  const Uuid._(this._uuidv1, this._uuidv4, this._uuidv5, this._uuidv6, this._uuidv7, this._uuidv8, {this.goptions});
+  const Uuid._(this._uuidv1, this._uuidv4, this._uuidv5, this._uuidv6,
+      this._uuidv7, this._uuidv8,
+      {this.goptions});
 
   ///Parses the provided [uuid] into a list of byte values as a List<int>.
   /// Can optionally be provided a [buffer] to write into and
@@ -59,7 +61,11 @@ class Uuid {
     bool validate = true,
     ValidationMode validationMode = ValidationMode.strictRFC4122,
   }) {
-    return UuidParsing.parse(uuid, buffer: buffer, offset: offset, validate: validate, validationMode: validationMode);
+    return UuidParsing.parse(uuid,
+        buffer: buffer,
+        offset: offset,
+        validate: validate,
+        validationMode: validationMode);
   }
 
   ///Parses the provided [uuid] into a list of byte values as a Uint8List.
@@ -73,7 +79,10 @@ class Uuid {
       bool validate = true,
       ValidationMode validationMode = ValidationMode.strictRFC4122}) {
     return UuidParsing.parseAsByteList(uuid,
-        buffer: buffer, offset: offset, validate: validate, validationMode: validationMode);
+        buffer: buffer,
+        offset: offset,
+        validate: validate,
+        validationMode: validationMode);
   }
 
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.
@@ -89,9 +98,13 @@ class Uuid {
   /// You can choose to validate from a string or from a byte list based on
   /// which parameter is passed.
   static bool isValidUUID(
-      {String fromString = '', Uint8List? fromByteList, ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+      {String fromString = '',
+      Uint8List? fromByteList,
+      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
     return UuidValidation.isValidUUID(
-        fromString: fromString, fromByteList: fromByteList, validationMode: validationMode);
+        fromString: fromString,
+        fromByteList: fromByteList,
+        validationMode: validationMode);
   }
 
   /// v1() Generates a time-based version 1 UUID
@@ -123,7 +136,8 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v1(options: options), buffer: buffer, offset: offset);
+    return UuidParsing.parse(v1(options: options),
+        buffer: buffer, offset: offset);
   }
 
   /// v1obj() Generates a time-based version 1 UUID
@@ -169,7 +183,8 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v4(options: options), buffer: buffer, offset: offset);
+    return UuidParsing.parse(v4(options: options),
+        buffer: buffer, offset: offset);
   }
 
   /// v4obj() Generates a RNG version 4 UUID
@@ -216,7 +231,8 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v5(namespace, name, options: options), buffer: buffer, offset: offset);
+    return UuidParsing.parse(v5(namespace, name, options: options),
+        buffer: buffer, offset: offset);
   }
 
   /// v5obj() Generates a namespace & name-based version 5 UUID
@@ -228,7 +244,8 @@ class Uuid {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  UuidValue v5obj(String? namespace, String? name, {Map<String, dynamic>? options}) {
+  UuidValue v5obj(String? namespace, String? name,
+      {Map<String, dynamic>? options}) {
     return UuidValue(v5(namespace, name, options: options));
   }
 
@@ -262,7 +279,8 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v6(options: options), buffer: buffer, offset: offset);
+    return UuidParsing.parse(v6(options: options),
+        buffer: buffer, offset: offset);
   }
 
   /// v6obj() Generates a draft time-based version 6 UUID
@@ -308,7 +326,8 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v7(options: options), buffer: buffer, offset: offset);
+    return UuidParsing.parse(v7(options: options),
+        buffer: buffer, offset: offset);
   }
 
   /// v7obj() Generates a draft time-based version 7 UUID
@@ -354,7 +373,8 @@ class Uuid {
     Map<String, dynamic>? options,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v8(options: options), buffer: buffer, offset: offset);
+    return UuidParsing.parse(v8(options: options),
+        buffer: buffer, offset: offset);
   }
 
   /// v8obj() Generates a draft time-based version 8 UUID

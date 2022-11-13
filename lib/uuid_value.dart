@@ -13,9 +13,12 @@ class UuidValue {
   ///
   /// Optionally , you can disable the validation check in the constructor
   /// by setting [validate] to `false`.
-  factory UuidValue(String uuid, [bool validate = true, ValidationMode validationMode = ValidationMode.strictRFC4122]) {
+  factory UuidValue(String uuid,
+      [bool validate = true,
+      ValidationMode validationMode = ValidationMode.strictRFC4122]) {
     if (validate) {
-      UuidValidation.isValidOrThrow(fromString: uuid, validationMode: validationMode);
+      UuidValidation.isValidOrThrow(
+          fromString: uuid, validationMode: validationMode);
     }
 
     return UuidValue._(uuid.toLowerCase());

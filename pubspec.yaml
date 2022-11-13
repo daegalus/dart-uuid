@@ -4,7 +4,7 @@ description: >
   RFC4122 (v1, v4, v5, v6, v7, v8) UUID Generator and Parser for Dart
 homepage: https://github.com/Daegalus/dart-uuid
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 dependencies:
   crypto: ^3.0.0
   sprintf: ^6.0.0

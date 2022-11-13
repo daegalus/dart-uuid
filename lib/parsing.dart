@@ -48,7 +48,8 @@ class UuidParsing {
     ValidationMode validationMode = ValidationMode.strictRFC4122,
   }) {
     if (validate) {
-      UuidValidation.isValidOrThrow(fromString: uuid, validationMode: validationMode);
+      UuidValidation.isValidOrThrow(
+          fromString: uuid, validationMode: validationMode);
     }
     var i = offset, ii = 0;
 
@@ -96,8 +97,11 @@ class UuidParsing {
       int offset = 0,
       bool validate = true,
       ValidationMode validationMode = ValidationMode.strictRFC4122}) {
-    return Uint8List.fromList(
-        parse(uuid, buffer: buffer, offset: offset, validate: validate, validationMode: validationMode));
+    return Uint8List.fromList(parse(uuid,
+        buffer: buffer,
+        offset: offset,
+        validate: validate,
+        validationMode: validationMode));
   }
 
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.
