@@ -2,7 +2,7 @@
 
 **UuidValue is still Experimental and the API for it is in flux, please pay attention to changelogs and versions.**
 
-[![Build Status](https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&event=push)](https://github.com/Daegalus/dart-uuid/actions)
+[![Build Status](https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=main&event=push)](https://github.com/Daegalus/dart-uuid/actions)
 
 # uuid
 
