@@ -1,4 +1,5 @@
-**Version 4.0.x is a complete redesign of the underlying setup, but tries to be API compatible or similar to 3.x**
+**Version 4.0.x is a complete redesign of the underlying setup, but tries to be API compatible or similar to 3.x.**
+
 **UuidValue is still Experimental and the API for it is in flux, please pay attention to changelogs and versions.**
 
 [![Build Status](https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=nullsafety&event=push)](https://github.com/Daegalus/dart-uuid/actions)
