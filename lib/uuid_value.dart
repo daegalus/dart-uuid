@@ -31,8 +31,14 @@ class UuidValue {
   factory UuidValue.fromList(List<int> byteList, {int? offset}) {
     return UuidValue(UuidParsing.unparse(byteList, offset: offset ?? 0));
   }
+  
+  static const dns = UuidValue._(Uuid.NAMESPACE_DNS);
+  static const url = UuidValue._(Uuid.NAMESPACE_URL);
+  static const oid = UuidValue._(Uuid.NAMESPACE_OID);
+  static const x500 = UuidValue._(Uuid.NAMESPACE_X500);
+  static const nil = UuidValue._(Uuid.NAMESPACE_NIL);
 
-  UuidValue._(this.uuid);
+  const UuidValue._(this.uuid);
 
   // toBytes() converts the internal string representation to a list of bytes.
   Uint8List toBytes() {
