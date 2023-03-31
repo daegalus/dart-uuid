@@ -1,26 +1,19 @@
 import 'dart:typed_data';
+import 'data.dart';
 import 'parsing.dart';
 import 'uuid_util.dart';
 
 class UuidV1 {
-  late List<int> seedBytes;
-  late List<int> nodeId;
-  late int clockSeq;
-  int mSecs = 0;
-  int nSecs = 0;
-  late Map<String, dynamic>? goptions;
+  final GlobalOptions? goptions;
 
-  factory UuidV1({Map<String, dynamic>? options}) {
-    options ??= {};
-    var v1PositionalArgs = (options['v1rngPositionalArgs'] != null)
-        ? options['v1rngPositionalArgs']
-        : [];
-    var v1NamedArgs = (options['v1rngNamedArgs'] != null)
-        ? options['v1rngNamedArgs'] as Map<Symbol, dynamic>
-        : const <Symbol, dynamic>{};
-    Uint8List seedBytes = (options['v1rng'] != null)
-        ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
-        : UuidUtil.mathRNG();
+  const UuidV1({this.goptions});
+
+  /// _init() Initializes the state of the UUID v1 generator
+  /// Primarily sets up the seedBytes then generates the node id and clockseq
+  void _init() {
+    if (V1State.initialized) return;
+    Uint8List seedBytes = Function.apply(goptions?.rng ?? UuidUtil.mathRNG,
+        goptions?.positionalArgs ?? [], goptions?.namedArgs ?? {});
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
     List<int> nodeId = [
@@ -31,14 +24,13 @@ class UuidV1 {
       seedBytes[4],
       seedBytes[5]
     ];
+    V1State.nodeId = nodeId;
 
     // Per 4.2.2, randomize (14 bit) clockseq
     var clockSeq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3ffff;
-
-    return UuidV1._(seedBytes, nodeId, clockSeq, 0, 0, options);
+    V1State.clockSeq = clockSeq;
+    V1State.initialized = true;
   }
-  UuidV1._(this.seedBytes, this.nodeId, this.clockSeq, this.mSecs, this.nSecs,
-      this.goptions);
 
   /// v1() Generates a time-based version 1 UUID
   ///
@@ -49,34 +41,34 @@ class UuidV1 {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
-  String generate({Map<String, dynamic>? options}) {
+  String generate({V1Options? options}) {
+    _init();
     var i = 0;
     var buf = Uint8List(16);
-    options ??= const {};
 
-    int clockSeq = options['clockSeq'] ?? this.clockSeq;
+    int clockSeq = options?.clockSeq ?? V1State.clockSeq ?? 0;
 
     // UUID timestamps are 100 nano-second units since the Gregorian epoch,
     // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
     // milliseconds) and 'nsecs' (100-nanoseconds offset from msecs) since unix
     // epoch, 1970-01-01 00:00.
-    int mSecs = options['mSecs'] ?? (DateTime.now()).millisecondsSinceEpoch;
+    int mSecs = options?.mSecs ?? (DateTime.now()).microsecondsSinceEpoch;
 
     // Per 4.2.1.2, use count of uuid's generated during the current clock
     // cycle to simulate higher resolution clock
-    int nSecs = options['nSecs'] ?? this.nSecs + 1;
+    int nSecs = options?.nSecs ?? V1State.nSecs + 1;
 
     // Time since last uuid creation (in msecs)
-    var dt = (mSecs - this.mSecs) + (nSecs - this.nSecs) / 10000;
+    var dt = (mSecs - V1State.mSecs) + (nSecs - V1State.nSecs) / 10000;
 
     // Per 4.2.1.2, Bump clockseq on clock regression
-    if (dt < 0 && options['clockSeq'] == null) {
+    if (dt < 0 && options?.clockSeq == null) {
       clockSeq = clockSeq + 1 & 0x3fff;
     }
 
     // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
     // time interval
-    if ((dt < 0 || mSecs > this.mSecs) && options['nSecs'] == null) {
+    if ((dt < 0 || mSecs > V1State.mSecs) && options?.nSecs == null) {
       nSecs = 0;
     }
 
@@ -85,9 +77,9 @@ class UuidV1 {
       throw Exception('uuid.v1(): Can\'t create more than 10M uuids/sec');
     }
 
-    this.mSecs = mSecs;
-    this.nSecs = nSecs;
-    this.clockSeq = clockSeq;
+    V1State.mSecs = mSecs;
+    V1State.nSecs = nSecs;
+    V1State.clockSeq = clockSeq;
 
     // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
     mSecs += 12219292800000;
@@ -118,7 +110,7 @@ class UuidV1 {
     buf[6] = buf[6] & 0xf | 0x10;
     buf[8] = buf[8] | 0x80;
     // node
-    List<int> node = (options['node'] != null) ? options['node'] : nodeId;
+    List<int> node = options?.node ?? V1State.nodeId ?? [0, 0, 0, 0, 0, 0];
     for (var n = 0; n < 6; n++) {
       buf[i + n] = node[n];
     }

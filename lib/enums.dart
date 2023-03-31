@@ -9,4 +9,5 @@ class Namespace {
   static const NIL = '00000000-0000-0000-0000-000000000000';
 }
 
+/// The options for UUID Validation strictness
 enum ValidationMode { nonStrict, strictRFC4122 }

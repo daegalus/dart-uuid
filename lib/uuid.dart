@@ -5,6 +5,7 @@ library uuid;
 
 import 'dart:typed_data';
 
+import 'package:uuid/data.dart';
 import 'package:uuid/validation.dart';
 
 import 'enums.dart';
@@ -32,28 +33,47 @@ class Uuid {
   static const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
-  final Map<String, dynamic>? goptions;
-  final UuidV1 _uuidv1;
-  final UuidV4 _uuidv4;
-  final UuidV5 _uuidv5;
-  final UuidV6 _uuidv6;
-  final UuidV7 _uuidv7;
-  final UuidV8 _uuidv8;
+  final GlobalOptions? goptions;
+  // final UuidV1 _uuidv1;
+  // final UuidV4 _uuidv4;
+  // final UuidV5 _uuidv5;
+  // final UuidV6 _uuidv6;
+  // final UuidV7 _uuidv7;
+  // final UuidV8 _uuidv8;
 
-  factory Uuid({Map<String, dynamic>? options}) {
-    return Uuid._(UuidV1(options: options), UuidV4(options: options),
-        UuidV5(options), UuidV6(options), UuidV7(options), UuidV8(options),
-        goptions: options);
-  }
-  const Uuid._(this._uuidv1, this._uuidv4, this._uuidv5, this._uuidv6,
-      this._uuidv7, this._uuidv8,
-      {this.goptions});
+  /// Creates a new instance of the Uuid class.
+  /// Optionally you can pass in a [GlobalOptions] object to set global options
+  /// for all UUID generation.
+  /// [rng] is a function that returns a list of random bytes.
+  /// [positionalArgs] is a list of positional arguments to pass to the RNG function.
+  /// [namedArgs] is a map of named arguments to pass to the RNG function.
+  ///
+  /// Defaults rng function is `UuidUtil.mathRNG`
+  ///
+  /// Example: Using CryptoRNG globally
+  ///
+  /// ```dart
+  /// var uuid = Uuid(options: {
+  ///   'grng': UuidUtil.cryptoRNG
+  /// })
+  ///
+  /// // Generate a v4 (random) id that will use cryptRNG for its rng function
+  /// uuid.v4();
+  /// ```
+  const Uuid({this.goptions});
 
-  ///Parses the provided [uuid] into a list of byte values as a List<int>.
+  /// Parses the provided [uuid] into a list of byte values as a List<int>.
   /// Can optionally be provided a [buffer] to write into and
   ///  a positional [offset] for where to start inputting into the buffer.
   /// Throws FormatException if the UUID is invalid. Optionally you can set
   /// [validate] to false to disable validation of the UUID before parsing.
+  ///
+  /// Example parsing a UUID string
+  ///
+  /// ```dart
+  /// var bytes = uuid.parse('797ff043-11eb-11e1-80d6-510998755d10');
+  /// // bytes-> [121, 127, 240, 67, 17, 235, 17, 225, 128, 214, 81, 9, 152, 117, 93, 16]
+  /// ```
   static List<int> parse(
     String uuid, {
     List<int>? buffer,
@@ -68,7 +88,7 @@ class Uuid {
         validationMode: validationMode);
   }
 
-  ///Parses the provided [uuid] into a list of byte values as a Uint8List.
+  /// Parses the provided [uuid] into a list of byte values as a Uint8List.
   /// Can optionally be provided a [buffer] to write into and
   ///  a positional [offset] for where to start inputting into the buffer.
   /// Throws FormatException if the UUID is invalid. Optionally you can set
@@ -89,6 +109,13 @@ class Uuid {
   /// An optional [offset] is allowed if you want to start at a different point
   /// in the buffer.
   /// Throws an exception if the buffer does not have a length of 16
+  ///
+  /// Example parsing and unparsing a UUID string
+  ///
+  /// ```dart
+  /// var uuidString = uuid.unparse(bytes);
+  /// // uuidString -> '797ff043-11eb-11e1-80d6-510998755d10'
+  /// ```
   static String unparse(List<int> buffer, {int offset = 0}) {
     return UuidParsing.unparse(buffer, offset: offset);
   }
@@ -107,66 +134,180 @@ class Uuid {
         validationMode: validationMode);
   }
 
-  /// v1() Generates a time-based version 1 UUID
+  /// Generates a time-based version 1 UUID
   ///
   /// By default it will generate a string based off current time, and will
   /// return a string.
   ///
   /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// options detailed in the readme. This is going to be eventually deprecated.
+  ///
+  /// The second argument is a [V1Options] object that takes the same options as
+  /// the options map. This is the preferred way to pass options.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
-  String v1({Map<String, dynamic>? options}) {
-    return _uuidv1.generate(options: options);
+  ///
+  /// Example: Generate string UUID with fully-specified options
+  /// ```dart
+  /// uuid.v1(options: {
+  ///     'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
+  ///     'clockSeq': 0x1234,
+  ///     'mSecs': new DateTime.utc(2011,11,01).millisecondsSinceEpoch,
+  ///     'nSecs': 5678
+  /// })   // -> "710b962e-041c-11e1-9234-0123456789ab"
+  /// ```
+  String v1(
+      {@Deprecated('use config instead. Removal in 5.0.0')
+          Map<String, dynamic>? options,
+      V1Options? config}) {
+    if (options != null && options.isNotEmpty) {
+      config = V1Options(options["clockSeq"], options["mSecs"],
+          options["nSecs"], options["node"], options["seedBytes"]);
+    }
+    return UuidV1(goptions: goptions).generate(options: config);
   }
 
-  /// v1buffer() Generates a time-based version 1 UUID
+  /// Generates a time-based version 1 UUID into a provided buffer
   ///
   /// By default it will generate a string based off current time, and will
   /// place the result into the provided [buffer]. The [buffer] will also be returned..
   ///
   /// Optionally an [offset] can be provided with a start position in the buffer.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first optional argument is an options map that takes various configuration
+  /// options detailed in the readme. This is going to be eventually deprecated.
+  ///
+  /// The second optional argument is a [V1Options] object that takes the same
+  /// options as the options map. This is the preferred way to pass options.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
+  ///
+  /// Example: In-place generation of two binary IDs
+  /// ```dart
+  /// // Generate two ids in an array
+  /// var myBuffer = new List(32); // -> []
+  /// uuid.v1buffer(myBuffer);
+  /// // -> [115, 189, 5, 128, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+  /// uuid.v1buffer(myBuffer, offset: 16);
+  /// // -> [115, 189, 5, 128, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128, 115, 189, 5, 129, 201, 91, 17, 225, 146, 52, 109, 0, 9, 0, 52, 128]
+  ///
+  /// // Optionally use uuid.unparse() to get stringify the ids
+  /// uuid.unparse(myBuffer);    // -> '73bd0580-c95b-11e1-9234-6d0009003480'
+  /// uuid.unparse(myBuffer, offset: 16) // -> '73bd0581-c95b-11e1-9234-6d0009003480'
+  /// ```
   List<int> v1buffer(
     List<int> buffer, {
-    Map<String, dynamic>? options,
+    @Deprecated('use config instead. Removal in 5.0.0')
+        Map<String, dynamic>? options,
+    V1Options? config,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v1(options: options),
-        buffer: buffer, offset: offset);
+    var result = config != null ? v1(config: config) : v1(options: options);
+    return UuidParsing.parse(result, buffer: buffer, offset: offset);
   }
 
-  /// v1obj() Generates a time-based version 1 UUID
+  /// Generates a time-based version 1 UUID as a [UuidValue] object
   ///
   /// By default it will generate a string based off current time, and will
   /// return it as a [UuidValue] object.
   ///
   /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// options detailed in the readme. This is going to be eventually deprecated.
+  ///
+  /// The second argument is a [V1Options] object that takes the same options as
+  /// the options map. This is the preferred way to pass options.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.2.2
-  UuidValue v1obj({Map<String, dynamic>? options}) {
-    return UuidValue(v1(options: options));
+  ///
+  /// Example: UuidValue usage
+  /// ```dart
+  /// uuidValue = uuid.v1Obj(options: {
+  ///     'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
+  ///     'clockSeq': 0x1234,
+  ///     'mSecs': new DateTime.utc(2011,11,01).millisecondsSinceEpoch,
+  ///     'nSecs': 5678
+  /// }) // -> UuidValue{uuid: '710b962e-041c-11e1-9234-0123456789ab'}
+  ///
+  /// print(uuidValue) -> // -> '710b962e-041c-11e1-9234-0123456789ab'
+  /// uuidValue.toBytes() -> // -> [...]
+  /// ```
+  UuidValue v1obj(
+      {@Deprecated('use config instead. Removal in 5.0.0')
+          Map<String, dynamic>? options,
+      V1Options? config}) {
+    return config != null
+        ? UuidValue(v1(config: config))
+        : UuidValue(v1(options: options));
   }
 
-  /// v4() Generates a RNG version 4 UUID
+  /// Generates a RNG version 4 UUID
   ///
   /// By default it will generate a string based mathRNG, and will return
   /// a string. If you wish to use crypto-strong RNG, pass in UuidUtil.cryptoRNG
   ///
   /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// options detailed in the readme. This is going to be eventually deprecated.
+  ///
+  /// The second argument is a [V4Options] object that takes the same options as
+  /// the options map. This is the preferred way to pass options.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  String v4({Map<String, dynamic>? options}) {
-    return _uuidv4.generate(options: options);
+  ///
+  /// Example: Generate string UUID with different RNG method
+  ///
+  /// ```dart
+  /// import 'package:uuid/uuid_util.dart';
+  /// uuid.v4(options: {
+  ///   'rng': UuidUtil.cryptoRNG
+  /// });
+  /// // -> "109156be-c4fb-41ea-b1b4-efe1671c5836"
+  /// ```
+  ///
+  /// Example: Generate string UUID with different RNG method and named parameters
+  ///
+  /// ```dart
+  /// import 'package:uuid/uuid_util.dart';
+  /// uuid.v4(options: {
+  ///   'rng': UuidUtil.mathRNG,
+  ///   'namedArgs': new Map.fromIterables([const Symbol('seed')],[1])
+  /// });
+  /// // -> "09a91894-e93f-4141-a3ec-82eb32f2a3ef"
+  /// ```
+  ///
+  /// Example: Generate string UUID with different RNG method and positional parameters
+  ///
+  /// ```dart
+  /// import 'package:uuid/uuid_util.dart';
+  /// uuid.v4(options: {
+  ///   'rng': UuidUtil.cryptoRNG,
+  ///   'positionalArgs': [1]
+  /// });
+  /// // -> "09a91894-e93f-4141-a3ec-82eb32f2a3ef"
+  /// ```
+  ///
+  /// Example: Generate string UUID with fully-specified options
+  ///
+  /// ```dart
+  /// uuid.v4(options: {
+  ///   'random': [
+  ///     0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
+  ///     0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
+  ///   ]
+  /// });
+  /// // -> "109156be-c4fb-41ea-b1b4-efe1671c5836"
+  /// ```
+  String v4(
+      {@Deprecated('use config instead. Removal in 5.0.0')
+          Map<String, dynamic>? options,
+      V4Options? config}) {
+    if (options != null && options.isNotEmpty) {
+      config = V4Options(options["random"], options["rng"],
+          options["namedArgs"], options["positionalArgs"]);
+    }
+    return UuidV4(goptions: goptions).generate(options: config);
   }
 
-  /// v4buffer() Generates a RNG version 4 UUID
+  /// Generates a RNG version 4 UUID into a provided buffer
   ///
   /// By default it will generate a string based off mathRNG, and will
   /// place the result into the provided [buffer]. The [buffer] will also be returned.
@@ -174,95 +315,183 @@ class Uuid {
   ///
   /// Optionally an [offset] can be provided with a start position in the buffer.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first optional argument is an options map that takes various configuration
+  /// options detailed in the readme. This is going to be eventually deprecated.
+  ///
+  /// The second optional argument is a [V4Options] object that takes the same options as
+  /// the options map. This is the preferred way to pass options.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
+  ///
+  /// Example: Generate two IDs in a single buffer
+  ///
+  /// ```dart
+  /// var myBuffer = new List(32);
+  /// uuid.v4buffer(myBuffer);
+  /// uuid.v4buffer(myBuffer, offset: 16);
+  /// ```
   List<int> v4buffer(
     List<int> buffer, {
-    Map<String, dynamic>? options,
+    @Deprecated('use config instead. Removal in 5.0.0')
+        Map<String, dynamic>? options,
+    V4Options? config,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v4(options: options),
-        buffer: buffer, offset: offset);
+    var result = config != null ? v4(config: config) : v4(options: options);
+    return UuidParsing.parse(result, buffer: buffer, offset: offset);
   }
 
-  /// v4obj() Generates a RNG version 4 UUID
+  /// Generates a RNG version 4 UUID as a [UuidValue] object
   ///
   /// By default it will generate a string based mathRNG, and will return
   /// a [UuidValue] object. If you wish to use crypto-strong RNG, pass in UuidUtil.cryptoRNG
   ///
   /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// options detailed in the readme. This is going to be eventually deprecated.
+  ///
+  /// The second argument is a [V4Options] object that takes the same options as
+  /// the options map. This is the preferred way to pass options.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  UuidValue v4obj({Map<String, dynamic>? options}) {
-    return UuidValue(v4(options: options));
+  ///
+  /// Example: UuidValue usage
+  ///
+  /// ```dart
+  /// uuidValue = uuid.v4obj(options: {
+  ///   'random': [
+  ///     0x10, 0x91, 0x56, 0xbe, 0xc4, 0xfb, 0xc1, 0xea,
+  ///     0x71, 0xb4, 0xef, 0xe1, 0x67, 0x1c, 0x58, 0x36
+  ///   ]
+  /// }) // -> UuidValue{uuid: '109156be-c4fb-41ea-b1b4-efe1671c5836'}
+  ///
+  /// print(uuidValue) -> // -> '109156be-c4fb-41ea-b1b4-efe1671c5836'
+  /// uuidValue.toBytes() -> // -> [...]
+  /// ```
+  UuidValue v4obj(
+      {@Deprecated('use config instead. Removal in 5.0.0')
+          Map<String, dynamic>? options,
+      V4Options? config}) {
+    return config != null
+        ? UuidValue(v4(config: config))
+        : UuidValue(v4(options: options));
   }
 
-  /// v5() Generates a namespace & name-based version 5 UUID
+  /// Generates a namespace & name-based version 5 UUID
   ///
   /// By default it will generate a string based on a provided uuid namespace and
   /// name, and will return a string.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first optional argument is an options map that takes various configuration
+  /// options detailed in the readme. This is going to be eventually deprecated.
+  ///
+  /// The second optional argument is a [V5Options] object that takes the same options as
+  /// the options map. This is the preferred way to pass options.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  String v5(String? namespace, String? name, {Map<String, dynamic>? options}) {
-    return _uuidv5.generate(namespace, name, options: options);
+  ///
+  /// Example: Generate string UUID with fully-specified options
+  ///
+  /// ```dart
+  /// uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com');
+  /// // -> "c74a196f-f19d-5ea9-bffd-a2742432fc9c"
+  /// ```
+  String v5(
+      String? namespace,
+      String? name,
+      {@Deprecated('use config instead. Removal in 5.0.0')
+          Map<String, dynamic>? options,
+      V5Options? config}) {
+    if (options != null && options.isNotEmpty) {
+      V4Options? v4config;
+      config = V5Options(options["randomNamespace"], v4config);
+    }
+    return UuidV5(goptions: goptions)
+        .generate(namespace, name, options: config);
   }
 
-  /// v5buffer() GGenerates a namespace & name-based version 5 UUID
+  /// Generates a namespace & name-based version 5 UUID into a provided buffer
   ///
   /// By default it will generate a string based on a provided uuid namespace and
   /// place the result into the provided [buffer]. The [buffer] will also be returned.
   ///
   /// Optionally an [offset] can be provided with a start position in the buffer.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first optional argument is an options map that takes various configuration
+  /// options detailed in the readme. This is going to be eventually deprecated.
+  ///
+  /// The second optional argument is a [V5Options] object that takes the same options as
+  /// the options map. This is the preferred way to pass options.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
+  ///
+  /// Example: Generate two IDs in a single buffer
+  ///
+  /// ```dart
+  /// var myBuffer = new List(32);
+  /// uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer);
+  /// uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer, offset: 16);
+  /// ```
   List<int> v5buffer(
     String? namespace,
     String? name,
     List<int>? buffer, {
-    Map<String, dynamic>? options,
+    @Deprecated('use config instead. Removal in 5.0.0')
+        Map<String, dynamic>? options,
+    V5Options? config,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v5(namespace, name, options: options),
-        buffer: buffer, offset: offset);
+    var result = config != null
+        ? v5(namespace, name, config: config)
+        : v5(namespace, name, options: options);
+    return UuidParsing.parse(result, buffer: buffer, offset: offset);
   }
 
-  /// v5obj() Generates a namespace & name-based version 5 UUID
+  /// Generates a namespace & name-based version 5 UUID as a [UuidValue] object
   ///
   /// By default it will generate a string based on a provided uuid namespace and
   /// name, and will return a [UuidValue] object.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first optional argument is an options map that takes various configuration
+  /// options detailed in the readme. This is going to be eventually deprecated.
+  ///
+  /// The second optional argument is a [V5Options] object that takes the same options as
+  /// the options map. This is the preferred way to pass options.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  UuidValue v5obj(String? namespace, String? name,
-      {Map<String, dynamic>? options}) {
-    return UuidValue(v5(namespace, name, options: options));
+  ///
+  /// Example: UuidValue usage
+  /// ```dart
+  /// uuidValue = uuid.v5obj(Uuid.NAMESPACE_URL, 'www.google.com');
+  /// // -> UuidValue(uuid: "c74a196f-f19d-5ea9-bffd-a2742432fc9c")
+  ///
+  /// print(uuidValue) -> // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
+  /// uuidValue.toBytes() -> // -> [...]
+  /// ```
+  UuidValue v5obj(
+      String? namespace,
+      String? name,
+      {@Deprecated('use config instead. Removal in 5.0.0')
+          Map<String, dynamic>? options,
+      V5Options? config}) {
+    return config != null
+        ? UuidValue(v5(namespace, name, config: config))
+        : UuidValue(v5(namespace, name, options: options));
   }
 
-  /// v6() Generates a draft time-based version 6 UUID
+  /// Generates a draft time-based version 6 UUID
   ///
   /// By default it will generate a string based off current Gregorian epoch time
   /// in milliseconds, and will return a string.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first argument is a [V6Options] object that takes the same options as
+  /// the options map.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
-  String v6({Map<String, dynamic>? options}) {
-    return _uuidv6.generate(options: options);
+  String v6({V6Options? config}) {
+    return UuidV6(goptions: goptions).generate(options: config);
   }
 
-  /// v6buffer() Generates a draft time-based version 1 UUID
+  /// Generates a draft time-based version 1 UUID into a provided buffer
   ///
   /// By default it will generate a string based off current Gregorian epoch time, and will
   /// in milliseconds, and will place the result into the provided [buffer].
@@ -270,46 +499,49 @@ class Uuid {
   ///
   /// Optionally an [offset] can be provided with a start position in the buffer.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first optional argument is an options map that takes various configuration
+  /// options detailed in the readme. This is going to be eventually deprecated.
+  ///
+  /// The second optional argument is a [V6Options] object that takes the same options as
+  /// the options map. This is the preferred way to pass options.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
   List<int> v6buffer(
     List<int> buffer, {
-    Map<String, dynamic>? options,
+    V6Options? config,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v6(options: options),
+    return UuidParsing.parse(v6(config: config),
         buffer: buffer, offset: offset);
   }
 
-  /// v6obj() Generates a draft time-based version 6 UUID
+  /// Generates a draft time-based version 6 UUID as a [UuidValue] object
   ///
   /// By default it will generate a string based off current Gregorian Epoch time
   /// in milliseconds, and will return it as a [UuidValue] object.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first argument is a [V6Options] object that takes the same options as
+  /// the options map. This is the preferred way to pass options.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
-  UuidValue v6obj({Map<String, dynamic>? options}) {
-    return UuidValue(v6(options: options));
+  UuidValue v6obj({V6Options? config}) {
+    return UuidValue(v6(config: config));
   }
 
-  /// v7() Generates a draft time-based version 7 UUID
+  /// Generates a draft time-based version 7 UUID as a [UuidValue] object
   ///
   /// By default it will generate a string based off current Unix epoch time in
   /// milliseconds, and will return a string.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first argument is a [V7Options] object that takes the same options as
+  /// the options map.
   ///
   /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
-  String v7({Map<String, dynamic>? options}) {
-    return _uuidv7.generate(options: options);
+  String v7({V7Options? config}) {
+    return UuidV7(goptions: goptions).generate(options: config);
   }
 
-  /// v7buffer() Generates a draft time-based version 7 UUID
+  /// Generates a draft time-based version 7 UUID into a provided buffer
   ///
   /// By default it will generate a string based off current Unix epoch time in
   /// milliseconds, and will place the result into the provided [buffer].
@@ -317,46 +549,46 @@ class Uuid {
   ///
   /// Optionally an [offset] can be provided with a start position in the buffer.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first optional argument is a [V7Options] object that takes the same options as
+  /// the options map.
   ///
   /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
   List<int> v7buffer(
     List<int> buffer, {
-    Map<String, dynamic>? options,
+    V7Options? config,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v7(options: options),
+    return UuidParsing.parse(v7(config: config),
         buffer: buffer, offset: offset);
   }
 
-  /// v7obj() Generates a draft time-based version 7 UUID
+  /// Generates a draft time-based version 7 UUID as a [UuidValue] object
   ///
   /// By default it will generate a string based off current Unix epoch time in
   /// milliseconds, and will return it as a [UuidValue] object.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first argument is a [V7Options] object that takes the same options as
+  /// the options map.
   ///
   /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
-  UuidValue v7obj({Map<String, dynamic>? options}) {
-    return UuidValue(v7(options: options));
+  UuidValue v7obj({V7Options? config}) {
+    return UuidValue(v7(config: config));
   }
 
-  /// v8() Generates a draft time-based version 8 UUID
+  /// Generates a draft time-based version 8 UUID
   ///
   /// By default it will generate a string based off current Unix epoch time in
   /// milliseconds, and will return a string.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first argument is a [V8Options] object that takes the same options as
+  /// the options map.
   ///
   /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
-  String v8({Map<String, dynamic>? options}) {
-    return _uuidv8.generate(options: options);
+  String v8({V8Options? config}) {
+    return UuidV8(goptions: goptions).generate(options: config);
   }
 
-  /// v8buffer() Generates a draft time-based version 8 UUID
+  /// Generates a draft time-based version 8 UUID into a provided buffer
   ///
   /// By default it will generate a string based off current Unix epoch time in
   /// milliseconds, and will place the result into the provided [buffer].
@@ -364,29 +596,29 @@ class Uuid {
   ///
   /// Optionally an [offset] can be provided with a start position in the buffer.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first optional argument is a [V8Options] object that takes the same options as
+  /// the options map.
   ///
   /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
   List<int> v8buffer(
     List<int> buffer, {
-    Map<String, dynamic>? options,
+    V8Options? config,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v8(options: options),
+    return UuidParsing.parse(v8(config: config),
         buffer: buffer, offset: offset);
   }
 
-  /// v8obj() Generates a draft time-based version 8 UUID
+  /// Generates a draft time-based version 8 UUID as a [UuidValue] object
   ///
   /// By default it will generate a string based off current Unix epoch time in
   /// milliseconds, and will return it as a [UuidValue] object.
   ///
-  /// The first argument is an options map that takes various configuration
-  /// options detailed in the readme.
+  /// The first argument is a [V8Options] object that takes the same options as
+  /// the options map.
   ///
   /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
-  UuidValue v8obj({Map<String, dynamic>? options}) {
-    return UuidValue(v8(options: options));
+  UuidValue v8obj({V8Options? config}) {
+    return UuidValue(v8(config: config));
   }
 }

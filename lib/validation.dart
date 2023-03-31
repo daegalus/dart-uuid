@@ -31,7 +31,7 @@ class UuidValidation {
           const pattern =
               r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$';
           final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
-          final match = regex.hasMatch(fromString);
+          final match = regex.hasMatch(fromString.toLowerCase());
           return match;
         }
       case ValidationMode.nonStrict:
@@ -39,7 +39,7 @@ class UuidValidation {
           const pattern =
               r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$';
           final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
-          final match = regex.hasMatch(fromString);
+          final match = regex.hasMatch(fromString.toLowerCase());
           return match;
         }
       default:
@@ -49,6 +49,14 @@ class UuidValidation {
     }
   }
 
+  /// Validates the provided [uuid] to make sure it has all the necessary
+  /// components and formatting and throws a [FormatException] if it is invalid.
+  /// You can choose to validate from a string or from a byte list based on
+  /// which parameter is passed.
+  /// Optionally you can set [validationMode] to `ValidationMode.nonStrict` to
+  /// allow for non RFC4122 compliant UUIDs.
+  /// If you are using a Microsoft GUID, you should set [validationMode] to
+  /// `ValidationMode.nonStrict`.
   static void isValidOrThrow(
       {String fromString = '',
       Uint8List? fromByteList,
