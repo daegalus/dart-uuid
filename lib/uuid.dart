@@ -1,5 +1,7 @@
-/// Generates UUID v1, v4, v5 following RFC4122 standard.
+/// Generates UUID v1, v4, v5, v6, v7, v8 following RFC4122 standard.
 // ignore_for_file: constant_identifier_names
+// ignore_for_file: deprecated_member_use_from_same_package
+// TODO: Remove this ignore when we remove the deprecated options.
 
 library uuid;
 
