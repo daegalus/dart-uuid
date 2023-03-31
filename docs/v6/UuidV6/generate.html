@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../../" data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
     <li><a href="../../v6/v6-library.html">v6</a></li>
@@ -37,10 +37,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -51,8 +57,8 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.18.1/dart-core/String-class.html">String</a></span>
-<span class="name ">generate</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="generate-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.1/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>}</span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">generate</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="generate-param-options">{<span class="type-annotation"><a href="../../data/V6Options-class.html">V6Options</a>?</span> <span class="parameter-name">options</span>}</span></li>
 </ol>)
 
       
@@ -72,33 +78,33 @@ options detailed in the readme.</p>
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">String generate({Map&lt;String, dynamic&gt;? options}) {
+  <pre class="language-dart"><code class="language-dart">String generate({V6Options? options}) {
+  _init();
   var buf = Uint8List(16);
-  options ??= const {};
 
-  int clockSeq = options[&#39;clockSeq&#39;] ?? this.clockSeq;
+  int clockSeq = options?.clockSeq ?? V6State.clockSeq ?? 0;
 
   &#47;&#47; UUID timestamps are 100 nano-second units since the Gregorian epoch,
   &#47;&#47; (1582-10-15 00:00). Time is handled internally as &#39;msecs&#39; (integer
   &#47;&#47; milliseconds) and &#39;nsecs&#39; (100-nanoseconds offset from msecs) since unix
   &#47;&#47; epoch, 1970-01-01 00:00.
-  int mSecs = options[&#39;mSecs&#39;] ?? (DateTime.now()).millisecondsSinceEpoch;
+  int mSecs = options?.mSecs ?? (DateTime.now()).millisecondsSinceEpoch;
 
   &#47;&#47; Per 4.2.1.2, use count of uuid&#39;s generated during the current clock
   &#47;&#47; cycle to simulate higher resolution clock
-  int nSecs = options[&#39;nSecs&#39;] ?? this.nSecs + 1;
+  int nSecs = options?.nSecs ?? V6State.nSecs + 1;
 
   &#47;&#47; Time since last uuid creation (in msecs)
-  var dt = (mSecs - this.mSecs) + (nSecs - this.nSecs) &#47; 10000;
+  var dt = (mSecs - V6State.mSecs) + (nSecs - V6State.nSecs) &#47; 10000;
 
   &#47;&#47; Per 4.2.1.2, Bump clockseq on clock regression
-  if (dt &lt; 0 &amp;&amp; options[&#39;clockSeq&#39;] == null) {
+  if (dt &lt; 0 &amp;&amp; options?.clockSeq == null) {
     clockSeq = clockSeq + 1 &amp; 0x3fff;
   }
 
   &#47;&#47; Reset nsecs if clock regresses (new clockseq) or we&#39;ve moved onto a new
   &#47;&#47; time interval
-  if ((dt &lt; 0 || mSecs &gt; this.mSecs) &amp;&amp; options[&#39;nSecs&#39;] == null) {
+  if ((dt &lt; 0 || mSecs &gt; V6State.mSecs) &amp;&amp; options?.nSecs == null) {
     nSecs = 0;
   }
 
@@ -107,23 +113,24 @@ options detailed in the readme.</p>
     throw Exception(&#39;uuid.v6(): Can\&#39;t create more than 10M uuids&#47;sec&#39;);
   }
 
-  this.mSecs = mSecs;
-  this.nSecs = nSecs;
-  this.clockSeq = clockSeq;
+  V6State.mSecs = mSecs;
+  V6State.nSecs = nSecs;
+  V6State.clockSeq = clockSeq;
 
   &#47;&#47; Per 4.1.4 - Convert from unix epoch to Gregorian epoch
   mSecs += 12219292800000;
 
-  var uuid_time = mSecs * 10000 + nSecs;
+  var uuidTime = mSecs * 10000 + nSecs;
 
-  var high = uuid_time &lt;&lt; 4;
-  var low = uuid_time &amp; 0x0fff | 0x6000;
+  var high = uuidTime &lt;&lt; 4;
+  var low = uuidTime &amp; 0x0fff | 0x6000;
   var clock = (clockSeq &amp; 0x3fff) | 0x8000;
   buf..buffer.asByteData().setUint64(0, high);
   buf..buffer.asByteData().setUint16(6, low);
   buf..buffer.asByteData().setUint16(8, clock);
 
-  var node = (options[&#39;node&#39;] != null) ? options[&#39;node&#39;] : nodeId;
+  var node =
+      options?.node ?? V6State.nodeId ?? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   buf.setAll(10, node);
 
   return UuidParsing.unparse(buf);
@@ -155,25 +162,20 @@ options detailed in the readme.</p>
           <li><a href="../../v6/UuidV6/UuidV6.html">UuidV6</a></li>
 
 
-    <li class="section-title">
-      <a href="../../v6/UuidV6-class.html#instance-properties">Properties</a>
-    </li>
-    <li><a href="../../v6/UuidV6/clockSeq.html">clockSeq</a></li>
-    <li><a href="../../v6/UuidV6/goptions.html">goptions</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li><a href="../../v6/UuidV6/mSecs.html">mSecs</a></li>
-    <li><a href="../../v6/UuidV6/nodeId.html">nodeId</a></li>
-    <li><a href="../../v6/UuidV6/nSecs.html">nSecs</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../../v6/UuidV6/seedBytes.html">seedBytes</a></li>
+        <li class="section-title">
+          <a href="../../v6/UuidV6-class.html#instance-properties">Properties</a>
+        </li>
+          <li><a href="../../v6/UuidV6/goptions.html">goptions</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
-    <li class="section-title"><a href="../../v6/UuidV6-class.html#instance-methods">Methods</a></li>
-    <li><a href="../../v6/UuidV6/generate.html">generate</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Object/toString.html">toString</a></li>
+        <li class="section-title"><a href="../../v6/UuidV6-class.html#instance-methods">Methods</a></li>
+          <li><a href="../../v6/UuidV6/generate.html">generate</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../../v6/UuidV6-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../../v6/UuidV6-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -190,7 +192,7 @@ options detailed in the readme.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.0.0-beta1
+      4.0.0-beta2
   </span>
 
   

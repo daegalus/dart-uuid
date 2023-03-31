@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../../" data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
     <li><a href="../../uuid/uuid-library.html">uuid</a></li>
@@ -37,10 +37,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -49,7 +55,8 @@
 </h1></div>
 
         <section class="multi-line-signature">
-          <a href="https://api.dart.dev/stable/2.18.1/dart-core/String-class.html">String</a>
+          
+          <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>
           const <span class="name ">NAMESPACE_NIL</span>
           
 
@@ -59,9 +66,7 @@
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static const NAMESPACE_NIL = &#39;00000000-0000-0000-0000-000000000000&#39;;
-
-</code></pre>
+  <pre class="language-dart"><code class="language-dart">static const NAMESPACE_NIL = &#39;00000000-0000-0000-0000-000000000000&#39;;</code></pre>
 </section>
 
 
@@ -89,37 +94,37 @@
           <li><a href="../../uuid/Uuid/Uuid.html">Uuid</a></li>
 
 
-    <li class="section-title">
-      <a href="../../uuid/Uuid-class.html#instance-properties">Properties</a>
-    </li>
-    <li><a href="../../uuid/Uuid/goptions.html">goptions</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Object/runtimeType.html">runtimeType</a></li>
+        <li class="section-title">
+          <a href="../../uuid/Uuid-class.html#instance-properties">Properties</a>
+        </li>
+          <li><a href="../../uuid/Uuid/goptions.html">goptions</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
-    <li class="section-title"><a href="../../uuid/Uuid-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Object/toString.html">toString</a></li>
-    <li><a href="../../uuid/Uuid/v1.html">v1</a></li>
-    <li><a href="../../uuid/Uuid/v1buffer.html">v1buffer</a></li>
-    <li><a href="../../uuid/Uuid/v1obj.html">v1obj</a></li>
-    <li><a href="../../uuid/Uuid/v4.html">v4</a></li>
-    <li><a href="../../uuid/Uuid/v4buffer.html">v4buffer</a></li>
-    <li><a href="../../uuid/Uuid/v4obj.html">v4obj</a></li>
-    <li><a href="../../uuid/Uuid/v5.html">v5</a></li>
-    <li><a href="../../uuid/Uuid/v5buffer.html">v5buffer</a></li>
-    <li><a href="../../uuid/Uuid/v5obj.html">v5obj</a></li>
-    <li><a href="../../uuid/Uuid/v6.html">v6</a></li>
-    <li><a href="../../uuid/Uuid/v6buffer.html">v6buffer</a></li>
-    <li><a href="../../uuid/Uuid/v6obj.html">v6obj</a></li>
-    <li><a href="../../uuid/Uuid/v7.html">v7</a></li>
-    <li><a href="../../uuid/Uuid/v7buffer.html">v7buffer</a></li>
-    <li><a href="../../uuid/Uuid/v7obj.html">v7obj</a></li>
-    <li><a href="../../uuid/Uuid/v8.html">v8</a></li>
-    <li><a href="../../uuid/Uuid/v8buffer.html">v8buffer</a></li>
-    <li><a href="../../uuid/Uuid/v8obj.html">v8obj</a></li>
+        <li class="section-title"><a href="../../uuid/Uuid-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+          <li><a href="../../uuid/Uuid/v1.html">v1</a></li>
+          <li><a href="../../uuid/Uuid/v1buffer.html">v1buffer</a></li>
+          <li><a href="../../uuid/Uuid/v1obj.html">v1obj</a></li>
+          <li><a href="../../uuid/Uuid/v4.html">v4</a></li>
+          <li><a href="../../uuid/Uuid/v4buffer.html">v4buffer</a></li>
+          <li><a href="../../uuid/Uuid/v4obj.html">v4obj</a></li>
+          <li><a href="../../uuid/Uuid/v5.html">v5</a></li>
+          <li><a href="../../uuid/Uuid/v5buffer.html">v5buffer</a></li>
+          <li><a href="../../uuid/Uuid/v5obj.html">v5obj</a></li>
+          <li><a href="../../uuid/Uuid/v6.html">v6</a></li>
+          <li><a href="../../uuid/Uuid/v6buffer.html">v6buffer</a></li>
+          <li><a href="../../uuid/Uuid/v6obj.html">v6obj</a></li>
+          <li><a href="../../uuid/Uuid/v7.html">v7</a></li>
+          <li><a href="../../uuid/Uuid/v7buffer.html">v7buffer</a></li>
+          <li><a href="../../uuid/Uuid/v7obj.html">v7obj</a></li>
+          <li><a href="../../uuid/Uuid/v8.html">v8</a></li>
+          <li><a href="../../uuid/Uuid/v8buffer.html">v8buffer</a></li>
+          <li><a href="../../uuid/Uuid/v8obj.html">v8obj</a></li>
 
-    <li class="section-title inherited"><a href="../../uuid/Uuid-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.1/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../../uuid/Uuid-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -147,7 +152,7 @@
 <footer>
   <span class="no-break">
     uuid
-      4.0.0-beta1
+      4.0.0-beta2
   </span>
 
   
