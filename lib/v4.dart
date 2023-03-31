@@ -1,24 +1,12 @@
+import 'package:uuid/data.dart';
+
 import 'parsing.dart';
 import 'uuid_util.dart';
 
 class UuidV4 {
-  late List<int> Function() globalRNG;
+  final GlobalOptions? goptions;
 
-  factory UuidV4({Map<String, dynamic>? options}) {
-    options ??= {};
-    // Set the globalRNG function to mathRNG with the option to set an alternative globally
-    List gPositionalArgs = options['gPositionalArgs'] ?? [];
-    Map<Symbol, dynamic> gNamedArgs =
-        options['gNamedArgs'] ?? const <Symbol, dynamic>{};
-
-    List<int> Function() grng = (options['grng'] != null)
-        ? () => Function.apply(options!['grng'], gPositionalArgs, gNamedArgs)
-        : UuidUtil.mathRNG;
-
-    return UuidV4._(grng);
-  }
-
-  UuidV4._(this.globalRNG);
+  const UuidV4({this.goptions});
 
   /// v4() Generates a RNG version 4 UUID
   ///
@@ -29,19 +17,15 @@ class UuidV4 {
   /// options detailed in the readme.
   ///
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
-  String generate({Map<String, dynamic>? options}) {
-    options ??= {};
-
+  String generate({V4Options? options}) {
     // Use the built-in RNG or a custom provided RNG
-    List positionalArgs = options['positionalArgs'] ?? [];
-    Map<Symbol, dynamic> namedArgs =
-        options['namedArgs'] ?? const <Symbol, dynamic>{};
-    List<int> rng = (options['rng'] != null)
-        ? Function.apply(options['rng'], positionalArgs, namedArgs)
-        : globalRNG();
+    List<int> rng = Function.apply(
+        options?.rng ?? goptions?.rng ?? UuidUtil.mathRNG,
+        options?.positionalArgs ?? goptions?.positionalArgs ?? [],
+        options?.namedArgs ?? goptions?.namedArgs ?? {});
 
     // Use provided values over RNG
-    List<int> rnds = options['random'] ?? rng;
+    List<int> rnds = options?.random ?? rng;
 
     // per 4.4, set bits for version and clockSeq high and reserved
     rnds[6] = (rnds[6] & 0x0f) | 0x40;

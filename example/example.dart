@@ -1,3 +1,4 @@
+import 'package:uuid/data.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/uuid_util.dart';
 
@@ -7,18 +8,19 @@ void main() {
   // Generate a v1 (time-based) id
   var v1 = uuid.v1(); // -> '6c84fb90-12c4-11e1-840d-7b25c5ee775a'
 
-  var v1Exact = uuid.v1(options: {
-    'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
-    'clockSeq': 0x1234,
-    'mSecs': DateTime.utc(2011, 11, 01).millisecondsSinceEpoch,
-    'nSecs': 5678
-  }); // -> '710b962e-041c-11e1-9234-0123456789ab'
+  var v1Exact = uuid.v1(
+      config: V1Options(
+          0x1234,
+          DateTime.utc(2011, 11, 01).millisecondsSinceEpoch,
+          5678,
+          [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
+          null)); // -> '710b962e-041c-11e1-9234-0123456789ab'
 
   // Generate a v4 (random) id
   var v4 = uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
 
   // Generate a v4 (crypto-random) id
-  var v4Crypto = uuid.v4(options: {'rng': UuidUtil.cryptoRNG});
+  var v4Crypto = uuid.v4(config: V4Options(null, UuidUtil.cryptoRNG, {}, []));
   // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
 
   // Generate a v5 (namespace-name-sha1-based) id
@@ -28,28 +30,48 @@ void main() {
   // Generate a v6 (time-based) id
   var v6 = uuid.v6(); // -> '1ebbc608-7459-6a20-bc85-0d10b6a52acd'
 
-  var v6Exact = uuid.v6(options: {
-    'node': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
-    'clockSeq': 0x1234,
-    'mSecs': DateTime.utc(2011, 11, 01).millisecondsSinceEpoch,
-    'nSecs': 5678,
-  }); // -> '1e1041c7-10b9-662e-9234-0123456789ab'
+  var v6Exact = uuid.v6(
+      config: V6Options(
+          0x1234,
+          DateTime.utc(2011, 11, 01).millisecondsSinceEpoch,
+          5678,
+          [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
+          null)); // -> '1e1041c7-10b9-662e-9234-0123456789ab'
 
   // Generate a v7 (time-based) id
   var v7 = uuid.v7(); // -> 060ab53c-0bb2-7482-8000-ab029e8fa2ea
 
-  var v7Exact = uuid.v7(options: {
-    'randomBytes': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0x01, 0x23, 0x45, 0x67],
-    'time': DateTime.utc(2011, 10, 9, 8, 7, 6, 543, 210).millisecondsSinceEpoch,
-  }); // -> '04e91562-0884-7fea-9234-0123456789ab'
+  var v7Exact = uuid.v7(
+      config: V7Options(
+          DateTime.utc(2011, 10, 9, 8, 7, 6, 543, 210).millisecondsSinceEpoch, [
+    0x01,
+    0x23,
+    0x45,
+    0x67,
+    0x89,
+    0xab,
+    0x01,
+    0x23,
+    0x45,
+    0x67
+  ])); // -> '04e91562-0884-7fea-9234-0123456789ab'
 
   // Generate a v8 (time-random) id
   var v8 = uuid.v8(); // -> '1e1041c7-10b9-662e-9234-0123456789ab'
 
-  var v8Exact = uuid.v8(options: {
-    'randomBytes': [0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0x01, 0x23, 0x45, 0x67],
-    'time': DateTime.utc(2011, 10, 9, 8, 7, 6, 543, 210),
-  }); // -> '1e1041c7-10b9-662e-9234-0123456789ab'
+  var v8Exact = uuid.v8(
+      config: V8Options(DateTime.utc(2011, 10, 9, 8, 7, 6, 543, 210), [
+    0x01,
+    0x23,
+    0x45,
+    0x67,
+    0x89,
+    0xab,
+    0x01,
+    0x23,
+    0x45,
+    0x67
+  ])); // -> '1e1041c7-10b9-662e-9234-0123456789ab'
 
   print('v1        | $v1');
   print('v1 exact  | $v1Exact');

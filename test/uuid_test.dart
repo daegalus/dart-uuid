@@ -1,11 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:test/test.dart';
+import 'package:uuid/data.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/uuid_util.dart';
 
 void main() {
-  var uuid = Uuid();
+  var uuid = const Uuid();
   const testTime = 1321644961388;
 
   group('[Version 1 Tests]', () {
@@ -251,14 +252,16 @@ void main() {
 
   group('[Version 6 Tests]', () {
     test('IDs created at same mSec are different', () {
-      expect(uuid.v6(options: {'mSecs': testTime}),
-          isNot(equals(uuid.v6(options: {'mSecs': testTime}))));
+      expect(
+          uuid.v6(config: V6Options(null, testTime, null, null, null)),
+          isNot(equals(
+              uuid.v6(config: V6Options(null, testTime, null, null, null)))));
     });
 
     test('Exception thrown when > 10K ids created in 1 ms', () {
       var thrown = false;
       try {
-        uuid.v6(options: {'mSecs': testTime, 'nSecs': 10000});
+        uuid.v6(config: V6Options(null, testTime, 10000, null, null));
       } catch (e) {
         thrown = true;
       }
@@ -266,8 +269,9 @@ void main() {
     });
 
     test('Clock regression by msec increments the clockseq - mSec', () {
-      var uidt = uuid.v6(options: {'mSecs': testTime});
-      var uidtb = uuid.v6(options: {'mSecs': testTime - 1});
+      var uidt = uuid.v6(config: V6Options(null, testTime, null, null, null));
+      var uidtb =
+          uuid.v6(config: V6Options(null, testTime - 1, null, null, null));
 
       expect(
           (int.parse("0x${uidtb.split('-')[3]}") -
@@ -276,8 +280,8 @@ void main() {
     });
 
     test('Clock regression by msec increments the clockseq - nSec', () {
-      var uidt = uuid.v6(options: {'mSecs': testTime, 'nSecs': 10});
-      var uidtb = uuid.v6(options: {'mSecs': testTime, 'nSecs': 9});
+      var uidt = uuid.v6(config: V6Options(null, testTime, 10, null, null));
+      var uidtb = uuid.v6(config: V6Options(null, testTime, 9, null, null));
 
       expect(
           (int.parse("0x${uidtb.split('-')[3]}") -
@@ -286,22 +290,17 @@ void main() {
     });
 
     test('Explicit options produce expected id', () {
-      var id = uuid.v6(options: {
-        'mSecs': 1321651533573,
-        'nSecs': 5432,
-        'clockSeq': 0x385c,
-        'node': [0x61, 0xcd, 0x3c, 0xbb, 0x32, 0x10]
-      });
+      var id = uuid.v6(
+          config: V6Options(0x385c, 1321651533573, 5432,
+              [0x61, 0xcd, 0x3c, 0xbb, 0x32, 0x10], null));
 
       expect(id, equals('1e1122bd-9428-6888-b85c-61cd3cbb3210'));
     });
 
     test('Ids spanning 1ms boundary are 100ns apart', () {
-      var u0 = uuid.v6(options: {'mSecs': testTime, 'nSecs': 9999});
-      var u1 = uuid.v6(options: {'mSecs': testTime + 1, 'nSecs': 0});
+      var u0 = uuid.v6(config: V6Options(null, testTime, 9999, null, null));
+      var u1 = uuid.v6(config: V6Options(null, testTime + 1, 0, null, null));
 
-      print(u0);
-      print(u1);
       var before = u0.split('-')[2], after = u1.split('-')[2];
       var dt = int.parse('0x$after') - int.parse('0x$before');
 
@@ -337,19 +336,19 @@ void main() {
 
     test('Using buffers', () {
       var buffer = Uint8List(16);
-      var options = {'mSecs': testTime, 'nSecs': 0};
+      var options = V6Options(null, testTime, 0, null, null);
 
-      var wihoutBuffer = uuid.v6(options: options);
-      uuid.v6buffer(buffer, options: options);
+      var wihoutBuffer = uuid.v6(config: options);
+      uuid.v6buffer(buffer, config: options);
 
       expect(Uuid.unparse(buffer), equals(wihoutBuffer));
     });
 
     test('Using Objects', () {
-      var options = {'mSecs': testTime, 'nSecs': 0};
+      var options = V6Options(null, testTime, 0, null, null);
 
-      var regular = uuid.v6(options: options);
-      var obj = uuid.v6obj(options: options);
+      var regular = uuid.v6(config: options);
+      var obj = uuid.v6obj(config: options);
 
       expect(obj.uuid, equals(regular));
     });
@@ -357,14 +356,14 @@ void main() {
 
   group('[Version 7 Tests]', () {
     test('IDs created at same mSec are different', () {
-      expect(uuid.v7(options: {'mSecs': testTime}),
-          isNot(equals(uuid.v7(options: {'mSecs': testTime}))));
+      expect(uuid.v7(config: V7Options(testTime, null)),
+          isNot(equals(uuid.v7(config: V7Options(testTime, null)))));
     });
 
     test('Explicit options produce expected id', () {
       final rand = UuidUtil.mathRNG(seed: 1);
-      var options = {'time': 1321651533573, 'randomBytes': rand};
-      var id = uuid.v7(options: options);
+      var options = V7Options(1321651533573, rand);
+      var id = uuid.v7(config: options);
 
       expect(id, equals('0133b891-f705-7473-bf7b-b3cdc899a04d'));
     });
@@ -399,20 +398,20 @@ void main() {
     test('Using buffers', () {
       var buffer = Uint8List(16);
       final rand = UuidUtil.mathRNG(seed: 1);
-      var options = {'time': testTime, 'randomBytes': rand};
+      var options = V7Options(testTime, rand);
 
-      var wihoutBuffer = uuid.v7(options: options);
-      uuid.v7buffer(buffer, options: options);
+      var wihoutBuffer = uuid.v7(config: options);
+      uuid.v7buffer(buffer, config: options);
 
       expect(Uuid.unparse(buffer), equals(wihoutBuffer));
     });
 
     test('Using Objects', () {
       final rand = UuidUtil.mathRNG(seed: 1);
-      var options = {'time': testTime, 'randomBytes': rand};
+      var options = V7Options(testTime, rand);
 
-      var regular = uuid.v7(options: options);
-      var obj = uuid.v7obj(options: options);
+      var regular = uuid.v7(config: options);
+      var obj = uuid.v7obj(config: options);
 
       expect(obj.uuid, equals(regular));
     });
@@ -471,32 +470,32 @@ void main() {
     test('Construct UuidValue instance', () {
       const validUUID = '87cd4eb3-cb88-449b-a1da-e468fd829310';
       expect(Uuid.isValidUUID(fromString: validUUID), true);
-      final uuidval = UuidValue(validUUID, true);
+      final uuidval = UuidValue.withValidation(validUUID);
       expect(uuidval.uuid, validUUID);
     });
 
     test('Pass invalid Uuid to constructor', () {
       const invalidUUID = 'For sure not a valid UUID';
       expect(Uuid.isValidUUID(fromString: invalidUUID), false);
-      expect(
-          () => UuidValue(invalidUUID, true), throwsA(isA<FormatException>()));
+      expect(() => UuidValue.withValidation(invalidUUID),
+          throwsA(isA<FormatException>()));
 
-      final uuidval = UuidValue(invalidUUID, false);
-      expect(uuidval.uuid, invalidUUID.toLowerCase());
+      final uuidval = UuidValue(invalidUUID);
+      expect(uuidval.uuid, invalidUUID);
     });
 
     test('Pass valid Guid to constructor without validation mode', () {
       const validGUID = '2400ee73-282c-4334-e153-08d8f922d1f9';
       expect(Uuid.isValidUUID(fromString: validGUID), false);
       expect(
-          () => UuidValue(validGUID, true),
+          () => UuidValue.withValidation(validGUID),
           throwsA(isA<FormatException>().having(
             (error) => error.message,
             'message',
             'The provided UUID is not RFC4122 compliant. It seems you might be using a Microsoft GUID. Try setting `validationMode = ValidationMode.nonStrict`',
           )));
 
-      final uuidval = UuidValue(validGUID, false);
+      final uuidval = UuidValue(validGUID);
       expect(uuidval.uuid, validGUID.toLowerCase());
     });
 
@@ -507,7 +506,8 @@ void main() {
               fromString: validGUID, validationMode: ValidationMode.nonStrict),
           true);
 
-      final uuidval = UuidValue(validGUID, true, ValidationMode.nonStrict);
+      final uuidval =
+          UuidValue.withValidation(validGUID, ValidationMode.nonStrict);
       expect(uuidval.uuid, validGUID.toLowerCase());
     });
   });
@@ -523,12 +523,9 @@ void main() {
         test(testCase.key, () {
           var nodeId = <int>[0x9E, 0x6B, 0xDE, 0xCE, 0xD8, 0x46];
           var clockSeq = (0xB3 << 8 | 0xC8) & 0x3ffff;
-          final uuid = Uuid().v6(options: {
-            'mSecs': testCase.value[0],
-            'nSecs': 0,
-            'node': nodeId,
-            'clockSeq': clockSeq
-          });
+          final uuid = Uuid().v6(
+              config: V6Options(
+                  clockSeq, testCase.value[0] as int, 0, nodeId, null));
           expect(uuid.toUpperCase(), equals(testCase.value[1]));
         });
       }
@@ -555,8 +552,8 @@ void main() {
             0x8F
           ];
 
-          final uuid = Uuid()
-              .v7(options: {'time': testCase.value[0], 'randomBytes': rand});
+          final uuid =
+              Uuid().v7(config: V7Options(testCase.value[0] as int, rand));
           expect(uuid.toUpperCase(), equals(testCase.value[1]));
         });
       }
@@ -571,8 +568,8 @@ void main() {
       }.entries) {
         test(testCase.key, () {
           final rand = UuidUtil.mathRNG(seed: 1);
-          final uuid = Uuid()
-              .v8(options: {'time': testCase.value[0], 'randomBytes': rand});
+          final uuid =
+              Uuid().v8(config: V8Options(testCase.value[0] as DateTime, rand));
           expect(uuid.toUpperCase(), equals(testCase.value[1]));
         });
       }

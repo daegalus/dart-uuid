@@ -1,3 +1,18 @@
+# Changelog
+
+v4.0.0-beta2
+
+* **[BREAKING CHANGE]** The `Uuid` class now takes a `GlobalOptions` class instead of a `Map<String, dynamic>`.
+* Added options classes to eventually replace the Map parameter.
+* **[BREAKING CHANGE]** Since v6,v7,v8 are new for 4.0, I have made it so they only take the new options class.
+* Reworked the constructors, and moved state out of the classes. Const is now supported properly again
+* Switched tests to use const Uuid to catch regressions.
+* Set the `options` parameter in v1, v4, and v5 to deprecated.
+* **[BREAKING CHANGE]** Make UuidValue properly const also
+  * Can no longer run validation on the const variant.
+  * Added UuidValue.withValidation() to handle this usecase, it can't be const.
+  * If you need const and validation. Create the UuidValue with the UUID, then call the `validate()` function on it.
+
 v4.0.0-beta1-1
 
 * Mostly cleanup, linting, updating depedencies, etc.

@@ -1,17 +1,13 @@
 import 'dart:typed_data';
+import 'package:uuid/data.dart';
+
 import 'parsing.dart';
 import 'uuid_util.dart';
 
 class UuidV7 {
-  int time = 0;
-  late Map<String, dynamic>? goptions;
+  final GlobalOptions? goptions;
 
-  factory UuidV7(Map<String, dynamic>? options) {
-    options ??= {};
-
-    return UuidV7._(options);
-  }
-  UuidV7._(this.goptions);
+  const UuidV7({this.goptions});
 
   /// v7() Generates a time-based version 7 UUID
   ///
@@ -22,14 +18,9 @@ class UuidV7 {
   /// options detailed in the readme.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
-  String generate({Map<String, dynamic>? options}) {
+  String generate({V7Options? options}) {
     var buf = Uint8List(16);
-    options ??= const {};
-
-    int time =
-        options['time'] ?? (DateTime.now().toUtc()).millisecondsSinceEpoch;
-
-    this.time = time;
+    int time = options?.time ?? (DateTime.now().toUtc()).millisecondsSinceEpoch;
 
     var timeList = Uint8List(8)..buffer.asUint64List()[0] = time;
     var endIndex = timeList.length - 1;
@@ -39,9 +30,7 @@ class UuidV7 {
     timeList = timeList.sublist(0, endIndex + 1);
 
     buf.setAll(0, timeList.reversed);
-    var randomBytes = (options['randomBytes'] != null)
-        ? (options['randomBytes'] as List<int>)
-        : randomData();
+    List<int> randomBytes = options?.randomBytes ?? _randomData();
 
     buf.setRange(6, 16, randomBytes);
     buf.setRange(6, 7, [buf.getRange(6, 7).last & 0x0f | 0x70]);
@@ -50,16 +39,11 @@ class UuidV7 {
     return UuidParsing.unparse(buf);
   }
 
-  List<int> randomData() {
-    var options = goptions ?? const {};
-    var v1PositionalArgs = options['v1rngPositionalArgs'] ?? [];
-    Map<Symbol, dynamic> v1NamedArgs =
-        options['v1rngNamedArgs'] ?? const <Symbol, dynamic>{};
-    Uint8List seedBytes = (options['v1rng'] != null)
-        ? Function.apply(options['v1rng'], v1PositionalArgs, v1NamedArgs)
-        : UuidUtil.mathRNG();
+  /// _randomData() Generates a random data for v7 UUID random section
+  List<int> _randomData() {
+    Uint8List seedBytes = Function.apply(goptions?.rng ?? UuidUtil.mathRNG,
+        goptions?.positionalArgs ?? [], goptions?.namedArgs ?? {});
 
-    // ignore: omit_local_variable_types
     List<int> randomData = [
       seedBytes[0],
       seedBytes[1],
