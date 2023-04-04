@@ -18,19 +18,36 @@ class UuidV7 {
   /// options detailed in the readme.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
-  String generate({V7Options? options}) {
+  String generate({Map<String, dynamic>? options}) {
     var buf = Uint8List(16);
-    int time = options?.time ?? (DateTime.now().toUtc()).millisecondsSinceEpoch;
+    options ??= const {};
 
-    var timeList = Uint8List(8)..buffer.asUint64List()[0] = time;
-    var endIndex = timeList.length - 1;
-    while (endIndex >= 0 && timeList[endIndex] == 0) {
-      endIndex--;
+    int time =
+        options['time'] ?? (DateTime.now().toUtc()).millisecondsSinceEpoch;
+
+    this.time = time;
+
+    var timeList32 = Uint8List(8)..buffer.asUint32List()[0] = time >> 16;
+    var timeList16 = Uint8List(8)..buffer.asUint16List()[0] = time;
+
+    var endIndex32 = timeList32.length - 1;
+    var endIndex16 = timeList16.length - 1;
+
+    while (endIndex32 >= 0 && timeList32[endIndex32] == 0) {
+      endIndex32--;
     }
-    timeList = timeList.sublist(0, endIndex + 1);
+    while (endIndex16 >= 0 && timeList16[endIndex16] == 0) {
+      endIndex16--;
+    }
 
-    buf.setAll(0, timeList.reversed);
-    List<int> randomBytes = options?.randomBytes ?? _randomData();
+    timeList32 = timeList32.sublist(0, endIndex32 + 1);
+    timeList16 = timeList16.sublist(0, endIndex16 + 1);
+
+    buf.setAll(0, timeList32.reversed);
+    buf.setAll(4, timeList16.reversed);
+    var randomBytes = (options['randomBytes'] != null)
+        ? (options['randomBytes'] as List<int>)
+        : randomData();
 
     buf.setRange(6, 16, randomBytes);
     buf.setRange(6, 7, [buf.getRange(6, 7).last & 0x0f | 0x70]);
