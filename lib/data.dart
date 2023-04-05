@@ -1,9 +1,7 @@
 import 'package:uuid/rng.dart';
 
 /// [GlobalOptions] stores the global options passed into the library on instantiation.
-/// [rng] is the random number generator function to use. Defaults to UuidUtil.mathRNG
-/// [namedArgs] is a map of named arguments to pass to the RNG function
-/// [positionalArgs] is a list of positional arguments to pass to the RNG function
+/// [GlobalOptions.rng] is the random number generator class to use. Defaults to MathRNG() [MathRNG]
 class GlobalOptions {
   final RNG? rng;
 
@@ -34,9 +32,7 @@ class V1Options {
 /// [V4Options] stores the options passed into the v4 function.
 /// [random] is the random bytes to use to generate the UUID. Primarily used for
 /// testing, or recreating a UUID
-/// [rng] is the random number generator function to use. Defaults to UuidUtil.mathRNG
-/// [namedArgs] is a map of named arguments to pass to the RNG function
-/// [positionalArgs] is a list of positional arguments to pass to the RNG function
+/// [rng] is the random number generator function to use. Defaults to MathRNG() [MathRNG]
 class V4Options {
   final List<int>? random;
   final RNG? rng;

@@ -47,9 +47,7 @@ class Uuid {
   /// Creates a new instance of the Uuid class.
   /// Optionally you can pass in a [GlobalOptions] object to set global options
   /// for all UUID generation.
-  /// [GlobalOptions.rng] is a function that returns a list of random bytes.
-  /// [GlobalOptions.positionalArgs] is a list of positional arguments to pass to the RNG function.
-  /// [GlobalOptions.namedArgs] is a map of named arguments to pass to the RNG function.
+  /// [GlobalOptions.rng] is a [RNG] class that returns a list of random bytes.
   ///
   /// Defaults rng function is `UuidUtil.mathRNG`
   ///
