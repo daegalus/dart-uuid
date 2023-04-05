@@ -1,7 +1,6 @@
-import 'package:uuid/data.dart';
-
+import 'data.dart';
 import 'parsing.dart';
-import 'uuid_util.dart';
+import 'rng.dart';
 
 class UuidV4 {
   final GlobalOptions? goptions;
@@ -19,10 +18,9 @@ class UuidV4 {
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   String generate({V4Options? options}) {
     // Use the built-in RNG or a custom provided RNG
-    List<int> rng = Function.apply(
-        options?.rng ?? goptions?.rng ?? UuidUtil.mathRNG,
-        options?.positionalArgs ?? goptions?.positionalArgs ?? [],
-        options?.namedArgs ?? goptions?.namedArgs ?? {});
+    List<int> rng = options?.rng?.generate() ??
+        goptions?.rng?.generate() ??
+        MathRNG().generate();
 
     // Use provided values over RNG
     List<int> rnds = options?.random ?? rng;

@@ -8,6 +8,7 @@ library uuid;
 import 'dart:typed_data';
 
 import 'package:uuid/data.dart';
+import 'package:uuid/rng.dart';
 import 'package:uuid/validation.dart';
 
 import 'enums.dart';
@@ -303,8 +304,12 @@ class Uuid {
           Map<String, dynamic>? options,
       V4Options? config}) {
     if (options != null && options.isNotEmpty) {
-      config = V4Options(options["random"], options["rng"],
-          options["namedArgs"], options["positionalArgs"]);
+      var rng = options["rng"];
+      if (options["rng"] != null && options["rng"] is! RNG) {
+        rng = LegacyRNG(
+            options["rng"], options["namedArgs"], options["positionalArgs"]);
+      }
+      config = V4Options(options["random"], rng);
     }
     return UuidV4(goptions: goptions).generate(options: config);
   }

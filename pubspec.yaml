@@ -1,5 +1,5 @@
 name: uuid
-version: 4.0.0-beta2
+version: 4.0.0-beta3
 description: >
   RFC4122 (v1, v4, v5, v6, v7, v8) UUID Generator and Parser for Dart
 homepage: https://github.com/Daegalus/dart-uuid

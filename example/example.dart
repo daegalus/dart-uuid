@@ -1,6 +1,6 @@
 import 'package:uuid/data.dart';
 import 'package:uuid/uuid.dart';
-import 'package:uuid/uuid_util.dart';
+import 'package:uuid/rng.dart';
 
 void main() {
   var uuid = Uuid();
@@ -20,7 +20,7 @@ void main() {
   var v4 = uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
 
   // Generate a v4 (crypto-random) id
-  var v4Crypto = uuid.v4(config: V4Options(null, UuidUtil.cryptoRNG, {}, []));
+  var v4Crypto = uuid.v4(config: V4Options(null, CryptoRNG()));
   // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
 
   // Generate a v5 (namespace-name-sha1-based) id

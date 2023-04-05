@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'data.dart';
 import 'parsing.dart';
-import 'uuid_util.dart';
+import 'rng.dart';
 
 class UuidV1 {
   final GlobalOptions? goptions;
@@ -12,8 +12,7 @@ class UuidV1 {
   /// Primarily sets up the seedBytes then generates the node id and clockseq
   void _init() {
     if (V1State.initialized) return;
-    Uint8List seedBytes = Function.apply(goptions?.rng ?? UuidUtil.mathRNG,
-        goptions?.positionalArgs ?? [], goptions?.namedArgs ?? {});
+    Uint8List seedBytes = goptions?.rng?.generate() ?? MathRNG().generate();
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
     List<int> nodeId = [

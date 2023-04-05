@@ -3,7 +3,7 @@ import 'package:sprintf/sprintf.dart';
 import 'package:uuid/data.dart';
 
 import 'parsing.dart';
-import 'uuid_util.dart';
+import 'rng.dart';
 
 class UuidV8 {
   final GlobalOptions? goptions;
@@ -73,8 +73,7 @@ class UuidV8 {
 
   /// _randomData() Generates a random data for V8 UUID random section
   List<int> _randomData() {
-    Uint8List seedBytes = Function.apply(goptions?.rng ?? UuidUtil.mathRNG,
-        goptions?.positionalArgs ?? [], goptions?.namedArgs ?? {});
+    Uint8List seedBytes = goptions?.rng?.generate() ?? MathRNG().generate();
 
     List<int> randomData = [
       seedBytes[0],
