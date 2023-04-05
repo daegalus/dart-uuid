@@ -18,18 +18,12 @@ class UuidV7 {
   /// options detailed in the readme.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
-  String generate({Map<String, dynamic>? options}) {
+  String generate({V7Options? options}) {
     var buf = Uint8List(16);
-    options ??= const {};
-
-    int time =
-        options['time'] ?? (DateTime.now().toUtc()).millisecondsSinceEpoch;
-
-    this.time = time;
+    int time = options?.time ?? (DateTime.now().toUtc()).millisecondsSinceEpoch;
 
     var timeList32 = Uint8List(8)..buffer.asUint32List()[0] = time >> 16;
     var timeList16 = Uint8List(8)..buffer.asUint16List()[0] = time;
-
     var endIndex32 = timeList32.length - 1;
     var endIndex16 = timeList16.length - 1;
 
@@ -45,9 +39,7 @@ class UuidV7 {
 
     buf.setAll(0, timeList32.reversed);
     buf.setAll(4, timeList16.reversed);
-    var randomBytes = (options['randomBytes'] != null)
-        ? (options['randomBytes'] as List<int>)
-        : randomData();
+    List<int> randomBytes = options?.randomBytes ?? _randomData();
 
     buf.setRange(6, 16, randomBytes);
     buf.setRange(6, 7, [buf.getRange(6, 7).last & 0x0f | 0x70]);
