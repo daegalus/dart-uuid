@@ -43,34 +43,33 @@ class UuidV6 {
   /// options detailed in the readme.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
-  String generate({Map<String, dynamic>? options}) {
+  String generate({V6Options? options}) {
+    _init();
     var buf = Uint8List(16);
-    var buf32 = Uint8List(16);
-    options ??= const {};
 
-    int clockSeq = options['clockSeq'] ?? this.clockSeq;
+    int clockSeq = options?.clockSeq ?? V6State.clockSeq ?? 0;
 
     // UUID timestamps are 100 nano-second units since the Gregorian epoch,
     // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
     // milliseconds) and 'nsecs' (100-nanoseconds offset from msecs) since unix
     // epoch, 1970-01-01 00:00.
-    int mSecs = options['mSecs'] ?? (DateTime.now()).millisecondsSinceEpoch;
+    int mSecs = options?.mSecs ?? (DateTime.now()).millisecondsSinceEpoch;
 
     // Per 4.2.1.2, use count of uuid's generated during the current clock
     // cycle to simulate higher resolution clock
-    int nSecs = options['nSecs'] ?? this.nSecs + 1;
+    int nSecs = options?.nSecs ?? V6State.nSecs + 1;
 
     // Time since last uuid creation (in msecs)
-    var dt = (mSecs - this.mSecs) + (nSecs - this.nSecs) / 10000;
+    var dt = (mSecs - V6State.mSecs) + (nSecs - V6State.nSecs) / 10000;
 
     // Per 4.2.1.2, Bump clockseq on clock regression
-    if (dt < 0 && options['clockSeq'] == null) {
+    if (dt < 0 && options?.clockSeq == null) {
       clockSeq = clockSeq + 1 & 0x3fff;
     }
 
     // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
     // time interval
-    if ((dt < 0 || mSecs > this.mSecs) && options['nSecs'] == null) {
+    if ((dt < 0 || mSecs > V6State.mSecs) && options?.nSecs == null) {
       nSecs = 0;
     }
 
@@ -79,9 +78,9 @@ class UuidV6 {
       throw Exception('uuid.v6(): Can\'t create more than 10M uuids/sec');
     }
 
-    this.mSecs = mSecs;
-    this.nSecs = nSecs;
-    this.clockSeq = clockSeq;
+    V6State.mSecs = mSecs;
+    V6State.nSecs = nSecs;
+    V6State.clockSeq = clockSeq;
 
     // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
     mSecs += 12219292800000;
@@ -98,9 +97,9 @@ class UuidV6 {
     buf..buffer.asByteData().setUint16(6, low);
     buf..buffer.asByteData().setUint16(8, clock);
 
-    var node = (options['node'] != null) ? options['node'] : nodeId;
+    var node =
+        options?.node ?? V6State.nodeId ?? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     buf.setAll(10, node);
-    buf32.setAll(10, node);
 
     return UuidParsing.unparse(buf);
   }
