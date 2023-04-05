@@ -6,8 +6,9 @@ v4.0.0-beta3
   * UuidUtil.mathRNG() is replaced with MathRNG().generate().
   * UuidUtil.cryptoRNG() is replaced with CryptoRNG().generate().
   * Custom crypto implementations just need to implement the `RNG` abstract class.
-  * namedArgs and positionalArgs have been removed from GlobalOptions and V4Options
-* Fix a bug with Uint64List in Dart2js. (Thanks @hambergerpls)
+  * namedArgs and positionalArgs have been removed from GlobalOptions
+  * You may use LegacyRNG() if you need to use the old function style RNG.
+* Fix a bug with the usage of Uint64List in Dart2js by not using it. (Thanks @hambergerpls)
 
 v4.0.0-beta2
 
