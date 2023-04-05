@@ -44,6 +44,8 @@ class CryptoRNG implements RNG {
   }
 }
 
+// LegacyRNG is a wrapper around a legacy RNG function that takes named and
+// positional arguments.
 class LegacyRNG implements RNG {
   final Function _rng;
   final Map<Symbol, dynamic> _namedArgs;
