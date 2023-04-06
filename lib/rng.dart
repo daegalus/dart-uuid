@@ -1,21 +1,31 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-// ignore: one_member_abstracts
 abstract class RNG {
-  Uint8List generate();
+  const RNG();
+
+  Uint8List generate() {
+    final uint8list = generateInternal();
+    if (uint8list.length != 16) {
+      throw Exception('The length of the Uint8list returned by the custom RNG must be 16.');
+    } else {
+      return uint8list;
+    }
+  }
+
+  Uint8List generateInternal();
 }
 
 /// Math.Random()-based RNG. All platforms, fast, not cryptographically
 /// strong. Optional [seed] can be passed on creation.
-class MathRNG implements RNG {
+class MathRNG extends RNG {
   static final _random = Random();
   final int seed;
 
   const MathRNG({this.seed = -1});
 
   @override
-  Uint8List generate() {
+  Uint8List generateInternal() {
     final b = Uint8List(16);
     final rand = (seed == -1) ? _random : Random(seed);
 
@@ -29,11 +39,11 @@ class MathRNG implements RNG {
 
 /// Crypto-Strong RNG. All platforms, unknown speed, cryptographically strong
 /// (theoretically)
-class CryptoRNG implements RNG {
+class CryptoRNG extends RNG {
   static final _secureRandom = Random.secure();
 
   @override
-  Uint8List generate() {
+  Uint8List generateInternal() {
     final b = Uint8List(16);
 
     for (var i = 0; i < 16; i++) {
@@ -46,7 +56,7 @@ class CryptoRNG implements RNG {
 
 // LegacyRNG is a wrapper around a legacy RNG function that takes named and
 // positional arguments.
-class LegacyRNG implements RNG {
+class LegacyRNG extends RNG {
   final Function _rng;
   final Map<Symbol, dynamic> _namedArgs;
   final List<dynamic> _positionalArgs;
@@ -54,7 +64,7 @@ class LegacyRNG implements RNG {
   const LegacyRNG(this._rng, this._namedArgs, this._positionalArgs);
 
   @override
-  Uint8List generate() {
+  Uint8List generateInternal() {
     return Function.apply(_rng, _positionalArgs, _namedArgs);
   }
 }
