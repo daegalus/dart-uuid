@@ -65,9 +65,7 @@
   <p>Creates a new instance of the Uuid class.
 Optionally you can pass in a <a href="../../data/GlobalOptions-class.html">GlobalOptions</a> object to set global options
 for all UUID generation.
-<a href="../../data/GlobalOptions/rng.html">GlobalOptions.rng</a> is a function that returns a list of random bytes.
-<a href="../../data/GlobalOptions/positionalArgs.html">GlobalOptions.positionalArgs</a> is a list of positional arguments to pass to the RNG function.
-<a href="../../data/GlobalOptions/namedArgs.html">GlobalOptions.namedArgs</a> is a map of named arguments to pass to the RNG function.</p>
+<a href="../../data/GlobalOptions/rng.html">GlobalOptions.rng</a> is a <a href="../../rng/RNG-class.html">RNG</a> class that returns a list of random bytes.</p>
 <p>Defaults rng function is <code>UuidUtil.mathRNG</code></p>
 <p>Example: Using CryptoRNG globally</p>
 <pre class="language-dart"><code class="language-dart">var uuid = Uuid(options: {
@@ -115,12 +113,12 @@ uuid.v4();
           <a href="../../uuid/Uuid-class.html#instance-properties">Properties</a>
         </li>
           <li><a href="../../uuid/Uuid/goptions.html">goptions</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
         <li class="section-title"><a href="../../uuid/Uuid-class.html#instance-methods">Methods</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Object/toString.html">toString</a></li>
           <li><a href="../../uuid/Uuid/v1.html">v1</a></li>
           <li><a href="../../uuid/Uuid/v1buffer.html">v1buffer</a></li>
           <li><a href="../../uuid/Uuid/v1obj.html">v1obj</a></li>
@@ -141,7 +139,7 @@ uuid.v4();
           <li><a href="../../uuid/Uuid/v8obj.html">v8obj</a></li>
 
         <li class="section-title inherited"><a href="../../uuid/Uuid-class.html#operators">Operators</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -169,7 +167,7 @@ uuid.v4();
 <footer>
   <span class="no-break">
     uuid
-      4.0.0-beta2
+      4.0.0-beta3-1
   </span>
 
   
