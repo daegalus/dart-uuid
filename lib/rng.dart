@@ -1,13 +1,19 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+// RNG is an abstract class that defines the interface for a random number
+// generator. It is used by the UUID class to generate random numbers.
+//
+// It also ensures that the Uint8List returned by the RNG is of the correct
+// length. Throws an [Exception] if the length is not 16.
 abstract class RNG {
   const RNG();
 
   Uint8List generate() {
     final uint8list = generateInternal();
     if (uint8list.length != 16) {
-      throw Exception('The length of the Uint8list returned by the custom RNG must be 16.');
+      throw Exception(
+          'The length of the Uint8list returned by the custom RNG must be 16.');
     } else {
       return uint8list;
     }

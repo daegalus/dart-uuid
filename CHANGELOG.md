@@ -1,5 +1,9 @@
 # Changelog
 
+v4.0.0-beta3-1
+
+* Ensure that any custom RNG implementation produces Uint8Lists of length 16. (Thanks @wph44)
+
 v4.0.0-beta3
 
 * **[BREAKING CHANGE]** Replacing UuidUtil rng functions with RNG classes.
