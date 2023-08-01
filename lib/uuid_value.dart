@@ -51,7 +51,7 @@ class UuidValue {
 
   // toBytes() converts the internal string representation to a list of bytes.
   Uint8List toBytes() {
-    return UuidParsing.parseAsByteList(uuid);
+    return UuidParsing.parseAsByteList(uuid, validate: false);
   }
 
   // toString() returns the String representation of the UUID
