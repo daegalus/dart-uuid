@@ -8,15 +8,15 @@ class UuidValue {
   final String uuid;
 
   /// fromByteList() creates a UuidValue from a [Uint8List] of bytes.
-  factory UuidValue.fromByteList(Uint8List byteList, {int? offset}) {
-    return UuidValue(UuidParsing.unparse(byteList, offset: offset ?? 0));
+  factory UuidValue.fromByteList(Uint8List byteList, {int? offset, bool validate = true, ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+    return UuidValue(UuidParsing.unparse(byteList, offset: offset ?? 0), validate, validationMode);
   }
 
   /// fromList() creates a UuidValue from a [List<int>] of bytes.
-  factory UuidValue.fromList(List<int> byteList, {int? offset}) {
-    return UuidValue(UuidParsing.unparse(byteList, offset: offset ?? 0));
+  factory UuidValue.fromList(List<int> byteList, {int? offset, bool validate = true, ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+    return UuidValue(UuidParsing.unparse(byteList, offset: offset ?? 0), validate, validationMode);
   }
-
+  
   /// withValidation() creates a UuidValue from a [uuid] string.
   /// Optionally, you can provide a [validationMode] to use when validating
   /// the uuid string.
