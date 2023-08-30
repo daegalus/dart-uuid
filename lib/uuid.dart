@@ -159,7 +159,7 @@ class Uuid {
   /// ```
   String v1(
       {@Deprecated('use config instead. Removal in 5.0.0')
-          Map<String, dynamic>? options,
+      Map<String, dynamic>? options,
       V1Options? config}) {
     if (options != null && options.isNotEmpty) {
       config = V1Options(options["clockSeq"], options["mSecs"],
@@ -199,7 +199,7 @@ class Uuid {
   List<int> v1buffer(
     List<int> buffer, {
     @Deprecated('use config instead. Removal in 5.0.0')
-        Map<String, dynamic>? options,
+    Map<String, dynamic>? options,
     V1Options? config,
     int offset = 0,
   }) {
@@ -234,7 +234,7 @@ class Uuid {
   /// ```
   UuidValue v1obj(
       {@Deprecated('use config instead. Removal in 5.0.0')
-          Map<String, dynamic>? options,
+      Map<String, dynamic>? options,
       V1Options? config}) {
     return config != null
         ? UuidValue(v1(config: config))
@@ -299,7 +299,7 @@ class Uuid {
   /// ```
   String v4(
       {@Deprecated('use config instead. Removal in 5.0.0')
-          Map<String, dynamic>? options,
+      Map<String, dynamic>? options,
       V4Options? config}) {
     if (options != null && options.isNotEmpty) {
       var rng = options["rng"];
@@ -338,7 +338,7 @@ class Uuid {
   List<int> v4buffer(
     List<int> buffer, {
     @Deprecated('use config instead. Removal in 5.0.0')
-        Map<String, dynamic>? options,
+    Map<String, dynamic>? options,
     V4Options? config,
     int offset = 0,
   }) {
@@ -374,7 +374,7 @@ class Uuid {
   /// ```
   UuidValue v4obj(
       {@Deprecated('use config instead. Removal in 5.0.0')
-          Map<String, dynamic>? options,
+      Map<String, dynamic>? options,
       V4Options? config}) {
     return config != null
         ? UuidValue(v4(config: config))
@@ -400,11 +400,9 @@ class Uuid {
   /// uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com');
   /// // -> "c74a196f-f19d-5ea9-bffd-a2742432fc9c"
   /// ```
-  String v5(
-      String? namespace,
-      String? name,
+  String v5(String? namespace, String? name,
       {@Deprecated('use config instead. Removal in 5.0.0')
-          Map<String, dynamic>? options,
+      Map<String, dynamic>? options,
       V5Options? config}) {
     if (options != null && options.isNotEmpty) {
       V4Options? v4config;
@@ -441,7 +439,7 @@ class Uuid {
     String? name,
     List<int>? buffer, {
     @Deprecated('use config instead. Removal in 5.0.0')
-        Map<String, dynamic>? options,
+    Map<String, dynamic>? options,
     V5Options? config,
     int offset = 0,
   }) {
@@ -472,11 +470,9 @@ class Uuid {
   /// print(uuidValue) -> // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
   /// uuidValue.toBytes() -> // -> [...]
   /// ```
-  UuidValue v5obj(
-      String? namespace,
-      String? name,
+  UuidValue v5obj(String? namespace, String? name,
       {@Deprecated('use config instead. Removal in 5.0.0')
-          Map<String, dynamic>? options,
+      Map<String, dynamic>? options,
       V5Options? config}) {
     return config != null
         ? UuidValue(v5(namespace, name, config: config))
