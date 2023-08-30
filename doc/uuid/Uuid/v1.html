@@ -40,8 +40,11 @@
   <div class="toggle" id="theme-button">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
-      <span class="material-symbols-outlined">
+      <span id="dark-theme-button" class="material-symbols-outlined">
         brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
       </span>
     </label>
   </div>
@@ -51,14 +54,13 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">v1</span> method 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.19.3/dart-core/String-class.html">String</a></span>
-<span class="name ">v1</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="v1-param-options">{<span>@<a href="https://api.dart.dev/stable/2.19.3/dart-core/Deprecated-class.html">Deprecated</a>(&#39;use config instead. Removal in 5.0.0&#39;)</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.19.3/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.0.6/dart-core/String-class.html">String</a></span>
+<span class="name ">v1</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="v1-param-options">{<span>@<a href="https://api.dart.dev/stable/3.0.6/dart-core/Deprecated-class.html">Deprecated</a>(&#39;use config instead. Removal in 5.0.0&#39;)</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.6/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.6/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span></li>
 <li><span class="parameter" id="v1-param-config"><span class="type-annotation"><a href="../../data/V1Options-class.html">V1Options</a>?</span> <span class="parameter-name">config</span>}</span></li>
 </ol>)
 
@@ -91,7 +93,7 @@ the options map. This is the preferred way to pass options.</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String v1(
     {@Deprecated(&#39;use config instead. Removal in 5.0.0&#39;)
-        Map&lt;String, dynamic&gt;? options,
+    Map&lt;String, dynamic&gt;? options,
     V1Options? config}) {
   if (options != null &amp;&amp; options.isNotEmpty) {
     config = V1Options(options[&quot;clockSeq&quot;], options[&quot;mSecs&quot;],
@@ -130,12 +132,12 @@ the options map. This is the preferred way to pass options.</p>
           <a href="../../uuid/Uuid-class.html#instance-properties">Properties</a>
         </li>
           <li><a href="../../uuid/Uuid/goptions.html">goptions</a></li>
-          <li class="inherited"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Object/hashCode.html">hashCode</a></li>
-          <li class="inherited"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.6/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.6/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
         <li class="section-title"><a href="../../uuid/Uuid-class.html#instance-methods">Methods</a></li>
-          <li class="inherited"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-          <li class="inherited"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Object/toString.html">toString</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.6/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.6/dart-core/Object/toString.html">toString</a></li>
           <li><a href="../../uuid/Uuid/v1.html">v1</a></li>
           <li><a href="../../uuid/Uuid/v1buffer.html">v1buffer</a></li>
           <li><a href="../../uuid/Uuid/v1obj.html">v1obj</a></li>
@@ -156,7 +158,7 @@ the options map. This is the preferred way to pass options.</p>
           <li><a href="../../uuid/Uuid/v8obj.html">v8obj</a></li>
 
         <li class="section-title inherited"><a href="../../uuid/Uuid-class.html#operators">Operators</a></li>
-          <li class="inherited"><a href="https://api.dart.dev/stable/2.19.3/dart-core/Object/operator_equals.html">operator ==</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.6/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -184,7 +186,7 @@ the options map. This is the preferred way to pass options.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.0.0-beta3-1
+      4.0.0
   </span>
 
   

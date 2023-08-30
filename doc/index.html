@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="generator" content="made with love by dartdoc 6.1.5">
+  <meta name="generator" content="made with love by dartdoc 6.2.2">
   <meta name="description" content="uuid API docs, for the Dart programming language.">
   <title>uuid - Dart API docs</title>
 
@@ -38,8 +38,11 @@
   <div class="toggle" id="theme-button">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
-      <span class="material-symbols-outlined">
+      <span id="dark-theme-button" class="material-symbols-outlined">
         brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
       </span>
     </label>
   </div>
@@ -75,10 +78,8 @@
 <li>If you wish to run tests, go into packages/dart-uuid/ and run 'dart test/uuid_test.dart'</li>
 </ol>
 <h3 id="pubspec">Pubspec</h3>
-<p>There are 2 options. Directly from git, or from pub.dartlang.org</p>
-<p>pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  uuid: ^4.0.0-beta1
+  uuid: ^4.0.0
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:uuid/uuid.dart';
 
@@ -241,7 +242,7 @@ uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com'); // -&gt; 'c74a196f-f19d-5ea9-bffd
 <footer>
   <span class="no-break">
     uuid
-      4.0.0-beta3-1
+      4.0.0
   </span>
 
   
