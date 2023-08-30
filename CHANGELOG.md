@@ -1,5 +1,9 @@
 # Changelog
 
+v4.0.0
+
+* toBytes on UuidValue now does not validate by default, but has the option `validate` that can be set to true if you need validation when calling it. (Thanks @Erhannis)
+
 v4.0.0-beta3-1
 
 * Ensure that any custom RNG implementation produces Uint8Lists of length 16. (Thanks @wph44)
