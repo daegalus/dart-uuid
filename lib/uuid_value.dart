@@ -7,6 +7,11 @@ import 'validation.dart';
 class UuidValue {
   final String uuid;
 
+  /// fromString() creates a UuidValue from a [String] with no validation.
+  factory UuidValue.fromString(String uuid) {
+    return UuidValue(uuid.toLowerCase());
+  }
+
   /// fromByteList() creates a UuidValue from a [Uint8List] of bytes.
   factory UuidValue.fromByteList(Uint8List byteList, {int? offset}) {
     return UuidValue(UuidParsing.unparse(byteList, offset: offset ?? 0));
@@ -35,6 +40,9 @@ class UuidValue {
   static const nil = UuidValue(Uuid.NAMESPACE_NIL);
 
   /// UuidValue() Constructor for creating a uuid value.
+  ///
+  /// WARNING: Please do not use this directly, use [UuidValue.fromString]
+  /// or [UuidValue.withValidation]
   ///
   /// Takes in a string representation of a [uuid] to wrap.
   const UuidValue(this.uuid);

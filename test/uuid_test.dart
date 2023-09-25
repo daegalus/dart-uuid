@@ -478,7 +478,7 @@ void main() {
       expect(() => UuidValue.withValidation(invalidUUID),
           throwsA(isA<FormatException>()));
 
-      final uuidval = UuidValue(invalidUUID);
+      final uuidval = UuidValue.fromString(invalidUUID);
       expect(uuidval.uuid, invalidUUID);
     });
 
@@ -493,7 +493,7 @@ void main() {
             'The provided UUID is not RFC4122 compliant. It seems you might be using a Microsoft GUID. Try setting `validationMode = ValidationMode.nonStrict`',
           )));
 
-      final uuidval = UuidValue(validGUID);
+      final uuidval = UuidValue.fromString(validGUID);
       expect(uuidval.uuid, validGUID.toLowerCase());
     });
 

@@ -237,8 +237,8 @@ class Uuid {
       Map<String, dynamic>? options,
       V1Options? config}) {
     return config != null
-        ? UuidValue(v1(config: config))
-        : UuidValue(v1(options: options));
+        ? UuidValue.fromString(v1(config: config))
+        : UuidValue.fromString(v1(options: options));
   }
 
   /// Generates a RNG version 4 UUID
@@ -377,8 +377,8 @@ class Uuid {
       Map<String, dynamic>? options,
       V4Options? config}) {
     return config != null
-        ? UuidValue(v4(config: config))
-        : UuidValue(v4(options: options));
+        ? UuidValue.fromString(v4(config: config))
+        : UuidValue.fromString(v4(options: options));
   }
 
   /// Generates a namespace & name-based version 5 UUID
@@ -475,8 +475,8 @@ class Uuid {
       Map<String, dynamic>? options,
       V5Options? config}) {
     return config != null
-        ? UuidValue(v5(namespace, name, config: config))
-        : UuidValue(v5(namespace, name, options: options));
+        ? UuidValue.fromString(v5(namespace, name, config: config))
+        : UuidValue.fromString(v5(namespace, name, options: options));
   }
 
   /// Generates a draft time-based version 6 UUID
@@ -526,7 +526,7 @@ class Uuid {
   ///
   /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
   UuidValue v6obj({V6Options? config}) {
-    return UuidValue(v6(config: config));
+    return UuidValue.fromString(v6(config: config));
   }
 
   /// Generates a draft time-based version 7 UUID as a [UuidValue] object
@@ -573,7 +573,7 @@ class Uuid {
   ///
   /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
   UuidValue v7obj({V7Options? config}) {
-    return UuidValue(v7(config: config));
+    return UuidValue.fromString(v7(config: config));
   }
 
   /// Generates a draft time-based version 8 UUID
@@ -620,6 +620,6 @@ class Uuid {
   ///
   /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
   UuidValue v8obj({V8Options? config}) {
-    return UuidValue(v8(config: config));
+    return UuidValue.fromString(v8(config: config));
   }
 }

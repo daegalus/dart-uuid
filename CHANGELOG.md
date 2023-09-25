@@ -1,5 +1,9 @@
 # Changelog
 
+v4.1.0
+
+* **[BREAKING CHANGE]** In order to enforce lowercase strings in `UuidValue`, I have made the default const constructor private, and added a `fromString` factory constructor. Please migrate any direct `UuidValue()` usage to `UuidValue.fromString()` or `UuidValue.withValidation()`.
+
 v4.0.0
 
 * toBytes on UuidValue now does not validate by default, but has the option `validate` that can be set to true if you need validation when calling it. (Thanks @Erhannis)
