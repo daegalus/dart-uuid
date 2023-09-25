@@ -99,8 +99,8 @@ uuidValue.toBytes() -&gt; // -&gt; [...]
     Map&lt;String, dynamic&gt;? options,
     V4Options? config}) {
   return config != null
-      ? UuidValue(v4(config: config))
-      : UuidValue(v4(options: options));
+      ? UuidValue.fromString(v4(config: config))
+      : UuidValue.fromString(v4(options: options));
 }</code></pre>
 </section>
 
@@ -187,7 +187,7 @@ uuidValue.toBytes() -&gt; // -&gt; [...]
 <footer>
   <span class="no-break">
     uuid
-      4.0.0
+      4.1.0
   </span>
 
   
