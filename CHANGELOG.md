@@ -1,5 +1,10 @@
 # Changelog
 
+v4.2.0
+
+* **[BREAKING CHANGE]** Deprecate default/empty `UuidValue` constructor because it has a different behavior from the 3.x package version. 
+Use `UuidValue.fromString()` instead, which has the same behavior. If you need to define a const `UuidValue` you can use `UuidValue.raw()`, but making sure the value is lowercase.
+
 v4.1.0
 
 * **[BREAKING CHANGE]** In order to enforce lowercase strings in `UuidValue`, I have made the default const constructor private, and added a `fromString` factory constructor. Please migrate any direct `UuidValue()` usage to `UuidValue.fromString()` or `UuidValue.withValidation()`.
