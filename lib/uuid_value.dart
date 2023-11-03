@@ -9,17 +9,17 @@ class UuidValue {
 
   /// fromString() creates a UuidValue from a [String] with no validation.
   factory UuidValue.fromString(String uuid) {
-    return UuidValue(uuid.toLowerCase());
+    return UuidValue.raw(uuid.toLowerCase());
   }
 
   /// fromByteList() creates a UuidValue from a [Uint8List] of bytes.
   factory UuidValue.fromByteList(Uint8List byteList, {int? offset}) {
-    return UuidValue(UuidParsing.unparse(byteList, offset: offset ?? 0));
+    return UuidValue.raw(UuidParsing.unparse(byteList, offset: offset ?? 0));
   }
 
   /// fromList() creates a UuidValue from a [List<int>] of bytes.
   factory UuidValue.fromList(List<int> byteList, {int? offset}) {
-    return UuidValue(UuidParsing.unparse(byteList, offset: offset ?? 0));
+    return UuidValue.raw(UuidParsing.unparse(byteList, offset: offset ?? 0));
   }
 
   /// withValidation() creates a UuidValue from a [uuid] string.
@@ -28,23 +28,29 @@ class UuidValue {
   /// Throws [FormatException] if the UUID is invalid.
   factory UuidValue.withValidation(String uuid,
       [ValidationMode validationMode = ValidationMode.strictRFC4122]) {
-    final uuidValue = UuidValue(uuid.toLowerCase());
+    final uuidValue = UuidValue.fromString(uuid);
     uuidValue.validate(validationMode);
     return uuidValue;
   }
 
-  static const dns = UuidValue(Uuid.NAMESPACE_DNS);
-  static const url = UuidValue(Uuid.NAMESPACE_URL);
-  static const oid = UuidValue(Uuid.NAMESPACE_OID);
-  static const x500 = UuidValue(Uuid.NAMESPACE_X500);
-  static const nil = UuidValue(Uuid.NAMESPACE_NIL);
+  static const dns = UuidValue.raw(Uuid.NAMESPACE_DNS);
+  static const url = UuidValue.raw(Uuid.NAMESPACE_URL);
+  static const oid = UuidValue.raw(Uuid.NAMESPACE_OID);
+  static const x500 = UuidValue.raw(Uuid.NAMESPACE_X500);
+  static const nil = UuidValue.raw(Uuid.NAMESPACE_NIL);
 
-  /// UuidValue() Constructor for creating a uuid value.
+  /// Creates a UuidValue by taking directly the internal string representation of the [uuid],
+  /// which is expected to be lowercase.
   ///
-  /// WARNING: Please do not use this directly, use [UuidValue.fromString]
-  /// or [UuidValue.withValidation]
-  ///
+  /// You can use [UuidValue.fromString] instead, which will lowercase the uuid string for you or
+  /// [UuidValue.withValidation] if you need validation of the created UUIDs.
+  const UuidValue.raw(this.uuid);
+
   /// Takes in a string representation of a [uuid] to wrap.
+  @Deprecated(
+    'Use UuidValue.fromString() instead. If you need to define a const UuidValue '
+    'you can use UuidValue.raw(), but making sure the value is lowercase.',
+  )
   const UuidValue(this.uuid);
 
   /// validate() validates the internal string representation of the uuid.
