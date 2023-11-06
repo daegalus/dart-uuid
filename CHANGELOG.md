@@ -1,5 +1,9 @@
 # Changelog
 
+v4.2.1
+
+* Lower `meta` dependency to 1.9.1 so that it is compatible with Flutter Stable 3.13
+
 v4.2.0
 
 * **[BREAKING CHANGE]** Deprecate default/empty `UuidValue` constructor because it has a different behavior from the 3.x package version. (Thanks @davidmartos96)
