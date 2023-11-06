@@ -2,8 +2,9 @@
 
 v4.2.0
 
-* **[BREAKING CHANGE]** Deprecate default/empty `UuidValue` constructor because it has a different behavior from the 3.x package version. 
-Use `UuidValue.fromString()` instead, which has the same behavior. If you need to define a const `UuidValue` you can use `UuidValue.raw()`, but making sure the value is lowercase.
+* **[BREAKING CHANGE]** Deprecate default/empty `UuidValue` constructor because it has a different behavior from the 3.x package version. (Thanks @davidmartos96)
+  * Use `UuidValue.fromString()` instead, which has the same behavior. If you need to define a const `UuidValue` you can use `UuidValue.raw()`, but making sure the value is lowercase.
+* Mark `UuidValue` as experimental with an annotation. (Thanks @Kaival-Patel)
 
 v4.1.0
 
