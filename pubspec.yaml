@@ -11,8 +11,8 @@ dependencies:
   sprintf: ^7.0.0
   meta: ^1.11.0
 dev_dependencies:
-  lints: ^2.1.1
-  test: ^1.24.6
+  lints: ^3.0.0
+  test: ^1.24.9
 funding:
   - https://ko-fi.com/yulian
   - https://paypal.me/yuliank
