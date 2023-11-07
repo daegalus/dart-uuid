@@ -49,8 +49,12 @@
 </header>
 <main>
 
-  <div id="dartdoc-main-content" class="main-content">
-    
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar=""
+      data-below-sidebar="data&#47;data-library-sidebar.html">
+      
       <div>
 <h1><span class="kind-library">data</span> library 
  
@@ -195,15 +199,16 @@ for testing, or recreating a UUID
   </div> <!-- /.main-content -->
 
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../index.html">uuid</a></li>
-  <li class="self-crumb">data library</li>
+    <li><a href="../index.html">uuid</a></li>
+    <li class="self-crumb">data library</li>
 </ol>
 
 
@@ -229,27 +234,6 @@ for testing, or recreating a UUID
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
     <h5>data library</h5>
-    <ol>
-      <li class="section-title"><a href="../data/data-library.html#classes">Classes</a></li>
-        <li><a href="../data/GlobalOptions-class.html">GlobalOptions</a></li>
-        <li><a href="../data/V1Options-class.html">V1Options</a></li>
-        <li><a href="../data/V1State-class.html">V1State</a></li>
-        <li><a href="../data/V4Options-class.html">V4Options</a></li>
-        <li><a href="../data/V5Options-class.html">V5Options</a></li>
-        <li><a href="../data/V6Options-class.html">V6Options</a></li>
-        <li><a href="../data/V6State-class.html">V6State</a></li>
-        <li><a href="../data/V7Options-class.html">V7Options</a></li>
-        <li><a href="../data/V8Options-class.html">V8Options</a></li>
-
-
-
-
-
-
-
-
-</ol>
-
   </div><!--/sidebar-offcanvas-right-->
 
 </main>
@@ -257,7 +241,7 @@ for testing, or recreating a UUID
 <footer>
   <span class="no-break">
     uuid
-      4.1.0
+      4.2.1
   </span>
 
   

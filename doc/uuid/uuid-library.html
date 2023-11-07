@@ -49,8 +49,12 @@
 </header>
 <main>
 
-  <div id="dartdoc-main-content" class="main-content">
-    
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar=""
+      data-below-sidebar="uuid&#47;uuid-library-sidebar.html">
+      
       <div>
 <h1><span class="kind-library">uuid</span> library 
  
@@ -120,15 +124,16 @@ Released under MIT License.
   </div> <!-- /.main-content -->
 
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../index.html">uuid</a></li>
-  <li class="self-crumb">uuid library</li>
+    <li><a href="../index.html">uuid</a></li>
+    <li class="self-crumb">uuid library</li>
 </ol>
 
 
@@ -154,23 +159,6 @@ Released under MIT License.
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
     <h5>uuid library</h5>
-    <ol>
-      <li class="section-title"><a href="../uuid/uuid-library.html#classes">Classes</a></li>
-        <li><a href="../enums/Namespace-class.html">Namespace</a></li>
-        <li><a href="../uuid/Uuid-class.html">Uuid</a></li>
-        <li><a href="../uuid_value/UuidValue-class.html">UuidValue</a></li>
-
-
-
-
-
-
-      <li class="section-title"><a href="../uuid/uuid-library.html#enums">Enums</a></li>
-        <li><a href="../enums/ValidationMode.html">ValidationMode</a></li>
-
-
-</ol>
-
   </div><!--/sidebar-offcanvas-right-->
 
 </main>
@@ -178,7 +166,7 @@ Released under MIT License.
 <footer>
   <span class="no-break">
     uuid
-      4.1.0
+      4.2.1
   </span>
 
   
