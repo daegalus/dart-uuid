@@ -68,7 +68,8 @@
 <li><span class="parameter" id="parse-param-buffer">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.2.0/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span></li>
 <li><span class="parameter" id="parse-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span></li>
 <li><span class="parameter" id="parse-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span></li>
-<li><span class="parameter" id="parse-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span></li>
+<li><span class="parameter" id="parse-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>, </span></li>
+<li><span class="parameter" id="parse-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>}</span></li>
 </ol>)
 
       
@@ -94,16 +95,15 @@ a <code>buffer</code>.</p>
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static List&lt;int&gt; parse(
-  String uuid, {
-  List&lt;int&gt;? buffer,
-  int offset = 0,
-  bool validate = true,
-  ValidationMode validationMode = ValidationMode.strictRFC4122,
-}) {
+  <pre class="language-dart"><code class="language-dart">static List&lt;int&gt; parse(String uuid,
+    {List&lt;int&gt;? buffer,
+    int offset = 0,
+    bool validate = true,
+    ValidationMode validationMode = ValidationMode.strictRFC4122,
+    bool noDashes = false}) {
   if (validate) {
     UuidValidation.isValidOrThrow(
-        fromString: uuid, validationMode: validationMode);
+        fromString: uuid, validationMode: validationMode, noDashes: noDashes);
   }
   var i = offset, ii = 0;
 
@@ -172,7 +172,7 @@ a <code>buffer</code>.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.3.0
+      4.3.1
   </span>
 
   

@@ -63,7 +63,8 @@
     <section class="multi-line-signature">
       
       <span class="name ">UuidValue.withValidation</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="withValidation-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, </span></li>
-<li><span class="parameter" id="withValidation-param-validationMode">[<span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>]</span></li>
+<li><span class="parameter" id="withValidation-param-validationMode">[<span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>, </span></li>
+<li><span class="parameter" id="withValidation-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>]</span></li>
 </ol>)
     </section>
 
@@ -80,9 +81,10 @@ Throws <a href="https://api.dart.dev/stable/3.2.0/dart-core/FormatException-clas
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory UuidValue.withValidation(String uuid,
-    [ValidationMode validationMode = ValidationMode.strictRFC4122]) {
+    [ValidationMode validationMode = ValidationMode.strictRFC4122,
+    bool noDashes = false]) {
   final uuidValue = UuidValue.fromString(uuid);
-  uuidValue.validate(validationMode);
+  uuidValue.validate(validationMode, noDashes);
   return uuidValue;
 }</code></pre>
 </section>
@@ -117,7 +119,7 @@ Throws <a href="https://api.dart.dev/stable/3.2.0/dart-core/FormatException-clas
 <footer>
   <span class="no-break">
     uuid
-      4.3.0
+      4.3.1
   </span>
 
   

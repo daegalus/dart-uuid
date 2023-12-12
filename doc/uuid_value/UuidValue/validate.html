@@ -64,7 +64,8 @@
       
 
 <span class="returntype">void</span>
-<span class="name ">validate</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="validate-param-validationMode">[<span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>]</span></li>
+<span class="name ">validate</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="validate-param-validationMode">[<span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>, </span></li>
+<li><span class="parameter" id="validate-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>]</span></li>
 </ol>)
 
       
@@ -83,9 +84,10 @@ Throws <a href="https://api.dart.dev/stable/3.2.0/dart-core/FormatException-clas
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void validate(
-    [ValidationMode validationMode = ValidationMode.strictRFC4122]) {
+    [ValidationMode validationMode = ValidationMode.strictRFC4122,
+    bool noDashes = false]) {
   UuidValidation.isValidOrThrow(
-      fromString: uuid, validationMode: validationMode);
+      fromString: uuid, validationMode: validationMode, noDashes: noDashes);
 }</code></pre>
 </section>
 
@@ -119,7 +121,7 @@ Throws <a href="https://api.dart.dev/stable/3.2.0/dart-core/FormatException-clas
 <footer>
   <span class="no-break">
     uuid
-      4.3.0
+      4.3.1
   </span>
 
   
