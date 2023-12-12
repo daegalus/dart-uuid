@@ -63,10 +63,11 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.1.3/dart-core/bool-class.html">bool</a></span>
-<span class="name ">isValidUUID</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="isValidUUID-param-fromString">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.1.3/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
-<li><span class="parameter" id="isValidUUID-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.1.3/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span></li>
-<li><span class="parameter" id="isValidUUID-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.2.0/dart-core/bool-class.html">bool</a></span>
+<span class="name ">isValidUUID</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="isValidUUID-param-fromString">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
+<li><span class="parameter" id="isValidUUID-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span></li>
+<li><span class="parameter" id="isValidUUID-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>, </span></li>
+<li><span class="parameter" id="isValidUUID-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>}</span></li>
 </ol>)
 
       
@@ -75,7 +76,7 @@
     
 <section class="desc markdown">
   <p>Validates the provided <a href="../../uuid/uuid-library.html">uuid</a> to make sure it has all the necessary
-components and formatting and returns a <a href="https://api.dart.dev/stable/3.1.3/dart-core/bool-class.html">bool</a>
+components and formatting and returns a <a href="https://api.dart.dev/stable/3.2.0/dart-core/bool-class.html">bool</a>
 You can choose to validate from a string or from a byte list based on
 which parameter is passed.</p>
 </section>
@@ -87,7 +88,8 @@ which parameter is passed.</p>
   <pre class="language-dart"><code class="language-dart">static bool isValidUUID(
     {String fromString = &#39;&#39;,
     Uint8List? fromByteList,
-    ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+    ValidationMode validationMode = ValidationMode.strictRFC4122,
+    bool noDashes = false}) {
   if (fromByteList != null) {
     fromString = UuidParsing.unparse(fromByteList);
   }
@@ -97,7 +99,12 @@ which parameter is passed.</p>
   }
 
   &#47;&#47; If its not 36 characters in length, don&#39;t bother (including dashes).
-  if (fromString.length != 36) {
+  if (!noDashes &amp;&amp; fromString.length != 36) {
+    return false;
+  }
+
+  &#47;&#47; If its not 32 characters in length, don&#39;t bother (excluding excluding).
+  if (noDashes &amp;&amp; fromString.length != 32) {
     return false;
   }
 
@@ -105,16 +112,18 @@ which parameter is passed.</p>
   switch (validationMode) {
     case ValidationMode.strictRFC4122:
       {
-        const pattern =
-            r&#39;^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$&#39;;
+        var pattern = (noDashes)
+            ? r&#39;^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-8][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$&#39;
+            : r&#39;^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$&#39;;
         final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
         final match = regex.hasMatch(fromString.toLowerCase());
         return match;
       }
     case ValidationMode.nonStrict:
       {
-        const pattern =
-            r&#39;^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$&#39;;
+        var pattern = (noDashes)
+            ? r&#39;^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-8][0-9a-f]{3}-?[0-9a-f]{4}-?[0-9a-f]{12}$&#39;
+            : r&#39;^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$&#39;;
         final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
         final match = regex.hasMatch(fromString.toLowerCase());
         return match;
@@ -157,7 +166,7 @@ which parameter is passed.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.2.1
+      4.2.2
   </span>
 
   

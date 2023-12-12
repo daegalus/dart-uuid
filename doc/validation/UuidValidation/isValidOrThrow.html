@@ -64,9 +64,10 @@
       
 
 <span class="returntype">void</span>
-<span class="name ">isValidOrThrow</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="isValidOrThrow-param-fromString">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.1.3/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
-<li><span class="parameter" id="isValidOrThrow-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.1.3/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span></li>
-<li><span class="parameter" id="isValidOrThrow-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span></li>
+<span class="name ">isValidOrThrow</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="isValidOrThrow-param-fromString">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
+<li><span class="parameter" id="isValidOrThrow-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span></li>
+<li><span class="parameter" id="isValidOrThrow-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>, </span></li>
+<li><span class="parameter" id="isValidOrThrow-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>}</span></li>
 </ol>)
 
       
@@ -75,7 +76,7 @@
     
 <section class="desc markdown">
   <p>Validates the provided <a href="../../uuid/uuid-library.html">uuid</a> to make sure it has all the necessary
-components and formatting and throws a <a href="https://api.dart.dev/stable/3.1.3/dart-core/FormatException-class.html">FormatException</a> if it is invalid.
+components and formatting and throws a <a href="https://api.dart.dev/stable/3.2.0/dart-core/FormatException-class.html">FormatException</a> if it is invalid.
 You can choose to validate from a string or from a byte list based on
 which parameter is passed.
 Optionally you can set <code>validationMode</code> to <code>ValidationMode.nonStrict</code> to
@@ -91,11 +92,13 @@ If you are using a Microsoft GUID, you should set <code>validationMode</code> to
   <pre class="language-dart"><code class="language-dart">static void isValidOrThrow(
     {String fromString = &#39;&#39;,
     Uint8List? fromByteList,
-    ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+    ValidationMode validationMode = ValidationMode.strictRFC4122,
+    bool noDashes = false}) {
   final isValid = isValidUUID(
       fromString: fromString,
       fromByteList: fromByteList,
-      validationMode: validationMode);
+      validationMode: validationMode,
+      noDashes: noDashes);
 
   if (!isValid) {
     &#47;&#47; let&#39;s check if it is a non RFC4122 uuid and help the developer
@@ -103,7 +106,8 @@ If you are using a Microsoft GUID, you should set <code>validationMode</code> to
       final isValidNonStrict = isValidUUID(
           fromString: fromString,
           fromByteList: fromByteList,
-          validationMode: ValidationMode.nonStrict);
+          validationMode: ValidationMode.nonStrict,
+          noDashes: noDashes);
 
       if (isValidNonStrict) {
         throw FormatException(
@@ -147,7 +151,7 @@ If you are using a Microsoft GUID, you should set <code>validationMode</code> to
 <footer>
   <span class="no-break">
     uuid
-      4.2.1
+      4.2.2
   </span>
 
   
