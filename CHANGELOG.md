@@ -1,5 +1,12 @@
 # Changelog
 
+v4.3.0
+
+* Update SDK constraints to >= 3.0.0
+* Update Meta package to 1.11.0
+* **[PARTIAL BREAKING CHANGE]** Changing MathRNG implementation to use 4 nextints, instead of 16 for optimization to match CryptoRNG. This will affect regenerating the same UUID from the same seed.
+  * If you need the old behavior, please use MathRNGDeprecated() instead.
+
 v4.2.2
 
 * Fix CryptoRNG on Web generating a random number 0 always

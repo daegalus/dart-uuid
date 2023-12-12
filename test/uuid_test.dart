@@ -120,7 +120,7 @@ void main() {
       var u0 = uuid.v4(options: {
         'rng': MathRNG(seed: 1),
       });
-      var u1 = 'a473ff7b-b3cd-4899-a04d-ea0fbd30a72e';
+      var u1 = 'a462502a-73af-4e41-bfc4-05957b7030dd';
       expect(u0, equals(u1));
     });
 
@@ -130,7 +130,7 @@ void main() {
         'rng': MathRNG(seed: 1),
       });
 
-      var u1 = 'a473ff7b-b3cd-4899-a04d-ea0fbd30a72e';
+      var u1 = 'a462502a-73af-4e41-bfc4-05957b7030dd';
       expect(Uuid.unparse(buffer), equals(u1));
     });
 
@@ -363,7 +363,7 @@ void main() {
       var options = V7Options(1321651533573, rand);
       var id = uuid.v7(config: options);
 
-      expect(id, equals('0133b891-f705-7473-bf7b-b3cdc899a04d'));
+      expect(id, equals('0133b891-f705-7462-902a-73af3e41ffc4'));
     });
 
     test('Generate lots of codes to see if we get v7 collisions.', () {
@@ -575,7 +575,7 @@ void main() {
       for (final testCase in {
         'Tuesday, February 22, 2022 2:22:22.222000 PM GMT-05:00': [
           DateTime.fromMillisecondsSinceEpoch(1645557742222).toUtc(),
-          '20220222-1922-8422-B222-B3CDC899A04D'
+          '20220222-1922-8422-9222-73AF3E41FFC4'
         ],
       }.entries) {
         test(testCase.key, () {

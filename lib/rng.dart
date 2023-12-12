@@ -35,6 +35,31 @@ class MathRNG extends RNG {
     final b = Uint8List(16);
     final rand = (seed == -1) ? _random : Random(seed);
 
+    for (var i = 0; i < 16; i += 4) {
+      var k = rand.nextInt(pow(2, 32).toInt());
+      b[i] = k;
+      b[i + 1] = k >> 8;
+      b[i + 2] = k >> 16;
+      b[i + 3] = k >> 24;
+    }
+
+    return b;
+  }
+}
+
+/// Math.Random()-based RNG. All platforms, fast, not cryptographically
+/// strong. Optional [seed] can be passed on creation.
+class MathRNGDeprecated extends RNG {
+  static final _random = Random();
+  final int seed;
+
+  const MathRNGDeprecated({this.seed = -1});
+
+  @override
+  Uint8List generateInternal() {
+    final b = Uint8List(16);
+    final rand = (seed == -1) ? _random : Random(seed);
+
     for (var i = 0; i < 16; i++) {
       b[i] = rand.nextInt(256);
     }
