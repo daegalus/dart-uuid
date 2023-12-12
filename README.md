@@ -1,6 +1,6 @@
 # uuid
 
-**Version 4.0.x is a complete redesign of the underlying setup, but tries to be API compatible or similar to 3.x.**
+**Version 4.x.x is a complete redesign of the underlying setup, but tries to be API compatible or similar to 3.x.**
 
 **UuidValue is still Experimental and the API for it is in flux, please pay attention to changelogs and versions.**
 
@@ -30,7 +30,7 @@ Features:
 
 ```yaml
 dependencies:
-  uuid: ^4.0.0
+  uuid: ^4.3.0
 ```
 
 ```dart
