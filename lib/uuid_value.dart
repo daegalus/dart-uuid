@@ -30,9 +30,10 @@ class UuidValue {
   /// the uuid string.
   /// Throws [FormatException] if the UUID is invalid.
   factory UuidValue.withValidation(String uuid,
-      [ValidationMode validationMode = ValidationMode.strictRFC4122]) {
+      [ValidationMode validationMode = ValidationMode.strictRFC4122,
+      bool noDashes = false]) {
     final uuidValue = UuidValue.fromString(uuid);
-    uuidValue.validate(validationMode);
+    uuidValue.validate(validationMode, noDashes);
     return uuidValue;
   }
 
@@ -61,9 +62,10 @@ class UuidValue {
   /// the uuid string.
   /// Throws [FormatException] if the UUID is invalid.
   void validate(
-      [ValidationMode validationMode = ValidationMode.strictRFC4122]) {
+      [ValidationMode validationMode = ValidationMode.strictRFC4122,
+      bool noDashes = false]) {
     UuidValidation.isValidOrThrow(
-        fromString: uuid, validationMode: validationMode);
+        fromString: uuid, validationMode: validationMode, noDashes: noDashes);
   }
 
   // toBytes() converts the internal string representation to a list of bytes.

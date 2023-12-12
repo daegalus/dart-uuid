@@ -40,16 +40,15 @@ class UuidParsing {
   /// Throws [RangeError] if a [buffer] is provided and it is too small.
   /// It is also thrown if a non-zero [offset] is provided without providing
   /// a [buffer].
-  static List<int> parse(
-    String uuid, {
-    List<int>? buffer,
-    int offset = 0,
-    bool validate = true,
-    ValidationMode validationMode = ValidationMode.strictRFC4122,
-  }) {
+  static List<int> parse(String uuid,
+      {List<int>? buffer,
+      int offset = 0,
+      bool validate = true,
+      ValidationMode validationMode = ValidationMode.strictRFC4122,
+      bool noDashes = false}) {
     if (validate) {
       UuidValidation.isValidOrThrow(
-          fromString: uuid, validationMode: validationMode);
+          fromString: uuid, validationMode: validationMode, noDashes: noDashes);
     }
     var i = offset, ii = 0;
 
@@ -96,12 +95,14 @@ class UuidParsing {
       {List<int>? buffer,
       int offset = 0,
       bool validate = true,
-      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+      ValidationMode validationMode = ValidationMode.strictRFC4122,
+      bool noDashes = false}) {
     return Uint8List.fromList(parse(uuid,
         buffer: buffer,
         offset: offset,
         validate: validate,
-        validationMode: validationMode));
+        validationMode: validationMode,
+        noDashes: noDashes));
   }
 
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.

@@ -1,5 +1,9 @@
 # Changelog
 
+v4.3.1
+
+* Add additional optional parameters for parseing and validation for the new noDashes flag.
+
 v4.3.0
 
 * Update SDK constraints to >= 3.0.0
