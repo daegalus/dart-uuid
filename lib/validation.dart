@@ -10,7 +10,8 @@ class UuidValidation {
   static bool isValidUUID(
       {String fromString = '',
       Uint8List? fromByteList,
-      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+      ValidationMode validationMode = ValidationMode.strictRFC4122,
+      bool noDashes = false}) {
     if (fromByteList != null) {
       fromString = UuidParsing.unparse(fromByteList);
     }
@@ -20,7 +21,12 @@ class UuidValidation {
     }
 
     // If its not 36 characters in length, don't bother (including dashes).
-    if (fromString.length != 36) {
+    if (!noDashes && fromString.length != 36) {
+      return false;
+    }
+
+    // If its not 32 characters in length, don't bother (excluding excluding).
+    if (noDashes && fromString.length != 32) {
       return false;
     }
 
@@ -28,16 +34,18 @@ class UuidValidation {
     switch (validationMode) {
       case ValidationMode.strictRFC4122:
         {
-          const pattern =
-              r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$';
+          var pattern = (noDashes)
+              ? r'^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-8][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$'
+              : r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$';
           final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
           final match = regex.hasMatch(fromString.toLowerCase());
           return match;
         }
       case ValidationMode.nonStrict:
         {
-          const pattern =
-              r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$';
+          var pattern = (noDashes)
+              ? r'^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-8][0-9a-f]{3}-?[0-9a-f]{4}-?[0-9a-f]{12}$'
+              : r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-8][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$';
           final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
           final match = regex.hasMatch(fromString.toLowerCase());
           return match;
@@ -60,11 +68,13 @@ class UuidValidation {
   static void isValidOrThrow(
       {String fromString = '',
       Uint8List? fromByteList,
-      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+      ValidationMode validationMode = ValidationMode.strictRFC4122,
+      bool noDashes = false}) {
     final isValid = isValidUUID(
         fromString: fromString,
         fromByteList: fromByteList,
-        validationMode: validationMode);
+        validationMode: validationMode,
+        noDashes: noDashes);
 
     if (!isValid) {
       // let's check if it is a non RFC4122 uuid and help the developer
@@ -72,7 +82,8 @@ class UuidValidation {
         final isValidNonStrict = isValidUUID(
             fromString: fromString,
             fromByteList: fromByteList,
-            validationMode: ValidationMode.nonStrict);
+            validationMode: ValidationMode.nonStrict,
+            noDashes: noDashes);
 
         if (isValidNonStrict) {
           throw FormatException(

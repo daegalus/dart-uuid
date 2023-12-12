@@ -510,6 +510,20 @@ void main() {
     });
   });
 
+  group('[Validation Test]', () {
+    test('Dashes UUID', () {
+      const validUUID = '87cd4eb3-cb88-449b-a1da-e468fd829310';
+      expect(Uuid.isValidUUID(fromString: validUUID, noDashes: true), false);
+      expect(Uuid.isValidUUID(fromString: validUUID), true);
+    });
+    test('No Dashes UUID', () {
+      const validNoDashesUUID = '87cd4eb3cb88449ba1dae468fd829310';
+      expect(Uuid.isValidUUID(fromString: validNoDashesUUID, noDashes: true),
+          true);
+      expect(Uuid.isValidUUID(fromString: validNoDashesUUID), false);
+    });
+  });
+
   group('[Test Vectors]', () {
     group('[UUID6]', () {
       for (final testCase in {

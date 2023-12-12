@@ -128,11 +128,13 @@ class Uuid {
   static bool isValidUUID(
       {String fromString = '',
       Uint8List? fromByteList,
-      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+      ValidationMode validationMode = ValidationMode.strictRFC4122,
+      bool noDashes = false}) {
     return UuidValidation.isValidUUID(
         fromString: fromString,
         fromByteList: fromByteList,
-        validationMode: validationMode);
+        validationMode: validationMode,
+        noDashes: noDashes);
   }
 
   /// Generates a time-based version 1 UUID

@@ -1,5 +1,10 @@
 # Changelog
 
+v4.2.2
+
+* Fix CryptoRNG on Web generating a random number 0 always
+* Add NoDashes support to the validator so that it validates UUIDs that don't have dashes but are otherwise valid.
+
 v4.2.1
 
 * Lower `meta` dependency to 1.9.1 so that it is compatible with Flutter Stable 3.13
