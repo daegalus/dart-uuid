@@ -522,6 +522,28 @@ void main() {
           true);
       expect(Uuid.isValidUUID(fromString: validNoDashesUUID), false);
     });
+
+    test('No Dashes UUIDValue Formatted string', () {
+      const validNoDashesUUID = '87cd4eb3cb88449ba1dae468fd829310';
+      expect(Uuid.isValidUUID(fromString: validNoDashesUUID, noDashes: true),
+          true);
+      expect(Uuid.isValidUUID(fromString: validNoDashesUUID), false);
+
+      var uuidval = UuidValue.fromString(validNoDashesUUID);
+      expect(
+          uuidval.toFormattedString(), "87cd4eb3-cb88-449b-a1da-e468fd829310");
+    });
+
+    test('No Dashes UUIDValue Formatted string validate', () {
+      const validNoDashesUUID = '87cd4eb3cb88449ba1dae468fd829310';
+      expect(Uuid.isValidUUID(fromString: validNoDashesUUID, noDashes: true),
+          true);
+      expect(Uuid.isValidUUID(fromString: validNoDashesUUID), false);
+
+      var uuidval = UuidValue.fromString(validNoDashesUUID);
+      expect(uuidval.toFormattedString(validate: true),
+          "87cd4eb3-cb88-449b-a1da-e468fd829310");
+    });
   });
 
   group('[Test Vectors]', () {

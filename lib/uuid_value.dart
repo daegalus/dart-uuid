@@ -73,10 +73,15 @@ class UuidValue {
     return UuidParsing.parseAsByteList(uuid, validate: validate);
   }
 
-  // toString() returns the String representation of the UUID
+  // toString() returns the String representation of the UUID, without reformatting it.
   @override
   String toString() {
     return uuid;
+  }
+
+  String toFormattedString({bool validate = false}) {
+    return UuidParsing.unparse(UuidParsing.parse(uuid,
+        validate: validate, noDashes: !uuid.contains('-')));
   }
 
   // equals() compares to UuidValue objects' uuids.
