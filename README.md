@@ -30,7 +30,7 @@ Features:
 
 ```yaml
 dependencies:
-  uuid: ^4.3.0
+  uuid: ^4.3.2
 ```
 
 ```dart

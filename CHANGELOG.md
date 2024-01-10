@@ -1,5 +1,10 @@
 # Changelog
 
+v4.3.2
+
+* Added `toFormattedString()` to `UuidValue` to handle cases where the UUID used has no hyphens but you wnt them for output.
+* Changed constraint for `meta` to `1.10.0` to not conflict with `flutter_test`
+
 v4.3.1
 
 * Add additional optional parameters for parseing and validation for the new noDashes flag.
