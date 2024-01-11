@@ -86,26 +86,20 @@ options detailed in the readme.</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String generate({V7Options? options}) {
   var buf = Uint8List(16);
-  int time = options?.time ?? (DateTime.now().toUtc()).millisecondsSinceEpoch;
+  int time = options?.time ?? DateTime.timestamp().millisecondsSinceEpoch;
 
-  var timeList32 = Uint8List(8)..buffer.asUint32List()[0] = time &gt;&gt; 16;
-  var timeList16 = Uint8List(8)..buffer.asUint16List()[0] = time;
-  var endIndex32 = timeList32.length - 1;
-  var endIndex16 = timeList16.length - 1;
+  var timeList48 = Uint8List.fromList([
+    time ~&#47; pow(2, 40),
+    time ~&#47; pow(2, 32),
+    time ~&#47; pow(2, 24),
+    time ~&#47; pow(2, 16),
+    time ~&#47; pow(2, 8),
+    time
+  ]);
 
-  while (endIndex32 &gt;= 0 &amp;&amp; timeList32[endIndex32] == 0) {
-    endIndex32--;
-  }
-  while (endIndex16 &gt;= 0 &amp;&amp; timeList16[endIndex16] == 0) {
-    endIndex16--;
-  }
-
-  timeList32 = timeList32.sublist(0, endIndex32 + 1);
-  timeList16 = timeList16.sublist(0, endIndex16 + 1);
-
-  buf.setAll(0, timeList32.reversed);
-  buf.setAll(4, timeList16.reversed);
-  List&lt;int&gt; randomBytes = options?.randomBytes ?? _randomData();
+  buf.setAll(0, timeList48);
+  List&lt;int&gt; randomBytes = options?.randomBytes ??
+      (goptions?.rng?.generate() ?? MathRNG().generate());
 
   buf.setRange(6, 16, randomBytes);
   buf.setRange(6, 7, [buf.getRange(6, 7).last &amp; 0x0f | 0x70]);
@@ -145,7 +139,7 @@ options detailed in the readme.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.3.2
+      4.3.3
   </span>
 
   

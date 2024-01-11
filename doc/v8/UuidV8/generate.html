@@ -105,7 +105,7 @@ options detailed in the readme.</p>
   <pre class="language-dart"><code class="language-dart">String generate({V8Options? options}) {
   var buf = Uint8List(16);
 
-  DateTime time = options?.time ?? DateTime.now().toUtc();
+  DateTime time = options?.time ?? DateTime.timestamp();
 
   buf.setRange(
       0, 2, UuidParsing.parseHexToBytes(sprintf(&#39;0x%04i&#39;, [time.year])));
@@ -118,7 +118,8 @@ options detailed in the readme.</p>
   buf.setRange(
       5, 6, UuidParsing.parseHexToBytes(sprintf(&#39;0x%02i&#39;, [time.minute])));
 
-  var randomBytes = options?.randomBytes ?? _randomData();
+  var randomBytes = options?.randomBytes ??
+      (goptions?.rng?.generate() ?? MathRNG().generate());
 
   buf.setRange(6, 16, randomBytes);
   buf.setRange(6, 7, [buf.getRange(6, 7).last &amp; 0x0f | 0x80]);
@@ -165,7 +166,7 @@ options detailed in the readme.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.3.2
+      4.3.3
   </span>
 
   
