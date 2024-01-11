@@ -10,3 +10,5 @@ packages
 out/
 .dart_tool
 .vscode/
+/index.html
+/out.js*

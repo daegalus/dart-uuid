@@ -42,7 +42,7 @@ class UuidV8 {
   String generate({V8Options? options}) {
     var buf = Uint8List(16);
 
-    DateTime time = options?.time ?? DateTime.now().toUtc();
+    DateTime time = options?.time ?? DateTime.timestamp();
 
     buf.setRange(
         0, 2, UuidParsing.parseHexToBytes(sprintf('0x%04i', [time.year])));
@@ -55,7 +55,8 @@ class UuidV8 {
     buf.setRange(
         5, 6, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.minute])));
 
-    var randomBytes = options?.randomBytes ?? _randomData();
+    var randomBytes = options?.randomBytes ??
+        (goptions?.rng?.generate() ?? MathRNG().generate());
 
     buf.setRange(6, 16, randomBytes);
     buf.setRange(6, 7, [buf.getRange(6, 7).last & 0x0f | 0x80]);
@@ -69,25 +70,5 @@ class UuidV8 {
     buf.setRange(8, 10, milliBytes);
 
     return UuidParsing.unparse(buf);
-  }
-
-  /// _randomData() Generates a random data for V8 UUID random section
-  List<int> _randomData() {
-    Uint8List seedBytes = goptions?.rng?.generate() ?? MathRNG().generate();
-
-    List<int> randomData = [
-      seedBytes[0],
-      seedBytes[1],
-      seedBytes[2],
-      seedBytes[3],
-      seedBytes[4],
-      seedBytes[5],
-      seedBytes[6],
-      seedBytes[7],
-      seedBytes[8],
-      seedBytes[9]
-    ];
-
-    return randomData;
   }
 }

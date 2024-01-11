@@ -1,5 +1,12 @@
 # Changelog
 
+v4.3.3
+
+* Fix UUIDv7 in Javascript
+  * Using bitshifts on anything over 32bits get truncated. Switched to a more naive solution for now. Hopefully dart2wasm fixes things.
+* Remove unnecessary `_randomData()` functions
+* Add `fixnum` package to handle issues in v6, time, and javascript.
+
 v4.3.2
 
 * Added `toFormattedString()` to `UuidValue` to handle cases where the UUID used has no hyphens but you wnt them for output.

@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_single_cascade_in_expression_statements
 
+import 'dart:math';
 import 'dart:typed_data';
+import 'package:fixnum/fixnum.dart';
 import 'data.dart';
 import 'parsing.dart';
 import 'rng.dart';
@@ -52,7 +54,7 @@ class UuidV6 {
     // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
     // milliseconds) and 'nsecs' (100-nanoseconds offset from msecs) since unix
     // epoch, 1970-01-01 00:00.
-    int mSecs = options?.mSecs ?? (DateTime.now()).millisecondsSinceEpoch;
+    int mSecs = options?.mSecs ?? DateTime.timestamp().millisecondsSinceEpoch;
 
     // Per 4.2.1.2, use count of uuid's generated during the current clock
     // cycle to simulate higher resolution clock
@@ -84,22 +86,21 @@ class UuidV6 {
     // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
     mSecs += 12219292800000;
 
-    var uuidTime = mSecs * 10000 + nSecs;
+    var uuidTime = Int64(mSecs) * Int64(10000) + Int64(nSecs);
 
-    var high32a = uuidTime >> 28;
-    var high32b = uuidTime << 4;
+    var high = uuidTime ~/ pow(2, 28);
+    var mid = uuidTime * pow(2, 4);
     var low = uuidTime & 0x0fff | 0x6000;
     var clock = (clockSeq & 0x3fff) | 0x8000;
 
-    buf..buffer.asByteData().setUint32(0, high32a);
-    buf..buffer.asByteData().setUint32(4, high32b);
-    buf..buffer.asByteData().setUint16(6, low);
+    buf..buffer.asByteData().setUint32(0, high.toInt());
+    buf..buffer.asByteData().setUint32(4, mid.toInt());
+    buf..buffer.asByteData().setUint16(6, low.toInt());
     buf..buffer.asByteData().setUint16(8, clock);
 
     var node =
         options?.node ?? V6State.nodeId ?? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     buf.setAll(10, node);
-
     return UuidParsing.unparse(buf);
   }
 }

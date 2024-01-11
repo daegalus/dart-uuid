@@ -51,7 +51,7 @@ class UuidV1 {
     // (1582-10-15 00:00). Time is handled internally as 'msecs' (integer
     // milliseconds) and 'nsecs' (100-nanoseconds offset from msecs) since unix
     // epoch, 1970-01-01 00:00.
-    int mSecs = options?.mSecs ?? (DateTime.now()).microsecondsSinceEpoch;
+    int mSecs = options?.mSecs ?? DateTime.timestamp().microsecondsSinceEpoch;
 
     // Per 4.2.1.2, use count of uuid's generated during the current clock
     // cycle to simulate higher resolution clock
@@ -100,7 +100,7 @@ class UuidV1 {
     buf[i++] = tmh >> 16 & 0xff;
 
     // clockSeq high and reserved (Per 4.2.2 - include variant)
-    buf[i++] = (clockSeq & 0x3F00) >> 8; // | 0x80;
+    buf[i++] = (clockSeq & 0x3F00) >> 8;
 
     // clockSeq low
     buf[i++] = clockSeq & 0xff;
