@@ -2,6 +2,7 @@
 // TODO: Remove this ignore when we remove the deprecated options.
 import 'dart:typed_data';
 
+import 'package:crypto/crypto.dart';
 import 'package:test/test.dart';
 import 'package:uuid/data.dart';
 import 'package:uuid/uuid.dart';
@@ -551,11 +552,11 @@ void main() {
       for (final testCase in {
         'Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00': [
           1645557742000,
-          '1EC9414C-232A-6B00-B3C8-9E6BDECED846'
+          '1EC9414C-232A-6B00-B3C8-9F6BDECED846'
         ],
       }.entries) {
         test(testCase.key, () {
-          var nodeId = <int>[0x9E, 0x6B, 0xDE, 0xCE, 0xD8, 0x46];
+          var nodeId = <int>[0x9F, 0x6B, 0xDE, 0xCE, 0xD8, 0x46];
           var clockSeq = (0xB3 << 8 | 0xC8) & 0x3ffff;
           final uuid = Uuid().v6(
               config: V6Options(
@@ -597,6 +598,39 @@ void main() {
       for (final testCase in {
         'Tuesday, February 22, 2022 2:22:22.222000 PM GMT-05:00': [
           DateTime.fromMillisecondsSinceEpoch(1645557742222).toUtc(),
+          '20220222-1922-8422-9222-73AF3E41FFC4'
+        ],
+      }.entries) {
+        test(testCase.key, () {
+          final rand = MathRNG(seed: 1).generate();
+          final uuid =
+              Uuid().v8(config: V8Options(testCase.value[0] as DateTime, rand));
+          expect(uuid.toUpperCase(), equals(testCase.value[1]));
+        });
+      }
+
+      for (final testCase in {
+        'UUIDv8 Generic, SHA512/256 random numbers': [
+          [
+            0xdb,
+            0xc9,
+            0xed,
+            0x5e,
+            0xf2,
+            0xf5,
+            0x43,
+            0x13,
+            0x8a,
+            0xf4,
+            0x5e,
+            0x8b,
+            0x58,
+            0x5f,
+            0x91,
+            0x31,
+            0xa6,
+            0x16
+          ],
           '20220222-1922-8422-9222-73AF3E41FFC4'
         ],
       }.entries) {

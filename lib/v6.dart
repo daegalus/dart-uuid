@@ -43,7 +43,7 @@ class UuidV6 {
   /// The first argument is an options map that takes various configuration
   /// options detailed in the readme.
   ///
-  /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-7
   String generate({V6Options? options}) {
     _init();
     var buf = Uint8List(16);

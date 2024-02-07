@@ -84,7 +84,7 @@ class V7Options {
   const V7Options(this.time, this.randomBytes);
 }
 
-/// [V8Options] stores the options passed into the v7 function.
+/// [V8Options] stores the options passed into the v8 function.
 /// [time] is the time in milliseconds since the unix epoch
 /// [randomBytes] is the random bytes to use to generate the UUID. Primarily used
 /// for testing, or recreating a UUID
@@ -93,6 +93,14 @@ class V8Options {
   final List<int>? randomBytes;
 
   const V8Options(this.time, this.randomBytes);
+}
+
+/// [V8GenericOptions] stores the options passed into the v8g function.
+/// [data] is the 122 bytes of custom data.
+class V8GenericOptions {
+  final List<int>? data;
+
+  const V8GenericOptions(this.data);
 }
 
 /// [V1State] stores the state of the v1 function.

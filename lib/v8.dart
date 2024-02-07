@@ -18,7 +18,7 @@ class UuidV8 {
   /// The first argument is an options map that takes various configuration
   /// options detailed in the readme.
   ///
-  /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-8
   ///
   ///   0                   10                  20                  30
   ///   0 1 2 3 4 5 6 7 8 9 A B C D E F 0 1 2 3 4 5 6 7 8 9 A B C D E F

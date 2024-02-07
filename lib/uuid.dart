@@ -20,6 +20,7 @@ import 'v5.dart';
 import 'v6.dart';
 import 'v7.dart';
 import 'v8.dart';
+import 'v8generic.dart';
 
 export 'uuid_value.dart';
 export 'enums.dart';
@@ -37,12 +38,6 @@ class Uuid {
   static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
 
   final GlobalOptions? goptions;
-  // final UuidV1 _uuidv1;
-  // final UuidV4 _uuidv4;
-  // final UuidV5 _uuidv5;
-  // final UuidV6 _uuidv6;
-  // final UuidV7 _uuidv7;
-  // final UuidV8 _uuidv8;
 
   /// Creates a new instance of the Uuid class.
   /// Optionally you can pass in a [GlobalOptions] object to set global options
@@ -489,7 +484,7 @@ class Uuid {
   /// The first argument is a [V6Options] object that takes the same options as
   /// the options map.
   ///
-  /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-6
   String v6({V6Options? config}) {
     return UuidV6(goptions: goptions).generate(options: config);
   }
@@ -508,7 +503,7 @@ class Uuid {
   /// The second optional argument is a [V6Options] object that takes the same options as
   /// the options map. This is the preferred way to pass options.
   ///
-  /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-6
   List<int> v6buffer(
     List<int> buffer, {
     V6Options? config,
@@ -526,7 +521,7 @@ class Uuid {
   /// The first argument is a [V6Options] object that takes the same options as
   /// the options map. This is the preferred way to pass options.
   ///
-  /// https://datatracker.ietf.org/doc/html/draft-peabody-dispatch-new-uuid-format#section-4.3
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-6
   UuidValue v6obj({V6Options? config}) {
     return UuidValue.fromString(v6(config: config));
   }
@@ -539,7 +534,7 @@ class Uuid {
   /// The first argument is a [V7Options] object that takes the same options as
   /// the options map.
   ///
-  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-7
   String v7({V7Options? config}) {
     return UuidV7(goptions: goptions).generate(options: config);
   }
@@ -555,7 +550,7 @@ class Uuid {
   /// The first optional argument is a [V7Options] object that takes the same options as
   /// the options map.
   ///
-  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-7
   List<int> v7buffer(
     List<int> buffer, {
     V7Options? config,
@@ -573,7 +568,7 @@ class Uuid {
   /// The first argument is a [V7Options] object that takes the same options as
   /// the options map.
   ///
-  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-7
   UuidValue v7obj({V7Options? config}) {
     return UuidValue.fromString(v7(config: config));
   }
@@ -586,7 +581,7 @@ class Uuid {
   /// The first argument is a [V8Options] object that takes the same options as
   /// the options map.
   ///
-  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-8
   String v8({V8Options? config}) {
     return UuidV8(goptions: goptions).generate(options: config);
   }
@@ -602,7 +597,7 @@ class Uuid {
   /// The first optional argument is a [V8Options] object that takes the same options as
   /// the options map.
   ///
-  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-8
   List<int> v8buffer(
     List<int> buffer, {
     V8Options? config,
@@ -620,8 +615,58 @@ class Uuid {
   /// The first argument is a [V8Options] object that takes the same options as
   /// the options map.
   ///
-  /// https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html#name-uuidv7-layout-and-bit-order
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-8
   UuidValue v8obj({V8Options? config}) {
     return UuidValue.fromString(v8(config: config));
+  }
+
+  /// Generates a draft time-based version 8 UUID
+  ///
+  /// Takes in 128 bits (16 bytes) of custom data, and produces a valid V8 uuid.
+  /// Bits 48-51 and bits 64-65 will be modified to create a valid uuid.
+  ///
+  /// The first argument is a [V8GenericOptions] object that takes the same options as
+  /// the options map.
+  ///
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-8
+  String v8g({V8GenericOptions? config}) {
+    return UuidV8Generic(goptions: goptions).generate(options: config);
+  }
+
+  /// Generates a draft time-based version 8 UUID into a provided buffer
+  ///
+  /// Takes in 128 bits (16 bytes) of custom data, and produces a valid V8 uuid.
+  /// Bits 48-51 and bits 64-65 will be modified to create a valid uuid.
+  /// It will place the result into the provided [buffer].
+  ///
+  /// The [buffer] will also be returned..
+  ///
+  /// Optionally an [offset] can be provided with a start position in the buffer.
+  ///
+  /// The first optional argument is a [V8GenericOptions] object that takes the same options as
+  /// the options map.
+  ///
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-8
+  List<int> v8gbuffer(
+    List<int> buffer, {
+    V8GenericOptions? config,
+    int offset = 0,
+  }) {
+    return UuidParsing.parse(v8g(config: config),
+        buffer: buffer, offset: offset);
+  }
+
+  /// Generates a draft time-based version 8 UUID as a [UuidValue] object
+  ///
+  /// Takes in 128 bits (16 bytes) of custom data, and produces a valid V8 uuid.
+  /// Bits 48-51 and bits 64-65 will be modified to create a valid uuid.
+  /// It will return it as a [UuidValue] object.
+  ///
+  /// The first argument is a [V8GenericOptions] object that takes the same options as
+  /// the options map.
+  ///
+  /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-8
+  UuidValue v8gobj({V8GenericOptions? config}) {
+    return UuidValue.fromString(v8g(config: config));
   }
 }
