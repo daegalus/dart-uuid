@@ -631,13 +631,12 @@ void main() {
             0xa6,
             0x16
           ],
-          '20220222-1922-8422-9222-73AF3E41FFC4'
+          'DBC9ED5E-F2F5-8313-8AF4-5E8B585F9131'
         ],
       }.entries) {
         test(testCase.key, () {
-          final rand = MathRNG(seed: 1).generate();
-          final uuid =
-              Uuid().v8(config: V8Options(testCase.value[0] as DateTime, rand));
+          final uuid = Uuid()
+              .v8g(config: V8GenericOptions(testCase.value[0] as List<int>));
           expect(uuid.toUpperCase(), equals(testCase.value[1]));
         });
       }
