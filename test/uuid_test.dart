@@ -2,7 +2,6 @@
 // TODO: Remove this ignore when we remove the deprecated options.
 import 'dart:typed_data';
 
-import 'package:crypto/crypto.dart';
 import 'package:test/test.dart';
 import 'package:uuid/data.dart';
 import 'package:uuid/uuid.dart';
