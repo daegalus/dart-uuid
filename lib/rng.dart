@@ -25,18 +25,16 @@ abstract class RNG {
 /// Math.Random()-based RNG. All platforms, fast, not cryptographically
 /// strong. Optional [seed] can be passed on creation.
 class MathRNG extends RNG {
-  static final _random = Random();
-  final int seed;
+  final Random _rnd;
 
-  const MathRNG({this.seed = -1});
+  MathRNG({int? seed}) : _rnd = Random(seed);
 
   @override
   Uint8List generateInternal() {
     final b = Uint8List(16);
-    final rand = (seed == -1) ? _random : Random(seed);
 
     for (var i = 0; i < 16; i += 4) {
-      var k = rand.nextInt(pow(2, 32).toInt());
+      var k = _rnd.nextInt(pow(2, 32).toInt());
       b[i] = k;
       b[i + 1] = k >> 8;
       b[i + 2] = k >> 16;
