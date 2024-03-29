@@ -22,7 +22,7 @@ class UuidV4 {
     List<int> rng = options?.rng?.generate() ??
         goptions?.rng?.generate() ??
         options?.rng?.generate() ??
-        MathRNG.noSeed().generate();
+        MathRNG().generate();
 
     // Use provided values over RNG
     List<int> rnds = options?.random ?? rng;
