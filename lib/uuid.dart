@@ -200,7 +200,7 @@ class Uuid {
     V1Options? config,
     int offset = 0,
   }) {
-    var result = config != null ? v1(config: config) : v1(options: options);
+    var result = options != null ? v1(options: options) : v1(config: config);
     return UuidParsing.parse(result, buffer: buffer, offset: offset);
   }
 
@@ -233,9 +233,9 @@ class Uuid {
       {@Deprecated('use config instead. Removal in 5.0.0')
       Map<String, dynamic>? options,
       V1Options? config}) {
-    return config != null
-        ? UuidValue.fromString(v1(config: config))
-        : UuidValue.fromString(v1(options: options));
+    return options != null
+        ? UuidValue.fromString(v1(options: options))
+        : UuidValue.fromString(v1(config: config));
   }
 
   /// Generates a RNG version 4 UUID
@@ -339,7 +339,7 @@ class Uuid {
     V4Options? config,
     int offset = 0,
   }) {
-    var result = config != null ? v4(config: config) : v4(options: options);
+    var result = options != null ? v4(options: options) : v4(config: config);
     return UuidParsing.parse(result, buffer: buffer, offset: offset);
   }
 
@@ -373,9 +373,9 @@ class Uuid {
       {@Deprecated('use config instead. Removal in 5.0.0')
       Map<String, dynamic>? options,
       V4Options? config}) {
-    return config != null
-        ? UuidValue.fromString(v4(config: config))
-        : UuidValue.fromString(v4(options: options));
+    return options != null
+        ? UuidValue.fromString(v4(options: options))
+        : UuidValue.fromString(v4(config: config));
   }
 
   /// Generates a namespace & name-based version 5 UUID
@@ -440,9 +440,9 @@ class Uuid {
     V5Options? config,
     int offset = 0,
   }) {
-    var result = config != null
-        ? v5(namespace, name, config: config)
-        : v5(namespace, name, options: options);
+    var result = options != null
+        ? v5(namespace, name, options: options)
+        : v5(namespace, name, config: config);
     return UuidParsing.parse(result, buffer: buffer, offset: offset);
   }
 
@@ -471,9 +471,9 @@ class Uuid {
       {@Deprecated('use config instead. Removal in 5.0.0')
       Map<String, dynamic>? options,
       V5Options? config}) {
-    return config != null
-        ? UuidValue.fromString(v5(namespace, name, config: config))
-        : UuidValue.fromString(v5(namespace, name, options: options));
+    return options != null
+        ? UuidValue.fromString(v5(namespace, name, options: options))
+        : UuidValue.fromString(v5(namespace, name, config: config));
   }
 
   /// Generates a draft time-based version 6 UUID

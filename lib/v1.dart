@@ -12,7 +12,8 @@ class UuidV1 {
   /// Primarily sets up the seedBytes then generates the node id and clockseq
   void _init() {
     if (V1State.initialized) return;
-    Uint8List seedBytes = goptions?.rng?.generate() ?? MathRNG().generate();
+    Uint8List seedBytes =
+        goptions?.rng?.generate() ?? MathRNG.noSeed().generate();
 
     // Per 4.5, create a 48-bit node id (47 random bits + multicast bit = 1)
     List<int> nodeId = [

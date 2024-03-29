@@ -8,7 +8,7 @@ import 'package:uuid/uuid.dart';
 import 'package:uuid/rng.dart';
 
 void main() {
-  var uuid = const Uuid();
+  var uuid = Uuid();
   const testTime = 1321644961388;
 
   group('[Version 1 Tests]', () {
@@ -118,7 +118,7 @@ void main() {
   group('[Version 4 Tests]', () {
     test('Check if V4 is consistent using a static seed', () {
       var u0 = uuid.v4(options: {
-        'rng': MathRNG(seed: 1),
+        'rng': MathRNG.fromSeed(seed: 1),
       });
       var u1 = 'a462502a-73af-4e41-bfc4-05957b7030dd';
       expect(u0, equals(u1));
@@ -127,7 +127,7 @@ void main() {
     test('Consistency check with buffer', () {
       var buffer = Uint8List(16);
       uuid.v4buffer(buffer, options: {
-        'rng': MathRNG(seed: 1),
+        'rng': MathRNG.fromSeed(seed: 1),
       });
 
       var u1 = 'a462502a-73af-4e41-bfc4-05957b7030dd';
@@ -136,10 +136,10 @@ void main() {
 
     test('Using Objects', () {
       var regular = uuid.v4(options: {
-        'rng': MathRNG(seed: 1),
+        'rng': MathRNG.fromSeed(seed: 1),
       });
       var obj = uuid.v4obj(options: {
-        'rng': MathRNG(seed: 1),
+        'rng': MathRNG.fromSeed(seed: 1),
       });
 
       expect(obj.uuid, equals(regular));
@@ -185,7 +185,7 @@ void main() {
 
       var numDuplicates = 0;
       for (var i = 0; i < numToGenerate; i++) {
-        final uuid = generator.v4();
+        final uuid = generator.v4(config: V4Options(null, MathRNG.noSeed()));
 
         if (!values.contains(uuid)) {
           values.add(uuid);
@@ -359,7 +359,7 @@ void main() {
     });
 
     test('Explicit options produce expected id', () {
-      final rand = MathRNG(seed: 1).generate();
+      final rand = MathRNG.fromSeed(seed: 1).generate();
       var options = V7Options(1321651533573, rand);
       var id = uuid.v7(config: options);
 
@@ -395,7 +395,7 @@ void main() {
 
     test('Using buffers', () {
       var buffer = Uint8List(16);
-      final rand = MathRNG(seed: 1).generate();
+      final rand = MathRNG.fromSeed(seed: 1).generate();
       var options = V7Options(testTime, rand);
 
       var wihoutBuffer = uuid.v7(config: options);
@@ -405,7 +405,7 @@ void main() {
     });
 
     test('Using Objects', () {
-      final rand = MathRNG(seed: 1).generate();
+      final rand = MathRNG.fromSeed(seed: 1).generate();
       var options = V7Options(testTime, rand);
 
       var regular = uuid.v7(config: options);
@@ -601,7 +601,7 @@ void main() {
         ],
       }.entries) {
         test(testCase.key, () {
-          final rand = MathRNG(seed: 1).generate();
+          final rand = MathRNG.fromSeed(seed: 1).generate();
           final uuid =
               Uuid().v8(config: V8Options(testCase.value[0] as DateTime, rand));
           expect(uuid.toUpperCase(), equals(testCase.value[1]));

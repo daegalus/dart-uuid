@@ -27,7 +27,20 @@ abstract class RNG {
 class MathRNG extends RNG {
   final Random _rnd;
 
-  MathRNG({int? seed}) : _rnd = Random(seed);
+  factory MathRNG.fromSeed({int? seed}) {
+    Random rnd = seed == null ? Random() : Random(seed);
+    return MathRNG._internal(rnd);
+  }
+
+  factory MathRNG.fromRandom({Random? rnd}) {
+    return MathRNG._internal(rnd ?? Random());
+  }
+
+  factory MathRNG.noSeed() {
+    return MathRNG._internal(Random());
+  }
+
+  const MathRNG._internal(this._rnd);
 
   @override
   Uint8List generateInternal() {
