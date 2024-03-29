@@ -2,6 +2,7 @@
 
 import 'package:uuid/data.dart';
 
+import 'dart:convert';
 import 'enums.dart';
 import 'parsing.dart';
 import 'v4.dart';
@@ -47,11 +48,8 @@ class UuidV5 {
     // Convert namespace UUID to Byte List
     var bytes = UuidParsing.parse(namespace);
 
-    // Convert name to a list of bytes
-    var nameBytes = <int>[];
-    for (var singleChar in name.codeUnits) {
-      nameBytes.add(singleChar);
-    }
+    // Convert name to UTF-8 bytes
+    var nameBytes = utf8.encode(name);
 
     // Generate SHA1 using namespace concatenated with name
     var hashBytes = crypto.sha1.convert([...bytes, ...nameBytes]).bytes;
