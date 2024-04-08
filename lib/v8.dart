@@ -56,7 +56,7 @@ class UuidV8 {
         5, 6, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.minute])));
 
     var randomBytes = options?.randomBytes ??
-        (goptions?.rng?.generate() ?? MathRNG().generate());
+        (goptions?.rng?.generate() ?? V8State.random.generate());
 
     buf.setRange(6, 16, randomBytes);
     buf.setRange(6, 7, [buf.getRange(6, 7).last & 0x0f | 0x80]);

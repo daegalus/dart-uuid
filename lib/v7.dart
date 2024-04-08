@@ -34,7 +34,7 @@ class UuidV7 {
 
     buf.setAll(0, timeList48);
     List<int> randomBytes = options?.randomBytes ??
-        (goptions?.rng?.generate() ?? MathRNG().generate());
+        (goptions?.rng?.generate() ?? V7State.random.generate());
 
     buf.setRange(6, 16, randomBytes);
     buf.setRange(6, 7, [buf.getRange(6, 7).last & 0x0f | 0x70]);

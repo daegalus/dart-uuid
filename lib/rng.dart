@@ -10,7 +10,7 @@ abstract class RNG {
   const RNG();
 
   Uint8List generate() {
-    final uint8list = generateInternal();
+    final uint8list = _generateInternal();
     if (uint8list.length != 16) {
       throw Exception(
           'The length of the Uint8list returned by the custom RNG must be 16.');
@@ -19,7 +19,7 @@ abstract class RNG {
     }
   }
 
-  Uint8List generateInternal();
+  Uint8List _generateInternal();
 }
 
 /// Math.Random()-based RNG. All platforms, fast, not cryptographically
@@ -27,10 +27,10 @@ abstract class RNG {
 class MathRNG extends RNG {
   final Random _rnd;
 
-  MathRNG({int? seed}) : _rnd = Random(seed);
+  MathRNG({int? seed}) : _rnd = seed != null ? Random(seed) : Random();
 
   @override
-  Uint8List generateInternal() {
+  Uint8List _generateInternal() {
     final b = Uint8List(16);
 
     for (var i = 0; i < 16; i += 4) {
@@ -54,7 +54,7 @@ class MathRNGDeprecated extends RNG {
   const MathRNGDeprecated({this.seed = -1});
 
   @override
-  Uint8List generateInternal() {
+  Uint8List _generateInternal() {
     final b = Uint8List(16);
     final rand = (seed == -1) ? _random : Random(seed);
 
@@ -72,7 +72,7 @@ class CryptoRNG extends RNG {
   static final _secureRandom = Random.secure();
 
   @override
-  Uint8List generateInternal() {
+  Uint8List _generateInternal() {
     final b = Uint8List(16);
 
     for (var i = 0; i < 16; i += 4) {
@@ -97,7 +97,7 @@ class LegacyRNG extends RNG {
   const LegacyRNG(this._rng, this._namedArgs, this._positionalArgs);
 
   @override
-  Uint8List generateInternal() {
+  Uint8List _generateInternal() {
     return Function.apply(_rng, _positionalArgs, _namedArgs);
   }
 }

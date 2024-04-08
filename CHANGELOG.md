@@ -1,5 +1,12 @@
 # Changelog
 
+v4.4.0
+
+* Fix MathRNG with Seed being recreated on each use, generating the same list of bytes. (thanks @showband)
+* Fix UUIDv5 UTF8 inconsistencies. (thanks @vjamrich)
+* Use static state storage for random number generator to prevent MathRNG issue.
+* Replace V1, v6, V7, V8 MathRNG preventively, the issue didn't exhibit there due to other factors in the UUID generation (primarily time, and clockseq)
+
 v4.3.3
 
 * Fix UUIDv7 in Javascript

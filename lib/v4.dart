@@ -18,11 +18,9 @@ class UuidV4 {
   /// http://tools.ietf.org/html/rfc4122.html#section-4.4
   String generate({V4Options? options}) {
     // Use the built-in RNG or a custom provided RNG
-
     List<int> rng = options?.rng?.generate() ??
         goptions?.rng?.generate() ??
-        options?.rng?.generate() ??
-        MathRNG().generate();
+        V4State.random.generate();
 
     // Use provided values over RNG
     List<int> rnds = options?.random ?? rng;

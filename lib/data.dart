@@ -116,7 +116,18 @@ class V1State {
   static int? clockSeq = 0;
   static int mSecs = 0;
   static int nSecs = 0;
+  static RNG random = MathRNG();
   static bool initialized = false;
+}
+
+/// [V4State] stores the random number generator state for the v4 function.
+/// [random] is a instantiation of the RNG state being used.
+/// [initialized] is a boolean to indicate whether or not the state has been
+/// initialized once already. Prevents re-initialization on subsequent calls to
+/// _init() from within the v4 function.
+class V4State {
+  static RNG random = MathRNG();
+  static bool initialized = true;
 }
 
 /// [V6State] stores the state of the v1 function.
@@ -132,5 +143,26 @@ class V6State {
   static int? clockSeq;
   static int mSecs = 0;
   static int nSecs = 0;
+  static RNG random = MathRNG();
   static bool initialized = false;
+}
+
+/// [V7State] stores the random number generator state for the v4 function.
+/// [random] is a instantiation of the RNG state being used.
+/// [initialized] is a boolean to indicate whether or not the state has been
+/// initialized once already. Prevents re-initialization on subsequent calls to
+/// _init() from within the v4 function.
+class V7State {
+  static RNG random = MathRNG();
+  static bool initialized = true;
+}
+
+/// [V8State] stores the random number generator state for the v4 function.
+/// [random] is a instantiation of the RNG state being used.
+/// [initialized] is a boolean to indicate whether or not the state has been
+/// initialized once already. Prevents re-initialization on subsequent calls to
+/// _init() from within the v4 function.
+class V8State {
+  static RNG random = MathRNG();
+  static bool initialized = true;
 }

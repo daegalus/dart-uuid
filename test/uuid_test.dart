@@ -6,6 +6,8 @@ import 'package:test/test.dart';
 import 'package:uuid/data.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/rng.dart';
+import 'package:collection/collection.dart';
+import 'package:uuid/v4.dart';
 
 void main() {
   var uuid = const Uuid();
@@ -181,11 +183,11 @@ void main() {
         () {
       final numToGenerate = 3 * 1000 * 1000;
       final values = <String>{}; // set of strings
-      var generator = Uuid();
+      var generator = UuidV4();
 
       var numDuplicates = 0;
       for (var i = 0; i < numToGenerate; i++) {
-        final uuid = generator.v4();
+        final uuid = generator.generate();
 
         if (!values.contains(uuid)) {
           values.add(uuid);
@@ -639,6 +641,68 @@ void main() {
           expect(uuid.toUpperCase(), equals(testCase.value[1]));
         });
       }
+    });
+  });
+
+  group('[RNG]', () {
+    test("MathRNG Generates unique lists of bytes, no seed", () {
+      var hexs = <String>{};
+      RNG rng = MathRNG();
+
+      final numToGenerate = 3 * 1000 * 1000;
+      int numDuplicates = 0;
+      for (var i = 0; i < numToGenerate; i++) {
+        Uint8List list = rng.generate();
+        var hexString = Uuid.unparse(list);
+
+        if (hexs.contains(hexString)) {
+          numDuplicates += 1;
+        } else {
+          hexs.add(hexString);
+        }
+      }
+
+      expect(numDuplicates, equals(0));
+    });
+
+    test("MathRNG Generates unique lists of bytes, with seed", () {
+      var hexs = <String>{};
+      RNG rng = MathRNG(seed: testTime);
+
+      final numToGenerate = 3 * 1000 * 1000;
+      int numDuplicates = 0;
+      for (var i = 0; i < numToGenerate; i++) {
+        Uint8List list = rng.generate();
+        var hexString = Uuid.unparse(list);
+
+        if (hexs.contains(hexString)) {
+          numDuplicates += 1;
+        } else {
+          hexs.add(hexString);
+        }
+      }
+
+      expect(numDuplicates, equals(0));
+    });
+
+    test("CryptoRNG Generates unique lists of bytes", () {
+      var hexs = <String>{};
+      RNG rng = CryptoRNG();
+
+      final numToGenerate = 3 * 1000 * 1000;
+      int numDuplicates = 0;
+      for (var i = 0; i < numToGenerate; i++) {
+        Uint8List list = rng.generate();
+        var hexString = Uuid.unparse(list);
+
+        if (hexs.contains(hexString)) {
+          numDuplicates += 1;
+        } else {
+          hexs.add(hexString);
+        }
+      }
+
+      expect(numDuplicates, equals(0));
     });
   });
 }
