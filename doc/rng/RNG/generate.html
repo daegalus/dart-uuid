@@ -29,7 +29,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../rng/rng-library.html">rng</a></li>
+    <li><a href="../../rng/rng-library.html">rng.dart</a></li>
     <li><a href="../../rng/RNG-class.html">RNG</a></li>
     <li class="self-crumb">generate method</li>
   </ol>
@@ -63,7 +63,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.2.4/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.3.2/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
 <span class="name ">generate</span>(<wbr>)
 
       
@@ -76,7 +76,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Uint8List generate() {
-  final uint8list = generateInternal();
+  final uint8list = _generateInternal();
   if (uint8list.length != 16) {
     throw Exception(
         &#39;The length of the Uint8list returned by the custom RNG must be 16.&#39;);
@@ -117,7 +117,7 @@
 <footer>
   <span class="no-break">
     uuid
-      4.3.3
+      4.4.0
   </span>
 
   

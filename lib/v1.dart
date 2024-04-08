@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'data.dart';
 import 'parsing.dart';
-import 'rng.dart';
 
 class UuidV1 {
   final GlobalOptions? goptions;

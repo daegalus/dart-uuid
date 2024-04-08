@@ -118,8 +118,8 @@ v3.0.3
 * [Experimental] Added new constructors `fromByteList` and `fromList` to `UuidValue`
 * [Experimental] Added `==` operator override and hashcode override. (Thanks @giorgiofran for suggestion)
 * Added `parseAsByteList` to offer a direct output to `Uint8List`
-* [Experimental][BREAKING CHANGE] Change `toBytes` in `UuidValue` to return `Uint8List` instead of `List<int>`
-* [Experimental][BREAKING CHANGE] `isValidUuid` function signature has changed, now takes 2 optional parameters `fromString` and `fromList` that will do the appropriate validation on different sources.
+* \[Experimental\]\[BREAKING CHANGE\] Change `toBytes` in `UuidValue` to return `Uint8List` instead of `List<int>`
+* \[Experimental\]\[BREAKING CHANGE\] `isValidUuid` function signature has changed, now takes 2 optional parameters `fromString` and `fromList` that will do the appropriate validation on different sources.
 
 v3.0.2
 
@@ -131,7 +131,7 @@ v3.0.1
 
 v3.0.0
 
-* Release nullsafety version 
+* Release nullsafety version.
 
 v3.0.0-nullsafety.1
 
@@ -190,7 +190,7 @@ v1.0.3
 
 v1.0.2
 
-* Fix constants breaking in Dart 1.x, need to be backwards compatible. 
+* Fix constants breaking in Dart 1.x, need to be backwards compatible.
 
 v1.0.1
 

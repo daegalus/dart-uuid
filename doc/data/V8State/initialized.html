@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the generateInternal method from the CryptoRNG class, for the Dart programming language.">
-  <title>generateInternal method - CryptoRNG class - rng library - Dart API</title>
+  <meta name="description" content="API docs for the initialized property from the V8State class, for the Dart programming language.">
+  <title>initialized property - V8State class - data library - Dart API</title>
 
 
   
@@ -29,11 +29,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../rng/rng-library.html">rng</a></li>
-    <li><a href="../../rng/CryptoRNG-class.html">CryptoRNG</a></li>
-    <li class="self-crumb">generateInternal method</li>
+    <li><a href="../../data/data-library.html">data.dart</a></li>
+    <li><a href="../../data/V8State-class.html">V8State</a></li>
+    <li class="self-crumb">initialized property</li>
   </ol>
-  <div class="self-name">generateInternal</div>
+  <div class="self-name">initialized</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,46 +54,25 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="rng&#47;CryptoRNG-class-sidebar.html"
+      data-above-sidebar="data&#47;V8State-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-method">generateInternal</span> method 
+<h1><span class="kind-property">initialized</span> property 
 </h1></div>
 
-    <section class="multi-line-signature">
-      
-  <div>
-    <ol class="annotation-list">
-        <li>@<a href="https://api.dart.dev/stable/3.2.4/dart-core/override-constant.html">override</a></li>
-    </ol>
-  </div>
+        <section class="multi-line-signature">
+          
+          <a href="https://api.dart.dev/stable/3.3.2/dart-core/bool-class.html">bool</a>
+          <span class="name ">initialized</span>
+          <div class="features"><span class="feature">getter/setter pair</span></div>
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.2.4/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
-<span class="name ">generateInternal</span>(<wbr>)
+        </section>
+        
 
-      <div class="features"><span class="feature">override</span></div>
-
-    </section>
-    
-
-
-    
+        
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-Uint8List generateInternal() {
-  final b = Uint8List(16);
-
-  for (var i = 0; i &lt; 16; i += 4) {
-    var k = _secureRandom.nextInt(pow(2, 32).toInt());
-    b[i] = k;
-    b[i + 1] = k &gt;&gt; 8;
-    b[i + 2] = k &gt;&gt; 16;
-    b[i + 3] = k &gt;&gt; 24;
-  }
-
-  return b;
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">static bool initialized = true;</code></pre>
 </section>
 
 
@@ -109,13 +88,13 @@ Uint8List generateInternal() {
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../rng/rng-library.html">rng</a></li>
-    <li><a href="../../rng/CryptoRNG-class.html">CryptoRNG</a></li>
-    <li class="self-crumb">generateInternal method</li>
+    <li><a href="../../data/data-library.html">data</a></li>
+    <li><a href="../../data/V8State-class.html">V8State</a></li>
+    <li class="self-crumb">initialized property</li>
 </ol>
 
 
-    <h5>CryptoRNG class</h5>
+    <h5>V8State class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 
@@ -127,7 +106,7 @@ Uint8List generateInternal() {
 <footer>
   <span class="no-break">
     uuid
-      4.3.3
+      4.4.0
   </span>
 
   

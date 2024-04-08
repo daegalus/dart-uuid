@@ -29,9 +29,9 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../rng/rng-library.html">rng</a></li>
+    <li><a href="../../rng/rng-library.html">rng.dart</a></li>
     <li><a href="../../rng/MathRNG-class.html">MathRNG</a></li>
-    <li class="self-crumb">MathRNG const constructor</li>
+    <li class="self-crumb">MathRNG constructor</li>
   </ol>
   <div class="self-name">MathRNG</div>
   <form class="search navbar-right" role="search">
@@ -61,8 +61,8 @@
 </h1></div>
 
     <section class="multi-line-signature">
-      const
-      <span class="name ">MathRNG</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-seed">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">seed</span> = <span class="default-value">-1</span>}</span></li>
+      
+      <span class="name ">MathRNG</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-seed">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">seed</span>}</span></li>
 </ol>)
     </section>
 
@@ -72,7 +72,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">const MathRNG</code></pre>
+  <pre class="language-dart"><code class="language-dart">MathRNG({int? seed}) : _rnd = seed != null ? Random(seed) : Random();</code></pre>
 </section>
 
 
@@ -90,7 +90,7 @@
     <li><a href="../../index.html">uuid</a></li>
     <li><a href="../../rng/rng-library.html">rng</a></li>
     <li><a href="../../rng/MathRNG-class.html">MathRNG</a></li>
-    <li class="self-crumb">MathRNG const constructor</li>
+    <li class="self-crumb">MathRNG constructor</li>
 </ol>
 
 
@@ -106,7 +106,7 @@
 <footer>
   <span class="no-break">
     uuid
-      4.3.3
+      4.4.0
   </span>
 
   

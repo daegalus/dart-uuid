@@ -29,7 +29,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../uuid/uuid-library.html">uuid</a></li>
+    <li><a href="../../uuid/uuid-library.html">uuid.dart</a></li>
     <li><a href="../../uuid/Uuid-class.html">Uuid</a></li>
     <li class="self-crumb">v5buffer method</li>
   </ol>
@@ -63,13 +63,13 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.2.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.2.4/dart-core/int-class.html">int</a></span>&gt;</span></span>
-<span class="name ">v5buffer</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="v5buffer-param-namespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">namespace</span>, </span></li>
-<li><span class="parameter" id="v5buffer-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span></li>
-<li><span class="parameter" id="v5buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.2.4/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span></li>
-<li><span class="parameter" id="v5buffer-param-options">{<span>@<a href="https://api.dart.dev/stable/3.2.4/dart-core/Deprecated-class.html">Deprecated</a>(&#39;use config instead. Removal in 5.0.0&#39;)</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.2.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+<span class="name ">v5buffer</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="v5buffer-param-namespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">namespace</span>, </span></li>
+<li><span class="parameter" id="v5buffer-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span></li>
+<li><span class="parameter" id="v5buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span></li>
+<li><span class="parameter" id="v5buffer-param-options">{<span>@<a href="https://api.dart.dev/stable/3.3.2/dart-core/Deprecated-class.html">Deprecated</a>(&#39;use config instead. Removal in 5.0.0&#39;)</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span></li>
 <li><span class="parameter" id="v5buffer-param-config"><span class="type-annotation"><a href="../../data/V5Options-class.html">V5Options</a>?</span> <span class="parameter-name">config</span>, </span></li>
-<li><span class="parameter" id="v5buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span></li>
+<li><span class="parameter" id="v5buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span></li>
 </ol>)
 
       
@@ -106,9 +106,9 @@ uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer, offset: 16);
   V5Options? config,
   int offset = 0,
 }) {
-  var result = config != null
-      ? v5(namespace, name, config: config)
-      : v5(namespace, name, options: options);
+  var result = options != null
+      ? v5(namespace, name, options: options)
+      : v5(namespace, name, config: config);
   return UuidParsing.parse(result, buffer: buffer, offset: offset);
 }</code></pre>
 </section>
@@ -144,7 +144,7 @@ uuid.v5buffer(Uuid.NAMESPACE_URL, 'www.google.com', myBuffer, offset: 16);
 <footer>
   <span class="no-break">
     uuid
-      4.3.3
+      4.4.0
   </span>
 
   

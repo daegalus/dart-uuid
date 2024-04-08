@@ -6,7 +6,6 @@ import 'package:test/test.dart';
 import 'package:uuid/data.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/rng.dart';
-import 'package:collection/collection.dart';
 import 'package:uuid/v4.dart';
 
 void main() {

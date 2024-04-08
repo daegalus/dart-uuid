@@ -29,7 +29,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../v7/v7-library.html">v7</a></li>
+    <li><a href="../../v7/v7-library.html">v7.dart</a></li>
     <li><a href="../../v7/UuidV7-class.html">UuidV7</a></li>
     <li class="self-crumb">generate method</li>
   </ol>
@@ -63,7 +63,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.2.4/dart-core/String-class.html">String</a></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
 <span class="name ">generate</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="generate-param-options">{<span class="type-annotation"><a href="../../data/V7Options-class.html">V7Options</a>?</span> <span class="parameter-name">options</span>}</span></li>
 </ol>)
 
@@ -99,7 +99,7 @@ options detailed in the readme.</p>
 
   buf.setAll(0, timeList48);
   List&lt;int&gt; randomBytes = options?.randomBytes ??
-      (goptions?.rng?.generate() ?? MathRNG().generate());
+      (goptions?.rng?.generate() ?? V7State.random.generate());
 
   buf.setRange(6, 16, randomBytes);
   buf.setRange(6, 7, [buf.getRange(6, 7).last &amp; 0x0f | 0x70]);
@@ -140,7 +140,7 @@ options detailed in the readme.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.3.3
+      4.4.0
   </span>
 
   

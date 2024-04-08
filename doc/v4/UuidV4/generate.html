@@ -29,7 +29,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../v4/v4-library.html">v4</a></li>
+    <li><a href="../../v4/v4-library.html">v4.dart</a></li>
     <li><a href="../../v4/UuidV4-class.html">UuidV4</a></li>
     <li class="self-crumb">generate method</li>
   </ol>
@@ -63,7 +63,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.2.4/dart-core/String-class.html">String</a></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
 <span class="name ">generate</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="generate-param-options">{<span class="type-annotation"><a href="../../data/V4Options-class.html">V4Options</a>?</span> <span class="parameter-name">options</span>}</span></li>
 </ol>)
 
@@ -88,7 +88,7 @@ options detailed in the readme.</p>
   &#47;&#47; Use the built-in RNG or a custom provided RNG
   List&lt;int&gt; rng = options?.rng?.generate() ??
       goptions?.rng?.generate() ??
-      MathRNG().generate();
+      V4State.random.generate();
 
   &#47;&#47; Use provided values over RNG
   List&lt;int&gt; rnds = options?.random ?? rng;
@@ -132,7 +132,7 @@ options detailed in the readme.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.3.3
+      4.4.0
   </span>
 
   

@@ -29,7 +29,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../v8/v8-library.html">v8</a></li>
+    <li><a href="../../v8/v8-library.html">v8.dart</a></li>
     <li><a href="../../v8/UuidV8-class.html">UuidV8</a></li>
     <li class="self-crumb">generate method</li>
   </ol>
@@ -63,7 +63,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.2.4/dart-core/String-class.html">String</a></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
 <span class="name ">generate</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="generate-param-options">{<span class="type-annotation"><a href="../../data/V8Options-class.html">V8Options</a>?</span> <span class="parameter-name">options</span>}</span></li>
 </ol>)
 
@@ -119,7 +119,7 @@ options detailed in the readme.</p>
       5, 6, UuidParsing.parseHexToBytes(sprintf(&#39;0x%02i&#39;, [time.minute])));
 
   var randomBytes = options?.randomBytes ??
-      (goptions?.rng?.generate() ?? MathRNG().generate());
+      (goptions?.rng?.generate() ?? V8State.random.generate());
 
   buf.setRange(6, 16, randomBytes);
   buf.setRange(6, 7, [buf.getRange(6, 7).last &amp; 0x0f | 0x80]);
@@ -167,7 +167,7 @@ options detailed in the readme.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.3.3
+      4.4.0
   </span>
 
   
