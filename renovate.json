@@ -8,10 +8,8 @@
   ],
   "packageRules": [
     {
+      "matchBaseBranches": ["main"],
       "groupName": "All"
     }
-  ],
-  "postUpdateOptions": [
-    "gomodTidy"
   ]
 }
