@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "config:recommended",
+    ":disableDependencyDashboard"
+  ],
+  "labels": [
+    "renovate"
+  ],
+  "packageRules": [
+    {
+      "groupName": "All"
+    }
+  ],
+  "postUpdateOptions": [
+    "gomodTidy"
+  ]
+}
