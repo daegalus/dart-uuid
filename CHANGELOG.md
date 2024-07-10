@@ -1,5 +1,9 @@
 # Changelog
 
+v4.4.1
+
+* Fix UUIDv1 to use millisecondsSinceEpoch instead of microsecondsSinceEpoch. Matches UUIDv6 and passes vector tests.
+  
 v4.4.0
 
 * Fix MathRNG with Seed being recreated on each use, generating the same list of bytes. (thanks @showband)

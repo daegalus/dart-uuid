@@ -100,10 +100,10 @@ void main() {
       var buffer = Uint8List(16);
       var options = {'mSecs': testTime, 'nSecs': 0};
 
-      var wihoutBuffer = uuid.v1(options: options);
+      var withoutBuffer = uuid.v1(options: options);
       uuid.v1buffer(buffer, options: options);
 
-      expect(Uuid.unparse(buffer), equals(wihoutBuffer));
+      expect(Uuid.unparse(buffer), equals(withoutBuffer));
     });
 
     test('Using Objects', () {
@@ -231,12 +231,12 @@ void main() {
 
     test('Using buffers', () {
       var buffer = Uint8List(16);
-      var wihoutBuffer =
+      var withoutBuffer =
           uuid.v5(null, 'www.google.com', options: {'randomNamespace': false});
       uuid.v5buffer(null, 'www.google.com', buffer,
           options: {'randomNamespace': false});
 
-      expect(Uuid.unparse(buffer), equals(wihoutBuffer));
+      expect(Uuid.unparse(buffer), equals(withoutBuffer));
     });
 
     test('Using Objects', () {
@@ -337,10 +337,10 @@ void main() {
       var buffer = Uint8List(16);
       var options = V6Options(null, testTime, 0, null, null);
 
-      var wihoutBuffer = uuid.v6(config: options);
+      var withoutBuffer = uuid.v6(config: options);
       uuid.v6buffer(buffer, config: options);
 
-      expect(Uuid.unparse(buffer), equals(wihoutBuffer));
+      expect(Uuid.unparse(buffer), equals(withoutBuffer));
     });
 
     test('Using Objects', () {
@@ -399,10 +399,10 @@ void main() {
       final rand = MathRNG(seed: 1).generate();
       var options = V7Options(testTime, rand);
 
-      var wihoutBuffer = uuid.v7(config: options);
+      var withoutBuffer = uuid.v7(config: options);
       uuid.v7buffer(buffer, config: options);
 
-      expect(Uuid.unparse(buffer), equals(wihoutBuffer));
+      expect(Uuid.unparse(buffer), equals(withoutBuffer));
     });
 
     test('Using Objects', () {
@@ -548,6 +548,24 @@ void main() {
   });
 
   group('[Test Vectors]', () {
+    group('[UUID1]', () {
+      for (final testCase in {
+        'Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00': [
+          1645557742000,
+          'C232AB00-9414-11EC-B3C8-9F6BDECED846'
+        ],
+      }.entries) {
+        test(testCase.key, () {
+          var nodeId = <int>[0x9F, 0x6B, 0xDE, 0xCE, 0xD8, 0x46];
+          var clockSeq = (0xB3 << 8 | 0xC8) & 0x3ffff;
+          final uuid = Uuid().v1(
+              config: V1Options(
+                  clockSeq, testCase.value[0] as int, 0, nodeId, null));
+          expect(uuid.toUpperCase(), equals(testCase.value[1]));
+        });
+      }
+    });
+
     group('[UUID6]', () {
       for (final testCase in {
         'Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00': [
