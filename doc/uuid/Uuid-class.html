@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -36,26 +36,26 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button">
+  <div class="toggle" id="theme-button" title="Toggle brightness">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
       <span id="dark-theme-button" class="material-symbols-outlined">
-        brightness_4
+        dark_mode
       </span>
       <span id="light-theme-button" class="material-symbols-outlined">
-        brightness_5
+        light_mode
       </span>
     </label>
   </div>
 </header>
 <main>
 
-  <div
-      id="dartdoc-main-content"
-      class="main-content"
-      data-above-sidebar="uuid&#47;uuid-library-sidebar.html"
-      data-below-sidebar="uuid&#47;Uuid-class-sidebar.html">
-      <div>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="uuid&#47;uuid-library-sidebar.html"
+    data-below-sidebar="uuid&#47;Uuid-class-sidebar.html">
+    <div>
 <h1><span class="kind-class">Uuid</span> class 
  
 </h1></div>
@@ -86,14 +86,16 @@ for all UUID generation.
         </dd>
     </dl>
   </section>
-
-    <section class="summary offset-anchor" id="instance-properties">
-      <h2>Properties</h2>
-
-      <dl class="properties">
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
         <dt id="goptions" class="property">
   <span class="name"><a href="../uuid/Uuid/goptions.html">goptions</a></span>
-  <span class="signature">&#8594; <a href="../data/GlobalOptions-class.html">GlobalOptions</a>?</span> 
+  <span class="signature">&#8594; <a href="../data/GlobalOptions-class.html">GlobalOptions</a>?</span>
+  
 
 </dt>
 <dd>
@@ -103,8 +105,9 @@ for all UUID generation.
 </dd>
 
         <dt id="hashCode" class="property inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Object/hashCode.html">hashCode</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> 
+  <span class="name"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>
+  
 
 </dt>
 <dd class="inherited">
@@ -114,8 +117,9 @@ for all UUID generation.
 </dd>
 
         <dt id="runtimeType" class="property inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Object/runtimeType.html">runtimeType</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/Type-class.html">Type</a></span> 
+  <span class="name"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/Type-class.html">Type</a></span>
+  
 
 </dt>
 <dd class="inherited">
@@ -124,9 +128,8 @@ for all UUID generation.
 
 </dd>
 
-      </dl>
-    </section>
-
+    </dl>
+  </section>
     
   <section
       class="summary offset-anchor"
@@ -134,7 +137,7 @@ for all UUID generation.
     <h2>Methods</h2>
     <dl class="callables">
         <dt id="noSuchMethod" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+  <span class="name"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
     <span class="returntype parameter">&#8594; dynamic</span>
   </span>
   
@@ -147,8 +150,8 @@ for all UUID generation.
 </dd>
 
         <dt id="toString" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -160,8 +163,8 @@ for all UUID generation.
 </dd>
 
         <dt id="v1" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v1.html">v1</a></span><span class="signature">(<wbr><span class="parameter" id="v1-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v1-param-config"><span class="type-annotation"><a href="../data/V1Options-class.html">V1Options</a>?</span> <span class="parameter-name">config</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+  <span class="name"><a href="../uuid/Uuid/v1.html">v1</a></span><span class="signature">(<wbr><span class="parameter" id="v1-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v1-param-config"><span class="type-annotation"><a href="../data/V1Options-class.html">V1Options</a>?</span> <span class="parameter-name">config</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -173,8 +176,8 @@ for all UUID generation.
 </dd>
 
         <dt id="v1buffer" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v1buffer.html">v1buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v1buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v1buffer-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v1buffer-param-config"><span class="type-annotation"><a href="../data/V1Options-class.html">V1Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v1buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  <span class="name"><a href="../uuid/Uuid/v1buffer.html">v1buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v1buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v1buffer-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v1buffer-param-config"><span class="type-annotation"><a href="../data/V1Options-class.html">V1Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v1buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
@@ -186,7 +189,7 @@ for all UUID generation.
 </dd>
 
         <dt id="v1obj" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v1obj.html">v1obj</a></span><span class="signature">(<wbr><span class="parameter" id="v1obj-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v1obj-param-config"><span class="type-annotation"><a href="../data/V1Options-class.html">V1Options</a>?</span> <span class="parameter-name">config</span>}</span>)
+  <span class="name"><a href="../uuid/Uuid/v1obj.html">v1obj</a></span><span class="signature">(<wbr><span class="parameter" id="v1obj-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v1obj-param-config"><span class="type-annotation"><a href="../data/V1Options-class.html">V1Options</a>?</span> <span class="parameter-name">config</span>}</span>)
     <span class="returntype parameter">&#8594; <a href="../uuid_value/UuidValue-class.html">UuidValue</a></span>
   </span>
   
@@ -199,8 +202,8 @@ for all UUID generation.
 </dd>
 
         <dt id="v4" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v4.html">v4</a></span><span class="signature">(<wbr><span class="parameter" id="v4-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v4-param-config"><span class="type-annotation"><a href="../data/V4Options-class.html">V4Options</a>?</span> <span class="parameter-name">config</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+  <span class="name"><a href="../uuid/Uuid/v4.html">v4</a></span><span class="signature">(<wbr><span class="parameter" id="v4-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v4-param-config"><span class="type-annotation"><a href="../data/V4Options-class.html">V4Options</a>?</span> <span class="parameter-name">config</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -212,8 +215,8 @@ for all UUID generation.
 </dd>
 
         <dt id="v4buffer" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v4buffer.html">v4buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v4buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v4buffer-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v4buffer-param-config"><span class="type-annotation"><a href="../data/V4Options-class.html">V4Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v4buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  <span class="name"><a href="../uuid/Uuid/v4buffer.html">v4buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v4buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v4buffer-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v4buffer-param-config"><span class="type-annotation"><a href="../data/V4Options-class.html">V4Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v4buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
@@ -225,7 +228,7 @@ for all UUID generation.
 </dd>
 
         <dt id="v4obj" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v4obj.html">v4obj</a></span><span class="signature">(<wbr><span class="parameter" id="v4obj-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v4obj-param-config"><span class="type-annotation"><a href="../data/V4Options-class.html">V4Options</a>?</span> <span class="parameter-name">config</span>}</span>)
+  <span class="name"><a href="../uuid/Uuid/v4obj.html">v4obj</a></span><span class="signature">(<wbr><span class="parameter" id="v4obj-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v4obj-param-config"><span class="type-annotation"><a href="../data/V4Options-class.html">V4Options</a>?</span> <span class="parameter-name">config</span>}</span>)
     <span class="returntype parameter">&#8594; <a href="../uuid_value/UuidValue-class.html">UuidValue</a></span>
   </span>
   
@@ -238,8 +241,8 @@ for all UUID generation.
 </dd>
 
         <dt id="v5" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v5.html">v5</a></span><span class="signature">(<wbr><span class="parameter" id="v5-param-namespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">namespace</span>, </span><span class="parameter" id="v5-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="v5-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v5-param-config"><span class="type-annotation"><a href="../data/V5Options-class.html">V5Options</a>?</span> <span class="parameter-name">config</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+  <span class="name"><a href="../uuid/Uuid/v5.html">v5</a></span><span class="signature">(<wbr><span class="parameter" id="v5-param-namespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">namespace</span>, </span><span class="parameter" id="v5-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="v5-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v5-param-config"><span class="type-annotation"><a href="../data/V5Options-class.html">V5Options</a>?</span> <span class="parameter-name">config</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -251,8 +254,8 @@ for all UUID generation.
 </dd>
 
         <dt id="v5buffer" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v5buffer.html">v5buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v5buffer-param-namespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">namespace</span>, </span><span class="parameter" id="v5buffer-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="v5buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v5buffer-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v5buffer-param-config"><span class="type-annotation"><a href="../data/V5Options-class.html">V5Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v5buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  <span class="name"><a href="../uuid/Uuid/v5buffer.html">v5buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v5buffer-param-namespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">namespace</span>, </span><span class="parameter" id="v5buffer-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="v5buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v5buffer-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v5buffer-param-config"><span class="type-annotation"><a href="../data/V5Options-class.html">V5Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v5buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
@@ -264,7 +267,7 @@ for all UUID generation.
 </dd>
 
         <dt id="v5obj" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v5obj.html">v5obj</a></span><span class="signature">(<wbr><span class="parameter" id="v5obj-param-namespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">namespace</span>, </span><span class="parameter" id="v5obj-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="v5obj-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v5obj-param-config"><span class="type-annotation"><a href="../data/V5Options-class.html">V5Options</a>?</span> <span class="parameter-name">config</span>}</span>)
+  <span class="name"><a href="../uuid/Uuid/v5obj.html">v5obj</a></span><span class="signature">(<wbr><span class="parameter" id="v5obj-param-namespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">namespace</span>, </span><span class="parameter" id="v5obj-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="v5obj-param-options">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span><span class="parameter" id="v5obj-param-config"><span class="type-annotation"><a href="../data/V5Options-class.html">V5Options</a>?</span> <span class="parameter-name">config</span>}</span>)
     <span class="returntype parameter">&#8594; <a href="../uuid_value/UuidValue-class.html">UuidValue</a></span>
   </span>
   
@@ -278,7 +281,7 @@ for all UUID generation.
 
         <dt id="v6" class="callable">
   <span class="name"><a href="../uuid/Uuid/v6.html">v6</a></span><span class="signature">(<wbr><span class="parameter" id="v6-param-config">{<span class="type-annotation"><a href="../data/V6Options-class.html">V6Options</a>?</span> <span class="parameter-name">config</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -290,8 +293,8 @@ for all UUID generation.
 </dd>
 
         <dt id="v6buffer" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v6buffer.html">v6buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v6buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v6buffer-param-config">{<span class="type-annotation"><a href="../data/V6Options-class.html">V6Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v6buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  <span class="name"><a href="../uuid/Uuid/v6buffer.html">v6buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v6buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v6buffer-param-config">{<span class="type-annotation"><a href="../data/V6Options-class.html">V6Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v6buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
@@ -317,7 +320,7 @@ for all UUID generation.
 
         <dt id="v7" class="callable">
   <span class="name"><a href="../uuid/Uuid/v7.html">v7</a></span><span class="signature">(<wbr><span class="parameter" id="v7-param-config">{<span class="type-annotation"><a href="../data/V7Options-class.html">V7Options</a>?</span> <span class="parameter-name">config</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -329,8 +332,8 @@ for all UUID generation.
 </dd>
 
         <dt id="v7buffer" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v7buffer.html">v7buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v7buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v7buffer-param-config">{<span class="type-annotation"><a href="../data/V7Options-class.html">V7Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v7buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  <span class="name"><a href="../uuid/Uuid/v7buffer.html">v7buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v7buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v7buffer-param-config">{<span class="type-annotation"><a href="../data/V7Options-class.html">V7Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v7buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
@@ -356,7 +359,7 @@ for all UUID generation.
 
         <dt id="v8" class="callable">
   <span class="name"><a href="../uuid/Uuid/v8.html">v8</a></span><span class="signature">(<wbr><span class="parameter" id="v8-param-config">{<span class="type-annotation"><a href="../data/V8Options-class.html">V8Options</a>?</span> <span class="parameter-name">config</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -368,8 +371,8 @@ for all UUID generation.
 </dd>
 
         <dt id="v8buffer" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v8buffer.html">v8buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v8buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v8buffer-param-config">{<span class="type-annotation"><a href="../data/V8Options-class.html">V8Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v8buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  <span class="name"><a href="../uuid/Uuid/v8buffer.html">v8buffer</a></span><span class="signature">(<wbr><span class="parameter" id="v8buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v8buffer-param-config">{<span class="type-annotation"><a href="../data/V8Options-class.html">V8Options</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v8buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
@@ -382,7 +385,7 @@ for all UUID generation.
 
         <dt id="v8g" class="callable">
   <span class="name"><a href="../uuid/Uuid/v8g.html">v8g</a></span><span class="signature">(<wbr><span class="parameter" id="v8g-param-config">{<span class="type-annotation"><a href="../data/V8GenericOptions-class.html">V8GenericOptions</a>?</span> <span class="parameter-name">config</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -394,8 +397,8 @@ for all UUID generation.
 </dd>
 
         <dt id="v8gbuffer" class="callable">
-  <span class="name"><a href="../uuid/Uuid/v8gbuffer.html">v8gbuffer</a></span><span class="signature">(<wbr><span class="parameter" id="v8gbuffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v8gbuffer-param-config">{<span class="type-annotation"><a href="../data/V8GenericOptions-class.html">V8GenericOptions</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v8gbuffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  <span class="name"><a href="../uuid/Uuid/v8gbuffer.html">v8gbuffer</a></span><span class="signature">(<wbr><span class="parameter" id="v8gbuffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="v8gbuffer-param-config">{<span class="type-annotation"><a href="../data/V8GenericOptions-class.html">V8GenericOptions</a>?</span> <span class="parameter-name">config</span>, </span><span class="parameter" id="v8gbuffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
@@ -441,8 +444,8 @@ for all UUID generation.
     <h2>Operators</h2>
     <dl class="callables">
         <dt id="operator ==" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/bool-class.html">bool</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/bool-class.html">bool</a></span>
   </span>
   
 
@@ -461,15 +464,15 @@ for all UUID generation.
     <h2>Static Methods</h2>
     <dl class="callables">
         <dt id="isValidUUID" class="callable">
-  <span class="name"><a href="../uuid/Uuid/isValidUUID.html">isValidUUID</a></span><span class="signature">(<wbr><span class="parameter" id="isValidUUID-param-fromString">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span><span class="parameter" id="isValidUUID-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span><span class="parameter" id="isValidUUID-param-validationMode"><span class="type-annotation"><a href="../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>, </span><span class="parameter" id="isValidUUID-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/bool-class.html">bool</a></span>
+  <span class="name"><a href="../uuid/Uuid/isValidUUID.html">isValidUUID</a></span><span class="signature">(<wbr><span class="parameter" id="isValidUUID-param-fromString">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span><span class="parameter" id="isValidUUID-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span><span class="parameter" id="isValidUUID-param-validationMode"><span class="type-annotation"><a href="../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>, </span><span class="parameter" id="isValidUUID-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/bool-class.html">bool</a></span>
   </span>
   
 
 </dt>
 <dd>
   Validates the provided <code>uuid</code> to make sure it has all the necessary
-components and formatting and returns a <a href="https://api.dart.dev/stable/3.3.2/dart-core/bool-class.html">bool</a>
+components and formatting and returns a <a href="https://api.dart.dev/stable/3.4.4/dart-core/bool-class.html">bool</a>
 You can choose to validate from a string or from a byte list based on
 which parameter is passed.
   
@@ -477,8 +480,8 @@ which parameter is passed.
 </dd>
 
         <dt id="parse" class="callable">
-  <span class="name"><a href="../uuid/Uuid/parse.html">parse</a></span><span class="signature">(<wbr><span class="parameter" id="parse-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="parse-param-buffer">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="parse-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span><span class="parameter" id="parse-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span><span class="parameter" id="parse-param-validationMode"><span class="type-annotation"><a href="../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  <span class="name"><a href="../uuid/Uuid/parse.html">parse</a></span><span class="signature">(<wbr><span class="parameter" id="parse-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="parse-param-buffer">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="parse-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span><span class="parameter" id="parse-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span><span class="parameter" id="parse-param-validationMode"><span class="type-annotation"><a href="../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
@@ -494,8 +497,8 @@ Throws FormatException if the UUID is invalid. Optionally you can set
 </dd>
 
         <dt id="parseAsByteList" class="callable">
-  <span class="name"><a href="../uuid/Uuid/parseAsByteList.html">parseAsByteList</a></span><span class="signature">(<wbr><span class="parameter" id="parseAsByteList-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="parseAsByteList-param-buffer">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="parseAsByteList-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span><span class="parameter" id="parseAsByteList-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span><span class="parameter" id="parseAsByteList-param-validationMode"><span class="type-annotation"><a href="../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  <span class="name"><a href="../uuid/Uuid/parseAsByteList.html">parseAsByteList</a></span><span class="signature">(<wbr><span class="parameter" id="parseAsByteList-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="parseAsByteList-param-buffer">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="parseAsByteList-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span><span class="parameter" id="parseAsByteList-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span><span class="parameter" id="parseAsByteList-param-validationMode"><span class="type-annotation"><a href="../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
   </span>
   
 
@@ -511,8 +514,8 @@ Throws FormatException if the UUID is invalid. Optionally you can set
 </dd>
 
         <dt id="unparse" class="callable">
-  <span class="name"><a href="../uuid/Uuid/unparse.html">unparse</a></span><span class="signature">(<wbr><span class="parameter" id="unparse-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="unparse-param-offset">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+  <span class="name"><a href="../uuid/Uuid/unparse.html">unparse</a></span><span class="signature">(<wbr><span class="parameter" id="unparse-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, </span><span class="parameter" id="unparse-param-offset">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -536,7 +539,7 @@ Throws an exception if the buffer does not have a length of 16
     <dl class="properties">
         <dt id="NAMESPACE_DNS" class="constant">
     <span class="name "><a href="../uuid/Uuid/NAMESPACE_DNS-constant.html">NAMESPACE_DNS</a></span>
-  <span class="signature">&#8594; const <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+  <span class="signature">&#8594; const <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   
 
 </dt>
@@ -548,7 +551,7 @@ Throws an exception if the buffer does not have a length of 16
 
         <dt id="NAMESPACE_NIL" class="constant">
     <span class="name "><a href="../uuid/Uuid/NAMESPACE_NIL-constant.html">NAMESPACE_NIL</a></span>
-  <span class="signature">&#8594; const <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+  <span class="signature">&#8594; const <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   
 
 </dt>
@@ -560,7 +563,7 @@ Throws an exception if the buffer does not have a length of 16
 
         <dt id="NAMESPACE_OID" class="constant">
     <span class="name "><a href="../uuid/Uuid/NAMESPACE_OID-constant.html">NAMESPACE_OID</a></span>
-  <span class="signature">&#8594; const <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+  <span class="signature">&#8594; const <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   
 
 </dt>
@@ -572,7 +575,7 @@ Throws an exception if the buffer does not have a length of 16
 
         <dt id="NAMESPACE_URL" class="constant">
     <span class="name "><a href="../uuid/Uuid/NAMESPACE_URL-constant.html">NAMESPACE_URL</a></span>
-  <span class="signature">&#8594; const <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+  <span class="signature">&#8594; const <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   
 
 </dt>
@@ -584,7 +587,7 @@ Throws an exception if the buffer does not have a length of 16
 
         <dt id="NAMESPACE_X500" class="constant">
     <span class="name "><a href="../uuid/Uuid/NAMESPACE_X500-constant.html">NAMESPACE_X500</a></span>
-  <span class="signature">&#8594; const <a href="https://api.dart.dev/stable/3.3.2/dart-core/String-class.html">String</a></span>
+  <span class="signature">&#8594; const <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
   
 
 </dt>
@@ -626,7 +629,7 @@ Throws an exception if the buffer does not have a length of 16
 <footer>
   <span class="no-break">
     uuid
-      4.4.0
+      4.4.1
   </span>
 
   
