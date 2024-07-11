@@ -1,5 +1,9 @@
 # Changelog
 
+v4.4.2
+
+* Revert meta depenency version upgrade, was breaking flutter_test. (thanks @techouse)
+
 v4.4.1
 
 * Fix UUIDv1 to use millisecondsSinceEpoch instead of microsecondsSinceEpoch. Matches UUIDv6 and passes vector tests.
