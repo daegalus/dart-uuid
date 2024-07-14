@@ -1,5 +1,10 @@
 # Changelog
 
+v4.4.3
+
+* Updated meta dependency to `meta: ">=1.0.5"` to support all possible versions of flutter.
+
+
 v4.4.2
 
 * Revert meta depenency version upgrade, was breaking flutter_test. (thanks @techouse)
