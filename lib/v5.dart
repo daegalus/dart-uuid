@@ -10,13 +10,6 @@ import 'v4.dart';
 import 'package:crypto/crypto.dart' as crypto;
 
 class UuidV5 {
-  // RFC4122 provided namespaces for v3 and v5 namespace based UUIDs
-  static const NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
-  static const NAMESPACE_URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
-  static const NAMESPACE_OID = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
-  static const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
-  static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
-
   final GlobalOptions? goptions;
 
   const UuidV5({this.goptions});
@@ -37,7 +30,7 @@ class UuidV5 {
     // If useRandom is true, generate UUIDv4, else use NIL
     var blankNS = useRandom
         ? UuidV4(goptions: goptions).generate(options: options?.v4options)
-        : Namespace.NIL;
+        : Namespace.NIL.value;
 
     // Use provided namespace, or use whatever is decided by options.
     namespace = (namespace != null) ? namespace : blankNS;

@@ -37,12 +37,6 @@ class UuidValue {
     return uuidValue;
   }
 
-  static const dns = UuidValue.raw(Uuid.NAMESPACE_DNS);
-  static const url = UuidValue.raw(Uuid.NAMESPACE_URL);
-  static const oid = UuidValue.raw(Uuid.NAMESPACE_OID);
-  static const x500 = UuidValue.raw(Uuid.NAMESPACE_X500);
-  static const nil = UuidValue.raw(Uuid.NAMESPACE_NIL);
-
   /// Creates a UuidValue by taking directly the internal string representation of the [uuid],
   /// which is expected to be lowercase.
   ///
