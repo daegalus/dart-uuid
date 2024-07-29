@@ -216,8 +216,8 @@ void main() {
 
   group('[Version 5 Tests]', () {
     test('Using URL namespace and custom name', () {
-      var u0 = uuid.v5(Namespace.URL.value, 'www.google.com');
-      var u1 = uuid.v5(Namespace.URL.value, 'www.google.com');
+      var u0 = uuid.v5(Namespace.url.value, 'www.google.com');
+      var u1 = uuid.v5(Namespace.url.value, 'www.google.com');
 
       expect(u0, equals(u1));
     });
@@ -439,11 +439,11 @@ void main() {
         'offset 16 bytes before the end': size - 16,
       }.entries) {
         test(testCase.key, () {
-          final v = Uuid.parse(Namespace.OID.value,
+          final v = Uuid.parse(Namespace.oid.value,
               buffer: buffer, offset: testCase.value);
 
           expect(Uuid.unparse(v, offset: testCase.value),
-              equals(Namespace.OID.value));
+              equals(Namespace.oid.value));
         });
       }
     });
@@ -457,7 +457,7 @@ void main() {
       }.entries) {
         test(testCase.key, () {
           expect(
-              () => Uuid.parse(Namespace.OID.value,
+              () => Uuid.parse(Namespace.oid.value,
                   buffer: buffer, offset: testCase.value),
               throwsA(isA<RangeError>()));
         });
