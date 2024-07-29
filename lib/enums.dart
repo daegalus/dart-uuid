@@ -1,7 +1,4 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:uuid/uuid.dart';
-import 'package:uuid/uuid_value.dart';
 
 /// The options for UUID Validation strictness
 enum ValidationMode { nonStrict, strictRFC4122 }
