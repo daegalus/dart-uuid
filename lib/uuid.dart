@@ -32,6 +32,17 @@ export 'enums.dart';
 class Uuid {
   final GlobalOptions? goptions;
 
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const NAMESPACE_URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const NAMESPACE_OID = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
+
   /// Creates a new instance of the Uuid class.
   /// Optionally you can pass in a [GlobalOptions] object to set global options
   /// for all UUID generation.

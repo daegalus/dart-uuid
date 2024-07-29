@@ -1,5 +1,15 @@
 # Changelog
 
+v4.5.0
+
+* Deprecate the use of `Uuid.NAMESPACE*` and `UuidV5.NAMESPACE`, and switch to using a proper const enum for this. (thanks @bymoye)
+  * These will be removed once sufficient time has been made for the deprecation notice to be seen. Most likely v5.0.
+  * Please use the new `Namespace` enum in `enums.dart`.
+* Re-add `Uuid.NAMESPACE*` and `UuidV5.NAMESPACE` in order to give deprecation time.
+* Add missing MAX UUID option from RFC9562
+* Add `bytes` getter to `Namespace` enum.
+* **[PARTIAL BREAKING CHANGE]** `Namespace` is now an enum, and the entries are now of the `Namespace` type. They all have a `value` function to return the internal `string`
+
 v4.4.2
 
 * Revert meta depenency version upgrade, was breaking flutter_test. (thanks @techouse)

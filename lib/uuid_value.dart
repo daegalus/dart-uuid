@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
 
+import 'enums.dart';
 import 'parsing.dart';
 import 'uuid.dart';
 import 'validation.dart';
@@ -9,6 +10,17 @@ import 'validation.dart';
 @experimental
 class UuidValue {
   final String uuid;
+
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const dns = UuidValue.raw(Uuid.NAMESPACE_DNS);
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const url = UuidValue.raw(Uuid.NAMESPACE_URL);
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const oid = UuidValue.raw(Uuid.NAMESPACE_OID);
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const x500 = UuidValue.raw(Uuid.NAMESPACE_X500);
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const nil = UuidValue.raw(Uuid.NAMESPACE_NIL);
 
   /// fromString() creates a UuidValue from a [String] with no validation.
   factory UuidValue.fromString(String uuid) {

@@ -12,6 +12,17 @@ import 'package:crypto/crypto.dart' as crypto;
 class UuidV5 {
   final GlobalOptions? goptions;
 
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const NAMESPACE_URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const NAMESPACE_OID = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
+  @Deprecated('Please use the Namespace enum in enums.dart instead.')
+  static const NAMESPACE_NIL = '00000000-0000-0000-0000-000000000000';
+
   const UuidV5({this.goptions});
 
   /// v5() Generates a namspace & name-based version 5 UUID
