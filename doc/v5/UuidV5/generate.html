@@ -93,7 +93,7 @@ options detailed in the readme.</p>
   &#47;&#47; If useRandom is true, generate UUIDv4, else use NIL
   var blankNS = useRandom
       ? UuidV4(goptions: goptions).generate(options: options?.v4options)
-      : Namespace.NIL;
+      : Namespace.NIL.value;
 
   &#47;&#47; Use provided namespace, or use whatever is decided by options.
   namespace = (namespace != null) ? namespace : blankNS;
@@ -149,7 +149,7 @@ options detailed in the readme.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.4.1
+      4.5.0
   </span>
 
   
