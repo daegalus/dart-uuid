@@ -16,7 +16,7 @@ class UuidValidation {
       fromString = UuidParsing.unparse(fromByteList);
     }
     // UUID of all 0s is ok.
-    if (fromString == Namespace.NIL.value) {
+    if (fromString == Namespace.nil.value) {
       return true;
     }
 

@@ -41,7 +41,7 @@ class UuidV5 {
     // If useRandom is true, generate UUIDv4, else use NIL
     var blankNS = useRandom
         ? UuidV4(goptions: goptions).generate(options: options?.v4options)
-        : Namespace.NIL.value;
+        : Namespace.nil.value;
 
     // Use provided namespace, or use whatever is decided by options.
     namespace = (namespace != null) ? namespace : blankNS;
