@@ -64,9 +64,9 @@
       
 
 <span class="returntype"><a href="../../uuid_value/UuidValue-class.html">UuidValue</a></span>
-<span class="name ">v4obj</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="v4obj-param-options">{<span>@<a href="https://api.dart.dev/stable/3.4.4/dart-core/Deprecated-class.html">Deprecated</a>(&#39;use config instead. Removal in 5.0.0&#39;)</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span></li>
-<li><span class="parameter" id="v4obj-param-config"><span class="type-annotation"><a href="../../data/V4Options-class.html">V4Options</a>?</span> <span class="parameter-name">config</span>}</span></li>
-</ol>)
+<span class="name ">v4obj</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="v4obj-param-options"><span>@<a href="https://api.dart.dev/stable/3.5.1/dart-core/Deprecated-class.html">Deprecated</a>(&#39;use config instead. Removal in 5.0.0&#39;)</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span></li>
+<li><span class="parameter" id="v4obj-param-config"><span class="type-annotation"><a href="../../data/V4Options-class.html">V4Options</a>?</span> <span class="parameter-name">config</span>, </span></li>
+</ol>})
 
       
 
@@ -74,7 +74,7 @@
     
 <section class="desc markdown">
   <p>Generates a RNG version 4 UUID as a <a href="../../uuid_value/UuidValue-class.html">UuidValue</a> object</p>
-<p>By default it will generate a string based mathRNG, and will return
+<p>By default it will generate a string based cryptoRNG, and will return
 a <a href="../../uuid_value/UuidValue-class.html">UuidValue</a> object. If you wish to use crypto-strong RNG, pass in UuidUtil.cryptoRNG</p>
 <p>The first argument is an options map that takes various configuration
 options detailed in the readme. This is going to be eventually deprecated.</p>

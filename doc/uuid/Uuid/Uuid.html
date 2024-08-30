@@ -62,8 +62,8 @@
 
     <section class="multi-line-signature">
       const
-      <span class="name ">Uuid</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-goptions">{<span class="type-annotation"><a href="../../data/GlobalOptions-class.html">GlobalOptions</a>?</span> <span class="parameter-name">goptions</span>}</span></li>
-</ol>)
+      <span class="name ">Uuid</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-goptions"><span class="type-annotation"><a href="../../data/GlobalOptions-class.html">GlobalOptions</a>?</span> <span class="parameter-name">goptions</span>, </span></li>
+</ol>})
     </section>
 
     
@@ -72,10 +72,10 @@
 Optionally you can pass in a <a href="../../data/GlobalOptions-class.html">GlobalOptions</a> object to set global options
 for all UUID generation.
 <a href="../../data/GlobalOptions/rng.html">GlobalOptions.rng</a> is a <a href="../../rng/RNG-class.html">RNG</a> class that returns a list of random bytes.</p>
-<p>Defaults rng function is <code>UuidUtil.mathRNG</code></p>
-<p>Example: Using CryptoRNG globally</p>
+<p>Defaults rng function is <code>UuidUtil.cryptoRNG</code></p>
+<p>Example: Using MathRNG globally</p>
 <pre class="language-dart"><code class="language-dart">var uuid = Uuid(options: {
-  'grng': UuidUtil.cryptoRNG
+  'grng': UuidUtil.mathRNG
 })
 
 // Generate a v4 (random) id that will use cryptRNG for its rng function
