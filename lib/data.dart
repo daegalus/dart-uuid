@@ -1,7 +1,7 @@
 import 'package:uuid/rng.dart';
 
 /// [GlobalOptions] stores the global options passed into the library on instantiation.
-/// [GlobalOptions.rng] is the random number generator class to use. Defaults to MathRNG() [MathRNG]
+/// [GlobalOptions.rng] is the random number generator class to use. Defaults to CryptoRNG() [CryptoRNG]
 class GlobalOptions {
   final RNG? rng;
 
@@ -32,7 +32,7 @@ class V1Options {
 /// [V4Options] stores the options passed into the v4 function.
 /// [random] is the random bytes to use to generate the UUID. Primarily used for
 /// testing, or recreating a UUID
-/// [rng] is the random number generator function to use. Defaults to MathRNG() [MathRNG]
+/// [rng] is the random number generator function to use. Defaults to CryptoRNG() [CryptoRNG]
 class V4Options {
   final List<int>? random;
   final RNG? rng;
@@ -116,7 +116,7 @@ class V1State {
   static int? clockSeq = 0;
   static int mSecs = 0;
   static int nSecs = 0;
-  static RNG random = MathRNG();
+  static RNG random = CryptoRNG();
   static bool initialized = false;
 }
 
@@ -126,7 +126,7 @@ class V1State {
 /// initialized once already. Prevents re-initialization on subsequent calls to
 /// _init() from within the v4 function.
 class V4State {
-  static RNG random = MathRNG();
+  static RNG random = CryptoRNG();
   static bool initialized = true;
 }
 
@@ -143,7 +143,7 @@ class V6State {
   static int? clockSeq;
   static int mSecs = 0;
   static int nSecs = 0;
-  static RNG random = MathRNG();
+  static RNG random = CryptoRNG();
   static bool initialized = false;
 }
 
@@ -153,7 +153,7 @@ class V6State {
 /// initialized once already. Prevents re-initialization on subsequent calls to
 /// _init() from within the v4 function.
 class V7State {
-  static RNG random = MathRNG();
+  static RNG random = CryptoRNG();
   static bool initialized = true;
 }
 
@@ -163,6 +163,6 @@ class V7State {
 /// initialized once already. Prevents re-initialization on subsequent calls to
 /// _init() from within the v4 function.
 class V8State {
-  static RNG random = MathRNG();
+  static RNG random = CryptoRNG();
   static bool initialized = true;
 }

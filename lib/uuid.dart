@@ -48,13 +48,13 @@ class Uuid {
   /// for all UUID generation.
   /// [GlobalOptions.rng] is a [RNG] class that returns a list of random bytes.
   ///
-  /// Defaults rng function is `UuidUtil.mathRNG`
+  /// Defaults rng function is `UuidUtil.cryptoRNG`
   ///
-  /// Example: Using CryptoRNG globally
+  /// Example: Using MathRNG globally
   ///
   /// ```dart
   /// var uuid = Uuid(options: {
-  ///   'grng': UuidUtil.cryptoRNG
+  ///   'grng': UuidUtil.mathRNG
   /// })
   ///
   /// // Generate a v4 (random) id that will use cryptRNG for its rng function
@@ -244,7 +244,7 @@ class Uuid {
 
   /// Generates a RNG version 4 UUID
   ///
-  /// By default it will generate a string based mathRNG, and will return
+  /// By default it will generate a string based cryptoRNG, and will return
   /// a string. If you wish to use crypto-strong RNG, pass in UuidUtil.cryptoRNG
   ///
   /// The first argument is an options map that takes various configuration
@@ -315,7 +315,7 @@ class Uuid {
 
   /// Generates a RNG version 4 UUID into a provided buffer
   ///
-  /// By default it will generate a string based off mathRNG, and will
+  /// By default it will generate a string based off cryptoRNG, and will
   /// place the result into the provided [buffer]. The [buffer] will also be returned.
   /// If you wish to have crypto-strong RNG, pass in UuidUtil.cryptoRNG.
   ///
@@ -349,7 +349,7 @@ class Uuid {
 
   /// Generates a RNG version 4 UUID as a [UuidValue] object
   ///
-  /// By default it will generate a string based mathRNG, and will return
+  /// By default it will generate a string based cryptoRNG, and will return
   /// a [UuidValue] object. If you wish to use crypto-strong RNG, pass in UuidUtil.cryptoRNG
   ///
   /// The first argument is an options map that takes various configuration
