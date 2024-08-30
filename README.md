@@ -14,7 +14,6 @@ Features:
 * Supports RFC9562 version 6, version 7, and version 8
 * Runs in web, server, and flutter
 * Cryptographically strong random number generation on all platforms
-  * **Defaults to non-crypto generator, see UuidUtil for cryptoRNG**
 * [Documentation](https://daegalus.github.io/dart-uuid/index.html)
 
 ## Getting Started
