@@ -8,7 +8,7 @@ class UuidV4 {
 
   /// v4() Generates a RNG version 4 UUID
   ///
-  /// By default it will generate a string based mathRNG, and will return
+  /// By default it will generate a string based cryptoRNG, and will return
   /// a string. If you wish to use crypto-strong RNG, pass in UuidUtil.cryptoRNG
   ///
   /// The first argument is an options map that takes various configuration
