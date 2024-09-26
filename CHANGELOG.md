@@ -1,5 +1,10 @@
 # Changelog
 
+v4.5.1
+
+* Add `UuidValue.fromNamespace` to let you make constant variants of the namespace, as due to language limitations on Enums, `Namespace.*.uuidValue` can't be constant.
+* Added `isV#()`, `isNil()`, and `isMax()` functions to `UuidValue` for matching Dart standards.
+
 v4.5.0
 
 * Change to CryptoRNG by default, you will now need to use MathRNG explicitly if you want speed over security. (thanks @Rexios80)

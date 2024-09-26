@@ -3,7 +3,7 @@
 // ignore_for_file: deprecated_member_use_from_same_package
 // TODO: Remove this ignore when we remove the deprecated options.
 
-library uuid;
+library;
 
 import 'dart:typed_data';
 

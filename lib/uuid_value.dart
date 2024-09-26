@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
+import 'package:uuid/constants.dart';
 
 import 'parsing.dart';
 import 'uuid.dart';
@@ -35,6 +36,22 @@ class UuidValue {
   factory UuidValue.fromList(List<int> byteList, {int? offset}) {
     return UuidValue.raw(UuidParsing.unparse(byteList, offset: offset ?? 0));
   }
+
+  /// fromNamespace() creates a UuidValue from a [Namespace] enum.
+  const UuidValue.fromNamespace(Namespace ns)
+      : uuid = ns == Namespace.nil
+            ? InternalConstants.zNIL
+            : ns == Namespace.dns
+                ? InternalConstants.zDNS
+                : ns == Namespace.url
+                    ? InternalConstants.zURL
+                    : ns == Namespace.oid
+                        ? InternalConstants.zOID
+                        : ns == Namespace.x500
+                            ? InternalConstants.zX500
+                            : ns == Namespace.max
+                                ? InternalConstants.zMAX
+                                : InternalConstants.zNIL;
 
   /// withValidation() creates a UuidValue from a [uuid] string.
   /// Optionally, you can provide a [validationMode] to use when validating
@@ -102,5 +119,30 @@ class UuidValue {
 
   // version gets the version of the UUID
   int get version => int.parse(String.fromCharCode(uuid.codeUnitAt(14)));
+
+  // Unimplemented
   int get time => -1;
+
+  // isV1() checks if the UUID is a version 1 UUID.
+  bool get isV1 => version == 1;
+
+  // isV4() checks if the UUID is a version 2 UUID.
+  bool get isV4 => version == 4;
+
+  // isV5() checks if the UUID is a version 5 UUID.
+  bool get isV5 => version == 5;
+
+  // isV6() checks if the UUID is a version 6 UUID.
+  bool get isV6 => version == 6;
+
+  // isV7() checks if the UUID is a version 7 UUID.
+  bool get isV7 => version == 7;
+
+  // isV8() checks if the UUID is a version 8 UUID.
+  bool get isV8 => version == 8;
+
+  // isNil() checks if the UUID is a nil UUID (00000000-0000-0000-0000-000000000000).
+  bool get isNil => uuid == Namespace.nil.value;
+
+  // isMAX() checks if the UUID is a MAX UUID (ffffffff-ffff-ffff-ffff-ffffffffffff).
 }

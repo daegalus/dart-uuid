@@ -509,6 +509,13 @@ void main() {
           UuidValue.withValidation(validGUID, ValidationMode.nonStrict);
       expect(uuidval.uuid, validGUID.toLowerCase());
     });
+
+    test('const namespace regression catcher', () {
+      const ns = Namespace.dns;
+      expect(ns.uuidValue, UuidValue.fromNamespace(ns));
+      const uuidval = UuidValue.fromNamespace(Namespace.url);
+      expect(uuidval.uuid, Namespace.url.value);
+    });
   });
 
   group('[Validation Test]', () {

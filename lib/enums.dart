@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:uuid/constants.dart';
 import 'package:uuid/uuid.dart';
 
 /// The options for UUID Validation strictness
@@ -9,32 +10,46 @@ enum ValidationMode { nonStrict, strictRFC4122 }
 enum Namespace {
   @Deprecated(
       "Please use the lowercase variant to follow Dart style guidelines.")
-  DNS("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+  DNS(value: InternalConstants.zDNS),
   @Deprecated(
       "Please use the lowercase variant to follow Dart style guidelines.")
-  URL("6ba7b811-9dad-11d1-80b4-00c04fd430c8"),
+  URL(value: InternalConstants.zURL),
   @Deprecated(
       "Please use the lowercase variant to follow Dart style guidelines.")
-  OID("6ba7b812-9dad-11d1-80b4-00c04fd430c8"),
+  OID(value: InternalConstants.zOID),
   @Deprecated(
       "Please use the lowercase variant to follow Dart style guidelines.")
-  X500("6ba7b814-9dad-11d1-80b4-00c04fd430c8"),
+  X500(value: InternalConstants.zX500),
   @Deprecated(
       "Please use the lowercase variant to follow Dart style guidelines.")
-  NIL("00000000-0000-0000-0000-000000000000"),
+  NIL(value: InternalConstants.zNIL),
   @Deprecated(
       "Please use the lowercase variant to follow Dart style guidelines.")
-  MAX("ffffffff-ffff-ffff-ffff-ffffffffffff"),
-  dns("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
-  url("6ba7b811-9dad-11d1-80b4-00c04fd430c8"),
-  oid("6ba7b812-9dad-11d1-80b4-00c04fd430c8"),
-  x500("6ba7b814-9dad-11d1-80b4-00c04fd430c8"),
-  nil("00000000-0000-0000-0000-000000000000"),
-  max("ffffffff-ffff-ffff-ffff-ffffffffffff");
+  MAX(value: InternalConstants.zMAX),
+  dns(value: InternalConstants.zDNS),
+  url(value: InternalConstants.zURL),
+  oid(value: InternalConstants.zOID),
+  x500(value: InternalConstants.zX500),
+  nil(value: InternalConstants.zNIL),
+  max(value: InternalConstants.zMAX);
 
-  const Namespace(this.value);
+  const Namespace({required this.value});
+
   final String value;
 
-  UuidValue get uuidValue => UuidValue.raw(value);
+  UuidValue get uuidValue => value == InternalConstants.zNIL
+      ? const UuidValue.raw(InternalConstants.zNIL)
+      : value == InternalConstants.zDNS
+          ? const UuidValue.raw(InternalConstants.zDNS)
+          : value == InternalConstants.zURL
+              ? const UuidValue.raw(InternalConstants.zURL)
+              : value == InternalConstants.zOID
+                  ? const UuidValue.raw(InternalConstants.zOID)
+                  : value == InternalConstants.zX500
+                      ? const UuidValue.raw(InternalConstants.zX500)
+                      : value == InternalConstants.zMAX
+                          ? const UuidValue.raw(InternalConstants.zMAX)
+                          : const UuidValue.raw(InternalConstants.zNIL);
+
   List<int> get bytes => Uuid.parse(value, validate: false);
 }
