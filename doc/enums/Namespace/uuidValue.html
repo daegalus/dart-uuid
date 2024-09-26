@@ -77,7 +77,19 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">UuidValue get uuidValue =&gt; UuidValue.raw(value);</code></pre>
+  <pre class="language-dart"><code class="language-dart">UuidValue get uuidValue =&gt; value == InternalConstants.zNIL
+    ? const UuidValue.raw(InternalConstants.zNIL)
+    : value == InternalConstants.zDNS
+        ? const UuidValue.raw(InternalConstants.zDNS)
+        : value == InternalConstants.zURL
+            ? const UuidValue.raw(InternalConstants.zURL)
+            : value == InternalConstants.zOID
+                ? const UuidValue.raw(InternalConstants.zOID)
+                : value == InternalConstants.zX500
+                    ? const UuidValue.raw(InternalConstants.zX500)
+                    : value == InternalConstants.zMAX
+                        ? const UuidValue.raw(InternalConstants.zMAX)
+                        : const UuidValue.raw(InternalConstants.zNIL);</code></pre>
 </section>
 
   </section>
@@ -113,7 +125,7 @@
 <footer>
   <span class="no-break">
     uuid
-      4.5.0
+      4.5.1
   </span>
 
   
