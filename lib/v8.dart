@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'package:sprintf/sprintf.dart';
 import 'package:uuid/data.dart';
 
 import 'parsing.dart';
@@ -40,19 +39,13 @@ class UuidV8 {
   ///  46 bits - random
   String generate({V8Options? options}) {
     var buf = Uint8List(16);
-
     DateTime time = options?.time ?? DateTime.timestamp();
 
-    buf.setRange(
-        0, 2, UuidParsing.parseHexToBytes(sprintf('0x%04i', [time.year])));
-    buf.setRange(
-        2, 3, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.month])));
-    buf.setRange(
-        3, 4, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.day])));
-    buf.setRange(
-        4, 5, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.hour])));
-    buf.setRange(
-        5, 6, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.minute])));
+    buf.setRange(0, 2, UuidParsing.parseHexToBytes(_toHexlike(time.year, 4)));
+    buf.setRange(2, 3, UuidParsing.parseHexToBytes(_toHexlike(time.month, 2)));
+    buf.setRange(3, 4, UuidParsing.parseHexToBytes(_toHexlike(time.day, 2)));
+    buf.setRange(4, 5, UuidParsing.parseHexToBytes(_toHexlike(time.hour, 2)));
+    buf.setRange(5, 6, UuidParsing.parseHexToBytes(_toHexlike(time.minute, 2)));
 
     var randomBytes = options?.randomBytes ??
         (goptions?.rng?.generate() ?? V8State.random.generate());
@@ -61,13 +54,18 @@ class UuidV8 {
     buf.setRange(6, 7, [buf.getRange(6, 7).last & 0x0f | 0x80]);
     buf.setRange(8, 9, [buf.getRange(8, 9).last & 0x3f | 0x80]);
 
-    buf.setRange(
-        7, 8, UuidParsing.parseHexToBytes(sprintf('0x%02i', [time.second])));
-    var milliBytes =
-        UuidParsing.parseHexToBytes(sprintf('0x%04i', [time.millisecond]));
+    buf.setRange(7, 8, UuidParsing.parseHexToBytes(_toHexlike(time.second, 2)));
+    var milliBytes = UuidParsing.parseHexToBytes(
+      _toHexlike(time.millisecond, 4),
+    );
     milliBytes[0] = milliBytes[0] & 0x0f | buf.getRange(8, 9).last & 0xf0;
     buf.setRange(8, 10, milliBytes);
 
     return UuidParsing.unparse(buf);
   }
+
+  // Custom hex(like) converting function which converts '2024' into '0x2024'
+  // and '3' into '0x03' depending on amount of padding.
+  static String _toHexlike(int value, int padding) =>
+      '0x${value.toString().padLeft(padding, '0')}';
 }
