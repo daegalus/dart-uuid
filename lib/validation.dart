@@ -50,10 +50,6 @@ class UuidValidation {
           final match = regex.hasMatch(fromString.toLowerCase());
           return match;
         }
-      default:
-        {
-          throw Exception('`$validationMode` is an invalid ValidationMode.');
-        }
     }
   }
 
