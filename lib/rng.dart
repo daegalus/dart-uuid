@@ -69,6 +69,8 @@ class MathRNGDeprecated extends RNG {
 /// Crypto-Strong RNG. All platforms, unknown speed, cryptographically strong
 /// (theoretically)
 class CryptoRNG extends RNG {
+  const CryptoRNG();
+
   static final _secureRandom = Random.secure();
 
   @override
