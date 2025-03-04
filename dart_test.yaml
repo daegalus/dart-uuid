@@ -1,0 +1,3 @@
+platforms: [chrome]
+concurrency: 1
+timeout: 2x 

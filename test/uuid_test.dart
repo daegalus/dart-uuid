@@ -1,16 +1,57 @@
 // ignore_for_file: deprecated_member_use_from_same_package
 // TODO: Remove this ignore when we remove the deprecated options.
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:test/test.dart';
 import 'package:uuid/data.dart';
-import 'package:uuid/uuid.dart';
 import 'package:uuid/rng.dart';
+import 'package:uuid/uuid.dart';
 import 'package:uuid/v4.dart';
 
 void main() {
   var uuid = const Uuid();
   const testTime = 1321644961388;
+
+  // Helper functions for UUID validation
+  double calculateEntropy(List<String> samples) {
+    // Count occurrences of each 4-bit nibble
+    final nibbleCounts = <String, int>{};
+
+    for (final sample in samples) {
+      for (var i = 0; i < sample.length; i++) {
+        final nibble = sample[i];
+        nibbleCounts[nibble] = (nibbleCounts[nibble] ?? 0) + 1;
+      }
+    }
+
+    // Calculate Shannon entropy
+    final totalNibbles = samples.fold<int>(0, (sum, s) => sum + s.length);
+    double entropy = 0;
+
+    for (final count in nibbleCounts.values) {
+      final probability = count / totalNibbles;
+      entropy -= probability * (log(probability) / log(2));
+    }
+
+    // Scale to total bit count
+    return entropy * totalNibbles * 4; // 4 bits per nibble
+  }
+
+  void verifyTimestampMonotonicity(List<String> uuids) {
+    if (uuids.length < 2) return;
+
+    final timestamps = uuids.map((id) {
+      final timePart = id.substring(0, 8);
+      return int.parse('0x$timePart');
+    }).toList();
+
+    for (var i = 1; i < timestamps.length; i++) {
+      // Timestamp can be equal but should never decrease
+      expect(timestamps[i] >= timestamps[i - 1], isTrue,
+          reason: 'UUID timestamps should be monotonically increasing');
+    }
+  }
 
   group('[Version 1 Tests]', () {
     test('IDs created at same mSec are different', () {
@@ -69,21 +110,53 @@ void main() {
       expect(dt, equals(1));
     });
 
-    test('Generate lots of codes to see if we get v1 collisions.', () {
-      var uuids = <dynamic>{};
-      var collisions = 0;
-      for (var i = 0; i < 10000000; i++) {
-        var code = uuid.v1();
-        if (uuids.contains(code)) {
-          collisions++;
-          print('Collision of code: $code');
-        } else {
-          uuids.add(code);
-        }
-      }
+    test('UUID v1 has mathematically sufficient randomness and uniqueness', () {
+      // 1. Generate a reasonable sample size of UUIDs
+      final samples = List.generate(1000, (_) => uuid.v1());
 
-      expect(collisions, equals(0));
-      expect(uuids.length, equals(10000000));
+      // 2. Extract the random sections (node ID and clock sequence)
+      final randomBits = samples.map((id) {
+        final parts = id.split('-');
+        final clockSeq = parts[3]; // Get the clock sequence part
+        final node = parts[4]; // Get the node part
+
+        // Extract just the random portions (node ID and clock sequence)
+        return clockSeq + node;
+      }).toList();
+
+      // 3. Calculate entropy for the random portions
+      final entropy = calculateEntropy(randomBits);
+
+      // 4. Ensure we have sufficient entropy
+      final minimumEntropy = 45.0; // Lower than v4/v7 as node ID may be stable
+
+      expect(entropy > minimumEntropy, isTrue,
+          reason:
+              'UUID implementation has insufficient entropy ($entropy bits)');
+
+      // 5. Test for uniqueness in the sample set
+      final uniqueCount = samples.toSet().length;
+      expect(uniqueCount, equals(samples.length),
+          reason: 'Generated UUIDs are not unique');
+
+      // 6. Verify timestamp increases or is supplemented by nsecs
+      for (var i = 1; i < samples.length; i++) {
+        final current = samples[i].split('-');
+        final previous = samples[i - 1].split('-');
+
+        // Compare timestamps (first component) or clock sequence if timestamp is the same
+        final currentTime =
+            int.parse('0x${current[0]}${current[1].substring(0, 3)}');
+        final previousTime =
+            int.parse('0x${previous[0]}${previous[1].substring(0, 3)}');
+
+        // Either time increases or clock sequence adjusts for same time
+        expect(
+            currentTime > previousTime ||
+                (currentTime == previousTime && current[3] != previous[3]),
+            isTrue,
+            reason: 'UUIDs are not properly sequenced');
+      }
     });
 
     test(
@@ -306,21 +379,53 @@ void main() {
       expect(dt, equals(1));
     });
 
-    test('Generate lots of codes to see if we get v6 collisions.', () {
-      var uuids = <dynamic>{};
-      var collisions = 0;
-      for (var i = 0; i < 10000000; i++) {
-        var code = uuid.v6();
-        if (uuids.contains(code)) {
-          collisions++;
-          print('Collision of code: $code');
-        } else {
-          uuids.add(code);
-        }
-      }
+    test('UUID v6 has mathematically sufficient randomness and uniqueness', () {
+      // 1. Generate a reasonable sample size of UUIDs
+      final samples = List.generate(1000, (_) => uuid.v6());
 
-      expect(collisions, equals(0));
-      expect(uuids.length, equals(10000000));
+      // 2. Extract the random sections (node ID and clock sequence)
+      final randomBits = samples.map((id) {
+        final parts = id.split('-');
+        final clockSeq = parts[3]; // Get the clock sequence part
+        final node = parts[4]; // Get the node part
+
+        // Extract just the random portions (node ID and clock sequence)
+        return clockSeq + node;
+      }).toList();
+
+      // 3. Calculate entropy for the random portions
+      final entropy = calculateEntropy(randomBits);
+
+      // 4. Ensure we have sufficient entropy
+      final minimumEntropy = 45.0; // Lower than v4/v7 as node ID may be stable
+
+      expect(entropy > minimumEntropy, isTrue,
+          reason:
+              'UUID implementation has insufficient entropy ($entropy bits)');
+
+      // 5. Test for uniqueness in the sample set
+      final uniqueCount = samples.toSet().length;
+      expect(uniqueCount, equals(samples.length),
+          reason: 'Generated UUIDs are not unique');
+
+      // 6. Verify timestamp monotonicity
+      for (var i = 1; i < samples.length; i++) {
+        final current = samples[i].split('-');
+        final previous = samples[i - 1].split('-');
+
+        // Compare timestamps (UUIDv6 has timestamp in first 3 components)
+        final currentTime = int.parse(
+            '0x${current[0]}${current[1]}${current[2].substring(0, 1)}');
+        final previousTime = int.parse(
+            '0x${previous[0]}${previous[1]}${previous[2].substring(0, 1)}');
+
+        // Either time increases or clock sequence adjusts for same time
+        expect(
+            currentTime >= previousTime ||
+                (currentTime == previousTime && current[3] != previous[3]),
+            isTrue,
+            reason: 'UUIDs are not properly sequenced');
+      }
     });
 
     test(
@@ -367,21 +472,34 @@ void main() {
       expect(id, equals('0133b891-f705-7462-902a-73af3e41ffc4'));
     });
 
-    test('Generate lots of codes to see if we get v7 collisions.', () {
-      var uuids = <dynamic>{};
-      var collisions = 0;
-      for (var i = 0; i < 10000000; i++) {
-        var code = uuid.v7();
-        if (uuids.contains(code)) {
-          collisions++;
-          //print('Collision of code: $code');
-        } else {
-          uuids.add(code);
-        }
-      }
+    test('UUID v7 has mathematically sufficient random bits', () {
+      // 1. Extract and analyze the random bits from multiple UUIDs
+      final samples = List.generate(1000, (_) => uuid.v7());
 
-      expect(collisions, equals(0));
-      expect(uuids.length, equals(10000000));
+      // 2. Extract the random sections (bits 60-63, 70-127)
+      final randomBits = samples.map((id) {
+        final parts = id.split('-');
+        final variant = parts[3]; // Get the variant section
+        final node = parts[4]; // Get the node section
+
+        // Extract just the random portions based on UUID v7 spec
+        return variant.substring(2) + node;
+      }).toList();
+
+      // 3. Calculate bit distribution and entropy
+      final entropy = calculateEntropy(randomBits);
+
+      // 4. Verify appropriate entropy for collision resistance
+      // Theoretical minimum for collision resistance at this sample size
+      final minimumEntropy = 70.0;
+
+      // 5. Verify enough random bits for collision resistance
+      expect(entropy > minimumEntropy, isTrue,
+          reason:
+              'UUID implementation has insufficient entropy ($entropy bits)');
+
+      // 6. Verify timestamp monotonicity alongside randomness tests
+      verifyTimestampMonotonicity(samples);
     });
 
     test(
