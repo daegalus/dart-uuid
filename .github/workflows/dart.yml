@@ -10,16 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # Note that this workflow uses the latest stable version of the Dart SDK.
-    # Docker images for other release channels - like dev and beta - are also
-    # available. See https://hub.docker.com/r/google/dart/ for the available
-    # images.
-    container:
-      image:  dart:beta
-
     steps:
       - uses: actions/checkout@v4
-
+      
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: beta
+          
       - name: Print Dart SDK version
         run: dart --version
 
@@ -36,15 +34,14 @@ jobs:
       - name: Run VM tests
         run: dart test -p vm
 
-      # Tests on Chrome
-      - name: Install Chrome
-        run: |
-          apt-get update
-          apt-get install -y wget gnupg
-          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
-          apt-get update
-          apt-get install -y google-chrome-stable
-
+      # Tests on Chrome - using browser-tools setup action
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      
       - name: Run Chrome tests
-        run: dart test -p chrome --chrome-flags="--no-sandbox"
+        run: |
+          # Use DART_TEST_CHROME_OPTIONS instead of CHROME_FLAGS
+          export DART_TEST_CHROME_OPTIONS="--no-sandbox --disable-gpu --headless --disable-dev-shm-usage"
+          dart test -p chrome
