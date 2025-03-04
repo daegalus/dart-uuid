@@ -12,3 +12,4 @@ out/
 .vscode/
 /index.html
 /out.js*
+.DS_Store

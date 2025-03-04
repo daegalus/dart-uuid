@@ -47,4 +47,4 @@ jobs:
           apt-get install -y google-chrome-stable
 
       - name: Run Chrome tests
-        run: dart test -p chrome
+        run: dart test -p chrome --chrome-flags="--no-sandbox"
