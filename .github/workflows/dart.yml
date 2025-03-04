@@ -26,14 +26,25 @@ jobs:
       - name: Install dependencies
         run: dart pub get
 
-      # Verify the use of 'dart format' on each commit.
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
 
-      # Passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
         run: dart analyze --fatal-infos
 
-      # Tests
-      - name: Run tests
-        run: dart test
+      # Tests on VM/native platform
+      - name: Run VM tests
+        run: dart test -p vm
+
+      # Tests on Chrome
+      - name: Install Chrome
+        run: |
+          apt-get update
+          apt-get install -y wget gnupg
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+          apt-get update
+          apt-get install -y google-chrome-stable
+
+      - name: Run Chrome tests
+        run: dart test -p chrome

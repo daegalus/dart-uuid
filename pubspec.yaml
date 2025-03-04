@@ -2,17 +2,8 @@ name: uuid
 version: 4.5.1
 description: >
   RFC4122 (v1, v4, v5, v6, v7, v8) UUID Generator and Parser for Dart
-documentation: https://daegalus.github.io/dart-uuid/index.html
-repository: https://github.com/Daegalus/dart-uuid
-funding:
-  - https://ko-fi.com/yulian
-  - https://paypal.me/yuliank
-  - https://cash.app/$yulian
-  - https://venmo.com/yuliank
-topics:
-  - uuid
-  - identifier
-  - id
+repository: https://github.com/input-output-hk/dart-uuid
+publish_to: none
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
