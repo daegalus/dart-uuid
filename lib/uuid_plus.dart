@@ -4,18 +4,18 @@
 /// Simple, fast generation of RFC4122 and RFC9562 UUIDs.
 library uuid_plus;
 
-export 'constants.dart';
-export 'data.dart';
-export 'enums.dart';
-export 'parsing.dart';
-export 'rng.dart';
-export 'uuid.dart';
-export 'uuid_value.dart';
-export 'v1.dart';
-export 'v4.dart';
-export 'v5.dart';
-export 'v6.dart';
-export 'v7.dart';
-export 'v8.dart';
-export 'v8generic.dart';
-export 'validation.dart';
+export 'src/constants.dart';
+export 'src/data.dart';
+export 'src/enums.dart';
+export 'src/parsing.dart';
+export 'src/rng.dart';
+export 'src/uuid.dart';
+export 'src/uuid_value.dart';
+export 'src/v1.dart';
+export 'src/v4.dart';
+export 'src/v5.dart';
+export 'src/v6.dart';
+export 'src/v7.dart';
+export 'src/v8.dart';
+export 'src/v8generic.dart';
+export 'src/validation.dart';

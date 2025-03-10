@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart' as crypto;
-import 'package:uuid_plus/data.dart';
+import 'package:uuid_plus/src/data.dart';
 
 import 'enums.dart';
 import 'parsing.dart';

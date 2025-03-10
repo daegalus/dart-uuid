@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
-import 'package:uuid_plus/constants.dart';
+import 'package:uuid_plus/src/constants.dart';
 
 import 'parsing.dart';
 import 'uuid.dart';

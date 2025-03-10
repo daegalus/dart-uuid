@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:uuid_plus/data.dart';
+import 'package:uuid_plus/src/data.dart';
 
 import 'parsing.dart';
 
