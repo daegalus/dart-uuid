@@ -7,9 +7,9 @@ library;
 
 import 'dart:typed_data';
 
-import 'package:uuid/data.dart';
-import 'package:uuid/rng.dart';
-import 'package:uuid/validation.dart';
+import 'package:uuid_plus/data.dart';
+import 'package:uuid_plus/rng.dart';
+import 'package:uuid_plus/validation.dart';
 
 import 'enums.dart';
 import 'parsing.dart';
@@ -22,8 +22,8 @@ import 'v7.dart';
 import 'v8.dart';
 import 'v8generic.dart';
 
-export 'uuid_value.dart';
 export 'enums.dart';
+export 'uuid_value.dart';
 
 /// uuid for Dart
 /// Author: Yulian Kuncheff

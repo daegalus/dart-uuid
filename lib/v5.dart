@@ -1,13 +1,13 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:uuid/data.dart';
-
 import 'dart:convert';
+
+import 'package:crypto/crypto.dart' as crypto;
+import 'package:uuid_plus/data.dart';
+
 import 'enums.dart';
 import 'parsing.dart';
 import 'v4.dart';
-
-import 'package:crypto/crypto.dart' as crypto;
 
 class UuidV5 {
   final GlobalOptions? goptions;

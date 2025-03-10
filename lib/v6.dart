@@ -2,7 +2,9 @@
 
 import 'dart:math';
 import 'dart:typed_data';
+
 import 'package:fixnum/fixnum.dart';
+
 import 'data.dart';
 import 'parsing.dart';
 

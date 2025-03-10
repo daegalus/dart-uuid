@@ -1,6 +1,6 @@
-import 'package:uuid/data.dart';
-import 'package:uuid/uuid.dart';
-import 'package:uuid/rng.dart';
+import 'package:uuid_plus/data.dart';
+import 'package:uuid_plus/rng.dart';
+import 'package:uuid_plus/uuid.dart';
 
 void main() {
   var uuid = Uuid();

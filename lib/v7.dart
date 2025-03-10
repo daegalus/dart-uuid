@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:fixnum/fixnum.dart';
-import 'package:uuid/data.dart';
+import 'package:uuid_plus/data.dart';
 
 import 'parsing.dart';
 

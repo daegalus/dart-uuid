@@ -1,4 +1,4 @@
-import 'package:uuid/rng.dart';
+import 'package:uuid_plus/rng.dart';
 
 /// [GlobalOptions] stores the global options passed into the library on instantiation.
 /// [GlobalOptions.rng] is the random number generator class to use. Defaults to CryptoRNG() [CryptoRNG]

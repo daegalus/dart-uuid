@@ -1,14 +1,13 @@
-# uuid
+# UUID Plus
 
-**Version 4.x.x is a complete redesign of the underlying setup, but tries to be API compatible or similar to 3.x.**
+> **⚠️ FORK NOTICE: This repository is a fork of the [original dart-uuid](https://github.com/Daegalus/dart-uuid) by [Daegalus](https://github.com/Daegalus). maintained by Input Output Global, Inc. (IOG)** 
 
-**UuidValue is still Experimental and the API for it is in flux, please pay attention to changelogs and versions.**
 
 [![Build Status](https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=main&event=push)](https://github.com/Daegalus/dart-uuid/actions)
 
 Simple, fast generation of [RFC4122](https://www.ietf.org/rfc/rfc4122.txt) and [RFC9562](https://www.rfc-editor.org/rfc/rfc9562.html) UUIDs.
 
-- [uuid](#uuid)
+- [UUID Plus](#uuid-plus)
   - [Getting Started](#getting-started)
     - [Instructions](#instructions)
     - [Pubspec](#pubspec)
@@ -18,34 +17,35 @@ Simple, fast generation of [RFC4122](https://www.ietf.org/rfc/rfc4122.txt) and [
     - [Running Tests in Browser Environment](#running-tests-in-browser-environment)
     - [Performance Considerations](#performance-considerations)
   - [Release notes](#release-notes)
-
+  - [Attribution](#attribution)
 
 Features:
 
 * Generate RFC4122 version 1, version 4, or version 5 UUIDs
 * Supports RFC9562 version 6, version 7, and version 8
-* Runs in web, server, and flutter
+* Supported Platforms:
+  * Web
+  * Server
+  * iOS
+  * Android
+  * Linux
+  * MacOS
+  * Windows (not tested)
 * Cryptographically strong random number generation on all platforms
-* [Documentation](https://daegalus.github.io/dart-uuid/index.html)
 
 ## Getting Started
 
 ### Instructions
 
-1. Open a command line and cd to your projects root folder
-2. In your pubspec, add an entry for dart-uuid to your dependencies (example below)
-3. Run `dart pub get` to install dependencies
-4. For testing, see the [Testing](#testing) section below
-
 ### Pubspec
 
 ```yaml
 dependencies:
-  uuid: ^4.4.2
+  uuid_plus: ^0.1.0
 ```
 
 ```dart
-import 'package:uuid/uuid.dart';
+import 'package:uuid_plus/uuid_plus.dart';
 
 var uuid = Uuid();
 ```
@@ -157,3 +157,9 @@ Some tests (particularly collision tests) may run millions of iterations. For br
 ## Release notes
 
 See [CHANGELOG](CHANGELOG.md)
+
+## Attribution
+
+This package is a fork of [dart-uuid](https://github.com/Daegalus/dart-uuid) originally created by Yulian Kuncheff. 
+
+The original package is licensed under the MIT License. This fork maintains the same license with additional copyright notice for Input Output Global, Inc. (IOG).

@@ -4,10 +4,10 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:test/test.dart';
-import 'package:uuid/data.dart';
-import 'package:uuid/rng.dart';
-import 'package:uuid/uuid.dart';
-import 'package:uuid/v4.dart';
+import 'package:uuid_plus/data.dart';
+import 'package:uuid_plus/rng.dart';
+import 'package:uuid_plus/uuid.dart';
+import 'package:uuid_plus/v4.dart';
 
 void main() {
   var uuid = const Uuid();
