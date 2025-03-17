@@ -6,15 +6,15 @@
 
 Simple, fast generation of [RFC4122](https://www.ietf.org/rfc/rfc4122.txt) and [RFC9562](https://www.rfc-editor.org/rfc/rfc9562.html) UUIDs.
 
-- [UUID Plus](#uuid-plus)
-  - [Getting Started](#getting-started)
-    - [Instructions](#instructions)
-    - [Pubspec](#pubspec)
-  - [Testing](#testing)
-    - [Running Tests in Native Environment](#running-tests-in-native-environment)
-    - [Running Tests in Browser Environment](#running-tests-in-browser-environment)
-  - [Release notes](#release-notes)
-  - [Attribution](#attribution)
+* [UUID Plus](#uuid-plus)
+  * [Getting Started](#getting-started)
+    * [Instructions](#instructions)
+    * [Pubspec](#pubspec)
+  * [Testing](#testing)
+    * [Running Tests in Native Environment](#running-tests-in-native-environment)
+    * [Running Tests in Browser Environment](#running-tests-in-browser-environment)
+  * [Release notes](#release-notes)
+  * [Attribution](#attribution)
 
 Features:
 
@@ -69,19 +69,19 @@ To run specific tests:
 
 ```bash
 # Run a specific test file
-dart test test/uuid_test.dart
+dart test test/v4_test.dart
 
 # Run a specific test group (by name)
-dart test test/uuid_test.dart --name="Version 7 Tests"
+dart test test/v7_test.dart --name="UuidV7"
 
 # Run a specific individual test 
-dart test test/uuid_test.dart --name="IDs created at same mSec are different"
+dart test test/v7_test.dart --name="Direct UuidV7 Class Tests"
 
 # Run tests matching a pattern
-dart test test/uuid_test.dart --name="timestamp"
+dart test test/v7_test.dart --name="timestamp"
 
 # Run multiple test files
-dart test test/uuid_test.dart test/other_test.dart
+dart test test/v4_test.dart test/v7_test.dart
 ```
 
 ### Running Tests in Browser Environment
@@ -93,7 +93,7 @@ To run all tests:
 dart test -p chrome
 
 # Run only UUID v7 tests in Chrome
-dart test test/uuid_test.dart --name="Version 7 Tests" -p chrome
+dart test test/v7_test.dart --name="UuidV7" -p chrome
 
 # Run on specific browsers
 dart test -p chrome,firefox
@@ -106,13 +106,13 @@ For debugging in the browser:
 
 ```bash
 # Basic debugging - pauses for you to connect DevTools
-dart test test/uuid_test.dart -p chrome --pause-after-load
+dart test test/v4_test.dart -p chrome --pause-after-load
 
 # Debug a specific test group
-dart test test/uuid_test.dart --name="Version 7 Tests" -p chrome --pause-after-load --timeout=10x
+dart test test/v7_test.dart --name="UuidV7" -p chrome --pause-after-load --timeout=10x
 
 # Debug a specific test with extended timeout
-dart test test/uuid_test.dart --name="UUID v7 has mathematically sufficient random bits" -p chrome --pause-after-load --timeout=10x
+dart test test/v7_test.dart --name="Direct UuidV7 Class Tests" -p chrome --pause-after-load --timeout=10x
 ```
 
 This will open Chrome and pause execution, allowing you to use Chrome DevTools for debugging.
