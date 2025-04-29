@@ -398,7 +398,7 @@ class Uuid {
   /// Example: Generate string UUID with fully-specified options
   ///
   /// ```dart
-  /// uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com');
+  /// uuid.v5(Namespace.url.value, 'www.google.com');
   /// // -> "c74a196f-f19d-5ea9-bffd-a2742432fc9c"
   /// ```
   String v5(String? namespace, String? name,
