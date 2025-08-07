@@ -8,7 +8,7 @@ v4.5.1
 v4.5.0
 
 * Change to CryptoRNG by default, you will now need to use MathRNG explicitly if you want speed over security. (thanks @Rexios80)
-  * This also works around a regression in the Dart SDK on WASM targets: https://github.com/dart-lang/sdk/issues/56609
+  * This also works around a regression in the Dart SDK on WASM targets: <https://github.com/dart-lang/sdk/issues/56609>
 * Deprecate the use of `Uuid.NAMESPACE*` and `UuidV5.NAMESPACE`, and switch to using a proper const enum for this. (thanks @bymoye)
   * These will be removed once sufficient time has been made for the deprecation notice to be seen. Most likely v5.0.
   * Please use the new `Namespace` enum in `enums.dart`.

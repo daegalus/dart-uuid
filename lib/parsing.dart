@@ -25,7 +25,7 @@ class UuidParsing {
     return bytes;
   }
 
-  /// Parses the provided [uuid] into a list of byte values as a List<int>.
+  /// Parses the provided [uuid] into a list of byte values as a List&lt;int&gt;.
   /// Can optionally be provided a [buffer] to write into and
   /// a positional [offset] for where to start inputting into the buffer.
   ///
