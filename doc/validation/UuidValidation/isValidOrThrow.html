@@ -16,20 +16,16 @@
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
   <link rel="icon" href="../../static-assets/favicon.png?v1">
-
   
 </head>
 
-
 <body data-base-href="../../" data-using-base-href="false" class="light-theme">
-
 <div id="overlay-under-drawer"></div>
-
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../validation/validation-library.html">validation.dart</a></li>
+    <li><a href="../../validation/">validation.dart</a></li>
     <li><a href="../../validation/UuidValidation-class.html">UuidValidation</a></li>
     <li class="self-crumb">isValidOrThrow static method</li>
   </ol>
@@ -37,20 +33,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
-
 <div
     id="dartdoc-main-content"
     class="main-content"
@@ -62,12 +54,11 @@
 
     <section class="multi-line-signature">
       
-
 <span class="returntype">void</span>
-<span class="name ">isValidOrThrow</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="isValidOrThrow-param-fromString"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.3/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
-<li><span class="parameter" id="isValidOrThrow-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.3/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span></li>
-<li><span class="parameter" id="isValidOrThrow-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC4122</span>, </span></li>
-<li><span class="parameter" id="isValidOrThrow-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.3/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>, </span></li>
+<span class="name ">isValidOrThrow</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="isValidOrThrow-param-fromString"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
+<li><span class="parameter" id="isValidOrThrow-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span></li>
+<li><span class="parameter" id="isValidOrThrow-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC9562</span>, </span></li>
+<li><span class="parameter" id="isValidOrThrow-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>, </span></li>
 </ol>})
 
       
@@ -75,8 +66,8 @@
     </section>
     
 <section class="desc markdown">
-  <p>Validates the provided <a href="../../uuid/uuid-library.html">uuid</a> to make sure it has all the necessary
-components and formatting and throws a <a href="https://api.dart.dev/stable/3.5.3/dart-core/FormatException-class.html">FormatException</a> if it is invalid.
+  <p>Validates the provided <a href="../../uuid/">uuid</a> to make sure it has all the necessary
+components and formatting and throws a <a href="https://api.dart.dev/stable/3.9.4/dart-core/FormatException-class.html">FormatException</a> if it is invalid.
 You can choose to validate from a string or from a byte list based on
 which parameter is passed.
 Optionally you can set <code>validationMode</code> to <code>ValidationMode.nonStrict</code> to
@@ -92,7 +83,7 @@ If you are using a Microsoft GUID, you should set <code>validationMode</code> to
   <pre class="language-dart"><code class="language-dart">static void isValidOrThrow(
     {String fromString = &#39;&#39;,
     Uint8List? fromByteList,
-    ValidationMode validationMode = ValidationMode.strictRFC4122,
+    ValidationMode validationMode = ValidationMode.strictRFC9562,
     bool noDashes = false}) {
   final isValid = isValidUUID(
       fromString: fromString,
@@ -123,7 +114,6 @@ If you are using a Microsoft GUID, you should set <code>validationMode</code> to
 
 
   </div> <!-- /.main-content -->
-
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
@@ -131,41 +121,31 @@ If you are using a Microsoft GUID, you should set <code>validationMode</code> to
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
 </header>
-
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../validation/validation-library.html">validation</a></li>
+    <li><a href="../../validation/">validation</a></li>
     <li><a href="../../validation/UuidValidation-class.html">UuidValidation</a></li>
     <li class="self-crumb">isValidOrThrow static method</li>
 </ol>
 
-
     <h5>UuidValidation class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
-
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
-
 </main>
-
 <footer>
   <span class="no-break">
     uuid
-      4.5.1
+      4.5.2
   </span>
-
   
 </footer>
-
 
 
 <script src="../../static-assets/highlight.pack.js?v1"></script>
 <script src="../../static-assets/docs.dart.js"></script>
 
-
-
 </body>
-
 </html>
 

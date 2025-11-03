@@ -205,7 +205,7 @@ void main() {
       expect(isValidDefault, false);
 
       var isValidRFC = Uuid.isValidUUID(
-          fromString: guidString, validationMode: ValidationMode.strictRFC4122);
+          fromString: guidString, validationMode: ValidationMode.strictRFC9562);
       expect(isValidRFC, false);
 
       var isValidNonStrict = Uuid.isValidUUID(
@@ -551,6 +551,20 @@ void main() {
       var uuidval = UuidValue.fromString(validNoDashesUUID);
       expect(uuidval.toFormattedString(validate: true),
           "87cd4eb3-cb88-449b-a1da-e468fd829310");
+    });
+
+    test("Nil UUID is Valid", () {
+      const nilUUID = '00000000-0000-0000-0000-000000000000';
+      expect(Uuid.isValidUUID(fromString: nilUUID), true);
+    });
+    test("Max UUID is Valid", () {
+      const maxUUID = 'ffffffff-ffff-ffff-ffff-ffffffffffff';
+      expect(Uuid.isValidUUID(fromString: maxUUID), true);
+    });
+
+    test("Invalid UUID Fails", () {
+      const invalidUUID = 'f1f1f1f1-f1f1-f1f1-f1f1-f1f1f1f1f1f';
+      expect(Uuid.isValidUUID(fromString: invalidUUID), false);
     });
   });
 
