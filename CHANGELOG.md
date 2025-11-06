@@ -1,5 +1,10 @@
 # Changelog
 
+v4.5.2
+
+* Fix validation to allow MAX UUID (`FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF`) as it is valid.
+* Add `strictRFC9562` and deprecate `strictRFC4122` to facilitate a rename. This will be remove in v5
+
 v4.5.1
 
 * Add `UuidValue.fromNamespace` to let you make constant variants of the namespace, as due to language limitations on Enums, `Namespace.*.uuidValue` can't be constant.
@@ -12,6 +17,7 @@ v4.5.0
 * Deprecate the use of `Uuid.NAMESPACE*` and `UuidV5.NAMESPACE`, and switch to using a proper const enum for this. (thanks @bymoye)
   * These will be removed once sufficient time has been made for the deprecation notice to be seen. Most likely v5.0.
   * Please use the new `Namespace` enum in `enums.dart`.
+  * These will be removed in v5
 * Re-add `Uuid.NAMESPACE*` and `UuidV5.NAMESPACE` in order to give deprecation time.
 * Add missing MAX UUID option from RFC9562
 * Add `bytes` getter to `Namespace` enum.

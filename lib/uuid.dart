@@ -79,7 +79,7 @@ class Uuid {
     List<int>? buffer,
     int offset = 0,
     bool validate = true,
-    ValidationMode validationMode = ValidationMode.strictRFC4122,
+    ValidationMode validationMode = ValidationMode.strictRFC9562,
   }) {
     return UuidParsing.parse(uuid,
         buffer: buffer,
@@ -97,7 +97,7 @@ class Uuid {
       {List<int>? buffer,
       int offset = 0,
       bool validate = true,
-      ValidationMode validationMode = ValidationMode.strictRFC4122}) {
+      ValidationMode validationMode = ValidationMode.strictRFC9562}) {
     return UuidParsing.parseAsByteList(uuid,
         buffer: buffer,
         offset: offset,
@@ -127,7 +127,7 @@ class Uuid {
   static bool isValidUUID(
       {String fromString = '',
       Uint8List? fromByteList,
-      ValidationMode validationMode = ValidationMode.strictRFC4122,
+      ValidationMode validationMode = ValidationMode.strictRFC9562,
       bool noDashes = false}) {
     return UuidValidation.isValidUUID(
         fromString: fromString,

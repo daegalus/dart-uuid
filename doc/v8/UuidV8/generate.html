@@ -16,20 +16,16 @@
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
   <link rel="icon" href="../../static-assets/favicon.png?v1">
-
   
 </head>
 
-
 <body data-base-href="../../" data-using-base-href="false" class="light-theme">
-
 <div id="overlay-under-drawer"></div>
-
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../v8/v8-library.html">v8.dart</a></li>
+    <li><a href="../../v8/">v8.dart</a></li>
     <li><a href="../../v8/UuidV8-class.html">UuidV8</a></li>
     <li class="self-crumb">generate method</li>
   </ol>
@@ -37,20 +33,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
-
 <div
     id="dartdoc-main-content"
     class="main-content"
@@ -62,8 +54,7 @@
 
     <section class="multi-line-signature">
       
-
-<span class="returntype"><a href="https://api.dart.dev/stable/3.5.3/dart-core/String-class.html">String</a></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span>
 <span class="name ">generate</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="generate-param-options"><span class="type-annotation"><a href="../../data/V8Options-class.html">V8Options</a>?</span> <span class="parameter-name">options</span>, </span></li>
 </ol>})
 
@@ -104,19 +95,13 @@ options detailed in the readme.</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String generate({V8Options? options}) {
   var buf = Uint8List(16);
-
   DateTime time = options?.time ?? DateTime.timestamp();
 
-  buf.setRange(
-      0, 2, UuidParsing.parseHexToBytes(sprintf(&#39;0x%04i&#39;, [time.year])));
-  buf.setRange(
-      2, 3, UuidParsing.parseHexToBytes(sprintf(&#39;0x%02i&#39;, [time.month])));
-  buf.setRange(
-      3, 4, UuidParsing.parseHexToBytes(sprintf(&#39;0x%02i&#39;, [time.day])));
-  buf.setRange(
-      4, 5, UuidParsing.parseHexToBytes(sprintf(&#39;0x%02i&#39;, [time.hour])));
-  buf.setRange(
-      5, 6, UuidParsing.parseHexToBytes(sprintf(&#39;0x%02i&#39;, [time.minute])));
+  buf.setRange(0, 2, UuidParsing.parseHexToBytes(_padLeft(time.year, 4)));
+  buf.setRange(2, 3, UuidParsing.parseHexToBytes(_padLeft(time.month, 2)));
+  buf.setRange(3, 4, UuidParsing.parseHexToBytes(_padLeft(time.day, 2)));
+  buf.setRange(4, 5, UuidParsing.parseHexToBytes(_padLeft(time.hour, 2)));
+  buf.setRange(5, 6, UuidParsing.parseHexToBytes(_padLeft(time.minute, 2)));
 
   var randomBytes = options?.randomBytes ??
       (goptions?.rng?.generate() ?? V8State.random.generate());
@@ -125,10 +110,10 @@ options detailed in the readme.</p>
   buf.setRange(6, 7, [buf.getRange(6, 7).last &amp; 0x0f | 0x80]);
   buf.setRange(8, 9, [buf.getRange(8, 9).last &amp; 0x3f | 0x80]);
 
-  buf.setRange(
-      7, 8, UuidParsing.parseHexToBytes(sprintf(&#39;0x%02i&#39;, [time.second])));
-  var milliBytes =
-      UuidParsing.parseHexToBytes(sprintf(&#39;0x%04i&#39;, [time.millisecond]));
+  buf.setRange(7, 8, UuidParsing.parseHexToBytes(_padLeft(time.second, 2)));
+  var milliBytes = UuidParsing.parseHexToBytes(
+    _padLeft(time.millisecond, 4),
+  );
   milliBytes[0] = milliBytes[0] &amp; 0x0f | buf.getRange(8, 9).last &amp; 0xf0;
   buf.setRange(8, 10, milliBytes);
 
@@ -138,7 +123,6 @@ options detailed in the readme.</p>
 
 
   </div> <!-- /.main-content -->
-
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
@@ -146,41 +130,31 @@ options detailed in the readme.</p>
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
 </header>
-
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">uuid</a></li>
-    <li><a href="../../v8/v8-library.html">v8</a></li>
+    <li><a href="../../v8/">v8</a></li>
     <li><a href="../../v8/UuidV8-class.html">UuidV8</a></li>
     <li class="self-crumb">generate method</li>
 </ol>
 
-
     <h5>UuidV8 class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
-
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
-
 </main>
-
 <footer>
   <span class="no-break">
     uuid
-      4.5.1
+      4.5.2
   </span>
-
   
 </footer>
-
 
 
 <script src="../../static-assets/highlight.pack.js?v1"></script>
 <script src="../../static-assets/docs.dart.js"></script>
 
-
-
 </body>
-
 </html>
 

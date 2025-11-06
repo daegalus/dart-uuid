@@ -4,7 +4,12 @@ import 'package:uuid/constants.dart';
 import 'package:uuid/uuid.dart';
 
 /// The options for UUID Validation strictness
-enum ValidationMode { nonStrict, strictRFC4122 }
+enum ValidationMode {
+  nonStrict,
+  @Deprecated('Use strictRFC9562 instead.')
+  strictRFC4122,
+  strictRFC9562
+}
 
 /// RFC4122 & RFC9562 provided namespaces for v3, v5, and v8 namespace based UUIDs
 enum Namespace {

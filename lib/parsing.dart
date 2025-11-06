@@ -44,7 +44,7 @@ class UuidParsing {
       {List<int>? buffer,
       int offset = 0,
       bool validate = true,
-      ValidationMode validationMode = ValidationMode.strictRFC4122,
+      ValidationMode validationMode = ValidationMode.strictRFC9562,
       bool noDashes = false}) {
     if (validate) {
       UuidValidation.isValidOrThrow(
@@ -95,7 +95,7 @@ class UuidParsing {
       {List<int>? buffer,
       int offset = 0,
       bool validate = true,
-      ValidationMode validationMode = ValidationMode.strictRFC4122,
+      ValidationMode validationMode = ValidationMode.strictRFC9562,
       bool noDashes = false}) {
     return Uint8List.fromList(parse(uuid,
         buffer: buffer,

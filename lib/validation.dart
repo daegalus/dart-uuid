@@ -10,13 +10,19 @@ class UuidValidation {
   static bool isValidUUID(
       {String fromString = '',
       Uint8List? fromByteList,
-      ValidationMode validationMode = ValidationMode.strictRFC4122,
+      ValidationMode validationMode = ValidationMode.strictRFC9562,
       bool noDashes = false}) {
     if (fromByteList != null) {
       fromString = UuidParsing.unparse(fromByteList);
     }
+
     // UUID of all 0s is ok.
     if (fromString == Namespace.nil.value) {
+      return true;
+    }
+
+    // UUID of all Fs is ok.
+    if (fromString == Namespace.max.value) {
       return true;
     }
 
@@ -32,7 +38,8 @@ class UuidValidation {
 
     // Make sure if it passes the above, that it's a valid UUID or GUID.
     switch (validationMode) {
-      case ValidationMode.strictRFC4122:
+      // ignore: deprecated_member_use_from_same_package
+      case ValidationMode.strictRFC9562 || ValidationMode.strictRFC4122:
         {
           var pattern = (noDashes)
               ? r'^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-8][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$'
@@ -64,7 +71,7 @@ class UuidValidation {
   static void isValidOrThrow(
       {String fromString = '',
       Uint8List? fromByteList,
-      ValidationMode validationMode = ValidationMode.strictRFC4122,
+      ValidationMode validationMode = ValidationMode.strictRFC9562,
       bool noDashes = false}) {
     final isValid = isValidUUID(
         fromString: fromString,
