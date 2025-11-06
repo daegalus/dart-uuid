@@ -387,6 +387,11 @@ class Uuid {
   /// By default it will generate a string based on a provided uuid namespace and
   /// name, and will return a string.
   ///
+  /// The [namespace] parameter is the UUID namespace (as a String).
+  /// The [name] parameter is a String that will be converted to UTF-8 bytes.
+  ///
+  /// For binary data input, use [v5FromBytes] instead.
+  ///
   /// The first optional argument is an options map that takes various configuration
   /// options detailed in the readme. This is going to be eventually deprecated.
   ///
@@ -413,10 +418,38 @@ class Uuid {
         .generate(namespace, name, options: config);
   }
 
+  /// Generates a namespace & name-based version 5 UUID from binary data
+  ///
+  /// By default it will generate a string based on a provided uuid namespace and
+  /// binary name data, and will return a string.
+  ///
+  /// The [namespace] parameter is the UUID namespace (as a String).
+  /// The [name] parameter is a Uint8List containing arbitrary binary data.
+  /// This allows for generating UUIDs from raw bytes as per RFC 4122 / RFC 9562.
+  ///
+  /// The optional [config] argument is a [V5Options] object that takes configuration options.
+  ///
+  /// http://tools.ietf.org/html/rfc4122.html#section-4.4
+  ///
+  /// Example: Generate UUID from binary data
+  ///
+  /// ```dart
+  /// var binaryData = Uint8List.fromList([0x01, 0x02, 0x03, 0x04]);
+  /// uuid.v5FromBytes(Namespace.url.value, binaryData);
+  /// // -> "81156b66-5dc6-5909-8842-89a96a29d3ba"
+  /// ```
+  String v5FromBytes(String? namespace, Uint8List? name, {V5Options? config}) {
+    return UuidV5(goptions: goptions)
+        .generateFromBytes(namespace, name, options: config);
+  }
+
   /// Generates a namespace & name-based version 5 UUID into a provided buffer
   ///
   /// By default it will generate a string based on a provided uuid namespace and
   /// place the result into the provided [buffer]. The [buffer] will also be returned.
+  ///
+  /// The [namespace] parameter is the UUID namespace (as a String).
+  /// The [name] parameter is a String.
   ///
   /// Optionally an [offset] can be provided with a start position in the buffer.
   ///
@@ -450,10 +483,45 @@ class Uuid {
     return UuidParsing.parse(result, buffer: buffer, offset: offset);
   }
 
+  /// Generates a namespace & name-based version 5 UUID from binary data into a provided buffer
+  ///
+  /// By default it will generate a string based on a provided uuid namespace and
+  /// binary name data, and place the result into the provided [buffer].
+  /// The [buffer] will also be returned.
+  ///
+  /// The [namespace] parameter is the UUID namespace (as a String).
+  /// The [name] parameter is a Uint8List containing arbitrary binary data.
+  ///
+  /// Optionally an [offset] can be provided with a start position in the buffer.
+  ///
+  /// http://tools.ietf.org/html/rfc4122.html#section-4.4
+  ///
+  /// Example: Generate two IDs in a single buffer
+  ///
+  /// ```dart
+  /// var myBuffer = new List(32);
+  /// var binaryData = Uint8List.fromList([0x01, 0x02, 0x03]);
+  /// uuid.v5FromBytesBuffer(Namespace.url.value, binaryData, myBuffer);
+  /// uuid.v5FromBytesBuffer(Namespace.url.value, binaryData, myBuffer, offset: 16);
+  /// ```
+  List<int> v5FromBytesBuffer(
+    String? namespace,
+    Uint8List? name,
+    List<int>? buffer, {
+    V5Options? config,
+    int offset = 0,
+  }) {
+    var result = v5FromBytes(namespace, name, config: config);
+    return UuidParsing.parse(result, buffer: buffer, offset: offset);
+  }
+
   /// Generates a namespace & name-based version 5 UUID as a [UuidValue] object
   ///
   /// By default it will generate a string based on a provided uuid namespace and
   /// name, and will return a [UuidValue] object.
+  ///
+  /// The [namespace] parameter is the UUID namespace (as a String).
+  /// The [name] parameter is a String.
   ///
   /// The first optional argument is an options map that takes various configuration
   /// options detailed in the readme. This is going to be eventually deprecated.
@@ -478,6 +546,30 @@ class Uuid {
     return options != null
         ? UuidValue.fromString(v5(namespace, name, options: options))
         : UuidValue.fromString(v5(namespace, name, config: config));
+  }
+
+  /// Generates a namespace & name-based version 5 UUID from binary data as a [UuidValue] object
+  ///
+  /// By default it will generate a string based on a provided uuid namespace and
+  /// binary name data, and will return a [UuidValue] object.
+  ///
+  /// The [namespace] parameter is the UUID namespace (as a String).
+  /// The [name] parameter is a Uint8List containing arbitrary binary data.
+  ///
+  /// http://tools.ietf.org/html/rfc4122.html#section-4.4
+  ///
+  /// Example: UuidValue usage with binary data
+  /// ```dart
+  /// var binaryData = Uint8List.fromList([0x01, 0x02, 0x03, 0x04]);
+  /// uuidValue = uuid.v5FromBytesObj(Namespace.url.value, binaryData);
+  /// // -> UuidValue(uuid: "81156b66-5dc6-5909-8842-89a96a29d3ba")
+  ///
+  /// print(uuidValue) -> // -> '81156b66-5dc6-5909-8842-89a96a29d3ba'
+  /// uuidValue.toBytes() -> // -> [...]
+  /// ```
+  UuidValue v5FromBytesObj(String? namespace, Uint8List? name,
+      {V5Options? config}) {
+    return UuidValue.fromString(v5FromBytes(namespace, name, config: config));
   }
 
   /// Generates a draft time-based version 6 UUID
