@@ -229,6 +229,51 @@ void main() {
       expect(u0, isNot(equals(u1)));
     });
 
+    test('Using binary data (Uint8List) as name with v5FromBytes', () {
+      var binaryName = Uint8List.fromList([0x01, 0x02, 0x03, 0x04]);
+      var u0 = uuid.v5FromBytes(Namespace.url.value, binaryName);
+      var u1 = uuid.v5FromBytes(Namespace.url.value, binaryName);
+
+      // Same binary input should produce same UUID
+      expect(u0, equals(u1));
+      // Verify it's a valid UUID format
+      expect(Uuid.isValidUUID(fromString: u0), isTrue);
+    });
+
+    test('String vs binary produces same UUIDs for equivalent UTF-8', () {
+      // String "test"
+      var stringUuid = uuid.v5(Namespace.url.value, 'test');
+
+      // Binary bytes that are UTF-8 encoding of "test"
+      var binaryName =
+          Uint8List.fromList([0x74, 0x65, 0x73, 0x74]); // "test" in UTF-8
+      var binaryUuid = uuid.v5FromBytes(Namespace.url.value, binaryName);
+
+      // These should be the same since binary is UTF-8 encoding of "test"
+      expect(stringUuid, equals(binaryUuid));
+    });
+
+    test('Binary data with non-UTF8 bytes', () {
+      // Binary data that is not valid UTF-8
+      var binaryName = Uint8List.fromList([0xFF, 0xFE, 0xFD, 0xFC, 0x00]);
+      var u0 = uuid.v5FromBytes(Namespace.dns.value, binaryName);
+      var u1 = uuid.v5FromBytes(Namespace.dns.value, binaryName);
+
+      // Same binary input should produce same UUID
+      expect(u0, equals(u1));
+      // Verify it's a valid UUID format
+      expect(Uuid.isValidUUID(fromString: u0), isTrue);
+    });
+
+    test('Empty binary data', () {
+      var emptyBytes = Uint8List.fromList([]);
+      var u0 = uuid.v5FromBytes(Namespace.url.value, emptyBytes);
+      var u1 = uuid.v5(Namespace.url.value, '');
+
+      // Empty bytes and empty string should produce same UUID
+      expect(u0, equals(u1));
+    });
+
     test('Using buffers', () {
       var buffer = Uint8List(16);
       var withoutBuffer =
@@ -239,11 +284,28 @@ void main() {
       expect(Uuid.unparse(buffer), equals(withoutBuffer));
     });
 
+    test('Using buffers with binary data', () {
+      var buffer = Uint8List(16);
+      var binaryName = Uint8List.fromList([0xAB, 0xCD, 0xEF]);
+      var withoutBuffer = uuid.v5FromBytes(Namespace.url.value, binaryName);
+      uuid.v5FromBytesBuffer(Namespace.url.value, binaryName, buffer);
+
+      expect(Uuid.unparse(buffer), equals(withoutBuffer));
+    });
+
     test('Using Objects', () {
       var regular =
           uuid.v5(null, 'www.google.com', options: {'randomNamespace': false});
       var obj = uuid
           .v5obj(null, 'www.google.com', options: {'randomNamespace': false});
+
+      expect(obj.uuid, equals(regular));
+    });
+
+    test('Using Objects with binary data', () {
+      var binaryName = Uint8List.fromList([0x12, 0x34, 0x56]);
+      var regular = uuid.v5FromBytes(Namespace.oid.value, binaryName);
+      var obj = uuid.v5FromBytesObj(Namespace.oid.value, binaryName);
 
       expect(obj.uuid, equals(regular));
     });

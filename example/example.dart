@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:uuid/data.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/rng.dart';
@@ -23,9 +24,16 @@ void main() {
   var v4Crypto = uuid.v4(config: V4Options(null, CryptoRNG()));
   // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
 
-  // Generate a v5 (namespace-name-sha1-based) id
+  // Generate a v5 (namespace-name-sha1-based) id from string
   var v5 = uuid.v5(Namespace.url.value, 'www.google.com');
   // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
+
+  // Generate a v5 UUID from binary data (Uint8List)
+  // This is useful for generating UUIDs from arbitrary binary data
+  // as per RFC 4122 / RFC 9562
+  var binaryData = Uint8List.fromList([0x01, 0x02, 0x03, 0x04, 0x05]);
+  var v5Binary = uuid.v5FromBytes(Namespace.url.value, binaryData);
+  print('v5 from binary: $v5Binary');
 
   // Generate a v6 (time-based) id
   var v6 = uuid.v6(); // -> '1ebbc608-7459-6a20-bc85-0d10b6a52acd'
