@@ -2,8 +2,6 @@
 
 **Version 4.x.x is a complete redesign of the underlying setup, but tries to be API compatible or similar to 3.x.**
 
-**UuidValue is still Experimental and the API for it is in flux, please pay attention to changelogs and versions.**
-
 [![Build Status](https://github.com/Daegalus/dart-uuid/workflows/Dart/badge.svg?branch=main&event=push)](https://github.com/Daegalus/dart-uuid/actions)
 
 Simple, fast generation of [RFC4122](https://www.ietf.org/rfc/rfc4122.txt) and [RFC9562](https://www.rfc-editor.org/rfc/rfc9562.html) UUIDs.
