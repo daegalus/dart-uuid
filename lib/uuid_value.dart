@@ -1,13 +1,11 @@
 import 'dart:typed_data';
 
-import 'package:meta/meta.dart';
 import 'package:uuid/constants.dart';
 
 import 'parsing.dart';
 import 'uuid.dart';
 import 'validation.dart';
 
-@experimental
 class UuidValue {
   final String uuid;
 
