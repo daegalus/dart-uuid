@@ -3,6 +3,7 @@
 v4.5.3
 
 * Remove experimental flag on UUIDValue and remote meta dependency. (thanks @marcelomendoncasoares)
+* Add binary support to UUIDv5 (thanks @ljanecek)
 
 v4.5.2
 
