@@ -27,7 +27,7 @@ Features:
 
 ```yaml
 dependencies:
-  uuid: ^4.4.2
+  uuid: ^4.5.3
 ```
 
 ```dart
