@@ -1,5 +1,9 @@
 # Changelog
 
+v4.5.3
+
+* Remove experimental flag on UUIDValue and remote meta dependency. (thanks @marcelomendoncasoares)
+
 v4.5.2
 
 * Fix validation to allow MAX UUID (`FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF`) as it is valid.

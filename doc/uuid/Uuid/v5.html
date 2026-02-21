@@ -54,10 +54,10 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span>
-<span class="name ">v5</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="v5-param-namespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">namespace</span>, </span></li>
-<li><span class="parameter" id="v5-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, {</span></li>
-<li><span class="parameter" id="v5-param-options"><span>@<a href="https://api.dart.dev/stable/3.9.4/dart-core/Deprecated-class.html">Deprecated</a>(&#39;use config instead. Removal in 5.0.0&#39;)</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.11.0/dart-core/String-class.html">String</a></span>
+<span class="name ">v5</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="v5-param-namespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">namespace</span>, </span></li>
+<li><span class="parameter" id="v5-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, {</span></li>
+<li><span class="parameter" id="v5-param-options"><span>@<a href="https://api.dart.dev/stable/3.11.0/dart-core/Deprecated/Deprecated.html">Deprecated</a>(&#39;use config instead. Removal in 5.0.0&#39;)</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.11.0/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span></li>
 <li><span class="parameter" id="v5-param-config"><span class="type-annotation"><a href="../../data/V5Options-class.html">V5Options</a>?</span> <span class="parameter-name">config</span>, </span></li>
 </ol>})
 
@@ -69,6 +69,9 @@
   <p>Generates a namespace &amp; name-based version 5 UUID</p>
 <p>By default it will generate a string based on a provided uuid namespace and
 name, and will return a string.</p>
+<p>The <code>namespace</code> parameter is the UUID namespace (as a String).
+The <code>name</code> parameter is a String that will be converted to UTF-8 bytes.</p>
+<p>For binary data input, use <a href="../../uuid/Uuid/v5FromBytes.html">v5FromBytes</a> instead.</p>
 <p>The first optional argument is an options map that takes various configuration
 options detailed in the readme. This is going to be eventually deprecated.</p>
 <p>The second optional argument is a <a href="../../data/V5Options-class.html">V5Options</a> object that takes the same options as
@@ -122,7 +125,7 @@ the options map. This is the preferred way to pass options.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.5.2
+      4.5.3
   </span>
   
 </footer>
