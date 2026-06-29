@@ -211,6 +211,10 @@ void main() {
       var isValidNonStrict = Uuid.isValidUUID(
           fromString: guidString, validationMode: ValidationMode.nonStrict);
       expect(isValidNonStrict, true);
+
+      var isValidLoose = Uuid.isValidUUID(
+          fromString: guidString, validationMode: ValidationMode.loose);
+      expect(isValidLoose, true);
     });
   });
 
@@ -570,6 +574,18 @@ void main() {
       final uuidval =
           UuidValue.withValidation(validGUID, ValidationMode.nonStrict);
       expect(uuidval.uuid, validGUID.toLowerCase());
+    });
+
+    test('Pass valid Ulid to constructor with validation mode loose', () {
+      const validUlid = '019f13f5-53cb-b219-ca3e-4b569376f32b';
+      expect(
+          Uuid.isValidUUID(
+              fromString: validUlid, validationMode: ValidationMode.loose),
+          true);
+
+      final uuidval =
+          UuidValue.withValidation(validUlid, ValidationMode.loose);
+      expect(uuidval.uuid, validUlid.toLowerCase());
     });
 
     test('const namespace regression catcher', () {
