@@ -57,16 +57,28 @@ class UuidValidation {
           final match = regex.hasMatch(fromString.toLowerCase());
           return match;
         }
-      case ValidationMode.loose:
-        {
-          var pattern = (noDashes)
-              ? r'^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[0-9a-f]{32})$'
-              : r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
-          final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
-          final match = regex.hasMatch(fromString.toLowerCase());
-          return match;
-        }
     }
+  }
+
+  /// Validates the provided [uuid] to be a 128 bits
+  /// representation and returns a [bool]
+  /// No validation is performed on the content of the uuid
+  /// You can choose to validate from a string or from a byte list based on
+  /// which parameter is passed.
+  static bool isValidUUIDFormat(
+      {String fromString = '',
+      Uint8List? fromByteList,
+      bool noDashes = false}) {
+    if (fromByteList != null) {
+      fromString = UuidParsing.unparse(fromByteList);
+    }
+
+      var pattern = (noDashes)
+          ? r'^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[0-9a-f]{32})$'
+          : r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+      final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
+      final match = regex.hasMatch(fromString.toLowerCase());
+      return match;
   }
 
   /// Validates the provided [uuid] to make sure it has all the necessary
@@ -74,8 +86,7 @@ class UuidValidation {
   /// You can choose to validate from a string or from a byte list based on
   /// which parameter is passed.
   /// Optionally you can set [validationMode] to `ValidationMode.nonStrict` to
-  /// allow for non RFC4122 compliant UUIDs, or to `ValidationMode.loose` to
-  /// allow any 128 bit uuid-like id (e.g. ulid or future versions of uuid).
+  /// allow for non RFC4122 compliant UUIDs.
   /// If you are using a Microsoft GUID, you should set [validationMode] to
   /// `ValidationMode.nonStrict`.
   static void isValidOrThrow(
@@ -103,21 +114,28 @@ class UuidValidation {
               'The provided UUID is not RFC4122 compliant. It seems you might be using a Microsoft GUID. Try setting `validationMode = ValidationMode.nonStrict`',
               fromString);
         }
-
-        final isValidLoose = isValidUUID(
-            fromString: fromString,
-            fromByteList: fromByteList,
-            validationMode: ValidationMode.loose,
-            noDashes: noDashes);
-
-        if (isValidLoose) {
-          throw FormatException(
-              'The provided UUID is not RFC4122 compliant. Try setting `validationMode = ValidationMode.loose`',
-              fromString);
-        }
       }
 
       throw FormatException('The provided UUID is invalid.', fromString);
+    }
+  }
+
+  /// Validates the provided [uuid] to be a 128 bits
+  /// representation and returns a [bool]
+  /// No validation is performed on the content of the uuid
+  /// You can choose to validate from a string or from a byte list based on
+  /// which parameter is passed.
+  static void isValidFormatOrThrow(
+      {String fromString = '',
+      Uint8List? fromByteList,
+      bool noDashes = false}) {
+    final isValid = isValidUUIDFormat(
+        fromString: fromString,
+        fromByteList: fromByteList,
+        noDashes: noDashes);
+
+    if (!isValid) {
+      throw FormatException('The provided UUID has an invalid format.', fromString);
     }
   }
 }

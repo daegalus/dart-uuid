@@ -211,10 +211,6 @@ void main() {
       var isValidNonStrict = Uuid.isValidUUID(
           fromString: guidString, validationMode: ValidationMode.nonStrict);
       expect(isValidNonStrict, true);
-
-      var isValidLoose = Uuid.isValidUUID(
-          fromString: guidString, validationMode: ValidationMode.loose);
-      expect(isValidLoose, true);
     });
   });
 
@@ -576,15 +572,19 @@ void main() {
       expect(uuidval.uuid, validGUID.toLowerCase());
     });
 
-    test('Pass valid Ulid to constructor with validation mode loose', () {
+    test('Pass valid Ulid to constructor with format validation', () {
       const validUlid = '019f13f5-53cb-b219-ca3e-4b569376f32b';
       expect(
           Uuid.isValidUUID(
-              fromString: validUlid, validationMode: ValidationMode.loose),
+              fromString: validUlid),
+          false);
+      expect(
+          Uuid.isValidUUIDFormat(
+              fromString: validUlid),
           true);
 
       final uuidval =
-          UuidValue.withValidation(validUlid, ValidationMode.loose);
+          UuidValue.withFormatValidation(validUlid);
       expect(uuidval.uuid, validUlid.toLowerCase());
     });
 
