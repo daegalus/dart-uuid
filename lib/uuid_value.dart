@@ -63,6 +63,16 @@ class UuidValue {
     return uuidValue;
   }
 
+  /// withFormatValidation() creates a UuidValue from a [uuid] string.
+  /// Throws [FormatException] if the UUID format is invalid.
+  /// No validation is performed on the content of the uuid.
+  factory UuidValue.withFormatValidation(String uuid,
+      [bool noDashes = false]) {
+    final uuidValue = UuidValue.fromString(uuid);
+    uuidValue.validateFormat(noDashes);
+    return uuidValue;
+  }
+
   /// Creates a UuidValue by taking directly the internal string representation of the [uuid],
   /// which is expected to be lowercase.
   ///
@@ -86,6 +96,14 @@ class UuidValue {
       bool noDashes = false]) {
     UuidValidation.isValidOrThrow(
         fromString: uuid, validationMode: validationMode, noDashes: noDashes);
+  }
+
+  /// validateFormat() validates the internal string representation format of the uuid.
+  /// Throws [FormatException] if the UUID format is invalid.
+  void validateFormat(
+      [bool noDashes = false]) {
+    UuidValidation.isValidFormatOrThrow(
+        fromString: uuid, noDashes: noDashes);
   }
 
   // toBytes() converts the internal string representation to a list of bytes.

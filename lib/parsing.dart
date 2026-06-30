@@ -50,6 +50,104 @@ class UuidParsing {
       UuidValidation.isValidOrThrow(
           fromString: uuid, validationMode: validationMode, noDashes: noDashes);
     }
+
+    return _parse(uuid, buffer, offset);
+  }
+
+  ///Parses the provided [uuid] into a list of byte values as a Uint8List.
+  /// Can optionally be provided a [buffer] to write into and
+  ///  a positional [offset] for where to start inputting into the buffer.
+  /// Throws FormatException if the UUID is invalid. Optionally you can set
+  /// [validate] to false to disable validation of the UUID before parsing.
+  static Uint8List parseAsByteList(String uuid,
+      {List<int>? buffer,
+      int offset = 0,
+      bool validate = true,
+      ValidationMode validationMode = ValidationMode.strictRFC9562,
+      bool noDashes = false}) {
+    return Uint8List.fromList(parse(uuid,
+        buffer: buffer,
+        offset: offset,
+        validate: validate,
+        validationMode: validationMode,
+        noDashes: noDashes));
+  }
+
+  /// Parses the provided [uuid] into a list of byte values as a List&lt;int&gt;.
+  /// Can optionally be provided a [buffer] to write into and
+  /// a positional [offset] for where to start inputting into the buffer.
+  ///
+  /// Returns the [buffer] containing the bytes. If no [buffer] was provided,
+  /// a new [buffer] is created and returned. If a [buffer] was provided, it
+  /// is returned (even if the uuid bytes are not placed at the beginning of
+  /// that [buffer]).
+  ///
+  /// Throws FormatException if the UUID format is invalid.
+  /// No validation is performed on the content of the uuid.
+  /// Optionally you can set [validate] to false to disable
+  /// validation of the UUID before parsing.
+  ///
+  /// Throws [RangeError] if a [buffer] is provided and it is too small.
+  /// It is also thrown if a non-zero [offset] is provided without providing
+  /// a [buffer].
+  static List<int> parseHex128(String uuid,
+      {List<int>? buffer,
+      int offset = 0,
+      bool validate = true,
+      bool noDashes = false}) {
+    if (validate) {
+      UuidValidation.isValidFormatOrThrow(
+          fromString: uuid, noDashes: noDashes);
+    }
+
+    return _parse(uuid, buffer, offset);
+  }
+
+  ///Parses the provided [uuid] into a list of byte values as a Uint8List.
+  /// Can optionally be provided a [buffer] to write into and
+  ///  a positional [offset] for where to start inputting into the buffer.
+  /// Throws FormatException if the UUID format is invalid.
+  /// No validation is performed on the content of the uuid.
+  /// Optionally you can set [validate] to false to disable
+  /// validation of the UUID before parsing.
+  static Uint8List parseHex128AsByteList(String uuid,
+      {List<int>? buffer,
+      int offset = 0,
+      bool validate = true,
+      bool noDashes = false}) {
+    return Uint8List.fromList(parseHex128(uuid,
+        buffer: buffer,
+        offset: offset,
+        validate: validate,
+        noDashes: noDashes));
+  }
+
+  /// Unparses a [buffer] of bytes and outputs a proper UUID string.
+  /// An optional [offset] is allowed if you want to start at a different point
+  /// in the buffer.
+  ///
+  /// Throws a [RangeError] exception if the [buffer] is not large enough to
+  /// hold the bytes. That is, if the length of the [buffer] after the [offset]
+  /// is less than 16.
+  static String unparse(List<int> buffer, {int offset = 0}) {
+    if (buffer.length - offset < 16) {
+      throw RangeError('buffer too small: need 16: length=${buffer.length}'
+          '${offset != 0 ? ', offset=$offset' : ''}');
+    }
+    var i = offset;
+    return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
+        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
+        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
+        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}';
+  }
+
+  static List<int> _parse(String uuid,
+      List<int>? buffer,
+      int offset) {
     var i = offset, ii = 0;
 
     // Get buffer to store the result
@@ -84,47 +182,5 @@ class UuidParsing {
     }
 
     return buffer;
-  }
-
-  ///Parses the provided [uuid] into a list of byte values as a Uint8List.
-  /// Can optionally be provided a [buffer] to write into and
-  ///  a positional [offset] for where to start inputting into the buffer.
-  /// Throws FormatException if the UUID is invalid. Optionally you can set
-  /// [validate] to false to disable validation of the UUID before parsing.
-  static Uint8List parseAsByteList(String uuid,
-      {List<int>? buffer,
-      int offset = 0,
-      bool validate = true,
-      ValidationMode validationMode = ValidationMode.strictRFC9562,
-      bool noDashes = false}) {
-    return Uint8List.fromList(parse(uuid,
-        buffer: buffer,
-        offset: offset,
-        validate: validate,
-        validationMode: validationMode,
-        noDashes: noDashes));
-  }
-
-  /// Unparses a [buffer] of bytes and outputs a proper UUID string.
-  /// An optional [offset] is allowed if you want to start at a different point
-  /// in the buffer.
-  ///
-  /// Throws a [RangeError] exception if the [buffer] is not large enough to
-  /// hold the bytes. That is, if the length of the [buffer] after the [offset]
-  /// is less than 16.
-  static String unparse(List<int> buffer, {int offset = 0}) {
-    if (buffer.length - offset < 16) {
-      throw RangeError('buffer too small: need 16: length=${buffer.length}'
-          '${offset != 0 ? ', offset=$offset' : ''}');
-    }
-    var i = offset;
-    return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}';
   }
 }

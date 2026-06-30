@@ -572,6 +572,22 @@ void main() {
       expect(uuidval.uuid, validGUID.toLowerCase());
     });
 
+    test('Pass valid Ulid to constructor with format validation', () {
+      const validUlid = '019f13f5-53cb-b219-ca3e-4b569376f32b';
+      expect(
+          Uuid.isValidUUID(
+              fromString: validUlid),
+          false);
+      expect(
+          Uuid.isValidUUIDFormat(
+              fromString: validUlid),
+          true);
+
+      final uuidval =
+          UuidValue.withFormatValidation(validUlid);
+      expect(uuidval.uuid, validUlid.toLowerCase());
+    });
+
     test('const namespace regression catcher', () {
       const ns = Namespace.dns;
       expect(ns.uuidValue, UuidValue.fromNamespace(ns));

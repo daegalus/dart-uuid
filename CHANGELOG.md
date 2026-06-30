@@ -1,5 +1,10 @@
 # Changelog
 
+Unreleased
+* Add validators for uuid format (`Uuid.isValidUUIDFormat(...)`, `UuidValue.validateFormat()`, `UuidValidation.isValidUUIDFormat(...)` and `UuidValidation.isValidFormatOrThrow(...)`)
+* Add `UuidValue.withFormatValidation(...)` constructor
+* Add `Uuid.parseHex128(...)`, `Uuid.parseHex128AsByteList(...)`, `UuidParsing.parseHex128(...)` and `UuidParsing.parseHex128AsByteList(...)` methods
+
 v4.5.3
 
 * Remove experimental flag on UUIDValue and remote meta dependency. (thanks @marcelomendoncasoares)

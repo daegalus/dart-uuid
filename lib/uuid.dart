@@ -105,6 +105,49 @@ class Uuid {
         validationMode: validationMode);
   }
 
+  /// Parses the provided [uuid] into a list of byte values as a List&lt;int&gt;.
+  /// Can optionally be provided a [buffer] to write into and
+  ///  a positional [offset] for where to start inputting into the buffer.
+  /// Throws FormatException if the UUID format is invalid.
+  /// No validation is performed on the content of the uuid.
+  /// Optionally you can set [validate] to false to disable
+  /// validation of the UUID before parsing.
+  ///
+  /// Example parsing a UUID string
+  ///
+  /// ```dart
+  /// var bytes = uuid.parse('797ff043-11eb-11e1-80d6-510998755d10');
+  /// // bytes-> [121, 127, 240, 67, 17, 235, 17, 225, 128, 214, 81, 9, 152, 117, 93, 16]
+  /// ```
+  static List<int> parseHex128(
+    String uuid, {
+    List<int>? buffer,
+    int offset = 0,
+    bool validate = true
+  }) {
+    return UuidParsing.parseHex128(uuid,
+        buffer: buffer,
+        offset: offset,
+        validate: validate);
+  }
+
+  /// Parses the provided [uuid] into a list of byte values as a Uint8List.
+  /// Can optionally be provided a [buffer] to write into and
+  ///  a positional [offset] for where to start inputting into the buffer.
+  /// Throws FormatException if the UUID is invalid.
+  /// No validation is performed on the content of the uuid.
+  /// Optionally you can set [validate] to false to disable
+  /// validation of the UUID before parsing.
+  static Uint8List parseHex128AsByteList(String uuid,
+      {List<int>? buffer,
+      int offset = 0,
+      bool validate = true}) {
+    return UuidParsing.parseHex128AsByteList(uuid,
+        buffer: buffer,
+        offset: offset,
+        validate: validate);
+  }
+
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.
   /// An optional [offset] is allowed if you want to start at a different point
   /// in the buffer.
@@ -133,6 +176,21 @@ class Uuid {
         fromString: fromString,
         fromByteList: fromByteList,
         validationMode: validationMode,
+        noDashes: noDashes);
+  }
+
+  /// Validates the provided [uuid] to be a 128 bits
+  /// representation and returns a [bool]
+  /// No validation is performed on the content of the uuid
+  /// You can choose to validate from a string or from a byte list based on
+  /// which parameter is passed.
+  static bool isValidUUIDFormat(
+      {String fromString = '',
+      Uint8List? fromByteList,
+      bool noDashes = false}) {
+    return UuidValidation.isValidUUIDFormat(
+        fromString: fromString,
+        fromByteList: fromByteList,
         noDashes: noDashes);
   }
 

@@ -60,6 +60,27 @@ class UuidValidation {
     }
   }
 
+  /// Validates the provided [uuid] to be a 128 bits
+  /// representation and returns a [bool]
+  /// No validation is performed on the content of the uuid
+  /// You can choose to validate from a string or from a byte list based on
+  /// which parameter is passed.
+  static bool isValidUUIDFormat(
+      {String fromString = '',
+      Uint8List? fromByteList,
+      bool noDashes = false}) {
+    if (fromByteList != null) {
+      fromString = UuidParsing.unparse(fromByteList);
+    }
+
+      var pattern = (noDashes)
+          ? r'^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[0-9a-f]{32})$'
+          : r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+      final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
+      final match = regex.hasMatch(fromString.toLowerCase());
+      return match;
+  }
+
   /// Validates the provided [uuid] to make sure it has all the necessary
   /// components and formatting and throws a [FormatException] if it is invalid.
   /// You can choose to validate from a string or from a byte list based on
@@ -96,6 +117,25 @@ class UuidValidation {
       }
 
       throw FormatException('The provided UUID is invalid.', fromString);
+    }
+  }
+
+  /// Validates the provided [uuid] to be a 128 bits
+  /// representation and returns a [bool]
+  /// No validation is performed on the content of the uuid
+  /// You can choose to validate from a string or from a byte list based on
+  /// which parameter is passed.
+  static void isValidFormatOrThrow(
+      {String fromString = '',
+      Uint8List? fromByteList,
+      bool noDashes = false}) {
+    final isValid = isValidUUIDFormat(
+        fromString: fromString,
+        fromByteList: fromByteList,
+        noDashes: noDashes);
+
+    if (!isValid) {
+      throw FormatException('The provided UUID has an invalid format.', fromString);
     }
   }
 }
