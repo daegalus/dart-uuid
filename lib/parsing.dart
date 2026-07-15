@@ -36,19 +36,25 @@ class UuidParsing {
   ///
   /// Throws [FormatException] if the UUID is invalid. Optionally you can set
   /// [validate] to false to disable validation of the UUID before parsing.
+  /// Set [noDashes] to `true` when parsing a 32-character UUID without dashes.
   ///
   /// Throws [RangeError] if a [buffer] is provided and it is too small.
   /// It is also thrown if a non-zero [offset] is provided without providing
   /// a [buffer].
-  static List<int> parse(String uuid,
-      {List<int>? buffer,
-      int offset = 0,
-      bool validate = true,
-      ValidationMode validationMode = ValidationMode.strictRFC9562,
-      bool noDashes = false}) {
+  static List<int> parse(
+    String uuid, {
+    List<int>? buffer,
+    int offset = 0,
+    bool validate = true,
+    ValidationMode validationMode = ValidationMode.strictRFC9562,
+    bool noDashes = false,
+  }) {
     if (validate) {
       UuidValidation.isValidOrThrow(
-          fromString: uuid, validationMode: validationMode, noDashes: noDashes);
+        fromString: uuid,
+        validationMode: validationMode,
+        noDashes: noDashes,
+      );
     }
 
     return _parse(uuid, buffer, offset);
@@ -59,18 +65,25 @@ class UuidParsing {
   ///  a positional [offset] for where to start inputting into the buffer.
   /// Throws FormatException if the UUID is invalid. Optionally you can set
   /// [validate] to false to disable validation of the UUID before parsing.
-  static Uint8List parseAsByteList(String uuid,
-      {List<int>? buffer,
-      int offset = 0,
-      bool validate = true,
-      ValidationMode validationMode = ValidationMode.strictRFC9562,
-      bool noDashes = false}) {
-    return Uint8List.fromList(parse(uuid,
+  /// Set [noDashes] to `true` when parsing a 32-character UUID without dashes.
+  static Uint8List parseAsByteList(
+    String uuid, {
+    List<int>? buffer,
+    int offset = 0,
+    bool validate = true,
+    ValidationMode validationMode = ValidationMode.strictRFC9562,
+    bool noDashes = false,
+  }) {
+    return Uint8List.fromList(
+      parse(
+        uuid,
         buffer: buffer,
         offset: offset,
         validate: validate,
         validationMode: validationMode,
-        noDashes: noDashes));
+        noDashes: noDashes,
+      ),
+    );
   }
 
   /// Parses the provided [uuid] into a list of byte values as a List&lt;int&gt;.
@@ -82,22 +95,25 @@ class UuidParsing {
   /// is returned (even if the uuid bytes are not placed at the beginning of
   /// that [buffer]).
   ///
-  /// Throws FormatException if the UUID format is invalid.
-  /// No validation is performed on the content of the uuid.
+  /// Throws [FormatException] if the hexadecimal format is invalid.
+  /// UUID version and variant bits are not validated.
   /// Optionally you can set [validate] to false to disable
   /// validation of the UUID before parsing.
+  /// Set [noDashes] to `true` when parsing 32 hexadecimal characters without
+  /// dashes.
   ///
   /// Throws [RangeError] if a [buffer] is provided and it is too small.
   /// It is also thrown if a non-zero [offset] is provided without providing
   /// a [buffer].
-  static List<int> parseHex128(String uuid,
-      {List<int>? buffer,
-      int offset = 0,
-      bool validate = true,
-      bool noDashes = false}) {
+  static List<int> parseHex128(
+    String uuid, {
+    List<int>? buffer,
+    int offset = 0,
+    bool validate = true,
+    bool noDashes = false,
+  }) {
     if (validate) {
-      UuidValidation.isValidFormatOrThrow(
-          fromString: uuid, noDashes: noDashes);
+      UuidValidation.isValidFormatOrThrow(fromString: uuid, noDashes: noDashes);
     }
 
     return _parse(uuid, buffer, offset);
@@ -106,20 +122,28 @@ class UuidParsing {
   ///Parses the provided [uuid] into a list of byte values as a Uint8List.
   /// Can optionally be provided a [buffer] to write into and
   ///  a positional [offset] for where to start inputting into the buffer.
-  /// Throws FormatException if the UUID format is invalid.
-  /// No validation is performed on the content of the uuid.
+  /// Throws [FormatException] if the hexadecimal format is invalid.
+  /// UUID version and variant bits are not validated.
   /// Optionally you can set [validate] to false to disable
   /// validation of the UUID before parsing.
-  static Uint8List parseHex128AsByteList(String uuid,
-      {List<int>? buffer,
-      int offset = 0,
-      bool validate = true,
-      bool noDashes = false}) {
-    return Uint8List.fromList(parseHex128(uuid,
+  /// Set [noDashes] to `true` when parsing 32 hexadecimal characters without
+  /// dashes.
+  static Uint8List parseHex128AsByteList(
+    String uuid, {
+    List<int>? buffer,
+    int offset = 0,
+    bool validate = true,
+    bool noDashes = false,
+  }) {
+    return Uint8List.fromList(
+      parseHex128(
+        uuid,
         buffer: buffer,
         offset: offset,
         validate: validate,
-        noDashes: noDashes));
+        noDashes: noDashes,
+      ),
+    );
   }
 
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.
@@ -131,8 +155,10 @@ class UuidParsing {
   /// is less than 16.
   static String unparse(List<int> buffer, {int offset = 0}) {
     if (buffer.length - offset < 16) {
-      throw RangeError('buffer too small: need 16: length=${buffer.length}'
-          '${offset != 0 ? ', offset=$offset' : ''}');
+      throw RangeError(
+        'buffer too small: need 16: length=${buffer.length}'
+        '${offset != 0 ? ', offset=$offset' : ''}',
+      );
     }
     var i = offset;
     return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
@@ -145,9 +171,7 @@ class UuidParsing {
         '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}';
   }
 
-  static List<int> _parse(String uuid,
-      List<int>? buffer,
-      int offset) {
+  static List<int> _parse(String uuid, List<int>? buffer, int offset) {
     var i = offset, ii = 0;
 
     // Get buffer to store the result
@@ -160,8 +184,10 @@ class UuidParsing {
     } else {
       // Buffer provided: check it is large enough
       if (buffer.length - offset < 16) {
-        throw RangeError('buffer too small: need 16: length=${buffer.length}'
-            '${offset != 0 ? ', offset=$offset' : ''}');
+        throw RangeError(
+          'buffer too small: need 16: length=${buffer.length}'
+          '${offset != 0 ? ', offset=$offset' : ''}',
+        );
       }
     }
 

@@ -67,6 +67,7 @@ class Uuid {
   ///  a positional [offset] for where to start inputting into the buffer.
   /// Throws FormatException if the UUID is invalid. Optionally you can set
   /// [validate] to false to disable validation of the UUID before parsing.
+  /// Set [noDashes] to `true` when parsing a 32-character UUID without dashes.
   ///
   /// Example parsing a UUID string
   ///
@@ -80,12 +81,16 @@ class Uuid {
     int offset = 0,
     bool validate = true,
     ValidationMode validationMode = ValidationMode.strictRFC9562,
+    bool noDashes = false,
   }) {
-    return UuidParsing.parse(uuid,
-        buffer: buffer,
-        offset: offset,
-        validate: validate,
-        validationMode: validationMode);
+    return UuidParsing.parse(
+      uuid,
+      buffer: buffer,
+      offset: offset,
+      validate: validate,
+      validationMode: validationMode,
+      noDashes: noDashes,
+    );
   }
 
   /// Parses the provided [uuid] into a list of byte values as a Uint8List.
@@ -93,25 +98,34 @@ class Uuid {
   ///  a positional [offset] for where to start inputting into the buffer.
   /// Throws FormatException if the UUID is invalid. Optionally you can set
   /// [validate] to false to disable validation of the UUID before parsing.
-  static Uint8List parseAsByteList(String uuid,
-      {List<int>? buffer,
-      int offset = 0,
-      bool validate = true,
-      ValidationMode validationMode = ValidationMode.strictRFC9562}) {
-    return UuidParsing.parseAsByteList(uuid,
-        buffer: buffer,
-        offset: offset,
-        validate: validate,
-        validationMode: validationMode);
+  /// Set [noDashes] to `true` when parsing a 32-character UUID without dashes.
+  static Uint8List parseAsByteList(
+    String uuid, {
+    List<int>? buffer,
+    int offset = 0,
+    bool validate = true,
+    ValidationMode validationMode = ValidationMode.strictRFC9562,
+    bool noDashes = false,
+  }) {
+    return UuidParsing.parseAsByteList(
+      uuid,
+      buffer: buffer,
+      offset: offset,
+      validate: validate,
+      validationMode: validationMode,
+      noDashes: noDashes,
+    );
   }
 
   /// Parses the provided [uuid] into a list of byte values as a List&lt;int&gt;.
   /// Can optionally be provided a [buffer] to write into and
   ///  a positional [offset] for where to start inputting into the buffer.
-  /// Throws FormatException if the UUID format is invalid.
-  /// No validation is performed on the content of the uuid.
+  /// Throws [FormatException] if the hexadecimal format is invalid.
+  /// UUID version and variant bits are not validated.
   /// Optionally you can set [validate] to false to disable
   /// validation of the UUID before parsing.
+  /// Set [noDashes] to `true` when parsing 32 hexadecimal characters without
+  /// dashes.
   ///
   /// Example parsing a UUID string
   ///
@@ -123,29 +137,41 @@ class Uuid {
     String uuid, {
     List<int>? buffer,
     int offset = 0,
-    bool validate = true
+    bool validate = true,
+    bool noDashes = false,
   }) {
-    return UuidParsing.parseHex128(uuid,
-        buffer: buffer,
-        offset: offset,
-        validate: validate);
+    return UuidParsing.parseHex128(
+      uuid,
+      buffer: buffer,
+      offset: offset,
+      validate: validate,
+      noDashes: noDashes,
+    );
   }
 
   /// Parses the provided [uuid] into a list of byte values as a Uint8List.
   /// Can optionally be provided a [buffer] to write into and
   ///  a positional [offset] for where to start inputting into the buffer.
-  /// Throws FormatException if the UUID is invalid.
-  /// No validation is performed on the content of the uuid.
+  /// Throws [FormatException] if the hexadecimal format is invalid.
+  /// UUID version and variant bits are not validated.
   /// Optionally you can set [validate] to false to disable
   /// validation of the UUID before parsing.
-  static Uint8List parseHex128AsByteList(String uuid,
-      {List<int>? buffer,
-      int offset = 0,
-      bool validate = true}) {
-    return UuidParsing.parseHex128AsByteList(uuid,
-        buffer: buffer,
-        offset: offset,
-        validate: validate);
+  /// Set [noDashes] to `true` when parsing 32 hexadecimal characters without
+  /// dashes.
+  static Uint8List parseHex128AsByteList(
+    String uuid, {
+    List<int>? buffer,
+    int offset = 0,
+    bool validate = true,
+    bool noDashes = false,
+  }) {
+    return UuidParsing.parseHex128AsByteList(
+      uuid,
+      buffer: buffer,
+      offset: offset,
+      validate: validate,
+      noDashes: noDashes,
+    );
   }
 
   /// Unparses a [buffer] of bytes and outputs a proper UUID string.
@@ -167,31 +193,36 @@ class Uuid {
   /// components and formatting and returns a [bool]
   /// You can choose to validate from a string or from a byte list based on
   /// which parameter is passed.
-  static bool isValidUUID(
-      {String fromString = '',
-      Uint8List? fromByteList,
-      ValidationMode validationMode = ValidationMode.strictRFC9562,
-      bool noDashes = false}) {
+  static bool isValidUUID({
+    String fromString = '',
+    Uint8List? fromByteList,
+    ValidationMode validationMode = ValidationMode.strictRFC9562,
+    bool noDashes = false,
+  }) {
     return UuidValidation.isValidUUID(
-        fromString: fromString,
-        fromByteList: fromByteList,
-        validationMode: validationMode,
-        noDashes: noDashes);
+      fromString: fromString,
+      fromByteList: fromByteList,
+      validationMode: validationMode,
+      noDashes: noDashes,
+    );
   }
 
-  /// Validates the provided [uuid] to be a 128 bits
-  /// representation and returns a [bool]
-  /// No validation is performed on the content of the uuid
-  /// You can choose to validate from a string or from a byte list based on
-  /// which parameter is passed.
-  static bool isValidUUIDFormat(
-      {String fromString = '',
-      Uint8List? fromByteList,
-      bool noDashes = false}) {
+  /// Validates that the input is exactly a 128-bit hexadecimal value.
+  ///
+  /// String input must use the canonical UUID 8-4-4-4-12 layout. Set
+  /// [noDashes] to `true` to instead require exactly 32 hexadecimal characters.
+  /// This method does not validate UUID version or variant bits.
+  /// Byte input must contain exactly 16 bytes.
+  static bool isValidUUIDFormat({
+    String fromString = '',
+    Uint8List? fromByteList,
+    bool noDashes = false,
+  }) {
     return UuidValidation.isValidUUIDFormat(
-        fromString: fromString,
-        fromByteList: fromByteList,
-        noDashes: noDashes);
+      fromString: fromString,
+      fromByteList: fromByteList,
+      noDashes: noDashes,
+    );
   }
 
   /// Generates a time-based version 1 UUID
@@ -216,13 +247,19 @@ class Uuid {
   ///     'nSecs': 5678
   /// })   // -> "710b962e-041c-11e1-9234-0123456789ab"
   /// ```
-  String v1(
-      {@Deprecated('use config instead. Removal in 5.0.0')
-      Map<String, dynamic>? options,
-      V1Options? config}) {
+  String v1({
+    @Deprecated('use config instead. Removal in 5.0.0')
+    Map<String, dynamic>? options,
+    V1Options? config,
+  }) {
     if (options != null && options.isNotEmpty) {
-      config = V1Options(options["clockSeq"], options["mSecs"],
-          options["nSecs"], options["node"], options["seedBytes"]);
+      config = V1Options(
+        options["clockSeq"],
+        options["mSecs"],
+        options["nSecs"],
+        options["node"],
+        options["seedBytes"],
+      );
     }
     return UuidV1(goptions: goptions).generate(options: config);
   }
@@ -291,10 +328,11 @@ class Uuid {
   /// print(uuidValue) -> // -> '710b962e-041c-11e1-9234-0123456789ab'
   /// uuidValue.toBytes() -> // -> [...]
   /// ```
-  UuidValue v1obj(
-      {@Deprecated('use config instead. Removal in 5.0.0')
-      Map<String, dynamic>? options,
-      V1Options? config}) {
+  UuidValue v1obj({
+    @Deprecated('use config instead. Removal in 5.0.0')
+    Map<String, dynamic>? options,
+    V1Options? config,
+  }) {
     return options != null
         ? UuidValue.fromString(v1(options: options))
         : UuidValue.fromString(v1(config: config));
@@ -356,15 +394,19 @@ class Uuid {
   /// });
   /// // -> "109156be-c4fb-41ea-b1b4-efe1671c5836"
   /// ```
-  String v4(
-      {@Deprecated('use config instead. Removal in 5.0.0')
-      Map<String, dynamic>? options,
-      V4Options? config}) {
+  String v4({
+    @Deprecated('use config instead. Removal in 5.0.0')
+    Map<String, dynamic>? options,
+    V4Options? config,
+  }) {
     if (options != null && options.isNotEmpty) {
       var rng = options["rng"];
       if (options["rng"] != null && options["rng"] is! RNG) {
         rng = LegacyRNG(
-            options["rng"], options["namedArgs"], options["positionalArgs"]);
+          options["rng"],
+          options["namedArgs"],
+          options["positionalArgs"],
+        );
       }
       config = V4Options(options["random"], rng);
     }
@@ -431,10 +473,11 @@ class Uuid {
   /// print(uuidValue) -> // -> '109156be-c4fb-41ea-b1b4-efe1671c5836'
   /// uuidValue.toBytes() -> // -> [...]
   /// ```
-  UuidValue v4obj(
-      {@Deprecated('use config instead. Removal in 5.0.0')
-      Map<String, dynamic>? options,
-      V4Options? config}) {
+  UuidValue v4obj({
+    @Deprecated('use config instead. Removal in 5.0.0')
+    Map<String, dynamic>? options,
+    V4Options? config,
+  }) {
     return options != null
         ? UuidValue.fromString(v4(options: options))
         : UuidValue.fromString(v4(config: config));
@@ -464,16 +507,20 @@ class Uuid {
   /// uuid.v5(Namespace.url.value, 'www.google.com');
   /// // -> "c74a196f-f19d-5ea9-bffd-a2742432fc9c"
   /// ```
-  String v5(String? namespace, String? name,
-      {@Deprecated('use config instead. Removal in 5.0.0')
-      Map<String, dynamic>? options,
-      V5Options? config}) {
+  String v5(
+    String? namespace,
+    String? name, {
+    @Deprecated('use config instead. Removal in 5.0.0')
+    Map<String, dynamic>? options,
+    V5Options? config,
+  }) {
     if (options != null && options.isNotEmpty) {
       V4Options? v4config;
       config = V5Options(options["randomNamespace"], v4config);
     }
-    return UuidV5(goptions: goptions)
-        .generate(namespace, name, options: config);
+    return UuidV5(
+      goptions: goptions,
+    ).generate(namespace, name, options: config);
   }
 
   /// Generates a namespace & name-based version 5 UUID from binary data
@@ -497,8 +544,9 @@ class Uuid {
   /// // -> "81156b66-5dc6-5909-8842-89a96a29d3ba"
   /// ```
   String v5FromBytes(String? namespace, Uint8List? name, {V5Options? config}) {
-    return UuidV5(goptions: goptions)
-        .generateFromBytes(namespace, name, options: config);
+    return UuidV5(
+      goptions: goptions,
+    ).generateFromBytes(namespace, name, options: config);
   }
 
   /// Generates a namespace & name-based version 5 UUID into a provided buffer
@@ -597,10 +645,13 @@ class Uuid {
   /// print(uuidValue) -> // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
   /// uuidValue.toBytes() -> // -> [...]
   /// ```
-  UuidValue v5obj(String? namespace, String? name,
-      {@Deprecated('use config instead. Removal in 5.0.0')
-      Map<String, dynamic>? options,
-      V5Options? config}) {
+  UuidValue v5obj(
+    String? namespace,
+    String? name, {
+    @Deprecated('use config instead. Removal in 5.0.0')
+    Map<String, dynamic>? options,
+    V5Options? config,
+  }) {
     return options != null
         ? UuidValue.fromString(v5(namespace, name, options: options))
         : UuidValue.fromString(v5(namespace, name, config: config));
@@ -625,8 +676,11 @@ class Uuid {
   /// print(uuidValue) -> // -> '81156b66-5dc6-5909-8842-89a96a29d3ba'
   /// uuidValue.toBytes() -> // -> [...]
   /// ```
-  UuidValue v5FromBytesObj(String? namespace, Uint8List? name,
-      {V5Options? config}) {
+  UuidValue v5FromBytesObj(
+    String? namespace,
+    Uint8List? name, {
+    V5Options? config,
+  }) {
     return UuidValue.fromString(v5FromBytes(namespace, name, config: config));
   }
 
@@ -658,13 +712,12 @@ class Uuid {
   /// the options map. This is the preferred way to pass options.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-6
-  List<int> v6buffer(
-    List<int> buffer, {
-    V6Options? config,
-    int offset = 0,
-  }) {
-    return UuidParsing.parse(v6(config: config),
-        buffer: buffer, offset: offset);
+  List<int> v6buffer(List<int> buffer, {V6Options? config, int offset = 0}) {
+    return UuidParsing.parse(
+      v6(config: config),
+      buffer: buffer,
+      offset: offset,
+    );
   }
 
   /// Generates a draft time-based version 6 UUID as a [UuidValue] object
@@ -705,13 +758,12 @@ class Uuid {
   /// the options map.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-7
-  List<int> v7buffer(
-    List<int> buffer, {
-    V7Options? config,
-    int offset = 0,
-  }) {
-    return UuidParsing.parse(v7(config: config),
-        buffer: buffer, offset: offset);
+  List<int> v7buffer(List<int> buffer, {V7Options? config, int offset = 0}) {
+    return UuidParsing.parse(
+      v7(config: config),
+      buffer: buffer,
+      offset: offset,
+    );
   }
 
   /// Generates a draft time-based version 7 UUID as a [UuidValue] object
@@ -752,13 +804,12 @@ class Uuid {
   /// the options map.
   ///
   /// https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-8
-  List<int> v8buffer(
-    List<int> buffer, {
-    V8Options? config,
-    int offset = 0,
-  }) {
-    return UuidParsing.parse(v8(config: config),
-        buffer: buffer, offset: offset);
+  List<int> v8buffer(List<int> buffer, {V8Options? config, int offset = 0}) {
+    return UuidParsing.parse(
+      v8(config: config),
+      buffer: buffer,
+      offset: offset,
+    );
   }
 
   /// Generates a draft time-based version 8 UUID as a [UuidValue] object
@@ -806,8 +857,11 @@ class Uuid {
     V8GenericOptions? config,
     int offset = 0,
   }) {
-    return UuidParsing.parse(v8g(config: config),
-        buffer: buffer, offset: offset);
+    return UuidParsing.parse(
+      v8g(config: config),
+      buffer: buffer,
+      offset: offset,
+    );
   }
 
   /// Generates a draft time-based version 8 UUID as a [UuidValue] object

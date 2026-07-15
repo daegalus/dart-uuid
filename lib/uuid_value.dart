@@ -55,9 +55,11 @@ class UuidValue {
   /// Optionally, you can provide a [validationMode] to use when validating
   /// the uuid string.
   /// Throws [FormatException] if the UUID is invalid.
-  factory UuidValue.withValidation(String uuid,
-      [ValidationMode validationMode = ValidationMode.strictRFC9562,
-      bool noDashes = false]) {
+  factory UuidValue.withValidation(
+    String uuid, [
+    ValidationMode validationMode = ValidationMode.strictRFC9562,
+    bool noDashes = false,
+  ]) {
     final uuidValue = UuidValue.fromString(uuid);
     uuidValue.validate(validationMode, noDashes);
     return uuidValue;
@@ -66,8 +68,7 @@ class UuidValue {
   /// withFormatValidation() creates a UuidValue from a [uuid] string.
   /// Throws [FormatException] if the UUID format is invalid.
   /// No validation is performed on the content of the uuid.
-  factory UuidValue.withFormatValidation(String uuid,
-      [bool noDashes = false]) {
+  factory UuidValue.withFormatValidation(String uuid, [bool noDashes = false]) {
     final uuidValue = UuidValue.fromString(uuid);
     uuidValue.validateFormat(noDashes);
     return uuidValue;
@@ -91,19 +92,21 @@ class UuidValue {
   /// Optionally, you can provide a [validationMode] to use when validating
   /// the uuid string.
   /// Throws [FormatException] if the UUID is invalid.
-  void validate(
-      [ValidationMode validationMode = ValidationMode.strictRFC9562,
-      bool noDashes = false]) {
+  void validate([
+    ValidationMode validationMode = ValidationMode.strictRFC9562,
+    bool noDashes = false,
+  ]) {
     UuidValidation.isValidOrThrow(
-        fromString: uuid, validationMode: validationMode, noDashes: noDashes);
+      fromString: uuid,
+      validationMode: validationMode,
+      noDashes: noDashes,
+    );
   }
 
   /// validateFormat() validates the internal string representation format of the uuid.
   /// Throws [FormatException] if the UUID format is invalid.
-  void validateFormat(
-      [bool noDashes = false]) {
-    UuidValidation.isValidFormatOrThrow(
-        fromString: uuid, noDashes: noDashes);
+  void validateFormat([bool noDashes = false]) {
+    UuidValidation.isValidFormatOrThrow(fromString: uuid, noDashes: noDashes);
   }
 
   // toBytes() converts the internal string representation to a list of bytes.
@@ -118,8 +121,13 @@ class UuidValue {
   }
 
   String toFormattedString({bool validate = false}) {
-    return UuidParsing.unparse(UuidParsing.parse(uuid,
-        validate: validate, noDashes: !uuid.contains('-')));
+    return UuidParsing.unparse(
+      UuidParsing.parse(
+        uuid,
+        validate: validate,
+        noDashes: !uuid.contains('-'),
+      ),
+    );
   }
 
   // equals() compares to UuidValue objects' uuids.
