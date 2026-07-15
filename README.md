@@ -12,6 +12,7 @@ Features:
 * Supports RFC9562 version 6, version 7, and version 8
 * Runs in web, server, and flutter
 * Cryptographically strong random number generation on all platforms
+* Validate and parse generic 128-bit hexadecimal values without enforcing UUID version or variant bits
 * [Documentation](https://daegalus.github.io/dart-uuid/index.html)
 
 ## Getting Started
@@ -27,7 +28,7 @@ Features:
 
 ```yaml
 dependencies:
-  uuid: ^4.5.3
+  uuid: ^4.6.0
 ```
 
 ```dart
@@ -47,6 +48,21 @@ uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
 
 // Generate a v5 (namespace-name-sha1-based) id
 uuid.v5(Uuid.NAMESPACE_URL, 'www.google.com'); // -> 'c74a196f-f19d-5ea9-bffd-a2742432fc9c'
+```
+
+### Structural 128-bit parsing
+
+Use the explicit format APIs when the input must be a 128-bit hexadecimal
+value but UUID version and variant bits should not be enforced.
+
+```dart
+const value = '019f13f5-53cb-b219-ca3e-4b569376f32b';
+
+Uuid.isValidUUIDFormat(fromString: value); // true
+Uuid.parseHex128(value); // 16 bytes
+
+const withoutDashes = '019f13f553cbb219ca3e4b569376f32b';
+Uuid.parseHex128(withoutDashes, noDashes: true); // 16 bytes
 ```
 
 ## Documentation

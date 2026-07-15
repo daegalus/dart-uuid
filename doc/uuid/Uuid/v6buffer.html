@@ -54,10 +54,10 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.11.0/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.11.0/dart-core/int-class.html">int</a></span>&gt;</span></span>
-<span class="name ">v6buffer</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="v6buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.11.0/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, {</span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.12.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.12.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+<span class="name ">v6buffer</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="v6buffer-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.12.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">buffer</span>, {</span></li>
 <li><span class="parameter" id="v6buffer-param-config"><span class="type-annotation"><a href="../../data/V6Options-class.html">V6Options</a>?</span> <span class="parameter-name">config</span>, </span></li>
-<li><span class="parameter" id="v6buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span></li>
+<li><span class="parameter" id="v6buffer-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span></li>
 </ol>})
 
       
@@ -81,13 +81,12 @@ the options map. This is the preferred way to pass options.</p>
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">List&lt;int&gt; v6buffer(
-  List&lt;int&gt; buffer, {
-  V6Options? config,
-  int offset = 0,
-}) {
-  return UuidParsing.parse(v6(config: config),
-      buffer: buffer, offset: offset);
+  <pre class="language-dart"><code class="language-dart">List&lt;int&gt; v6buffer(List&lt;int&gt; buffer, {V6Options? config, int offset = 0}) {
+  return UuidParsing.parse(
+    v6(config: config),
+    buffer: buffer,
+    offset: offset,
+  );
 }</code></pre>
 </section>
 
@@ -116,7 +115,7 @@ the options map. This is the preferred way to pass options.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.5.3
+      4.6.0
   </span>
   
 </footer>

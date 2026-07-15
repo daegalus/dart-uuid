@@ -55,10 +55,10 @@
     <section class="multi-line-signature">
       
 <span class="returntype">void</span>
-<span class="name ">isValidOrThrow</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="isValidOrThrow-param-fromString"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
-<li><span class="parameter" id="isValidOrThrow-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span></li>
+<span class="name ">isValidOrThrow</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="isValidOrThrow-param-fromString"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">fromString</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
+<li><span class="parameter" id="isValidOrThrow-param-fromByteList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">fromByteList</span>, </span></li>
 <li><span class="parameter" id="isValidOrThrow-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC9562</span>, </span></li>
-<li><span class="parameter" id="isValidOrThrow-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="isValidOrThrow-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>, </span></li>
 </ol>})
 
       
@@ -67,7 +67,7 @@
     
 <section class="desc markdown">
   <p>Validates the provided <a href="../../uuid/">uuid</a> to make sure it has all the necessary
-components and formatting and throws a <a href="https://api.dart.dev/stable/3.11.0/dart-core/FormatException-class.html">FormatException</a> if it is invalid.
+components and formatting and throws a <a href="https://api.dart.dev/stable/3.12.2/dart-core/FormatException-class.html">FormatException</a> if it is invalid.
 You can choose to validate from a string or from a byte list based on
 which parameter is passed.
 Optionally you can set <code>validationMode</code> to <code>ValidationMode.nonStrict</code> to
@@ -80,30 +80,34 @@ If you are using a Microsoft GUID, you should set <code>validationMode</code> to
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static void isValidOrThrow(
-    {String fromString = &#39;&#39;,
-    Uint8List? fromByteList,
-    ValidationMode validationMode = ValidationMode.strictRFC9562,
-    bool noDashes = false}) {
+  <pre class="language-dart"><code class="language-dart">static void isValidOrThrow({
+  String fromString = &#39;&#39;,
+  Uint8List? fromByteList,
+  ValidationMode validationMode = ValidationMode.strictRFC9562,
+  bool noDashes = false,
+}) {
   final isValid = isValidUUID(
-      fromString: fromString,
-      fromByteList: fromByteList,
-      validationMode: validationMode,
-      noDashes: noDashes);
+    fromString: fromString,
+    fromByteList: fromByteList,
+    validationMode: validationMode,
+    noDashes: noDashes,
+  );
 
   if (!isValid) {
     &#47;&#47; let&#39;s check if it is a non RFC4122 uuid and help the developer
     if (validationMode != ValidationMode.nonStrict) {
       final isValidNonStrict = isValidUUID(
-          fromString: fromString,
-          fromByteList: fromByteList,
-          validationMode: ValidationMode.nonStrict,
-          noDashes: noDashes);
+        fromString: fromString,
+        fromByteList: fromByteList,
+        validationMode: ValidationMode.nonStrict,
+        noDashes: noDashes,
+      );
 
       if (isValidNonStrict) {
         throw FormatException(
-            &#39;The provided UUID is not RFC4122 compliant. It seems you might be using a Microsoft GUID. Try setting `validationMode = ValidationMode.nonStrict`&#39;,
-            fromString);
+          &#39;The provided UUID is not RFC4122 compliant. It seems you might be using a Microsoft GUID. Try setting `validationMode = ValidationMode.nonStrict`&#39;,
+          fromString,
+        );
       }
     }
 
@@ -137,7 +141,7 @@ If you are using a Microsoft GUID, you should set <code>validationMode</code> to
 <footer>
   <span class="no-break">
     uuid
-      4.5.3
+      4.6.0
   </span>
   
 </footer>

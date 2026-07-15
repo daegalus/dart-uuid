@@ -54,8 +54,8 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.11.0/dart-core/String-class.html">String</a></span>
-<span class="name ">v4</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="v4-param-options"><span>@<a href="https://api.dart.dev/stable/3.11.0/dart-core/Deprecated/Deprecated.html">Deprecated</a>(&#39;use config instead. Removal in 5.0.0&#39;)</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.11.0/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.12.2/dart-core/String-class.html">String</a></span>
+<span class="name ">v4</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="v4-param-options"><span>@<a href="https://api.dart.dev/stable/3.12.2/dart-core/Deprecated/Deprecated.html">Deprecated</a>(&#39;use config instead. Removal in 5.0.0&#39;)</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.12.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">options</span>, </span></li>
 <li><span class="parameter" id="v4-param-config"><span class="type-annotation"><a href="../../data/V4Options-class.html">V4Options</a>?</span> <span class="parameter-name">config</span>, </span></li>
 </ol>})
 
@@ -110,15 +110,19 @@ uuid.v4(options: {
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">String v4(
-    {@Deprecated(&#39;use config instead. Removal in 5.0.0&#39;)
-    Map&lt;String, dynamic&gt;? options,
-    V4Options? config}) {
+  <pre class="language-dart"><code class="language-dart">String v4({
+  @Deprecated(&#39;use config instead. Removal in 5.0.0&#39;)
+  Map&lt;String, dynamic&gt;? options,
+  V4Options? config,
+}) {
   if (options != null &amp;&amp; options.isNotEmpty) {
     var rng = options[&quot;rng&quot;];
     if (options[&quot;rng&quot;] != null &amp;&amp; options[&quot;rng&quot;] is! RNG) {
       rng = LegacyRNG(
-          options[&quot;rng&quot;], options[&quot;namedArgs&quot;], options[&quot;positionalArgs&quot;]);
+        options[&quot;rng&quot;],
+        options[&quot;namedArgs&quot;],
+        options[&quot;positionalArgs&quot;],
+      );
     }
     config = V4Options(options[&quot;random&quot;], rng);
   }
@@ -151,7 +155,7 @@ uuid.v4(options: {
 <footer>
   <span class="no-break">
     uuid
-      4.5.3
+      4.6.0
   </span>
   
 </footer>

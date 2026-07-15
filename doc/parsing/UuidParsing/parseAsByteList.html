@@ -54,13 +54,13 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.11.0/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
-<span class="name ">parseAsByteList</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="parseAsByteList-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, {</span></li>
-<li><span class="parameter" id="parseAsByteList-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.11.0/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span></li>
-<li><span class="parameter" id="parseAsByteList-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span></li>
-<li><span class="parameter" id="parseAsByteList-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.12.2/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+<span class="name ">parseAsByteList</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="parseAsByteList-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, {</span></li>
+<li><span class="parameter" id="parseAsByteList-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.12.2/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span></li>
+<li><span class="parameter" id="parseAsByteList-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span></li>
+<li><span class="parameter" id="parseAsByteList-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="parseAsByteList-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC9562</span>, </span></li>
-<li><span class="parameter" id="parseAsByteList-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="parseAsByteList-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>, </span></li>
 </ol>})
 
       
@@ -72,25 +72,32 @@
 Can optionally be provided a <code>buffer</code> to write into and
  a positional <code>offset</code> for where to start inputting into the buffer.
 Throws FormatException if the UUID is invalid. Optionally you can set
-<code>validate</code> to false to disable validation of the UUID before parsing.</p>
+<code>validate</code> to false to disable validation of the UUID before parsing.
+Set <code>noDashes</code> to <code>true</code> when parsing a 32-character UUID without dashes.</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static Uint8List parseAsByteList(String uuid,
-    {List&lt;int&gt;? buffer,
-    int offset = 0,
-    bool validate = true,
-    ValidationMode validationMode = ValidationMode.strictRFC9562,
-    bool noDashes = false}) {
-  return Uint8List.fromList(parse(uuid,
+  <pre class="language-dart"><code class="language-dart">static Uint8List parseAsByteList(
+  String uuid, {
+  List&lt;int&gt;? buffer,
+  int offset = 0,
+  bool validate = true,
+  ValidationMode validationMode = ValidationMode.strictRFC9562,
+  bool noDashes = false,
+}) {
+  return Uint8List.fromList(
+    parse(
+      uuid,
       buffer: buffer,
       offset: offset,
       validate: validate,
       validationMode: validationMode,
-      noDashes: noDashes));
+      noDashes: noDashes,
+    ),
+  );
 }</code></pre>
 </section>
 
@@ -119,7 +126,7 @@ Throws FormatException if the UUID is invalid. Optionally you can set
 <footer>
   <span class="no-break">
     uuid
-      4.5.3
+      4.6.0
   </span>
   
 </footer>

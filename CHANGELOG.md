@@ -1,9 +1,12 @@
 # Changelog
 
-Unreleased
-* Add validators for uuid format (`Uuid.isValidUUIDFormat(...)`, `UuidValue.validateFormat()`, `UuidValidation.isValidUUIDFormat(...)` and `UuidValidation.isValidFormatOrThrow(...)`)
-* Add `UuidValue.withFormatValidation(...)` constructor
-* Add `Uuid.parseHex128(...)`, `Uuid.parseHex128AsByteList(...)`, `UuidParsing.parseHex128(...)` and `UuidParsing.parseHex128AsByteList(...)` methods
+v4.6.0
+
+* Add explicit 128-bit hexadecimal format validators: `Uuid.isValidUUIDFormat(...)`, `UuidValue.validateFormat()`, `UuidValidation.isValidUUIDFormat(...)`, and `UuidValidation.isValidFormatOrThrow(...)`. (thanks @DPDmancul)
+* Add `UuidValue.withFormatValidation(...)` for values whose UUID version and variant bits should not be checked. (thanks @DPDmancul)
+* Add `Uuid.parseHex128(...)`, `Uuid.parseHex128AsByteList(...)`, `UuidParsing.parseHex128(...)`, and `UuidParsing.parseHex128AsByteList(...)`. (thanks @DPDmancul)
+* Require exact single-line 8-4-4-4-12 or 32-character hexadecimal input and exactly 16 bytes during format validation.
+* Expose the existing `noDashes` parsing option through the public `Uuid` parse methods.
 
 v4.5.3
 

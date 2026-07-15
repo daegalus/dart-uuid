@@ -54,13 +54,13 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.11.0/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.11.0/dart-core/int-class.html">int</a></span>&gt;</span></span>
-<span class="name ">parse</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="parse-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, {</span></li>
-<li><span class="parameter" id="parse-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.11.0/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span></li>
-<li><span class="parameter" id="parse-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span></li>
-<li><span class="parameter" id="parse-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.12.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.12.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+<span class="name ">parse</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="parse-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">uuid</span>, {</span></li>
+<li><span class="parameter" id="parse-param-buffer"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.12.2/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">buffer</span>, </span></li>
+<li><span class="parameter" id="parse-param-offset"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span> = <span class="default-value">0</span>, </span></li>
+<li><span class="parameter" id="parse-param-validate"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">validate</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="parse-param-validationMode"><span class="type-annotation"><a href="../../enums/ValidationMode.html">ValidationMode</a></span> <span class="parameter-name">validationMode</span> = <span class="default-value">ValidationMode.strictRFC9562</span>, </span></li>
-<li><span class="parameter" id="parse-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.11.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="parse-param-noDashes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.12.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">noDashes</span> = <span class="default-value">false</span>, </span></li>
 </ol>})
 
       
@@ -75,9 +75,10 @@ a positional <code>offset</code> for where to start inputting into the buffer.</
 a new <code>buffer</code> is created and returned. If a <code>buffer</code> was provided, it
 is returned (even if the uuid bytes are not placed at the beginning of
 that <code>buffer</code>).</p>
-<p>Throws <a href="https://api.dart.dev/stable/3.11.0/dart-core/FormatException-class.html">FormatException</a> if the UUID is invalid. Optionally you can set
-<code>validate</code> to false to disable validation of the UUID before parsing.</p>
-<p>Throws <a href="https://api.dart.dev/stable/3.11.0/dart-core/RangeError-class.html">RangeError</a> if a <code>buffer</code> is provided and it is too small.
+<p>Throws <a href="https://api.dart.dev/stable/3.12.2/dart-core/FormatException-class.html">FormatException</a> if the UUID is invalid. Optionally you can set
+<code>validate</code> to false to disable validation of the UUID before parsing.
+Set <code>noDashes</code> to <code>true</code> when parsing a 32-character UUID without dashes.</p>
+<p>Throws <a href="https://api.dart.dev/stable/3.12.2/dart-core/RangeError-class.html">RangeError</a> if a <code>buffer</code> is provided and it is too small.
 It is also thrown if a non-zero <code>offset</code> is provided without providing
 a <code>buffer</code>.</p>
 </section>
@@ -86,50 +87,23 @@ a <code>buffer</code>.</p>
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static List&lt;int&gt; parse(String uuid,
-    {List&lt;int&gt;? buffer,
-    int offset = 0,
-    bool validate = true,
-    ValidationMode validationMode = ValidationMode.strictRFC9562,
-    bool noDashes = false}) {
+  <pre class="language-dart"><code class="language-dart">static List&lt;int&gt; parse(
+  String uuid, {
+  List&lt;int&gt;? buffer,
+  int offset = 0,
+  bool validate = true,
+  ValidationMode validationMode = ValidationMode.strictRFC9562,
+  bool noDashes = false,
+}) {
   if (validate) {
     UuidValidation.isValidOrThrow(
-        fromString: uuid, validationMode: validationMode, noDashes: noDashes);
-  }
-  var i = offset, ii = 0;
-
-  &#47;&#47; Get buffer to store the result
-  if (buffer == null) {
-    &#47;&#47; Buffer not provided: create a 16 item buffer
-    if (offset != 0) {
-      throw RangeError(&#39;non-zero offset without providing a buffer&#39;);
-    }
-    buffer = Uint8List(16);
-  } else {
-    &#47;&#47; Buffer provided: check it is large enough
-    if (buffer.length - offset &lt; 16) {
-      throw RangeError(&#39;buffer too small: need 16: length=${buffer.length}&#39;
-          &#39;${offset != 0 ? &#39;, offset=$offset&#39; : &#39;&#39;}&#39;);
-    }
+      fromString: uuid,
+      validationMode: validationMode,
+      noDashes: noDashes,
+    );
   }
 
-  &#47;&#47; Convert to lowercase and replace all hex with bytes then
-  &#47;&#47; string.replaceAll() does a lot of work that I don&#39;t need, and a manual
-  &#47;&#47; regex gives me more control.
-  final regex = RegExp(&#39;[0-9a-f]{2}&#39;);
-  for (Match match in regex.allMatches(uuid.toLowerCase())) {
-    if (ii &lt; 16) {
-      var hex = uuid.toLowerCase().substring(match.start, match.end);
-      buffer[i + ii++] = int.parse(hex, radix: 16);
-    }
-  }
-
-  &#47;&#47; Zero out any left over bytes if the string was too short.
-  while (ii &lt; 16) {
-    buffer[i + ii++] = 0;
-  }
-
-  return buffer;
+  return _parse(uuid, buffer, offset);
 }</code></pre>
 </section>
 
@@ -158,7 +132,7 @@ a <code>buffer</code>.</p>
 <footer>
   <span class="no-break">
     uuid
-      4.5.3
+      4.6.0
   </span>
   
 </footer>
