@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:uuid/data.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/rng.dart';
+import 'package:uuid/v7monotonic.dart';
 
 void main() {
   var uuid = Uuid();
@@ -81,6 +82,14 @@ void main() {
     0x67
   ])); // -> '1e1041c7-10b9-662e-9234-0123456789ab'
 
+  // Generate monotonic v7 ids, which sort in creation order even when created
+  // within the same millisecond
+  final mono = UuidV7Monotonic();
+  var mono1 =
+      mono.generate(); // -> e.g., '019fcd85-9fb3-7488-a625-f7a830c2dcf7'
+  var mono2 =
+      mono.generate(); // -> e.g., '019fcd85-9fb3-7488-a87c-0c31456d733b'
+
   print('v1        | $v1');
   print('v1 exact  | $v1Exact');
   print('v4        | $v4');
@@ -92,4 +101,6 @@ void main() {
   print('v7 exact  | $v7Exact');
   print('v8        | $v8');
   print('v8 exact  | $v8Exact');
+  print('v7 mono 1 | $mono1');
+  print('v7 mono 2 | $mono2');
 }
