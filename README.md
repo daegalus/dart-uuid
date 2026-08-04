@@ -10,6 +10,7 @@ Features:
 
 * Generate RFC4122 version 1, version 4, or version 5 UUIDs
 * Supports RFC9562 version 6, version 7, and version 8
+* Optional monotonic version 7 generator
 * Runs in web, server, and flutter
 * Cryptographically strong random number generation on all platforms
 * Validate and parse generic 128-bit hexadecimal values without enforcing UUID version or variant bits
@@ -22,7 +23,7 @@ Features:
 1. Open a command line and cd to your projects root folder
 2. In your pubspec, add an entry for dart-uuid to your dependencies (example below)
 3. pub install
-4. If you wish to run tests, go into packages/dart-uuid/ and run 'dart test/uuid_test.dart'
+4. If you wish to run tests, go into packages/dart-uuid/ and run 'dart test'
 
 ### Pubspec
 
@@ -64,6 +65,43 @@ Uuid.parseHex128(value); // 16 bytes
 const withoutDashes = '019f13f553cbb219ca3e4b569376f32b';
 Uuid.parseHex128(withoutDashes, noDashes: true); // 16 bytes
 ```
+
+### Monotonic v7
+
+`uuid.v7()` fills everything after the millisecond timestamp with random bits,
+so ids created in the same millisecond have no defined order. `UuidV7Monotonic`
+replaces the most significant of those random bits with a 16-bit counter
+(RFC 9562 §6.2, Method 1), so ids from one generator sort in creation order
+under an ordinary string comparison (or byte comparison if parsed).
+
+```dart
+import 'package:uuid/uuid.dart';
+import 'package:uuid/v7monotonic.dart';
+
+// Plain v7, both created in the same millisecond. Creation order and sort
+// order happen to disagree.
+const uuid = Uuid();
+uuid.v7(); // -> '019fcd85-9fac-7f64-8711-97a4665f1adc'
+uuid.v7(); // -> '019fcd85-9fac-715d-80d0-556404fa23ea'
+
+// Monotonic, also within one millisecond. The counter defines the order.
+final generator = UuidV7Monotonic();
+generator.generate(); // -> '019fcd85-9fb3-7488-a625-f7a830c2dcf7'
+generator.generate(); // -> '019fcd85-9fb3-7488-a87c-0c31456d733b'
+```
+
+Import the generator directly; it is not exported from `uuid.dart`.
+
+Some limits of the monotonic generator:
+
+1. Ordering only holds within one generator instance. v7 cannot order
+   concurrent generators against each other without shared state.
+2. Ids strictly increase unless the clock moves backward by more than 10
+   seconds, which resets ordering to the new clock reading. Ids stay unique
+   across the reset.
+3. Ids are not secret tokens. The counter increments by exactly +1 within a
+   millisecond, so an observer holding one id can predict the next. Use v4
+   if unguessability matters.
 
 ## Documentation
 
