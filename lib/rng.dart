@@ -78,7 +78,7 @@ class CryptoRNG extends RNG {
     final b = Uint8List(16);
 
     for (var i = 0; i < 16; i += 4) {
-      var k = _secureRandom.nextInt(pow(2, 32).toInt());
+      var k = _secureRandom.nextInt(0x100000000);
       b[i] = k;
       b[i + 1] = k >> 8;
       b[i + 2] = k >> 16;
