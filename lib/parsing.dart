@@ -9,6 +9,12 @@ class UuidParsing {
     return i.toRadixString(16).padLeft(2, '0');
   });
 
+  static final Uint8List _hexDigits =
+      Uint8List.fromList('0123456789abcdef'.codeUnits);
+
+  /// True only on dart2js. dart2wasm and the VM give false.
+  static const bool _isJs = identical(0, 0.0);
+
   /// Convert Hex String to Uint8List
   static Uint8List parseHexToBytes(String hex) {
     if (hex.length % 2 != 0) {
@@ -160,15 +166,42 @@ class UuidParsing {
         '${offset != 0 ? ', offset=$offset' : ''}',
       );
     }
-    var i = offset;
-    return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
-        '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}';
+    if (_isJs) {
+      // On dart2js, joining the table strings is faster than
+      // String.fromCharCodes.
+      var i = offset;
+      return '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
+          '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+          '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+          '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+          '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}-'
+          '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
+          '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}'
+          '${_byteToHex[buffer[i++]]}${_byteToHex[buffer[i++]]}';
+    }
+    final result = Uint8List(36);
+    var j = 0;
+    for (var i = offset; i < offset + 16; i++) {
+      if (i == offset + 4 ||
+          i == offset + 6 ||
+          i == offset + 8 ||
+          i == offset + 10) {
+        result[j++] = 0x2d; // '-'
+      }
+      final byte = buffer[i];
+      RangeError.checkValueInInterval(byte, 0, 255);
+      result[j++] = _hexDigits[byte >> 4];
+      result[j++] = _hexDigits[byte & 0x0f];
+    }
+    return String.fromCharCodes(result);
+  }
+
+  static int _hexValue(int c) {
+    final d = c - 0x30;
+    if (d >= 0 && d <= 9) return d; // 0-9
+    final l = (c | 0x20) - 0x61; // c | 0x20 maps A-F to a-f
+    if (l >= 0 && l <= 5) return l + 10; // a-f, A-F
+    return -1;
   }
 
   static List<int> _parse(String uuid, List<int>? buffer, int offset) {
@@ -191,15 +224,17 @@ class UuidParsing {
       }
     }
 
-    // Convert to lowercase and replace all hex with bytes then
-    // string.replaceAll() does a lot of work that I don't need, and a manual
-    // regex gives me more control.
-    final regex = RegExp('[0-9a-f]{2}');
-    for (Match match in regex.allMatches(uuid.toLowerCase())) {
-      if (ii < 16) {
-        var hex = uuid.toLowerCase().substring(match.start, match.end);
-        buffer[i + ii++] = int.parse(hex, radix: 16);
+    // Each character accepts both cases. The result is the same as
+    // toLowerCase() and then matching RegExp('[0-9a-f]{2}') from left to right.
+    for (var j = 0; j + 1 < uuid.length && ii < 16;) {
+      final hi = _hexValue(uuid.codeUnitAt(j));
+      final lo = hi < 0 ? -1 : _hexValue(uuid.codeUnitAt(j + 1));
+      if (lo < 0) {
+        j++;
+        continue;
       }
+      buffer[i + ii++] = (hi << 4) | lo;
+      j += 2;
     }
 
     // Zero out any left over bytes if the string was too short.

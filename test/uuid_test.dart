@@ -582,6 +582,29 @@ void main() {
         });
       }
     });
+
+    test('Parsing upper case gives the same bytes as lower case', () {
+      const id = '87cd4eb3-cb88-449b-a1da-e468fd829310';
+      expect(Uuid.parse(id.toUpperCase()), equals(Uuid.parse(id)));
+    });
+
+    test('Parsing without validation reads non-overlapping hex pairs', () {
+      expect(
+        Uuid.parse('a-bC-d', validate: false),
+        equals([0xbc, ...List.filled(15, 0)]),
+      );
+      expect(
+        Uuid.parse('abcg12', validate: false),
+        equals([0xab, 0x12, ...List.filled(14, 0)]),
+      );
+    });
+
+    test('Unparsing a value that is not a byte throws RangeError', () {
+      for (final bad in [256, -1]) {
+        final bytes = List<int>.filled(16, 0)..[5] = bad;
+        expect(() => Uuid.unparse(bytes), throwsA(isA<RangeError>()));
+      }
+    });
   });
 
   group('[UuidValue]', () {
